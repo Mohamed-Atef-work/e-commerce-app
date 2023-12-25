@@ -4,7 +4,7 @@ part of 'product_details_cubit.dart';
 class ProductDetailsState extends Equatable {
   final ProductEntity? selectedProduct;
   final List<ProductEntity>? products;
-  final RequestState? favoriteState; /// rtdfgfdsget
+  final RequestState? favoriteState;
   final RequestState? productsState;
   final RequestState? cartState;
   final String? message;

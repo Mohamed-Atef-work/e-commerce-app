@@ -24,16 +24,6 @@ class ProductsOfCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*const ProductEntity product = ProductEntity(
-      description: "we are testing",
-      location: "home",
-      category: "jackets",
-      price: "100",
-      image:
-          "https://firebasestorage.googleapis.com/v0/b/ecommerce-39620.appspot.com/o/productImagesIMG-20231030-WA0011.jpg?alt=media&token=ddccf23c-2e3b-420b-a0a4-5cc527aff36b",
-      name: "Product details Screen task",
-      id: "",
-    );*/
     final ProductEntity product =
         ModalRoute.of(context)!.settings.arguments as ProductEntity;
 
@@ -44,15 +34,11 @@ class ProductsOfCategoryScreen extends StatelessWidget {
             ..emitProduct(product)
             ..loadProducts(product.category),
         ),
-        BlocProvider(
-          create: (BuildContext context) => sl<AddDeleteFavoriteCubit>(),
-        ),
       ],
       child: Builder(builder: (context) {
         ///
         final controller = BlocProvider.of<ProductDetailsCubit>(context);
 
-        ///
         return Scaffold(
           backgroundColor: AppColors.primaryColorYellow,
           appBar: appBar(title: AppStrings.products),
@@ -67,7 +53,8 @@ class ProductsOfCategoryScreen extends StatelessWidget {
                   /// Inside this ---> implement [Fav] .........
                   /// Implemented :) But There is a problem Can't be [Handled] :( ......
                   /// We can't determine if the product in favorite or not  .....
-                  return ProductDetailsImageWidget(
+                  /// [Fortunatly] We avoided this problem ......
+                  return ProductOfCategoryImageWidget(
                       product: state.selectedProduct!);
                 },
               ),
@@ -116,8 +103,8 @@ class ProductsOfCategoryScreen extends StatelessWidget {
                     BlocProvider.of<ProductDetailsCubit>(context)
                         .emitSelectedProduct(index);
 
-                    BlocProvider.of<AddDeleteFavoriteCubit>(context)
-                        .newProductHeart();
+                    //BlocProvider.of<AddDeleteFavoriteCubit>(context)
+                    //.newProductHeart();
                   },
                   name: state.products![index].name,
                   image: state.products![index].image,
@@ -130,3 +117,13 @@ class ProductsOfCategoryScreen extends StatelessWidget {
         ),
       );
 }
+/*const ProductEntity product = ProductEntity(
+      description: "we are testing",
+      location: "home",
+      category: "jackets",
+      price: "100",
+      image:
+          "https://firebasestorage.googleapis.com/v0/b/ecommerce-39620.appspot.com/o/productImagesIMG-20231030-WA0011.jpg?alt=media&token=ddccf23c-2e3b-420b-a0a4-5cc527aff36b",
+      name: "Product details Screen task",
+      id: "",
+    );*/

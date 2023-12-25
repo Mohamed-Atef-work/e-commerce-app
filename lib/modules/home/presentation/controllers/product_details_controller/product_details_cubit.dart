@@ -31,13 +31,15 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
       ),
     );
     result.fold(
-        (failure) => emit(state.copyWith(
-              productsState: RequestState.error,
-              message: failure.message,
-            )), (stream) {
+        (failure) => emit(
+              state.copyWith(
+                  productsState: RequestState.error, message: failure.message),
+            ), (stream) {
       stream.listen((products) {
-        emit(state.copyWith(
-            productsState: RequestState.success, products: products));
+        emit(
+          state.copyWith(
+              productsState: RequestState.success, products: products),
+        );
       });
     });
   }
