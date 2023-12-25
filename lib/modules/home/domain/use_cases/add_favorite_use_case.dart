@@ -4,21 +4,22 @@ import 'package:e_commerce_app/core/use_case/base_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/repository/favorite_domain_repository.dart';
 import 'package:equatable/equatable.dart';
 
-class AddFavoriteUseCase extends BaseUseCase<void, AddFavoriteParams> {
+class AddFavoriteUseCase extends BaseUseCase<void, AddDeleteFavoriteParams> {
   final FavoriteDomainRepository repo;
 
   AddFavoriteUseCase(this.repo);
   @override
-  Future<Either<Failure, void>> call(AddFavoriteParams parameters) async {
+  Future<Either<Failure, void>> call(AddDeleteFavoriteParams parameters) async {
     return await repo.addFavorite(parameters);
   }
 }
-class AddFavoriteParams extends Equatable {
+
+class AddDeleteFavoriteParams extends Equatable {
   final String category;
   final String productId;
   final String uId;
 
-  const AddFavoriteParams({
+  const AddDeleteFavoriteParams({
     required this.category,
     required this.productId,
     required this.uId,
@@ -26,8 +27,8 @@ class AddFavoriteParams extends Equatable {
 
   @override
   List<Object?> get props => [
-    uId,
-    category,
-    productId,
-  ];
+        uId,
+        category,
+        productId,
+      ];
 }

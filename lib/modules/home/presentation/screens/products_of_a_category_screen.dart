@@ -6,6 +6,7 @@ import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/add_delete_favorite_controller/add_delete_favorite_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,10 +37,17 @@ class ProductsOfCategoryScreen extends StatelessWidget {
     final ProductEntity product =
         ModalRoute.of(context)!.settings.arguments as ProductEntity;
 
-    return BlocProvider<ProductDetailsCubit>(
-      create: (context) => sl<ProductDetailsCubit>()
-        ..emitProduct(product)
-        ..loadProducts(product.category),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ProductDetailsCubit>(
+          create: (context) => sl<ProductDetailsCubit>()
+            ..emitProduct(product)
+            ..loadProducts(product.category),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => sl<AddDeleteFavoriteCubit>(),
+        ),
+      ],
       child: Builder(builder: (context) {
         ///
         final controller = BlocProvider.of<ProductDetailsCubit>(context);
@@ -57,9 +65,10 @@ class ProductsOfCategoryScreen extends StatelessWidget {
                     previous.selectedProduct != current.selectedProduct,
                 builder: (context, state) {
                   /// Inside this ---> implement [Fav] .........
+                  /// Implemented :) But There is a problem Can't be [Handled] :( ......
+                  /// We can't determine if the product in favorite or not  .....
                   return ProductDetailsImageWidget(
-                    product: state.selectedProduct!,
-                  );
+                      product: state.selectedProduct!);
                 },
               ),
               SizedBox(height: context.height * 0.01),
@@ -106,6 +115,9 @@ class ProductsOfCategoryScreen extends StatelessWidget {
                   onTap: () {
                     BlocProvider.of<ProductDetailsCubit>(context)
                         .emitSelectedProduct(index);
+
+                    BlocProvider.of<AddDeleteFavoriteCubit>(context)
+                        .newProductHeart();
                   },
                   name: state.products![index].name,
                   image: state.products![index].image,

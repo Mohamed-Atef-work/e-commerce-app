@@ -22,12 +22,12 @@ class HomeLayoutScreen extends StatelessWidget {
         ..loadProductsOfTheFirstCategory(),
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<LayoutCubit>(create: (context) => sl<LayoutCubit>()),
           BlocProvider<HomeCubit>(
             create: (context) => sl<HomeCubit>()
-              ..loadProductsOfTheFirstCategory()
-              ..loadCategories(),
-          )
+              ..loadCategories()
+              ..loadProductsOfTheFirstCategory(),
+          ),
+          BlocProvider<LayoutCubit>(create: (context) => sl<LayoutCubit>()),
         ],
         child: BlocBuilder<LayoutCubit, LayoutState>(builder: (context, state) {
           return Scaffold(

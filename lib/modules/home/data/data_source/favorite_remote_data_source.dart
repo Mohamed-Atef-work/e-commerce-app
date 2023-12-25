@@ -5,6 +5,8 @@ import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/favorite_categories_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/favorite_entity.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/delete_favorite_use_case.dart';
 
 import '../models/favorite_category_model.dart';
 
@@ -17,6 +19,7 @@ abstract class FavoriteBaseRemoteDataSource {
     required String category,
     required String productId,
   });
+  Future<void> deleteFav(AddDeleteFavoriteParams params);
 }
 
 class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
@@ -35,7 +38,10 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
       uId: uId,
       category: category,
       productId: productId,
-    )
+    ).then((value) {
+      print("<---------- Added ---------->");
+
+    })
         .catchError((error) {
       throw ServerException(message: error.code);
     });
@@ -145,6 +151,15 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
               .toList(),
         ),
       );
+    }).catchError((error) {
+      throw ServerException(message: error);
+    });
+  }
+
+  @override
+  Future<void> deleteFav(AddDeleteFavoriteParams params) {
+    return favoriteStore.deleteFav(params).then((value) {
+      print("<---------- Deleted ---------->");
     }).catchError((error) {
       throw ServerException(message: error);
     });

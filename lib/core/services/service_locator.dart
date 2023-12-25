@@ -31,7 +31,8 @@ import 'package:e_commerce_app/modules/auth/presentation/controllers/sign_up_con
 import 'package:e_commerce_app/modules/home/data/data_source/cart_remote_data_source.dart';
 import 'package:e_commerce_app/modules/home/data/data_source/favorite_remote_data_source.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/add_favorite_controller/add_favorite_cubit.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/delete_favorite_use_case.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/add_delete_favorite_controller/add_delete_favorite_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_cubit.dart';
 import 'package:e_commerce_app/modules/orders/data/data_source/order_remote_data_source.dart';
 import 'package:e_commerce_app/modules/home/data/repository/cart_data_repository.dart';
@@ -103,7 +104,7 @@ void _admin() {
   sl.registerLazySingleton(() => DeleteProductsCategoryUseCase(sl()));
   sl.registerLazySingleton(() => GetAllProductCategoriesUseCase(sl()));
   sl.registerLazySingleton(() => DownloadProductImageUrlUseCase(sl()));
-  sl.registerLazySingleton(() => AddFavoriteUseCase(sl()));
+
 }
 
 void _auth() {
@@ -132,10 +133,13 @@ void _home() {
   sl.registerFactory(() => HomeCubit(sl(), sl()));
   sl.registerFactory(() => LayoutCubit());
   sl.registerFactory(() => GetFavoritesCubit(sl()));
-  sl.registerFactory(() => AddFavoriteCubit(sl()));
+  sl.registerFactory(() => AddDeleteFavoriteCubit(sl(), sl()));
+
 
   /// Use Case
   sl.registerLazySingleton(() => GetFavoritesUseCase(sl()));
+  sl.registerLazySingleton(() => AddFavoriteUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteFavoriteUseCase(sl()));
 
   /// Repositories
   sl.registerLazySingleton<FavoriteDomainRepository>(

@@ -7,7 +7,9 @@ import 'package:e_commerce_app/modules/home/domain/use_cases/get_favorites_use_c
 import 'package:equatable/equatable.dart';
 
 abstract class FavoriteDomainRepository {
-  Future<Either<Failure, void>> addFavorite(AddFavoriteParams parameters);
+  Future<Either<Failure, void>> addFavorite(AddDeleteFavoriteParams parameters);
+  Future<Either<Failure, void>> deleteFavorite(
+      AddDeleteFavoriteParams parameters);
   Future<Either<Failure, List<FavoriteCategoryEntity>>> getFavCategories(
       GetFavCategoriesParams parameters);
   Future<Either<Failure, FavoriteEntity>> getFavOfOneCategory(

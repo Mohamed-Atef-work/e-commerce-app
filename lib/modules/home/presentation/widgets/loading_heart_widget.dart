@@ -15,7 +15,7 @@ class _LoadingHeartWidgetState extends State<LoadingHeartWidget>
   void initState() {
     super.initState();
     animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 900));
+        vsync: this, duration: const Duration(milliseconds: 600));
     animation =
         Tween<double>(begin: 0.1, end: 0.9).animate(animationController);
     animationController.addListener(() {

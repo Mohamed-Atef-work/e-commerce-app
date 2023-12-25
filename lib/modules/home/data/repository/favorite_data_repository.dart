@@ -7,6 +7,7 @@ import 'package:e_commerce_app/modules/home/domain/entities/favorite_entity.dart
 import 'package:e_commerce_app/modules/home/domain/repository/favorite_domain_repository.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/get_favorites_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/delete_favorite_use_case.dart';
 
 class FavoriteDataRepository implements FavoriteDomainRepository {
   final FavoriteBaseRemoteDataSource dataSource;
@@ -15,7 +16,7 @@ class FavoriteDataRepository implements FavoriteDomainRepository {
 
   @override
   Future<Either<Failure, void>> addFavorite(
-      AddFavoriteParams parameters) async {
+      AddDeleteFavoriteParams parameters) async {
     try {
       final result = await dataSource.addFav(
         uId: parameters.uId,
@@ -58,6 +59,17 @@ class FavoriteDataRepository implements FavoriteDomainRepository {
       GetFavOfOneCategoryParams parameters) async {
     try {
       final result = await dataSource.getFavOfOneCategory(parameters.category);
+      return Right(result);
+    } on ServerException catch (exception) {
+      return Left(ServerFailure(message: exception.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteFavorite(
+      AddDeleteFavoriteParams parameters) async {
+    try {
+      final result = await dataSource.deleteFav(parameters);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));

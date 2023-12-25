@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/utils/fire_base_strings.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/delete_favorite_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class FavoriteStoreServices {
@@ -13,7 +15,7 @@ abstract class FavoriteStoreServices {
     required String uId,
     required String productId,
   });
-  Future<void> deleteFav(FavoriteParameters parameters);
+  Future<void> deleteFav(AddDeleteFavoriteParams parameters);
 }
 
 class FavoriteStoreServicesImpl implements FavoriteStoreServices {
@@ -21,8 +23,7 @@ class FavoriteStoreServicesImpl implements FavoriteStoreServices {
   FavoriteStoreServicesImpl(this.store);
 
   @override
-
-  Future<void> deleteFav(FavoriteParameters parameters) async {
+  Future<void> deleteFav(AddDeleteFavoriteParams parameters) async {
     await store
         .collection(FirebaseStrings.users)
         .doc(parameters.uId)
