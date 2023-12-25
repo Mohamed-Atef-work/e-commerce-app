@@ -18,9 +18,9 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<FavoritesCubit>(
-      create: (context) => sl<FavoritesCubit>()..getFavorites(),
-      child: BlocBuilder<FavoritesCubit, FavoritesState>(
+    return BlocProvider<GetFavoritesCubit>(
+      create: (context) => sl<GetFavoritesCubit>()..getFavorites(),
+      child: BlocBuilder<GetFavoritesCubit, FavoritesState>(
         builder: (context, state) {
           if (state.favState == RequestState.loading) {
             return const LoadingWidget();

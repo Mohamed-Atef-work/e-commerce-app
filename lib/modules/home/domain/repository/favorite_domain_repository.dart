@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/favorite_categories_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/favorite_entity.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/get_favorites_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class FavoriteDomainRepository {
@@ -33,36 +35,6 @@ class GetFavCategoriesParams extends Equatable {
   final String uId;
 
   const GetFavCategoriesParams({required this.uId});
-
-  @override
-  List<Object?> get props => [
-        uId,
-      ];
-}
-
-class AddFavoriteParams extends Equatable {
-  final String category;
-  final String productId;
-  final String uId;
-
-  const AddFavoriteParams({
-    required this.category,
-    required this.productId,
-    required this.uId,
-  });
-
-  @override
-  List<Object?> get props => [
-        uId,
-        category,
-        productId,
-      ];
-}
-
-class GetFavoritesParams extends Equatable {
-  final String uId;
-
-  const GetFavoritesParams({required this.uId});
 
   @override
   List<Object?> get props => [

@@ -49,13 +49,14 @@ class ProductsOfCategoryScreen extends StatelessWidget {
           backgroundColor: AppColors.primaryColorYellow,
           appBar: appBar(title: AppStrings.products),
           body: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             children: [
               BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
                 buildWhen: (previous, current) =>
                     previous.selectedProduct != current.selectedProduct,
                 builder: (context, state) {
+                  /// Inside this ---> implement [Fav] .........
                   return ProductDetailsImageWidget(
                     product: state.selectedProduct!,
                   );
@@ -64,21 +65,24 @@ class ProductsOfCategoryScreen extends StatelessWidget {
               SizedBox(height: context.height * 0.01),
               CustomText(
                 fontSize: 23,
-                text: controller.state.selectedProduct!.category,
                 fontWeight: FontWeight.bold,
+                text: controller.state.selectedProduct!.category,
               ),
               SizedBox(height: context.height * 0.01),
               _products(),
               CustomButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, Screens.detailsScreen,
-                      arguments: BlocProvider.of<ProductDetailsCubit>(context)
-                          .state
-                          .selectedProduct);
-                },
                 width: 0,
                 height: 45,
                 text: AppStrings.details,
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    Screens.detailsScreen,
+                    arguments: BlocProvider.of<ProductDetailsCubit>(context)
+                        .state
+                        .selectedProduct,
+                  );
+                },
               ),
             ],
           ),
@@ -96,9 +100,7 @@ class ProductsOfCategoryScreen extends StatelessWidget {
             if (state.productsState == RequestState.success) {
               return ListView.separated(
                 scrollDirection: Axis.horizontal,
-                separatorBuilder: (context, index) => const SizedBox(
-                  width: 10,
-                ),
+                separatorBuilder: (context, index) => const SizedBox(width: 10),
                 itemCount: state.products!.length,
                 itemBuilder: (context, index) => ProductComponent(
                   onTap: () {

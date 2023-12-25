@@ -3,6 +3,7 @@ import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/core/use_case/base_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/favorite_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/repository/favorite_domain_repository.dart';
+import 'package:equatable/equatable.dart';
 
 class GetFavoritesUseCase
     extends BaseUseCase<List<FavoriteEntity>, GetFavoritesParams> {
@@ -14,4 +15,15 @@ class GetFavoritesUseCase
       GetFavoritesParams parameters) async {
     return await domainRepository.getFavorites(parameters);
   }
+}
+
+class GetFavoritesParams extends Equatable {
+  final String uId;
+
+  const GetFavoritesParams({required this.uId});
+
+  @override
+  List<Object?> get props => [
+        uId,
+      ];
 }

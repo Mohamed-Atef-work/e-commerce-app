@@ -38,13 +38,16 @@ class DetailsScreen extends StatelessWidget {
               fixedSize: Size(context.width, context.height * 0.08),
             ),
             onPressed: () async {
+              /// To Do o o o o o o o
               final cartStore =
                   CartStoreServicesImpl(FirebaseFirestore.instance);
-              cartStore.addToCart(CartParams(
-                uId: 'uId',
-                category: product.category,
-                productId: product.id,
-              ));
+              cartStore.addToCart(
+                CartParams(
+                  uId: 'uId',
+                  category: product.category,
+                  productId: product.id,
+                ),
+              );
             },
             child: const CustomText(
               fontSize: 20,

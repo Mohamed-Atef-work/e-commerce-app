@@ -5,6 +5,8 @@ import 'package:e_commerce_app/modules/home/data/data_source/favorite_remote_dat
 import 'package:e_commerce_app/modules/home/domain/entities/favorite_categories_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/favorite_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/repository/favorite_domain_repository.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/get_favorites_use_case.dart';
 
 class FavoriteDataRepository implements FavoriteDomainRepository {
   final FavoriteBaseRemoteDataSource dataSource;

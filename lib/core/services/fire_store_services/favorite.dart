@@ -21,6 +21,7 @@ class FavoriteStoreServicesImpl implements FavoriteStoreServices {
   FavoriteStoreServicesImpl(this.store);
 
   @override
+
   Future<void> deleteFav(FavoriteParameters parameters) async {
     await store
         .collection(FirebaseStrings.users)
