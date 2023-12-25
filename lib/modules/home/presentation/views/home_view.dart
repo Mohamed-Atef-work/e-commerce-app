@@ -29,9 +29,9 @@ class HomeView extends StatelessWidget {
               } else {
                 return GridView.builder(
                   itemCount: state.products.length,
+                  physics: const BouncingScrollPhysics(),
                   padding:
                       EdgeInsets.symmetric(horizontal: context.width * 0.02),
-                  physics: const BouncingScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 1 / 1.6,

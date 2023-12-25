@@ -5,8 +5,8 @@ import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart
 import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_states.dart';
-import 'package:e_commerce_app/modules/home/presentation/screens/favorites_screen.dart';
-import 'package:e_commerce_app/modules/home/presentation/screens/home_screen.dart';
+import 'package:e_commerce_app/modules/home/presentation/views/favorites_screen.dart';
+import 'package:e_commerce_app/modules/home/presentation/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
