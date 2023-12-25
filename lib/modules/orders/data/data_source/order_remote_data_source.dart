@@ -4,8 +4,8 @@ import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
-import 'package:e_commerce_app/modules/home/data/models/order_data_model.dart';
-import 'package:e_commerce_app/modules/home/domain/entities/order_data_entity.dart';
+import 'package:e_commerce_app/modules/orders/data/model/order_data_model.dart';
+import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.dart';
 
 import '../../../../core/services/fire_store_services/order.dart';
 

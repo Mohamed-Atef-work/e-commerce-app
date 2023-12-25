@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
-import 'package:e_commerce_app/modules/home/domain/entities/order_data_entity.dart';
+import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.dart';
 
 import '../../../../core/services/fire_store_services/order.dart';
 

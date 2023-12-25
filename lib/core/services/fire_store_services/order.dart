@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/utils/fire_base_strings.dart';
 import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 
-import '../../../modules/home/data/models/order_data_model.dart';
+import '../../../modules/orders/data/model/order_data_model.dart';
 
 abstract class OrderStoreServices {
   Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params);

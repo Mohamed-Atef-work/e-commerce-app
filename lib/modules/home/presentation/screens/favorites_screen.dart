@@ -20,26 +20,22 @@ class FavoritesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<FavoritesCubit>(
       create: (context) => sl<FavoritesCubit>()..getFavorites(),
-      child: Scaffold(
-        backgroundColor: AppColors.primaryColorYellow,
-        appBar: appBar(title: AppStrings.favorites),
-        body: BlocBuilder<FavoritesCubit, FavoritesState>(
-          builder: (context, state) {
-            if (state.favState == RequestState.loading) {
-              return const LoadingWidget();
-            } else {
-              return ListView.separated(
-                shrinkWrap: true,
-                itemCount: state.favorites.length,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) =>
-                    FavoriteWidget(favoriteEntity: state.favorites[index]),
-                separatorBuilder: (context, index) =>
-                    SizedBox(height: context.height * 0.01),
-              );
-            }
-          },
-        ),
+      child: BlocBuilder<FavoritesCubit, FavoritesState>(
+        builder: (context, state) {
+          if (state.favState == RequestState.loading) {
+            return const LoadingWidget();
+          } else {
+            return ListView.separated(
+              shrinkWrap: true,
+              itemCount: state.favorites.length,
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, index) =>
+                  FavoriteWidget(favoriteEntity: state.favorites[index]),
+              separatorBuilder: (context, index) =>
+                  SizedBox(height: context.height * 0.01),
+            );
+          }
+        },
       ),
     );
   }

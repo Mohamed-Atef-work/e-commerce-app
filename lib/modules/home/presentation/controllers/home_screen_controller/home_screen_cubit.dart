@@ -19,8 +19,10 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> loadProducts() async {
     emit(state.copyWith(productsState: RequestState.loading));
-    final result = await loadProductsUseCase(LoadProductsParameters(
-        category: state.categories[state.categoryIndex].name));
+    final result = await loadProductsUseCase(
+      LoadProductsParameters(
+          category: state.categories[state.categoryIndex].name),
+    );
     result.fold((l) {
       emit(state.copyWith(
         productsState: RequestState.error,

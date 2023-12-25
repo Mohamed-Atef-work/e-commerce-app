@@ -1,86 +1,122 @@
-import 'package:e_commerce_app/core/components/loading_widget.dart';
-import 'package:e_commerce_app/core/components/product_details_component.dart';
-import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/core/constants/colors.dart';
+import 'package:e_commerce_app/core/services/service_locator.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
+import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
-import 'package:e_commerce_app/modules/home/presentation/widgets/categories_widget.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_cubit.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_states.dart';
+import 'package:e_commerce_app/modules/home/presentation/screens/favorites_screen.dart';
+import 'package:e_commerce_app/modules/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
-import 'package:e_commerce_app/modules/home/presentation/widgets/bottom_navigation_bar_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/constants/colors.dart';
-import '../../../../core/services/service_locator.dart';
-import '../../../../core/utils/app_strings.dart';
-import '../../../admin/domain/entities/product_entity.dart';
 
 class HomeLayoutScreen extends StatelessWidget {
   const HomeLayoutScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
     return BlocProvider<HomeCubit>(
       create: (context) => sl<HomeCubit>()
         ..loadCategories()
         ..loadProductsOfTheFirstCategory(),
-      child: Scaffold(
-        backgroundColor: Colors.amber,
-        appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: AppColors.primaryColorYellow,
-          centerTitle: true,
-          title: const CustomText(
-            text: AppStrings.categories,
-            fontSize: 30,
-            fontFamily: AppStrings.pacifico,
-            fontWeight: FontWeight.bold,
-            textColor: AppColors.black,
-          ),
-        ),
-        body: Column(
-          children: [
-            const CategoriesWidget(),
-            Expanded(
-              child: BlocBuilder<HomeCubit, HomeState>(
-                builder: (context, state) {
-                  if (state.categoriesState != RequestState.success ||
-                      state.productsState != RequestState.success) {
-                    return const LoadingWidget();
-                  } else if (state.products.isEmpty) {
-                    return const Center(
-                      child: CustomText(text: "No Data"),
-                    );
-                  } else {
-                    return GridView.builder(
-                      itemCount: state.products.length,
-                      padding: EdgeInsets.symmetric(horizontal: width * 0.02),
-                      physics: const BouncingScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 1 / 1.6,
-                        crossAxisSpacing: width * 0.01,
-                        mainAxisSpacing: height * 0.005,
-                      ),
-                      itemBuilder: (context, index) =>
-                          ProductWithMoreDetailsComponent(
-                        product: state.products[index],
-                        imageWidth: width * 0.48,
-                        imageHeight: height * 0.25,
-                      ),
-                    );
-                  }
-                },
-              ),
-            ),
-          ],
-        ),
-        bottomNavigationBar: const BottomNavigationBarWidget(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<LayoutCubit>(create: (context) => sl<LayoutCubit>()),
+          BlocProvider<HomeCubit>(
+            create: (context) => sl<HomeCubit>()
+              ..loadProductsOfTheFirstCategory()
+              ..loadCategories(),
+          )
+        ],
+        child: BlocBuilder<LayoutCubit, LayoutState>(builder: (context, state) {
+          return Scaffold(
+            backgroundColor: Colors.amber,
+            appBar: _appBar(context),
+            body: _body(context),
+            bottomNavigationBar: _bottomNavBar(context),
+          );
+        }),
       ),
     );
   }
+
+  Widget _body(BuildContext context) {
+    LayoutState state = BlocProvider.of<LayoutCubit>(context).state;
+    if (state.currentIndex == 0) {
+      return const HomeView();
+    } else if (state.currentIndex == 1) {
+      return const HomeView();
+    } else {
+      return const FavoritesScreen();
+    }
+  }
+
+  PreferredSizeWidget _appBar(BuildContext context) => AppBar(
+        elevation: 0.0,
+        centerTitle: true,
+        backgroundColor: AppColors.primaryColorYellow,
+        title: CustomText(
+          fontSize: 30,
+          textColor: AppColors.black,
+          fontWeight: FontWeight.bold,
+          fontFamily: AppStrings.pacifico,
+          text: BlocProvider.of<LayoutCubit>(context).state.appBarTitle,
+        ),
+      );
+
+  BottomNavigationBar _bottomNavBar(BuildContext context) =>
+      BottomNavigationBar(
+        unselectedItemColor: Colors.orange,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: AppColors.primaryColorYellow,
+        onTap: (index) {
+          BlocProvider.of<LayoutCubit>(context).newScreen(index);
+        },
+        currentIndex: BlocProvider.of<LayoutCubit>(context).state.currentIndex,
+        items: const [
+          BottomNavigationBarItem(
+            label: '',
+            activeIcon: Icon(Icons.shopping_cart, color: Colors.white),
+            icon: Icon(Icons.shopping_cart, color: Colors.black),
+          ),
+          BottomNavigationBarItem(
+            label: '',
+            activeIcon: Icon(Icons.home, color: Colors.white),
+            icon: Icon(Icons.home, color: Colors.black),
+          ),
+          BottomNavigationBarItem(
+            label: '',
+            activeIcon: Icon(Icons.favorite, color: Colors.white),
+            icon: Icon(Icons.favorite, color: Colors.black),
+          ),
+        ],
+      );
 }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 final List<String> _tabs = [
   AppStrings.jackets,
   AppStrings.shirts,

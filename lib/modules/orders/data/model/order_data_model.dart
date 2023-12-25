@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/modules/home/domain/entities/order_data_entity.dart';
+import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.dart';
 
 class OrderDataModel extends OrderDataEntity {
   const OrderDataModel({

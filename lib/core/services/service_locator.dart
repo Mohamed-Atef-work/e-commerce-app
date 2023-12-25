@@ -30,12 +30,13 @@ import 'package:e_commerce_app/modules/auth/presentation/controllers/login_contr
 import 'package:e_commerce_app/modules/auth/presentation/controllers/sign_up_controller/sign_up_bloc.dart';
 import 'package:e_commerce_app/modules/home/data/data_source/cart_remote_data_source.dart';
 import 'package:e_commerce_app/modules/home/data/data_source/favorite_remote_data_source.dart';
-import 'package:e_commerce_app/modules/home/data/data_source/order_remote_data_source.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_cubit.dart';
+import 'package:e_commerce_app/modules/orders/data/data_source/order_remote_data_source.dart';
 import 'package:e_commerce_app/modules/home/data/repository/cart_data_repository.dart';
-import 'package:e_commerce_app/modules/home/data/repository/order_data_repository.dart';
-import 'package:e_commerce_app/modules/home/domain/home_use_cases/get_favorites_use_case.dart';
-import 'package:e_commerce_app/modules/home/domain/repository/cart_domin_repository.dart';
-import 'package:e_commerce_app/modules/home/domain/repository/order_domain_repository.dart';
+import 'package:e_commerce_app/modules/orders/data/repository/order_data_repository.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/get_favorites_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/repository/cart_domain_repository.dart';
+import 'package:e_commerce_app/modules/orders/domain/repository/order_domain_repository.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/favorites_controller/favorites_cubit.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -127,6 +128,7 @@ void _home() {
   sl.registerFactory(() => ProductDetailsCubit(sl()));
   sl.registerFactory(() => HomeCubit(sl(), sl()));
   sl.registerFactory(() => FavoritesCubit(sl()));
+  sl.registerFactory(() => LayoutCubit());
 
   /// Use Case
   sl.registerLazySingleton(() => GetFavoritesUseCase(sl()));

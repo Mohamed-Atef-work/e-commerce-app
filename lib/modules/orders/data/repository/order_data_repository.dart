@@ -5,9 +5,9 @@ import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/core/services/fire_store_services/order.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
-import 'package:e_commerce_app/modules/home/data/data_source/order_remote_data_source.dart';
-import 'package:e_commerce_app/modules/home/domain/entities/order_data_entity.dart';
-import 'package:e_commerce_app/modules/home/domain/repository/order_domain_repository.dart';
+import 'package:e_commerce_app/modules/orders/data/data_source/order_remote_data_source.dart';
+import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.dart';
+import 'package:e_commerce_app/modules/orders/domain/repository/order_domain_repository.dart';
 
 class OrderDataRepo implements OrderDomainRepo {
   final OrderBaseRemoteDataSource dataSource;

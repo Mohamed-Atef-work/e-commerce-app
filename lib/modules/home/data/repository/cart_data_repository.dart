@@ -4,7 +4,7 @@ import 'package:e_commerce_app/core/services/fire_store_services/cart.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_category_entity.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/home/data/data_source/cart_remote_data_source.dart';
-import 'package:e_commerce_app/modules/home/domain/repository/cart_domin_repository.dart';
+import 'package:e_commerce_app/modules/home/domain/repository/cart_domain_repository.dart';
 
 class CartDataRepo implements CartDomainRepo{
   final CartBaseRemoteDataSource dataSource;
