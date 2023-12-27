@@ -1,24 +1,25 @@
+import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:equatable/equatable.dart';
 
 class OrderEntity extends Equatable {
-  final List<ItemEntity> items;
-  final String phoneNumber;
-  final double totalPrice;
-  final String address;
   final String name;
+  final String phone;
+  final String address;
+  final double totalPrice;
+  final List<ItemEntity> items;
 
   const OrderEntity({
-    required this.phoneNumber,
-    required this.totalPrice,
-    required this.address,
-    required this.items,
     required this.name,
+    required this.items,
+    required this.phone,
+    required this.address,
+    required this.totalPrice,
   });
 
   @override
   List<Object?> get props => [
-        phoneNumber,
         totalPrice,
+        phone,
         address,
         items,
         name,
@@ -26,35 +27,17 @@ class OrderEntity extends Equatable {
 }
 
 class ItemEntity extends Equatable {
-  final String description;
-  final String category;
-  final String location;
-  final String image;
-  final String price;
+  final ProductEntity productEntity;
   final int quantity;
-  final String name;
-  final String id;
 
   const ItemEntity({
+    required this.productEntity,
     required this.quantity,
-    required this.description,
-    required this.location,
-    required this.category,
-    required this.price,
-    required this.image,
-    required this.name,
-    required this.id,
   });
 
   @override
   List<Object?> get props => [
-        description,
+        productEntity,
         quantity,
-        location,
-        category,
-        price,
-        image,
-        name,
-        id,
       ];
 }
