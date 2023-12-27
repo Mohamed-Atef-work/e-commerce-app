@@ -1,21 +1,19 @@
 import 'package:e_commerce_app/core/components/app_bar.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
+import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/core/components/product_component.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
+import 'package:e_commerce_app/core/services/service_locator.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/add_delete_favorite_controller/add_delete_favorite_cubit.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
+import 'package:e_commerce_app/modules/home/presentation/widgets/product_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/components/custom_text.dart';
-import '../../../../core/components/product_component.dart';
-import '../../../../core/services/service_locator.dart';
-import '../../../../core/utils/screens_strings.dart';
-import '../controllers/product_details_controller/product_details_cubit.dart';
-import '../widgets/product_image_widget.dart';
 
 class ProductsOfCategoryScreen extends StatelessWidget {
   const ProductsOfCategoryScreen({
