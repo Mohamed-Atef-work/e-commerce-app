@@ -38,11 +38,10 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
       uId: uId,
       category: category,
       productId: productId,
-    ).then((value) {
+    )
+        .then((value) {
       print("<---------- Added ---------->");
-
-    })
-        .catchError((error) {
+    }).catchError((error) {
       throw ServerException(message: error.code);
     });
   }
@@ -100,8 +99,14 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
 
     ///
     for (int i = 0; i < category.length; i++) {
+      /// There is a problem with the data base Which ........
+      /// When all fav are deleted from a Category ...........
+      /// It still can be accessed Which Creates an EMPTY model .......
+      /// That make problems in the UI :) .......
       await getFavOfOneCategory(category[i]).then((favoriteEntity) {
-        favorites.add(favoriteEntity);
+        if (favoriteEntity.products.isNotEmpty) {
+          favorites.add(favoriteEntity);
+        }
       });
 
       ///

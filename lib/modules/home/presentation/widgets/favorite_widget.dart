@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/core/components/custom_text.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/favorite_entity.dart';
@@ -19,9 +20,10 @@ class FavoriteWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
             CustomText(
-              text: favoriteEntity.category,
+              fontSize: 25,
               fontWeight: FontWeight.bold,
-              fontSize: 20,
+              fontFamily: AppStrings.pacifico,
+              text: favoriteEntity.category,
             ),
             SizedBox(height: context.height * 0.01),
           ] +

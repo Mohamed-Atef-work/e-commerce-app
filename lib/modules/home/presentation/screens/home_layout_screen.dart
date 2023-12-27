@@ -2,10 +2,11 @@ import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/services/service_locator.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/favorites_controller/favorites_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_states.dart';
-import 'package:e_commerce_app/modules/home/presentation/views/favorites_screen.dart';
+import 'package:e_commerce_app/modules/home/presentation/views/favorites_view.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
@@ -26,6 +27,9 @@ class HomeLayoutScreen extends StatelessWidget {
             create: (context) => sl<HomeCubit>()
               ..loadCategories()
               ..loadProductsOfTheFirstCategory(),
+          ),
+          BlocProvider<GetFavoritesCubit>(
+            create: (context) => sl<GetFavoritesCubit>()..getFavorites(),
           ),
           BlocProvider<LayoutCubit>(create: (context) => sl<LayoutCubit>()),
         ],
@@ -48,7 +52,7 @@ class HomeLayoutScreen extends StatelessWidget {
     } else if (state.currentIndex == 1) {
       return const HomeView();
     } else {
-      return const FavoritesScreen();
+      return const FavoritesView();
     }
   }
 

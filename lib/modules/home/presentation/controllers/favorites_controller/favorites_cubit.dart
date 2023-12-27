@@ -11,6 +11,8 @@ class GetFavoritesCubit extends Cubit<FavoritesState> {
   GetFavoritesCubit(this.getFavoritesUseCase) : super(const FavoritesState());
   Future<void> getFavorites() async {
     emit(state.copyWith(favState: RequestState.loading));
+
+    /// Handling UID  :) ..........
     final result =
         await getFavoritesUseCase(const GetFavoritesParams(uId: "uId"));
     emit(

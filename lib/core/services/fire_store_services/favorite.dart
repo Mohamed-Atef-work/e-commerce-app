@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/utils/fire_base_strings.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
-import 'package:e_commerce_app/modules/home/domain/use_cases/delete_favorite_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class FavoriteStoreServices {
@@ -71,7 +70,11 @@ class FavoriteStoreServicesImpl implements FavoriteStoreServices {
   @override
   Future<QuerySnapshot<Map<String, dynamic>>> getFavProductsIdsOfCategory(
       DocumentReference reference) async {
-    return await reference.collection(FirebaseStrings.products).get();
+    final response = await reference.collection(FirebaseStrings.products).get();
+    if (response.docs.isEmpty) {
+      await reference.delete();
+    }
+    return response;
   }
 
   @override

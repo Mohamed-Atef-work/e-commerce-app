@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/core/services/fire_store_services/favorite.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_favorite_use_case.dart';
@@ -12,16 +11,16 @@ class AddDeleteFavoriteCubit extends Cubit<AddDeleteFavoriteState> {
   AddDeleteFavoriteCubit(this.addFavoriteUseCase, this.deleteFavoriteUseCase)
       : super(const AddDeleteFavoriteState());
 
+  void setHeartColor(Color heartColor) {
+    emit(state.copyWith(heartColor: heartColor));
+  }
+
   Future<void> addOrDelete(AddDeleteFavoriteParams parameters) async {
     if (state.heartColor == Colors.red) {
       await deleteFavorite(parameters);
     } else {
       await addFavorite(parameters);
     }
-  }
-
-  void newProductHeart() {
-    emit(state.copyWith(heartColor: Colors.white));
   }
 
   Future<void> addFavorite(AddDeleteFavoriteParams params) async {

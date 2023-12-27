@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/modules/home/presentation/screens/cart_screen.dart';
-import 'package:e_commerce_app/modules/home/presentation/views/favorites_screen.dart';
+import 'package:e_commerce_app/modules/home/presentation/views/favorites_view.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/details_screen.dart';
 import 'package:e_commerce_app/test_screen.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +34,6 @@ class BuyItApp extends StatelessWidget {
         Screens.adminPanelScreen: (context) => AdminPanelScreen(),
         Screens.detailsScreen: (context) => const DetailsScreen(),
         Screens.homeScreen: (context) => const HomeLayoutScreen(),
-        Screens.favoritesScreen: (context) => const FavoritesScreen(),
         Screens.addProductScreen: (context) => const AddProductScreen(),
         Screens.exploreScreen: (context) => const ExploreProductsScreen(),
         Screens.adminProductDetailsScreen: (context) =>
