@@ -72,6 +72,8 @@ class FavoriteStoreServicesImpl implements FavoriteStoreServices {
       DocumentReference reference) async {
     final response = await reference.collection(FirebaseStrings.products).get();
     if (response.docs.isEmpty) {
+      /// Solving the second part of database problem :) .....
+      /// Deleting categories that doesn't contain [Favs] :) .....
       await reference.delete();
     }
     return response;
