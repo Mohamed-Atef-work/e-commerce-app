@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/utils/fire_base_strings.dart';
-import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
+import 'package:e_commerce_app/modules/orders/data/model/item_model.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/up_date_order_data_use_case.dart';
 
 import '../../../modules/orders/data/model/order_data_model.dart';
 
-abstract class OrderStoreServices {
+abstract class OrderStore {
   Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params);
   Future<void> addItemToOrder(AddItemToOrderParams params);
   Future<void> updateOrderData(UpDateOrderDataParams params);
@@ -20,51 +21,9 @@ abstract class OrderStoreServices {
   Future<QuerySnapshot<Map<String, dynamic>>> getUserOrders(String userId);
 }
 
-class UpDateOrderDataParams {
-  final DocumentReference orderRef;
-  final OrderDataModel orderData;
-
-  UpDateOrderDataParams({
-    required this.orderRef,
-    required this.orderData,
-  });
-}
-
-class AddOrderParams {
-  final List<ProductModel> items;
-  final OrderDataModel orderData;
-  final String uId;
-
-  AddOrderParams({
-    required this.items,
-    required this.orderData,
-    required this.uId,
-  });
-}
-
-class AddItemToOrderParams {
-  final DocumentReference orderRef;
-  final ProductModel item;
-
-  AddItemToOrderParams({
-    required this.orderRef,
-    required this.item,
-  });
-}
-
-class DeleteItemFromOrderParams {
-  final DocumentReference orderRef;
-  final String itemId;
-
-  DeleteItemFromOrderParams({
-    required this.orderRef,
-    required this.itemId,
-  });
-}
-
-class OrderStoreServicesImpl implements OrderStoreServices {
+class OrderStoreImpl implements OrderStore {
   final FirebaseFirestore store;
-  OrderStoreServicesImpl(this.store);
+  OrderStoreImpl(this.store);
 
   /// take from this method the references of users ids;
   /// may a (new user) Order (while the admin is exploring) the Orders;
@@ -123,7 +82,7 @@ class OrderStoreServicesImpl implements OrderStoreServices {
   Future<void> updateOrderData(UpDateOrderDataParams params) async {
     /// admin and user
     /// base methods (according to the design of the firebase);
-    await params.orderRef.set(params.orderData.toJson());
+    await params.ref.set(params.data.toJson());
   }
 
   @override
@@ -153,10 +112,44 @@ class OrderStoreServicesImpl implements OrderStoreServices {
         .collection(FirebaseStrings.orders)
         .add(params.orderData.toJson())
         .then((orderRef) async {
-      for (ProductModel item in params.items) {
+      for (OrderItemModel item in params.items) {
         await addItemToOrder(
-            AddItemToOrderParams(orderRef: orderRef, item: item));
+          AddItemToOrderParams(orderRef: orderRef, item: item),
+        );
       }
     });
   }
+}
+
+
+class AddOrderParams {
+  final List<OrderItemModel> items;
+  final OrderDataModel orderData;
+  final String uId;
+
+  AddOrderParams({
+    required this.items,
+    required this.orderData,
+    required this.uId,
+  });
+}
+
+class AddItemToOrderParams {
+  final DocumentReference orderRef;
+  final OrderItemModel item;
+
+  AddItemToOrderParams({
+    required this.orderRef,
+    required this.item,
+  });
+}
+
+class DeleteItemFromOrderParams {
+  final DocumentReference orderRef;
+  final String itemId;
+
+  DeleteItemFromOrderParams({
+    required this.orderRef,
+    required this.itemId,
+  });
 }

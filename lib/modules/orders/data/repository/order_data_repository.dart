@@ -8,6 +8,10 @@ import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/orders/data/data_source/order_remote_data_source.dart';
 import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.dart';
 import 'package:e_commerce_app/modules/orders/domain/repository/order_domain_repository.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/get_order_data_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/get_order_items_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/up_date_order_data_use_case.dart';
 
 class OrderDataRepo implements OrderDomainRepo {
   final OrderBaseRemoteDataSource dataSource;
@@ -48,9 +52,9 @@ class OrderDataRepo implements OrderDomainRepo {
 
   @override
   Future<Either<Failure, void>> deleteOrder(
-      DocumentReference<Object?> orderRef) async {
+      DeleteOrderParams params) async {
     try {
-      final result = await dataSource.deleteOrder(orderRef);
+      final result = await dataSource.deleteOrder(params);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));
@@ -59,9 +63,9 @@ class OrderDataRepo implements OrderDomainRepo {
 
   @override
   Future<Either<Failure, OrderDataEntity>> getOrderData(
-      DocumentReference<Object?> orderRef) async {
+      GetOrderDataParams params) async {
     try {
-      final result = await dataSource.getOrderData(orderRef);
+      final result = await dataSource.getOrderData(params);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));
@@ -70,9 +74,9 @@ class OrderDataRepo implements OrderDomainRepo {
 
   @override
   Future<Either<Failure, List<ProductEntity>>> getOrderItems(
-      DocumentReference<Object?> orderRef) async {
+      GetOrderItemsParams params) async {
     try {
-      final result = await dataSource.getOrderItems(orderRef);
+      final result = await dataSource.getOrderItems(params);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));
@@ -102,7 +106,8 @@ class OrderDataRepo implements OrderDomainRepo {
   }
 
   @override
-  Future<Either<Failure, Stream<List<UserEntity>>>> streamUsersWhoOrdered() async {
+  Future<Either<Failure, Stream<List<UserEntity>>>>
+      streamUsersWhoOrdered() async {
     try {
       final result = await dataSource.streamUsersWhoOrdered();
       return Right(result);

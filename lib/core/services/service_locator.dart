@@ -3,7 +3,6 @@ import 'package:e_commerce_app/core/services/fire_storage_service.dart';
 import 'package:e_commerce_app/core/services/fire_store_services/cart.dart';
 import 'package:e_commerce_app/core/services/fire_store_services/favorite.dart';
 import 'package:e_commerce_app/core/services/fire_store_services/order.dart';
-import 'package:e_commerce_app/core/services/fire_store_services/order.dart';
 import 'package:e_commerce_app/core/services/fire_store_services/product.dart';
 import 'package:e_commerce_app/core/services/fire_store_services/user.dart';
 import 'package:e_commerce_app/modules/admin/data/data_source/admin_remote_data_source.dart';
@@ -73,8 +72,8 @@ void _init() {
       () => FavoriteStoreServicesImpl(sl()));
   sl.registerLazySingleton<CartStoreServices>(
       () => CartStoreServicesImpl(sl()));
-  sl.registerLazySingleton<OrderStoreServices>(
-      () => OrderStoreServicesImpl(sl()));
+  sl.registerLazySingleton<OrderStore>(
+      () => OrderStoreImpl(sl()));
 }
 
 void _admin() {

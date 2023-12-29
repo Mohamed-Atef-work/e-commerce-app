@@ -24,7 +24,7 @@ class BuyItApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: AppStrings.buyIt,
-      initialRoute: Screens.homeScreen,
+      initialRoute: Screens.testScreen,
       routes: {
         Screens.testScreen: (context) => const TestScreen(),
         Screens.cartScreen: (context) => const CartScreen(),

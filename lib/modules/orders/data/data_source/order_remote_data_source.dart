@@ -6,6 +6,10 @@ import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/orders/data/model/order_data_model.dart';
 import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/get_order_data_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/get_order_items_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/up_date_order_data_use_case.dart';
 
 import '../../../../core/services/fire_store_services/order.dart';
 
@@ -13,17 +17,17 @@ abstract class OrderBaseRemoteDataSource {
   Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params);
   Future<void> addItemToOrder(AddItemToOrderParams params);
   Future<void> updateOrderData(UpDateOrderDataParams params);
-  Future<void> deleteOrder(DocumentReference orderRef);
+  Future<void> deleteOrder(DeleteOrderParams params);
   Future<void> addOrder(AddOrderParams params);
-  Future<OrderDataEntity> getOrderData(DocumentReference orderRef);
-  Future<List<ProductEntity>> getOrderItems(DocumentReference orderRef);
+  Future<OrderDataEntity> getOrderData(GetOrderDataParams params);
+  Future<List<ProductEntity>> getOrderItems(GetOrderItemsParams params);
   Future<Stream<List<UserEntity>>> streamUsersWhoOrdered();
   Future<Stream<List<OrderDataEntity>>> streamOfUserOrders(String userId);
   Future<List<OrderDataEntity>> getUserOrders(String userId);
 }
 
 class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
-  final OrderStoreServices orderStore;
+  final OrderStore orderStore;
 
   OrderRemoteDataSource(this.orderStore);
   @override
@@ -55,16 +59,15 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
   }
 
   @override
-  Future<void> deleteOrder(DocumentReference<Object?> orderRef) async {
-    await orderStore.deleteOrder(orderRef).catchError((error) {
+  Future<void> deleteOrder(DeleteOrderParams params) async {
+    await orderStore.deleteOrder(params.orderRef).catchError((error) {
       throw ServerException(message: error.code);
     });
   }
 
   @override
-  Future<OrderDataEntity> getOrderData(
-      DocumentReference<Object?> orderRef) async {
-    return await orderStore.getOrderData(orderRef).then((value) {
+  Future<OrderDataEntity> getOrderData(GetOrderDataParams params) async {
+    return await orderStore.getOrderData(params.orderRef).then((value) {
       return OrderDataModel.fromJson(value.data()!, orderRef: value.reference);
     }).catchError((error) {
       throw ServerException(message: error.code);
@@ -72,9 +75,8 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
   }
 
   @override
-  Future<List<ProductEntity>> getOrderItems(
-      DocumentReference<Object?> orderRef) async {
-    return await orderStore.getOrderItems(orderRef).then((value) {
+  Future<List<ProductEntity>> getOrderItems(GetOrderItemsParams params) async {
+    return await orderStore.getOrderItems(params.orderRef).then((value) {
       return List<ProductEntity>.of(value.docs
           .map((e) => ProductModel.formJson(e.data(), productId: e.id))
           .toList());
