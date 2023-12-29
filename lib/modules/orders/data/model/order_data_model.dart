@@ -19,9 +19,9 @@ class OrderDataModel extends OrderDataEntity {
         reference: orderRef,
       );
   Map<String, dynamic> toJson() => {
-        name: "name",
-        phone: "phone",
-        address: "address",
-        totalPrice: "totalPrice",
+        "name": name,
+        "phone": phone,
+        "address": address,
+        "totalPrice": totalPrice,
       };
 }
