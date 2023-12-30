@@ -34,7 +34,7 @@ class CartScreen extends StatelessWidget {
                         as List<DocumentSnapshot<Map<String, dynamic>>>;
                     final List<ProductEntity> pros = List<ProductModel>.of(data
                         .map((e) => ProductModel.formJson(
-                              e.data()!,
+                              json: e.data()!,
                               productId: e.id,
                             ))
                         .toList());

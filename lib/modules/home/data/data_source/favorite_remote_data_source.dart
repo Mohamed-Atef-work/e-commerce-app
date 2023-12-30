@@ -149,7 +149,7 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
           products
               .map(
                 (doc) => ProductModel.formJson(
-                  doc.data()!,
+                  json: doc.data()!,
                   productId: doc.id,
                 ),
               )

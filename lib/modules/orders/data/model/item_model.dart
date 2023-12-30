@@ -11,15 +11,13 @@ class OrderItemModel extends OrderItemEntity {
     required Map<String, dynamic> json,
   }) =>
       OrderItemModel(
-        quantity: int.parse(json["quantity"]),
-        product: ProductModel.formJson(
-          productId: productId,
-          json["item"],
-        ),
+        quantity: json["quantity"],
+        product:
+            ProductModel.formJson(productId: productId, json: json["item"]),
       );
 
   Map<String, dynamic> toJson() => {
         "item": product.toJson(),
-        "quantity": quantity.toString(),
+        "quantity": quantity,
       };
 }

@@ -9,8 +9,10 @@ class OrderDataModel extends OrderDataEntity {
     required super.totalPrice,
     super.reference,
   });
-  factory OrderDataModel.fromJson(Map<String, dynamic> json,
-          {required DocumentReference orderRef}) =>
+  factory OrderDataModel.fromJson({
+    required Map<String, dynamic> json,
+    required DocumentReference orderRef,
+  }) =>
       OrderDataModel(
         name: json["name"],
         phone: json["phone"],

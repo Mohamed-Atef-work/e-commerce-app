@@ -1,6 +1,5 @@
 import 'package:e_commerce_app/core/error/exceptions.dart';
-import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
-import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
+import 'package:e_commerce_app/core/services/fire_store_services/order.dart';
 import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/orders/data/model/item_model.dart';
@@ -14,8 +13,6 @@ import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_c
 import 'package:e_commerce_app/modules/orders/domain/use_case/get_order_data_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/get_order_items_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/up_date_order_data_use_case.dart';
-
-import '../../../../core/services/fire_store_services/order.dart';
 
 abstract class OrderBaseRemoteDataSource {
   Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params);
@@ -72,18 +69,22 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
   @override
   Future<OrderDataEntity> getOrderData(GetOrderDataParams params) async {
     return await orderStore.getOrderData(params.orderRef).then((value) {
-      return OrderDataModel.fromJson(value.data()!, orderRef: value.reference);
+      return OrderDataModel.fromJson(
+          json: value.data()!, orderRef: value.reference);
     }).catchError((error) {
       throw ServerException(message: error.code);
     });
   }
 
   @override
-  Future<List<OrderItemEntity>> getOrderItems(GetOrderItemsParams params) async {
+  Future<List<OrderItemEntity>> getOrderItems(
+      GetOrderItemsParams params) async {
     return await orderStore.getOrderItems(params.orderRef).then((value) {
-      return List<OrderItemEntity>.of(value.docs
+      late List<OrderItemEntity> items;
+      items = List<OrderItemEntity>.of(value.docs
           .map((e) => OrderItemModel.fromJson(json: e.data(), productId: e.id))
           .toList());
+      return items;
     }).catchError((error) {
       throw ServerException(message: error.toString());
     });
@@ -92,9 +93,12 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
   @override
   Future<List<OrderDataEntity>> getUserOrders(String userId) async {
     return await orderStore.getUserOrders(userId).then((value) {
-      return List<OrderDataEntity>.of(value.docs
-          .map((e) => OrderDataModel.fromJson(e.data(), orderRef: e.reference))
+      late List<OrderDataEntity> items;
+      items = List<OrderDataEntity>.of(value.docs
+          .map((e) =>
+              OrderDataModel.fromJson(json: e.data(), orderRef: e.reference))
           .toList());
+      return items;
     }).catchError((error) {
       throw ServerException(message: error.code);
     });
@@ -105,8 +109,8 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
       String userId) async {
     return await orderStore.streamOfUserOrders(userId).then((stream) {
       return stream.map((event) {
-        return List<OrderDataEntity>.of(event.docs.map(
-            (e) => OrderDataModel.fromJson(e.data(), orderRef: e.reference)));
+        return List<OrderDataEntity>.of(event.docs.map((e) =>
+            OrderDataModel.fromJson(json: e.data(), orderRef: e.reference)));
       });
     }).catchError((error) {
       throw ServerException(message: error.code);

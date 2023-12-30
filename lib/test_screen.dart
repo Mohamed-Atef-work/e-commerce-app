@@ -49,6 +49,11 @@ class TestScreen extends StatelessWidget {
                       print(l.message);
                     }, (r) {
                       print(r.length);
+                      print(r.first.quantity);
+                      print(r.first.product.name);
+                      print(r.first.product.price);
+                      print(r.first.product.category);
+                      print(r.first.product.description);
                     });
                   });
                 }).toList();

@@ -77,7 +77,7 @@ class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
       return stream.map((snapshot) {
         return snapshot.docs
             .map((doc) => ProductModel.formJson(
-                  doc.data(),
+          json:doc.data(),
                   productId: doc.id,
                 ))
             .toList();
