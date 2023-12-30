@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/core/error/failure.dart';
-import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/orders/data/data_source/order_remote_data_source.dart';
 import 'package:e_commerce_app/modules/orders/domain/entity/item_entity.dart';
@@ -53,8 +52,7 @@ class OrderDataRepo implements OrderDomainRepo {
   }
 
   @override
-  Future<Either<Failure, void>> deleteOrder(
-      DeleteOrderParams params) async {
+  Future<Either<Failure, void>> deleteOrder(DeleteOrderParams params) async {
     try {
       final result = await dataSource.deleteOrder(params);
       return Right(result);

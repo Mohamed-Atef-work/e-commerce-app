@@ -34,35 +34,35 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
   @override
   Future<void> updateOrderData(UpDateOrderDataParams params) async {
     await orderStore.updateOrderData(params).catchError((error) {
-      throw ServerException(message: error.code);
+      throw ServerException(message: error.toString());
     });
   }
 
   @override
   Future<void> addItemToOrder(AddItemToOrderParams params) async {
     await orderStore.addItemToOrder(params).catchError((error) {
-      throw ServerException(message: error.code);
+      throw ServerException(message: error.toString());
     });
   }
 
   @override
   Future<void> addOrder(AddOrderParams params) async {
     await orderStore.addOrder(params).catchError((error) {
-      throw ServerException(message: error.code);
+      throw ServerException(message: error.toString());
     });
   }
 
   @override
   Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params) async {
     await orderStore.deleteItemFromOrder(params).catchError((error) {
-      throw ServerException(message: error.code);
+      throw ServerException(message: error.toString());
     });
   }
 
   @override
   Future<void> deleteOrder(DeleteOrderParams params) async {
     await orderStore.deleteOrder(params.orderRef).catchError((error) {
-      throw ServerException(message: error.code);
+      throw ServerException(message: error.toString());
     });
   }
 
@@ -72,7 +72,7 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
       return OrderDataModel.fromJson(
           json: value.data()!, orderRef: value.reference);
     }).catchError((error) {
-      throw ServerException(message: error.code);
+      throw ServerException(message: error.toString());
     });
   }
 
@@ -100,7 +100,7 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
           .toList());
       return items;
     }).catchError((error) {
-      throw ServerException(message: error.code);
+      throw ServerException(message: error.toString());
     });
   }
 
@@ -113,7 +113,7 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
             OrderDataModel.fromJson(json: e.data(), orderRef: e.reference)));
       });
     }).catchError((error) {
-      throw ServerException(message: error.code);
+      throw ServerException(message: error.toString());
     });
   }
 
@@ -125,7 +125,7 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
             event.docs.map((e) => UserModel.fromJson(e.data(), id: e.id)));
       });
     }).catchError((error) {
-      throw ServerException(message: error.code);
+      throw ServerException(message: error.toString());
     });
   }
 }
