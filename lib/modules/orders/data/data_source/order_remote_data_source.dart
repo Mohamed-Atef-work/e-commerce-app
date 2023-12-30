@@ -1,11 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
+import 'package:e_commerce_app/modules/orders/data/model/item_model.dart';
 import 'package:e_commerce_app/modules/orders/data/model/order_data_model.dart';
+import 'package:e_commerce_app/modules/orders/domain/entity/item_entity.dart';
 import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/add_item_to_order_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/add_order_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/delete_item_from_order_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/get_order_data_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/get_order_items_use_case.dart';
@@ -20,7 +24,7 @@ abstract class OrderBaseRemoteDataSource {
   Future<void> deleteOrder(DeleteOrderParams params);
   Future<void> addOrder(AddOrderParams params);
   Future<OrderDataEntity> getOrderData(GetOrderDataParams params);
-  Future<List<ProductEntity>> getOrderItems(GetOrderItemsParams params);
+  Future<List<OrderItemEntity>> getOrderItems(GetOrderItemsParams params);
   Future<Stream<List<UserEntity>>> streamUsersWhoOrdered();
   Future<Stream<List<OrderDataEntity>>> streamOfUserOrders(String userId);
   Future<List<OrderDataEntity>> getUserOrders(String userId);
@@ -75,13 +79,13 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
   }
 
   @override
-  Future<List<ProductEntity>> getOrderItems(GetOrderItemsParams params) async {
+  Future<List<OrderItemEntity>> getOrderItems(GetOrderItemsParams params) async {
     return await orderStore.getOrderItems(params.orderRef).then((value) {
-      return List<ProductEntity>.of(value.docs
-          .map((e) => ProductModel.formJson(e.data(), productId: e.id))
+      return List<OrderItemEntity>.of(value.docs
+          .map((e) => OrderItemModel.fromJson(json: e.data(), productId: e.id))
           .toList());
     }).catchError((error) {
-      throw ServerException(message: error.code);
+      throw ServerException(message: error.toString());
     });
   }
 

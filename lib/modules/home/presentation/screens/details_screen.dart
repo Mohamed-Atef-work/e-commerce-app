@@ -45,7 +45,7 @@ class DetailsScreen extends StatelessWidget {
                 CartParams(
                   uId: 'uId',
                   category: product.category,
-                  productId: product.id,
+                  productId: product.id!,
                 ),
               );
             },

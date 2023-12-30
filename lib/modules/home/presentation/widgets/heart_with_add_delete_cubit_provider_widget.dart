@@ -32,7 +32,7 @@ class HeartWithAddDeleteCubitProviderWidget extends StatelessWidget {
                 BlocProvider.of<AddDeleteFavoriteCubit>(context).addOrDelete(
                   AddDeleteFavoriteParams(
                     category: product.category,
-                    productId: product.id,
+                    productId: product.id!,
                     uId: "uId",
                   ),
                 );

@@ -14,7 +14,7 @@ class OrderModel extends OrderEntity {
   }) =>
       OrderModel(
         orderData: orderData,
-        items: List<ItemEntity>.of(
+        items: List<OrderItemEntity>.of(
           json.map(
             (item) => OrderItemModel.fromJson(
               productId: item.id,

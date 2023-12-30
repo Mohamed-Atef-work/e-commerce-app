@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/utils/fire_base_strings.dart';
 import 'package:e_commerce_app/modules/orders/data/model/item_model.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/add_item_to_order_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/add_order_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/delete_item_from_order_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/up_date_order_data_use_case.dart';
-
-import '../../../modules/orders/data/model/order_data_model.dart';
 
 abstract class OrderStore {
   Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params);
@@ -122,34 +123,4 @@ class OrderStoreImpl implements OrderStore {
 }
 
 
-class AddOrderParams {
-  final List<OrderItemModel> items;
-  final OrderDataModel orderData;
-  final String uId;
 
-  AddOrderParams({
-    required this.items,
-    required this.orderData,
-    required this.uId,
-  });
-}
-
-class AddItemToOrderParams {
-  final DocumentReference orderRef;
-  final OrderItemModel item;
-
-  AddItemToOrderParams({
-    required this.orderRef,
-    required this.item,
-  });
-}
-
-class DeleteItemFromOrderParams {
-  final DocumentReference orderRef;
-  final String itemId;
-
-  DeleteItemFromOrderParams({
-    required this.orderRef,
-    required this.itemId,
-  });
-}

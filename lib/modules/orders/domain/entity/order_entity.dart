@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 
 class OrderEntity extends Equatable {
   final OrderDataEntity orderData;
-  final List<ItemEntity> items;
+  final List<OrderItemEntity> items;
 
   const OrderEntity({
     required this.orderData,

@@ -100,7 +100,7 @@ class AdminProductDetailsScreen extends StatelessWidget {
                                             context)
                                         .deleteProduct(
                                       DeleteProductParameters(
-                                        product.id,
+                                        product.id!,
                                         product.category,
                                       ),
                                     );

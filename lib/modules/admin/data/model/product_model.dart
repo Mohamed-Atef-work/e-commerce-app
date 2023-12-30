@@ -8,7 +8,7 @@ class ProductModel extends ProductEntity {
     required super.image,
     required super.price,
     required super.name,
-    required super.id,
+    super.id,
   });
   Map<String, String> toJson() => {
         "Description": description,

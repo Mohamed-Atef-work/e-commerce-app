@@ -6,7 +6,7 @@ class OrderDataEntity extends Equatable {
   final String phone;
   final String address;
   final String totalPrice;
-  final DocumentReference reference;
+  final DocumentReference? reference;
 
   const OrderDataEntity({
     required this.name,
@@ -17,7 +17,7 @@ class OrderDataEntity extends Equatable {
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         name,
         phone,
         address,

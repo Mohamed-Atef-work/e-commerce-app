@@ -21,7 +21,7 @@ class ProductDetailsWidget extends StatelessWidget {
           _oneItem(field: AppStrings.productCategory, value: product.category),
           _oneItem(
               field: AppStrings.productDescription, value: product.description),
-          _oneItem(field: AppStrings.productPrice, value: product.price),
+          _oneItem(field: AppStrings.productPrice, value: product.price.toString()),
           _oneItem(field: AppStrings.productLocation, value: product.location),
         ],
       ),

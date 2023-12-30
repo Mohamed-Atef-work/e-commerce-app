@@ -69,7 +69,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
         productToBeUpdated: productToBeUpdated,
       ));
       nameController.text = productToBeUpdated.name;
-      priceController.text = productToBeUpdated.price;
+      priceController.text = productToBeUpdated.price.toString();
       //categoryController.text = productToBeUpdated.category;
       locationController.text = productToBeUpdated.location;
       descriptionController.text = productToBeUpdated.description;
@@ -110,7 +110,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
     final result = await updateProductUseCase(
       UpdateProductParameters(
         productDescription: descriptionController.text,
-        productId: state.productToBeUpdated!.id,
+        productId: state.productToBeUpdated!.id!,
         productCategory: state.categories![state.categoryIndex].name,
         productLocation: locationController.text,
         productPrice: priceController.text,
