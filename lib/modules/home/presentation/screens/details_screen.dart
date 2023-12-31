@@ -20,7 +20,7 @@ class DetailsScreen extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as ProductEntity;
     return Scaffold(
       backgroundColor: AppColors.primaryColorYellow,
-      appBar: appBar(title: AppStrings.order),
+      appBar: appBar(title: AppStrings.details),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -40,13 +40,12 @@ class DetailsScreen extends StatelessWidget {
             ),
             onPressed: () async {
               /// To Do o o o o o o o
-              final cartStore =
-                  CartStoreImpl(FirebaseFirestore.instance);
+              final cartStore = CartStoreImpl(FirebaseFirestore.instance);
               cartStore.addToCart(
                 AddToCartParams(
-                  uId: 'uId',
                   category: product.category,
                   productId: product.id!,
+                  uId: 'uId',
                 ),
               );
             },

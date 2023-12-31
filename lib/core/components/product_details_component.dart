@@ -22,7 +22,7 @@ class ProductWithMoreDetailsComponent extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(
           context,
-          Screens.productsOfCategory,
+          Screens.detailsScreen,
           arguments: product,
         );
         print(product.id);
@@ -30,8 +30,9 @@ class ProductWithMoreDetailsComponent extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            color: Colors.orange.shade300),
+          borderRadius: BorderRadius.circular(30),
+          color: Colors.orange.shade300,
+        ),
         child: Column(
           //crossAxisAlignment: CrossAxisAlignment.start,
           //mainAxisAlignment: MainAxisAlignment.spaceEvenly,

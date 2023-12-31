@@ -38,8 +38,7 @@ class BuyItApp extends StatelessWidget {
         Screens.exploreScreen: (context) => const ExploreProductsScreen(),
         Screens.adminProductDetailsScreen: (context) =>
             const AdminProductDetailsScreen(),
-        Screens.productsOfCategory: (context) =>
-            const ProductsOfCategoryScreen(),
+        //Screens.productsOfCategory: (context) => const ProductsOfCategoryScreen(),
       },
     );
   }

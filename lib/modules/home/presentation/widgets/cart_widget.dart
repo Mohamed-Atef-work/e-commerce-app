@@ -37,7 +37,7 @@ class CartWidget extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(
                     context,
-                    Screens.productsOfCategory,
+                    Screens.detailsScreen,
                     arguments: cartEntity.products[index],
                   );
                 },

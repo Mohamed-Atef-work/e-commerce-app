@@ -33,8 +33,11 @@ class FavoriteWidget extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: context.width * 0.01),
               child: FavoriteProductWidget(
                 onPressed: () {
-                  Navigator.pushNamed(context, Screens.productsOfCategory,
-                      arguments: favoriteEntity.products[index]);
+                  Navigator.pushNamed(
+                    context,
+                    Screens.detailsScreen,
+                    arguments: favoriteEntity.products[index],
+                  );
                 },
                 product: favoriteEntity.products[index],
               ),
