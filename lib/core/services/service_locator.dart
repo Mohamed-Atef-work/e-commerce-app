@@ -30,8 +30,14 @@ import 'package:e_commerce_app/modules/auth/presentation/controllers/sign_up_con
 import 'package:e_commerce_app/modules/home/data/data_source/cart_remote_data_source.dart';
 import 'package:e_commerce_app/modules/home/data/data_source/favorite_remote_data_source.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_favorite_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/get_cart_products_use_case.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/add_cart_product_controller/add_cart_product_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/add_delete_favorite_controller/add_delete_favorite_cubit.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/delete_cart_product_controller/delete_cart_product_cubit.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/get_cart_products_controller/get_cart_products_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_cubit.dart';
 import 'package:e_commerce_app/modules/orders/data/data_source/order_remote_data_source.dart';
 import 'package:e_commerce_app/modules/home/data/repository/cart_data_repository.dart';
@@ -127,11 +133,17 @@ void _home() {
   sl.registerFactory(() => LayoutCubit());
   sl.registerFactory(() => GetFavoritesCubit(sl()));
   sl.registerFactory(() => AddDeleteFavoriteCubit(sl(), sl()));
+  sl.registerFactory(() => GetCartProductsCubit(sl()));
+  sl.registerFactory(() => DeleteCartProductCubit(sl()));
+  sl.registerFactory(() => AddCartProductCubit(sl()));
 
   /// Use Case
   sl.registerLazySingleton(() => GetFavoritesUseCase(sl()));
   sl.registerLazySingleton(() => AddFavoriteUseCase(sl()));
   sl.registerLazySingleton(() => DeleteFavoriteUseCase(sl()));
+  sl.registerLazySingleton(() => AddToCartUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteFromCartUseCase(sl()));
+  sl.registerLazySingleton(() => GetCartProductsUseCase(sl()));
 
   /// Repositories
   sl.registerLazySingleton<FavoriteDomainRepository>(

@@ -4,10 +4,10 @@ import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/core/use_case/base_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/repository/cart_domain_repository.dart';
 
-class DeleteProductFromCartUseCase extends BaseUseCase<void, DeleteFromCartParams> {
+class DeleteFromCartUseCase extends BaseUseCase<void, DeleteFromCartParams> {
   final CartDomainRepo repo;
 
-  DeleteProductFromCartUseCase(this.repo);
+  DeleteFromCartUseCase(this.repo);
   @override
   Future<Either<Failure, void>> call(DeleteFromCartParams parameters) async {
     return await repo.deleteFromCart(parameters);

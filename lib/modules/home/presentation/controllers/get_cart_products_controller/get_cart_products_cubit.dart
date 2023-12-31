@@ -8,7 +8,7 @@ class GetCartProductsCubit extends Cubit<GetCartProductsState> {
   final GetCartProductsUseCase _getCartProductsUseCase;
   GetCartProductsCubit(this._getCartProductsUseCase)
       : super(const GetCartProductsState());
-  Future<void> getFavorites() async {
+  Future<void> getCartProducts() async {
     emit(state.copyWith(getCartState: RequestState.loading));
 
     /// Handling UID  :) ..........

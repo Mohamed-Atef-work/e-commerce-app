@@ -5,13 +5,13 @@ import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from
 part 'delete_cart_product_state.dart';
 
 class DeleteCartProductCubit extends Cubit<DeleteCartProductState> {
-  final DeleteProductFromCartUseCase _deleteProductFromCartUseCase;
-  DeleteCartProductCubit(this._deleteProductFromCartUseCase)
+  final DeleteFromCartUseCase _deleteFromCartUseCase;
+  DeleteCartProductCubit(this._deleteFromCartUseCase)
       : super(const DeleteCartProductState());
 
   Future<void> deleteFromCart(DeleteFromCartParams params) async {
     emit(state.copyWith(deleteState: RequestState.loading));
-    final result = await _deleteProductFromCartUseCase.call(params);
+    final result = await _deleteFromCartUseCase.call(params);
     emit(result.fold(
       (l) =>
           state.copyWith(deleteState: RequestState.error, message: l.message),

@@ -2,6 +2,7 @@ import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/services/service_locator.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/get_cart_products_controller/get_cart_products_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorites_controller/get_favorites_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_cubit.dart';
@@ -17,31 +18,31 @@ class HomeLayoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<HomeCubit>(
-      create: (context) => sl<HomeCubit>()
-        ..loadCategories()
-        ..loadProductsOfTheFirstCategory(),
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<HomeCubit>(
-            create: (context) => sl<HomeCubit>()
-              ..loadCategories()
-              ..loadProductsOfTheFirstCategory(),
-          ),
-          BlocProvider<GetFavoritesCubit>(
-            create: (context) => sl<GetFavoritesCubit>()..getFavorites(),
-          ),
-          BlocProvider<LayoutCubit>(create: (context) => sl<LayoutCubit>()),
-        ],
-        child: BlocBuilder<LayoutCubit, LayoutState>(builder: (context, state) {
-          return Scaffold(
-            backgroundColor: Colors.amber,
-            appBar: _appBar(context),
-            body: _body(context),
-            bottomNavigationBar: _bottomNavBar(context),
-          );
-        }),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<HomeCubit>(
+          create: (context) => sl<HomeCubit>()
+            ..loadCategories()
+            ..loadProductsOfTheFirstCategory(),
+        ),
+        BlocProvider<GetFavoritesCubit>(
+          create: (context) => sl<GetFavoritesCubit>()..getFavorites(),
+        ),
+        BlocProvider<GetCartProductsCubit>(
+          create: (context) => sl<GetCartProductsCubit>()..getCartProducts(),
+        ),
+        BlocProvider<LayoutCubit>(
+          create: (context) => sl<LayoutCubit>(),
+        ),
+      ],
+      child: BlocBuilder<LayoutCubit, LayoutState>(builder: (context, state) {
+        return Scaffold(
+          backgroundColor: Colors.amber,
+          appBar: _appBar(context),
+          body: _body(context),
+          bottomNavigationBar: _bottomNavBar(context),
+        );
+      }),
     );
   }
 
