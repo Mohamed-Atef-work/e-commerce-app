@@ -64,16 +64,11 @@ void _init() {
   sl.registerLazySingleton(() => FirebaseFirestore.instance);
   sl.registerLazySingleton(() => FirebaseStorage.instance);
   sl.registerLazySingleton<StorageService>(() => StorageServiceImpl(sl()));
-  sl.registerLazySingleton<UserStoreServices>(
-      () => UserStoreServicesImpl(sl()));
-  sl.registerLazySingleton<ProductStoreService>(
-      () => ProductStoreServiceImpl(sl()));
-  sl.registerLazySingleton<FavoriteStoreServices>(
-      () => FavoriteStoreServicesImpl(sl()));
-  sl.registerLazySingleton<CartStoreServices>(
-      () => CartStoreServicesImpl(sl()));
-  sl.registerLazySingleton<OrderStore>(
-      () => OrderStoreImpl(sl()));
+  sl.registerLazySingleton<UserStore>(() => UserStoreImpl(sl()));
+  sl.registerLazySingleton<ProductStore>(() => ProductStoreImpl(sl()));
+  sl.registerLazySingleton<FavoriteStore>(() => FavoriteStoreImpl(sl()));
+  sl.registerLazySingleton<CartStore>(() => CartStoreImpl(sl()));
+  sl.registerLazySingleton<OrderStore>(() => OrderStoreImpl(sl()));
 }
 
 void _admin() {
@@ -103,7 +98,6 @@ void _admin() {
   sl.registerLazySingleton(() => DeleteProductsCategoryUseCase(sl()));
   sl.registerLazySingleton(() => GetAllProductCategoriesUseCase(sl()));
   sl.registerLazySingleton(() => DownloadProductImageUrlUseCase(sl()));
-
 }
 
 void _auth() {
@@ -133,7 +127,6 @@ void _home() {
   sl.registerFactory(() => LayoutCubit());
   sl.registerFactory(() => GetFavoritesCubit(sl()));
   sl.registerFactory(() => AddDeleteFavoriteCubit(sl(), sl()));
-
 
   /// Use Case
   sl.registerLazySingleton(() => GetFavoritesUseCase(sl()));

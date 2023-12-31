@@ -6,6 +6,7 @@ import 'package:e_commerce_app/core/services/fire_store_services/cart.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/product_details_widget.dart';
@@ -40,9 +41,9 @@ class DetailsScreen extends StatelessWidget {
             onPressed: () async {
               /// To Do o o o o o o o
               final cartStore =
-                  CartStoreServicesImpl(FirebaseFirestore.instance);
+                  CartStoreImpl(FirebaseFirestore.instance);
               cartStore.addToCart(
-                CartParams(
+                AddToCartParams(
                   uId: 'uId',
                   category: product.category,
                   productId: product.id!,

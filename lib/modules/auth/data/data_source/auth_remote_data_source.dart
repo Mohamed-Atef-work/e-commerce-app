@@ -14,7 +14,7 @@ abstract class AuthBaseRemoteDatSource {
 
 /// <-------------------------------------------------------------------------->
 class AuthRemoteDatSourceImpl implements AuthBaseRemoteDatSource {
-  final UserStoreServices userStore;
+  final UserStore userStore;
 
   AuthRemoteDatSourceImpl(this.userStore);
   @override

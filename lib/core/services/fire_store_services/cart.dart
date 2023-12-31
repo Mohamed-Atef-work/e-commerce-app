@@ -1,26 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/utils/fire_base_strings.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
 
-abstract class CartStoreServices {
-  Future<void> addToCart(CartParams params);
-  Future<void> deleteFromCart(CartParams params);
+abstract class CartStore {
+  Future<void> addToCart(AddToCartParams params);
+  Future<void> deleteFromCart(DeleteFromCartParams params);
+  Future<List<DocumentSnapshot<Map<String, dynamic>>>> getCartProducts(
+      String uId);
+
+  /// < ---------------------------------------------------------------------- >
   Future<List<DocumentReference>> getCartCategories(String uId);
   Future<ReturnedIdsAndTheirCategory> getCategoryIds(
       DocumentReference categoryRef);
-  Future<DocumentSnapshot<Map<String, dynamic>>> getProduct(
-      GetProductParams params);
-  Future<List<DocumentSnapshot<Map<String, dynamic>>>> getCartProducts(
-      String uId);
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getProductsOfCategory(
       GetProductsOfOneCategoryParams params);
+  Future<QuerySnapshot<Map<String, dynamic>>> getCartProductsIdsOfCategory(
+      DocumentReference reference);
+  Future<DocumentSnapshot<Map<String, dynamic>>> getProduct(
+      GetProductParams params);
 }
 
-class CartStoreServicesImpl implements CartStoreServices {
+class CartStoreImpl implements CartStore {
   final FirebaseFirestore store;
 
-  CartStoreServicesImpl(this.store);
+  CartStoreImpl(this.store);
   @override
-  Future<void> addToCart(CartParams params) async {
+  Future<void> addToCart(AddToCartParams params) async {
     await store
         .collection(FirebaseStrings.users)
         .doc(params.uId)
@@ -33,7 +39,7 @@ class CartStoreServicesImpl implements CartStoreServices {
   }
 
   @override
-  Future<void> deleteFromCart(CartParams params) async {
+  Future<void> deleteFromCart(DeleteFromCartParams params) async {
     await store
         .collection(FirebaseStrings.users)
         .doc(params.uId)
@@ -127,7 +133,8 @@ class CartStoreServicesImpl implements CartStoreServices {
     return products;
   }
 
-  Future<void> _setCartCategoryToBeAvailableToFetch(CartParams params) async {
+  Future<void> _setCartCategoryToBeAvailableToFetch(
+      AddToCartParams params) async {
     await store
         .collection(FirebaseStrings.users)
         .doc(params.uId)
@@ -135,13 +142,28 @@ class CartStoreServicesImpl implements CartStoreServices {
         .doc(params.category)
         .set({"able_to_fetch": true});
   }
+
+  @override
+  Future<QuerySnapshot<Map<String, dynamic>>> getCartProductsIdsOfCategory(
+      DocumentReference reference) async {
+    final response = await reference.collection(FirebaseStrings.products).get();
+    if (response.docs.isEmpty) {
+      /// Solving the second part of database problem :) .....
+      /// Deleting categories that doesn't contain [products] :) .....
+      await reference.delete();
+    }
+    return response;
+  }
 }
 
 class GetProductsOfOneCategoryParams {
   final String category;
   final List<String> ids;
 
-  GetProductsOfOneCategoryParams({required this.category, required this.ids});
+  GetProductsOfOneCategoryParams({
+    required this.category,
+    required this.ids,
+  });
 }
 
 class GetProductParams {
@@ -170,5 +192,8 @@ class ReturnedIdsAndTheirCategory {
   final String category;
   final List<String> ids;
 
-  ReturnedIdsAndTheirCategory({required this.category, required this.ids});
+  ReturnedIdsAndTheirCategory({
+    required this.category,
+    required this.ids,
+  });
 }

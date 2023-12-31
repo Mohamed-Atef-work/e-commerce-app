@@ -113,6 +113,10 @@ class OrderStoreImpl implements OrderStore {
         .collection(FirebaseStrings.orders)
         .add(params.orderData.toJson())
         .then((orderRef) async {
+      await store
+          .collection(FirebaseStrings.orders)
+          .doc(params.uId)
+          .set(const {"able_to_access_user_order": true});
       for (OrderItemModel item in params.items) {
         await addItemToOrder(
           AddItemToOrderParams(orderRef: orderRef, item: item),
@@ -121,6 +125,3 @@ class OrderStoreImpl implements OrderStore {
     });
   }
 }
-
-
-

@@ -9,7 +9,7 @@ import 'package:e_commerce_app/modules/admin/domain/use_cases/up_date_product_ca
 
 import '../../../modules/admin/domain/use_cases/load_product_use_case.dart';
 
-abstract class ProductStoreService {
+abstract class ProductStore {
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>> getAllProductCategories();
   Future<void> deleteProduct(DeleteProductParameters parameters);
   Future<void> updateProduct(UpdateProductParameters parameters);
@@ -24,10 +24,10 @@ abstract class ProductStoreService {
       AddNewProductsCategoryParameters parameters);
 }
 
-class ProductStoreServiceImpl implements ProductStoreService {
+class ProductStoreImpl implements ProductStore {
   final FirebaseFirestore store;
 
-  ProductStoreServiceImpl(this.store);
+  ProductStoreImpl(this.store);
   @override
   Future<void> addProduct(AddProductParameters product) async {
     await store

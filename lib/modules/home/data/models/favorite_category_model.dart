@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/modules/home/domain/entities/favorite_categories_entity.dart';
+import 'package:e_commerce_app/modules/home/domain/entities/favorite_category_entity.dart';
 
 class FavoriteCategoryModel extends FavoriteCategoryEntity {
   const FavoriteCategoryModel({

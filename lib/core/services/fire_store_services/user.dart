@@ -3,17 +3,17 @@ import 'package:e_commerce_app/core/utils/fire_base_strings.dart';
 
 import '../../../modules/auth/domain/use_cases/store_user_data_use_case.dart';
 
-abstract class UserStoreServices {
+abstract class UserStore {
   Future<void> storeUserData(StoreUserDataParameters params);
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserData(String uId);
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getGroupUserData(
       List<String> ids);
 }
 
-class UserStoreServicesImpl implements UserStoreServices {
+class UserStoreImpl implements UserStore {
   final FirebaseFirestore store;
 
-  UserStoreServicesImpl(this.store);
+  UserStoreImpl(this.store);
   @override
   Future<void> storeUserData(StoreUserDataParameters params) async {
     await store

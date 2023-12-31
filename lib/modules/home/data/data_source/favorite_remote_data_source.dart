@@ -3,43 +3,27 @@ import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/core/services/fire_store_services/favorite.dart';
 import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
-import 'package:e_commerce_app/modules/home/domain/entities/favorite_categories_entity.dart';
+import 'package:e_commerce_app/modules/home/data/models/favorite_category_model.dart';
+import 'package:e_commerce_app/modules/home/domain/entities/favorite_category_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/favorite_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
-import 'package:e_commerce_app/modules/home/domain/use_cases/delete_favorite_use_case.dart';
-
-import '../models/favorite_category_model.dart';
 
 abstract class FavoriteBaseRemoteDataSource {
   Future<List<FavoriteEntity>> getFavorites(String uId);
   Future<List<FavoriteCategoryEntity>> getFavCategories(String uId);
   Future<FavoriteEntity> getFavOfOneCategory(FavoriteCategoryEntity category);
-  Future<void> addFav({
-    required String uId,
-    required String category,
-    required String productId,
-  });
+  Future<void> addFav(AddDeleteFavoriteParams params);
   Future<void> deleteFav(AddDeleteFavoriteParams params);
 }
 
 class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
-  final FavoriteStoreServices favoriteStore;
+  final FavoriteStore favoriteStore;
 
   FavoriteRemoteDataSource(this.favoriteStore);
 
   @override
-  Future<void> addFav({
-    required String uId,
-    required String category,
-    required String productId,
-  }) async {
-    await favoriteStore
-        .addFav(
-      uId: uId,
-      category: category,
-      productId: productId,
-    )
-        .then((value) {
+  Future<void> addFav(AddDeleteFavoriteParams params) async {
+    await favoriteStore.addFav(params).then((value) {
       print("<---------- Added ---------->");
     }).catchError((error) {
       throw ServerException(message: error.code);

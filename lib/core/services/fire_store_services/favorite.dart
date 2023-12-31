@@ -1,25 +1,21 @@
+import 'package:equatable/equatable.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/utils/fire_base_strings.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
-import 'package:equatable/equatable.dart';
 
-abstract class FavoriteStoreServices {
+abstract class FavoriteStore {
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getFavProductsOfCategory(
       {required List<String> productIds, required String category});
   Future<QuerySnapshot<Map<String, dynamic>>> getFavProductsIdsOfCategory(
       DocumentReference reference);
   Future<QuerySnapshot<Map<String, dynamic>>> getFavCategories(String uId);
-  Future<void> addFav({
-    required String category,
-    required String uId,
-    required String productId,
-  });
+  Future<void> addFav(AddDeleteFavoriteParams params);
   Future<void> deleteFav(AddDeleteFavoriteParams parameters);
 }
 
-class FavoriteStoreServicesImpl implements FavoriteStoreServices {
+class FavoriteStoreImpl implements FavoriteStore {
   final FirebaseFirestore store;
-  FavoriteStoreServicesImpl(this.store);
+  FavoriteStoreImpl(this.store);
 
   @override
   Future<void> deleteFav(AddDeleteFavoriteParams parameters) async {
@@ -34,25 +30,21 @@ class FavoriteStoreServicesImpl implements FavoriteStoreServices {
   }
 
   @override
-  Future<void> addFav({
-    required String category,
-    required String uId,
-    required String productId,
-  }) async {
+  Future<void> addFav(AddDeleteFavoriteParams params) async {
     await _setFavCategoryToBeAvailableToFetch(
       FavoriteParameters(
-        uId: uId,
-        productId: productId,
-        category: category,
+        uId: params.uId,
+        productId: params.productId,
+        category: params.category,
       ),
     ).then((value) async {
       await store
           .collection(FirebaseStrings.users)
-          .doc(uId)
+          .doc(params.uId)
           .collection(FirebaseStrings.favorites)
-          .doc(category)
+          .doc(params.category)
           .collection(FirebaseStrings.products)
-          .doc(productId)
+          .doc(params.productId)
           .set(const {});
     });
   }

@@ -36,7 +36,7 @@ abstract class AdminBaseRemoteDataSource {
 }
 
 class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
-  final ProductStoreService store;
+  final ProductStore store;
   final StorageService storage;
 
   AdminRemoteDataSourceImpl(this.store, this.storage);
