@@ -1,15 +1,10 @@
-import 'package:e_commerce_app/core/components/app_bar.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
-import 'package:e_commerce_app/core/constants/colors.dart';
-import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/favorites_controller/favorites_cubit.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorites_controller/get_favorites_cubit.dart';
+import 'package:e_commerce_app/modules/home/presentation/widgets/favorite_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/services/service_locator.dart';
-import '../widgets/favorite_widget.dart';
 
 class FavoritesView extends StatelessWidget {
   const FavoritesView({

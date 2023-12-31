@@ -1,4 +1,4 @@
-part of 'favorites_cubit.dart';
+part of 'get_favorites_cubit.dart';
 
 @immutable
 class FavoritesState {

@@ -39,7 +39,7 @@ import 'package:e_commerce_app/modules/orders/data/repository/order_data_reposit
 import 'package:e_commerce_app/modules/home/domain/use_cases/get_favorites_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/repository/cart_domain_repository.dart';
 import 'package:e_commerce_app/modules/orders/domain/repository/order_domain_repository.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/favorites_controller/favorites_cubit.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorites_controller/get_favorites_cubit.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 

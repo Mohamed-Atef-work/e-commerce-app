@@ -4,7 +4,7 @@ import 'package:e_commerce_app/modules/home/domain/entities/favorite_entity.dart
 import 'package:e_commerce_app/modules/home/domain/use_cases/get_favorites_use_case.dart';
 import 'package:meta/meta.dart';
 
-part 'favorites_state.dart';
+part 'get_favorites_state.dart';
 
 class GetFavoritesCubit extends Cubit<FavoritesState> {
   final GetFavoritesUseCase getFavoritesUseCase;
