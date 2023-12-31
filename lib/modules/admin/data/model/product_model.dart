@@ -14,20 +14,20 @@ class ProductModel extends ProductEntity {
   factory ProductModel.formJson(
           {required Map<String, dynamic> json, required String productId}) =>
       ProductModel(
-        description: json["Description"],
-        location: json["Location"],
-        category: json["Category"],
-        price: json["Price"],
-        image: json["Image"],
-        name: json["Name"],
+        description: json["productDescription"],
+        location: json["productLocation"],
+        category: json["productCategory"],
+        price: json["productPrice"],
+        image: json["productImage"],
+        name: json["productName"],
         id: productId,
       );
   Map<String, String> toJson() => {
-        "Description": description,
-        "Location": location,
-        "Category": category,
-        "Price": price,
-        "Image": image,
-        "Name": name,
+        "productDescription": description,
+        "productLocation": location,
+        "productCategory": category,
+        "productPrice": price,
+        "productImage": image,
+        "productName": name,
       };
 }

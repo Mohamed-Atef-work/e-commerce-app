@@ -2,14 +2,12 @@ import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_cart_products_controller/get_cart_products_cubit.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorites_controller/get_favorites_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/cart_widget.dart';
-import 'package:e_commerce_app/modules/home/presentation/widgets/favorite_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class FavoritesView extends StatelessWidget {
-  const FavoritesView({
+class CartView extends StatelessWidget {
+  const CartView({
     Key? key,
   }) : super(key: key);
 

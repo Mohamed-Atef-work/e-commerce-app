@@ -7,6 +7,7 @@ import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorit
 import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_states.dart';
+import 'package:e_commerce_app/modules/home/presentation/views/cart_view.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/favorites_view.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/home_view.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class HomeLayoutScreen extends StatelessWidget {
   Widget _body(BuildContext context) {
     LayoutState state = BlocProvider.of<LayoutCubit>(context).state;
     if (state.currentIndex == 0) {
-      return const HomeView();
+      return const CartView();
     } else if (state.currentIndex == 1) {
       return const HomeView();
     } else {
