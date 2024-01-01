@@ -34,6 +34,7 @@ import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_favorite_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/get_cart_products_use_case.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_favorite_products_controller/manage_favorite_products_cubit.dart';
@@ -128,8 +129,8 @@ void _home() {
   sl.registerFactory(() => ProductDetailsCubit(sl()));
   sl.registerFactory(() => HomeCubit(sl(), sl()));
   sl.registerFactory(() => LayoutCubit());
-  //sl.registerFactory(() => GetFavoritesCubit(sl()));
-  sl.registerFactory(() => ManageFavoriteCubit(sl(), sl(), sl()));
+  sl.registerFactory(() => GetFavoriteCubit(sl()));
+  sl.registerFactory(() => ManageFavoriteCubit(sl(), sl()));
   sl.registerFactory(() => ManageCartProductsCubit(sl(), sl(), sl()));
 
   /// Use Case

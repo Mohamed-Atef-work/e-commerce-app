@@ -5,15 +5,11 @@ import 'package:e_commerce_app/modules/home/presentation/widgets/heart_with_mana
 import 'package:flutter/material.dart';
 
 class FavoriteProductWidget extends StatelessWidget {
-  final int index;
-
-
   final ProductEntity product;
   final void Function() onPressed;
 
   const FavoriteProductWidget({
     super.key,
-    required this.index,
     required this.product,
     required this.onPressed,
   });
@@ -37,7 +33,6 @@ class FavoriteProductWidget extends StatelessWidget {
             HeartWihMangeFavoriteCubitProviderWidget(
               heartColor: Colors.red,
               product: product,
-              index: index,
             ),
             SizedBox(
               height: 165,

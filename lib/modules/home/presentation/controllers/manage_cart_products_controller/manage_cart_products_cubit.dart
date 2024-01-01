@@ -12,9 +12,11 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
   final DeleteFromCartUseCase _deleteFromCartUseCase;
   final AddToCartUseCase _addToCartUseCase;
 
-  ManageCartProductsCubit(this._getCartProductsUseCase,
-      this._deleteFromCartUseCase, this._addToCartUseCase)
-      : super(const ManageCartProductsState());
+  ManageCartProductsCubit(
+    this._getCartProductsUseCase,
+    this._deleteFromCartUseCase,
+    this._addToCartUseCase,
+  ) : super(const ManageCartProductsState());
 
   Future<void> getCartProducts() async {
     if (state.needToReGet) {
@@ -46,13 +48,10 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
   Future<void> addToCart(AddToCartParams params) async {
     emit(state.copyWith(addState: RequestState.loading));
     final result = await _addToCartUseCase.call(params);
-    emit(
-      result.fold(
-        (l) => state.copyWith(addState: RequestState.error, message: l.message),
-        (r) =>
-            state.copyWith(needToReGet: true, addState: RequestState.success),
-      ),
-    );
+    emit(result.fold(
+      (l) => state.copyWith(addState: RequestState.error, message: l.message),
+      (r) => state.copyWith(addState: RequestState.success, needToReGet: true),
+    ));
   }
 
   Future<void> deleteFromCart(DeleteFromCartParams params) async {

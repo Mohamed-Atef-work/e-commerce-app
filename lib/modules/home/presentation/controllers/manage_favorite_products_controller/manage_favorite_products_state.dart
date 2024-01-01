@@ -1,40 +1,33 @@
 import 'package:e_commerce_app/core/utils/enums.dart';
-import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
+import 'package:e_commerce_app/modules/home/domain/entities/favorite_entity.dart';
+import 'package:flutter/material.dart';
 
 class ManageFavoriteState {
-  final int? heartIndex;
+  final int heartIndex;
   final String? message;
-  final bool needToReGet;
-  final List<bool> isRed;
-  final RequestState getFavState;
+  final Color heartColor;
+  final List<FavoriteEntity> favorites;
   final RequestState requestState;
-  final List<ProductEntity> favorites;
 
   const ManageFavoriteState({
     this.message,
-    this.heartIndex,
-    this.isRed = const [],
-    this.needToReGet = true,
+    this.heartIndex = 0,
+    this.heartColor = Colors.white,
     this.favorites = const [],
-    this.getFavState = RequestState.initial,
     this.requestState = RequestState.initial,
   });
   ManageFavoriteState copyWith({
     String? message,
     int? heartIndex,
-    bool? needToReGet,
-    List<bool>? isRed,
-    RequestState? getFavState,
+    Color? heartColor,
+    List<FavoriteEntity>? favorites,
     RequestState? requestState,
-    List<ProductEntity>? favorites,
   }) =>
       ManageFavoriteState(
-        isRed: isRed ?? this.isRed,
         message: message ?? this.message,
         favorites: favorites ?? this.favorites,
         heartIndex: heartIndex ?? this.heartIndex,
-        needToReGet: needToReGet ?? this.needToReGet,
-        getFavState: getFavState ?? this.getFavState,
+        heartColor: heartColor ?? this.heartColor,
         requestState: requestState ?? this.requestState,
       );
 }

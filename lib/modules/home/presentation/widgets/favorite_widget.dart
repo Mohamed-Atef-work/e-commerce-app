@@ -38,7 +38,6 @@ class FavoriteWidget extends StatelessWidget {
                 );
               },
               product: favoriteEntity.products[index],
-              index: index,
             ),
           ),
     );

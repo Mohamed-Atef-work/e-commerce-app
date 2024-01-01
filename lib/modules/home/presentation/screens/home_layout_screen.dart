@@ -2,11 +2,11 @@ import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/services/service_locator.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_states.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/manage_favorite_products_controller/manage_favorite_products_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/cart_view.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/favorites_view.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/home_view.dart';
@@ -49,7 +49,7 @@ class HomeLayoutScreen extends StatelessWidget {
     } else if (state.currentIndex == 1) {
       return const HomeView();
     } else {
-      BlocProvider.of<ManageFavoriteCubit>(context).getFavorites();
+      BlocProvider.of<GetFavoriteCubit>(context).getFavorites();
       return const FavoritesView();
     }
   }

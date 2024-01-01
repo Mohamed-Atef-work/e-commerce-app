@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/core/services/service_locator.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/manage_favorite_products_controller/manage_favorite_products_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/cart_screen.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/details_screen.dart';
 import 'package:e_commerce_app/test_screen.dart';
@@ -27,8 +27,8 @@ class BuyItApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<ManageFavoriteCubit>(
-          create: (context) => sl<ManageFavoriteCubit>()..getFavorites(),
+        BlocProvider<GetFavoriteCubit>(
+          create: (context) => sl<GetFavoriteCubit>()..getFavorites(),
         ),
         BlocProvider<ManageCartProductsCubit>(
           create: (context) => sl<ManageCartProductsCubit>()..getCartProducts(),

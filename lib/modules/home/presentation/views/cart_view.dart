@@ -6,8 +6,6 @@ import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/manage_favorite_products_controller/manage_favorite_products_cubit.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/manage_favorite_products_controller/manage_favorite_products_state.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/cart_product_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,23 +17,23 @@ class CartView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ManageFavoriteCubit, ManageFavoriteState>(
+    return BlocBuilder<ManageCartProductsCubit, ManageCartProductsState>(
       builder: (context, state) {
-        if (state.getFavState == RequestState.success) {
-          if (state.favorites.isNotEmpty) {
+        if (state.getCartState == RequestState.success) {
+          if (state.products.isNotEmpty) {
             return ListView.separated(
               shrinkWrap: true,
-              itemCount: state.favorites.length,
+              itemCount: state.products.length,
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
               itemBuilder: (context, index) => CartProductWidget(
                 index: index,
-                product: state.favorites[index],
+                product: state.products[index],
                 onPressed: () {
                   Navigator.pushNamed(
                     context,
                     Screens.detailsScreen,
-                    arguments: state.favorites[index],
+                    arguments: state.products[index],
                   );
                 },
               ),
@@ -48,8 +46,8 @@ class CartView extends StatelessWidget {
                 fontSize: 25,
                 textColor: AppColors.black,
                 fontWeight: FontWeight.bold,
-                fontFamily: AppStrings.pacifico,
                 text: AppStrings.cartIsEmpty,
+                fontFamily: AppStrings.pacifico,
               ),
             );
           }
