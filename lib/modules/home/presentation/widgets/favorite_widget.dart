@@ -29,18 +29,16 @@ class FavoriteWidget extends StatelessWidget {
           ] +
           List.generate(
             favoriteEntity.products.length,
-            (index) => Padding(
-              padding: EdgeInsets.symmetric(vertical: context.width * 0.01),
-              child: FavoriteProductWidget(
-                onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    Screens.detailsScreen,
-                    arguments: favoriteEntity.products[index],
-                  );
-                },
-                product: favoriteEntity.products[index],
-              ),
+            (index) => FavoriteProductWidget(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  Screens.detailsScreen,
+                  arguments: favoriteEntity.products[index],
+                );
+              },
+              product: favoriteEntity.products[index],
+              index: index,
             ),
           ),
     );

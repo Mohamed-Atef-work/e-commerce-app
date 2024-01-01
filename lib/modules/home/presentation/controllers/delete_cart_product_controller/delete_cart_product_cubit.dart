@@ -4,7 +4,7 @@ import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from
 
 part 'delete_cart_product_state.dart';
 
-class DeleteCartProductCubit extends Cubit<DeleteCartProductState> {
+/*class DeleteCartProductCubit extends Cubit<DeleteCartProductState> {
   final DeleteFromCartUseCase _deleteFromCartUseCase;
   DeleteCartProductCubit(this._deleteFromCartUseCase)
       : super(const DeleteCartProductState());
@@ -18,4 +18,4 @@ class DeleteCartProductCubit extends Cubit<DeleteCartProductState> {
       (r) => state.copyWith(deleteState: RequestState.success),
     ));
   }
-}
+}*/

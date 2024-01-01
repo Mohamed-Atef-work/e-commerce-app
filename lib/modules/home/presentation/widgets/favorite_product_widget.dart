@@ -1,70 +1,81 @@
 import 'package:e_commerce_app/core/components/custom_text.dart';
+import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
-import 'package:e_commerce_app/modules/home/presentation/widgets/heart_with_add_delete_cubit_provider_widget.dart';
+import 'package:e_commerce_app/modules/home/presentation/widgets/heart_with_manage_favorite_cubit_provided_widget.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteProductWidget extends StatelessWidget {
+  final int index;
+
+
   final ProductEntity product;
   final void Function() onPressed;
 
   const FavoriteProductWidget({
     super.key,
+    required this.index,
     required this.product,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextButton.icon(
-      onPressed: onPressed,
-      icon: Container(
-        width: 180,
-        height: 167,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-        child: Image.network(product.image, fit: BoxFit.cover),
-      ),
-      label: Stack(
-        alignment: Alignment.topRight,
-        children: [
-          HeartWithAddDeleteCubitProviderWidget(
-              product: product, heartColor: Colors.red),
-          SizedBox(
-            height: 165,
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                CustomText(
-                  text: product.name,
-                  fontWeight: FontWeight.w300,
-                  textAlign: TextAlign.left,
-                  fontSize: 20,
-                  textColor: Colors.black,
-                ),
-                CustomText(
-                  text: product.description,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w300,
-                  textColor: Colors.black,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.left,
-                ),
-                CustomText(
-                  text: product.location,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w300,
-                  textColor: Colors.black,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.left,
-                ),
-              ],
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: context.width * 0.01),
+      child: TextButton.icon(
+        onPressed: onPressed,
+        icon: Container(
+          width: 180,
+          height: 167,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+          child: Image.network(product.image, fit: BoxFit.cover),
+        ),
+        label: Stack(
+          alignment: Alignment.topRight,
+          children: [
+            HeartWihMangeFavoriteCubitProviderWidget(
+              heartColor: Colors.red,
+              product: product,
+              index: index,
             ),
-          ),
-        ],
+            SizedBox(
+              height: 165,
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CustomText(
+                    text: product.name,
+                    fontWeight: FontWeight.w300,
+                    textAlign: TextAlign.left,
+                    fontSize: 20,
+                    textColor: Colors.black,
+                  ),
+                  CustomText(
+                    text: product.description,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w300,
+                    textColor: Colors.black,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.left,
+                  ),
+                  CustomText(
+                    text: product.location,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w300,
+                    textColor: Colors.black,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.left,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

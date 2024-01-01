@@ -14,7 +14,8 @@ class CartProductWidget extends StatelessWidget {
   const CartProductWidget({
     super.key,
     required this.product,
-    required this.onPressed, required this.index,
+    required this.onPressed,
+    required this.index,
   });
 
   @override
@@ -23,7 +24,10 @@ class CartProductWidget extends StatelessWidget {
       key: ValueKey(product.name),
       onDismissed: (direction) {
         /// To Do ooo ooo ooo ooo ooo
-        BlocProvider.of<ManageCartProductsCubit>(context).state.products.removeAt(index);
+        BlocProvider.of<ManageCartProductsCubit>(context)
+            .state
+            .products
+            .removeAt(index);
         BlocProvider.of<ManageCartProductsCubit>(context).deleteFromCart(
           DeleteFromCartParams(
             uId: "uId",

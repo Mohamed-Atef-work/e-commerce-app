@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
-import 'package:e_commerce_app/modules/home/presentation/widgets/heart_with_add_delete_cubit_provider_widget.dart';
+import 'package:e_commerce_app/modules/home/presentation/widgets/heart_with_manage_favorite_cubit_provided_widget.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsImageWidget extends StatelessWidget {
@@ -26,7 +26,10 @@ class ProductDetailsImageWidget extends StatelessWidget {
               height: context.height / 4,
             ),
           ),
-          HeartWithAddDeleteCubitProviderWidget(product: product,heartColor: Colors.white),
+          HeartWihMangeFavoriteCubitProviderWidget(
+            heartColor: Colors.white,
+            product: product,
+          ),
         ],
       ),
     );

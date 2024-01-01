@@ -1,13 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/components/app_bar.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
-import 'package:e_commerce_app/core/services/fire_store_services/cart.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widgets/product_details_widget.dart';
 
@@ -38,19 +38,26 @@ class DetailsScreen extends StatelessWidget {
             ),
             onPressed: () async {
               /// To Do o o o o o o o
-              final cartStore = CartStoreImpl(FirebaseFirestore.instance);
-              cartStore.addToCart(
+              BlocProvider.of<ManageCartProductsCubit>(context).addToCart(
                 AddToCartParams(
                   category: product.category,
                   productId: product.id!,
                   uId: 'uId',
                 ),
               );
+              /*final cartStore = CartStoreImpl(FirebaseFirestore.instance);
+              cartStore.addToCart(
+                AddToCartParams(
+                  category: product.category,
+                  productId: product.id!,
+                  uId: 'uId',
+                ),
+              );*/
             },
             child: const CustomText(
               fontSize: 20,
-              textColor: Colors.white,
               text: AppStrings.order,
+              textColor: Colors.white,
               fontWeight: FontWeight.bold,
               fontFamily: AppStrings.pacifico,
             ),
