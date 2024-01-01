@@ -2,11 +2,11 @@ import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/services/service_locator.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/get_cart_products_controller/get_cart_products_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorites_controller/get_favorites_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_states.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/cart_view.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/favorites_view.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/home_view.dart';
@@ -29,8 +29,8 @@ class HomeLayoutScreen extends StatelessWidget {
         BlocProvider<GetFavoritesCubit>(
           create: (context) => sl<GetFavoritesCubit>()..getFavorites(),
         ),
-        BlocProvider<GetCartProductsCubit>(
-          create: (context) => sl<GetCartProductsCubit>()..getCartProducts(),
+        BlocProvider<ManageCartProductsCubit>(
+          create: (context) => sl<ManageCartProductsCubit>()..getCartProducts(),
         ),
         BlocProvider<LayoutCubit>(
           create: (context) => sl<LayoutCubit>(),

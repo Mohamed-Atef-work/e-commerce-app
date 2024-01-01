@@ -40,6 +40,8 @@ class AppStrings {
   static const String order = "Order";
   static const String addToCart = "Add to cart";
   static const String cart = "Cart";
+  static const String cartIsEmpty = "Your Cart Is Empty";
+  static const String favoriteIsEmpty = "Your Favorite Is Empty";
   static const String profile = "Profile";
 
   static const String jackets = "Jackets";

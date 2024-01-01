@@ -21,7 +21,8 @@ class ProductDetailsWidget extends StatelessWidget {
           _oneItem(field: AppStrings.productCategory, value: product.category),
           _oneItem(
               field: AppStrings.productDescription, value: product.description),
-          _oneItem(field: AppStrings.productPrice, value: product.price.toString()),
+          _oneItem(
+              field: AppStrings.productPrice, value: product.price.toString()),
           _oneItem(field: AppStrings.productLocation, value: product.location),
         ],
       ),
@@ -34,18 +35,14 @@ class ProductDetailsWidget extends StatelessWidget {
   }) =>
       Column(
         children: [
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           CustomText(
             text: "$field :",
             fontSize: 18,
             fontWeight: FontWeight.w600,
             textColor: Colors.black,
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Align(
             alignment: Alignment.center,
             child: CustomText(
@@ -55,9 +52,7 @@ class ProductDetailsWidget extends StatelessWidget {
               textColor: Colors.grey,
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           const Divider(
             height: 10,
             color: Colors.black,
@@ -65,6 +60,7 @@ class ProductDetailsWidget extends StatelessWidget {
             endIndent: 60,
             indent: 60,
           ),
+          const SizedBox(height: 5),
         ],
       );
 }

@@ -24,9 +24,7 @@ class DetailsScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(
-            child: ProductDetailsWidget(product: product),
-          ),
+          Expanded(child: ProductDetailsWidget(product: product)),
           OutlinedButton(
             style: OutlinedButton.styleFrom(
               backgroundColor: Colors.black,
@@ -52,7 +50,7 @@ class DetailsScreen extends StatelessWidget {
             child: const CustomText(
               fontSize: 20,
               textColor: Colors.white,
-              text: AppStrings.addToCart,
+              text: AppStrings.order,
               fontWeight: FontWeight.bold,
               fontFamily: AppStrings.pacifico,
             ),

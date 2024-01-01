@@ -1,18 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/components/app_bar.dart';
+import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/services/fire_store_services/cart.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
-import 'package:e_commerce_app/modules/home/presentation/widgets/favorite_product_widget.dart';
+import 'package:e_commerce_app/core/utils/screens_strings.dart';
+import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
+import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
+import 'package:e_commerce_app/modules/home/presentation/widgets/cart_product_widget.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../core/components/custom_text.dart';
-import '../../../../core/utils/screens_strings.dart';
-import '../../../admin/data/model/product_model.dart';
-import '../../../admin/domain/entities/product_entity.dart';
-import '../widgets/cart_product_widget.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -43,11 +41,12 @@ class CartScreen extends StatelessWidget {
                       itemCount: pros.length,
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) => CartProductWidget(
+                        index: index,
+                        product: pros[index],
                         onPressed: () {
                           Navigator.pushNamed(context, Screens.detailsScreen,
                               arguments: pros[index]);
                         },
-                        product: pros[index],
                       ),
                     );
                   } else {

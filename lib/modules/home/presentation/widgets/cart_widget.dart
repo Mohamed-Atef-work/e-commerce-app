@@ -3,13 +3,10 @@ import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/cart_entity.dart';
-import 'package:e_commerce_app/modules/home/domain/entities/favorite_entity.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/cart_product_widget.dart';
 import 'package:flutter/material.dart';
 
-import 'favorite_product_widget.dart';
-
-class CartWidget extends StatelessWidget {
+/*class CartWidget extends StatelessWidget {
   final CartEntity cartEntity;
   const CartWidget({
     Key? key,
@@ -31,20 +28,17 @@ class CartWidget extends StatelessWidget {
           ] +
           List.generate(
             cartEntity.products.length,
-            (index) => Padding(
-              padding: EdgeInsets.symmetric(vertical: context.width * 0.01),
-              child: CartProductWidget(
-                onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    Screens.detailsScreen,
-                    arguments: cartEntity.products[index],
-                  );
-                },
-                product: cartEntity.products[index],
-              ),
+            (index) => CartProductWidget(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  Screens.detailsScreen,
+                  arguments: cartEntity.products[index],
+                );
+              },
+              product: cartEntity.products[index],
             ),
           ),
     );
   }
-}
+}*/
