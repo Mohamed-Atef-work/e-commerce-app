@@ -50,6 +50,8 @@ import 'package:e_commerce_app/modules/orders/data/repository/order_data_reposit
 import 'package:e_commerce_app/modules/home/domain/use_cases/get_favorites_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/repository/cart_domain_repository.dart';
 import 'package:e_commerce_app/modules/orders/domain/repository/order_domain_repository.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/get_user_orders_use_case.dart';
+import 'package:e_commerce_app/modules/orders/presentation/controller/get_user_orders/get_user_orders_cubit.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 
@@ -130,6 +132,7 @@ void _home() {
   sl.registerFactory(() => GetFavoriteCubit(sl()));
   sl.registerFactory(() => ManageFavoriteCubit(sl(), sl()));
   sl.registerFactory(() => ManageCartProductsCubit(sl(), sl(), sl()));
+  sl.registerFactory(() => GetUserOrdersCubit(sl()));
 
   /// Use Case
   sl.registerLazySingleton(() => GetFavoritesUseCase(sl()));
@@ -138,6 +141,7 @@ void _home() {
   sl.registerLazySingleton(() => AddToCartUseCase(sl()));
   sl.registerLazySingleton(() => DeleteFromCartUseCase(sl()));
   sl.registerLazySingleton(() => GetCartProductsUseCase(sl()));
+  sl.registerLazySingleton(() => GetUserOrdersUseCase(sl()));
 
   /// Repositories
   sl.registerLazySingleton<FavoriteDomainRepository>(
