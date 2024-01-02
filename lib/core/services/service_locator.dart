@@ -15,10 +15,13 @@ import 'package:e_commerce_app/modules/admin/domain/use_cases/delete_product_use
 import 'package:e_commerce_app/modules/admin/domain/use_cases/download_product_image_url_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/edit_product_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/get_all_product_categories.dart';
+import 'package:e_commerce_app/modules/admin/domain/use_cases/load_product_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/up_date_product_category_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/upload_product_image_use_case.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/add_product_controller/add_product_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_product_details_controller/admin_product_details_cubit.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/categories_model_sheet_controller_in_edit_add_screen/categories_model_sheet_cubit.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/explore_product_controller/explore_product_cubit.dart';
 import 'package:e_commerce_app/modules/auth/data/data_source/auth_remote_data_source.dart';
 import 'package:e_commerce_app/modules/auth/data/repository/auth_data_repository.dart';
 import 'package:e_commerce_app/modules/auth/domain/repository/auth_domain_repository.dart';
@@ -29,12 +32,15 @@ import 'package:e_commerce_app/modules/auth/presentation/controllers/login_contr
 import 'package:e_commerce_app/modules/auth/presentation/controllers/sign_up_controller/sign_up_bloc.dart';
 import 'package:e_commerce_app/modules/home/data/data_source/cart_remote_data_source.dart';
 import 'package:e_commerce_app/modules/home/data/data_source/favorite_remote_data_source.dart';
+import 'package:e_commerce_app/modules/home/data/repository/favorite_data_repository.dart';
+import 'package:e_commerce_app/modules/home/domain/repository/favorite_domain_repository.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_favorite_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/get_cart_products_use_case.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_favorite_products_controller/manage_favorite_products_cubit.dart';
@@ -46,14 +52,6 @@ import 'package:e_commerce_app/modules/home/domain/repository/cart_domain_reposi
 import 'package:e_commerce_app/modules/orders/domain/repository/order_domain_repository.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
-
-import '../../modules/admin/domain/use_cases/load_product_use_case.dart';
-import '../../modules/admin/presentation/controllers/categories_model_sheet_controller_in_edit_add_screen/categories_model_sheet_cubit.dart';
-import '../../modules/admin/presentation/controllers/explore_product_controller/explore_product_cubit.dart';
-import '../../modules/home/data/repository/favorite_data_repository.dart';
-import '../../modules/home/domain/repository/favorite_domain_repository.dart';
-import '../../modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
-import '../../modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -126,9 +124,9 @@ void _auth() {
 
 void _home() {
   /// blocs
-  sl.registerFactory(() => ProductDetailsCubit(sl()));
-  sl.registerFactory(() => HomeCubit(sl(), sl()));
+  //sl.registerFactory(() => ProductDetailsCubit(sl()));
   sl.registerFactory(() => LayoutCubit());
+  sl.registerFactory(() => HomeCubit(sl(), sl()));
   sl.registerFactory(() => GetFavoriteCubit(sl()));
   sl.registerFactory(() => ManageFavoriteCubit(sl(), sl()));
   sl.registerFactory(() => ManageCartProductsCubit(sl(), sl(), sl()));

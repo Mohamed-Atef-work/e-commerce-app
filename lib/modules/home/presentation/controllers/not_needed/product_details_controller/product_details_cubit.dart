@@ -3,7 +3,6 @@ import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/load_product_use_case.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/details_screen.dart';
-import 'package:e_commerce_app/modules/home/presentation/screens/products_of_a_category_screen.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 part 'product_details_state.dart';

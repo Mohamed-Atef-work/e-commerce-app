@@ -1,18 +1,18 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
-import 'package:e_commerce_app/core/services/service_locator.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
+import 'package:e_commerce_app/core/components/custom_text.dart';
+import 'package:e_commerce_app/core/services/service_locator.dart';
+import 'package:e_commerce_app/modules/home/presentation/views/home_view.dart';
+import 'package:e_commerce_app/modules/home/presentation/views/cart_view.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
+import 'package:e_commerce_app/modules/home/presentation/views/favorites_view.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_states.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
-import 'package:e_commerce_app/modules/home/presentation/views/cart_view.dart';
-import 'package:e_commerce_app/modules/home/presentation/views/favorites_view.dart';
-import 'package:e_commerce_app/modules/home/presentation/views/home_view.dart';
-import 'package:flutter/material.dart';
-import 'package:e_commerce_app/core/components/custom_text.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeLayoutScreen extends StatelessWidget {
   const HomeLayoutScreen({Key? key}) : super(key: key);
