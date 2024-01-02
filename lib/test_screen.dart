@@ -40,11 +40,12 @@ class TestScreen extends StatelessWidget {
                       .call(
                     UpDateOrderDataParams(
                       ref: event.first.reference!,
-                      data: const OrderDataModel(
+                      data: OrderDataModel(
                         name: " Modified",
                         address: " Modified",
                         phone: " Modified",
                         totalPrice: " Modified",
+                        date: DateTime.now().toString(),
                       ),
                     ),
                   )

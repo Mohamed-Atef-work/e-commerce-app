@@ -3,11 +3,12 @@ import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.da
 
 class OrderDataModel extends OrderDataEntity {
   const OrderDataModel({
+    super.reference,
+    required super.date,
     required super.name,
     required super.phone,
     required super.address,
     required super.totalPrice,
-    super.reference,
   });
   factory OrderDataModel.fromJson({
     required Map<String, dynamic> json,
@@ -18,11 +19,13 @@ class OrderDataModel extends OrderDataEntity {
         phone: json["phone"],
         address: json["address"],
         totalPrice: json["totalPrice"],
+        date: json["date"],
         reference: orderRef,
       );
   Map<String, dynamic> toJson() => {
         "name": name,
         "phone": phone,
+        "date": date,
         "address": address,
         "totalPrice": totalPrice,
       };

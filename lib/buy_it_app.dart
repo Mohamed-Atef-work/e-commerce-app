@@ -3,6 +3,7 @@ import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorit
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/cart_screen.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/details_screen.dart';
+import 'package:e_commerce_app/modules/orders/presentation/screens/orders_screen.dart';
 import 'package:e_commerce_app/test_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,8 +17,6 @@ import 'modules/admin/presentation/screens/admin_explore_products_screen.dart';
 import 'modules/auth/presentation/screens/login_screen.dart';
 import 'modules/auth/presentation/screens/sign_up_screen.dart';
 import 'modules/home/presentation/screens/home_layout_screen.dart';
-import 'modules/orders/presentaion/screens/orders_screen.dart';
-import 'modules/home/presentation/screens/products_of_a_category_screen.dart';
 
 class BuyItApp extends StatelessWidget {
   const BuyItApp({super.key});
@@ -36,11 +35,10 @@ class BuyItApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: AppStrings.buyIt,
-        initialRoute: Screens.homeScreen,
+        initialRoute: Screens.viewUserOrdersScreen,
         routes: {
           Screens.testScreen: (context) => const TestScreen(),
           Screens.cartScreen: (context) => const CartScreen(),
-          Screens.ordersScreen: (context) => const OrdersScreen(),
           Screens.loginScreen: (context) => const LoginScreen(),
           Screens.signUpScreen: (context) => const SignUpScreen(),
           Screens.adminPanelScreen: (context) => AdminPanelScreen(),
@@ -48,6 +46,8 @@ class BuyItApp extends StatelessWidget {
           Screens.homeScreen: (context) => const HomeLayoutScreen(),
           Screens.addProductScreen: (context) => const AddProductScreen(),
           Screens.exploreScreen: (context) => const ExploreProductsScreen(),
+          Screens.viewUserOrdersScreen: (context) =>
+              const ViewUserOrdersScreen(),
           Screens.adminProductDetailsScreen: (context) =>
               const AdminProductDetailsScreen(),
           //Screens.productsOfCategory: (context) => const ProductsOfCategoryScreen(),

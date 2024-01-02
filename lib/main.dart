@@ -5,6 +5,7 @@ import 'core/services/service_locator.dart';
 import 'firebase_options.dart';
 
 void main() async {
+  print(DateTime.now());
   /// To D0000000
   /// handle Login in order to ----->
   /// ..........-_-_-_--> Take his [Id] to GET {FAVORITES} and {ORDERS}
