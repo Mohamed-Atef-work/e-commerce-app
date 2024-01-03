@@ -17,7 +17,15 @@ class OrderItemModel extends OrderItemEntity {
       );
 
   Map<String, dynamic> toJson() => {
-        "item": product.toJson(),
+        "item": ProductModel(
+          description: product.description,
+          name: product.name,
+          price: product.price,
+          category: product.category,
+          image: product.image,
+          location: product.location,
+          id: product.id,
+        ).toJson(),
         "quantity": quantity,
       };
 }

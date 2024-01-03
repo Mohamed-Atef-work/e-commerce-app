@@ -1,8 +1,9 @@
 import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
+import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:equatable/equatable.dart';
 
 class OrderItemEntity extends Equatable {
-  final ProductModel product;
+  final ProductEntity product;
   final int quantity;
 
   const OrderItemEntity({
