@@ -14,6 +14,7 @@ class AppStrings {
   static const String iAmAnAdmin = "I'm an Admin !";
   static const String iAmAUser = "I'm a User !";
   static const String add = "Add";
+  static const String ok = "Ok";
   static const String update = "Update";
   static const String addAnImage = "Add An Image";
   static const String changeTheImage = "Change The Image";
@@ -38,6 +39,9 @@ class AppStrings {
   static const String productName = "Product Name";
   static const String favorites = "Favorites";
   static const String order = "Order";
+  static const String thisOrderIsNoLongerExisted =
+      "This Order Is No Longer Existed";
+  static const String youHaveNoOrders = "You Have No Orders";
   static const String yourOrder = "Your Order";
   static const String yourOrders = "Your Orders";
   static const String addToCart = "Add to cart";

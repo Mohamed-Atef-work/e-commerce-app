@@ -75,8 +75,10 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
       AddOrderParams(
         items: List.generate(
           state.products.length,
-          (index) =>
-              OrderItemModel(product: state.products[index], quantity: 1),
+          (index) => OrderItemModel(
+            product: state.products[index],
+            quantity: 1,
+          ),
         ),
         orderData: const OrderDataModel(
             date: 'date',

@@ -50,9 +50,15 @@ import 'package:e_commerce_app/modules/orders/data/repository/order_data_reposit
 import 'package:e_commerce_app/modules/home/domain/use_cases/get_favorites_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/repository/cart_domain_repository.dart';
 import 'package:e_commerce_app/modules/orders/domain/repository/order_domain_repository.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/add_item_to_order_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/add_order_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/delete_item_from_order_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/get_order_items_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/get_user_orders_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/get_users_who_ordered_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/up_date_order_data_use_case.dart';
+import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_order_view/user_order_view_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_orders/manage_user_orders_cubit.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -134,18 +140,32 @@ void _home() {
   sl.registerFactory(() => GetFavoriteCubit(sl()));
   sl.registerFactory(() => ManageFavoriteCubit(sl(), sl()));
   sl.registerFactory(() => ManageCartProductsCubit(sl(), sl(), sl(), sl()));
-  sl.registerFactory(() => ManageUserOrdersCubit(sl(), sl()));
+  sl.registerFactory(() => ManageUserOrdersCubit(sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => ManageUserOrderViewCubit());
 
   /// Use Case
+  /// <-------------------- Orders ----------------------------->
   sl.registerLazySingleton(() => GetFavoritesUseCase(sl()));
   sl.registerLazySingleton(() => AddFavoriteUseCase(sl()));
   sl.registerLazySingleton(() => DeleteFavoriteUseCase(sl()));
+
+  /// <--------------------- Cart ------------------------------->
   sl.registerLazySingleton(() => AddToCartUseCase(sl()));
   sl.registerLazySingleton(() => DeleteFromCartUseCase(sl()));
   sl.registerLazySingleton(() => GetCartProductsUseCase(sl()));
-  sl.registerLazySingleton(() => GetUserOrdersUseCase(sl()));
-  sl.registerLazySingleton(() => DeleteOrderUseCase(sl()));
+
   sl.registerLazySingleton(() => AddOrderUseCase(sl()));
+  sl.registerLazySingleton(() => AddItemToOrderUseCase(sl()));
+
+  /// <-------------------- Orders ------------------------------->
+  sl.registerLazySingleton(() => GetOrderItemsUseCase(sl()));
+  sl.registerLazySingleton(() => GetUserOrdersUseCase(sl()));
+  sl.registerLazySingleton(() => GetUsersWhoOrderedUseCase(sl()));
+
+  sl.registerLazySingleton(() => UpDateOrderDataUseCase(sl()));
+
+  sl.registerLazySingleton(() => DeleteOrderUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteItemFromOrderUseCase(sl()));
 
   /// Repositories
   sl.registerLazySingleton<FavoriteDomainRepository>(

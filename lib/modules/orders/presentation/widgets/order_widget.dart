@@ -1,8 +1,9 @@
+import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/images.dart';
-import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.dart';
+import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_order_view/user_order_view_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_orders/manage_user_orders_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +15,11 @@ class OrderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        BlocProvider.of<ManageUserOrdersCubit>(context)
+            .getOrderItems(order.reference!);
+        BlocProvider.of<ManageUserOrderViewCubit>(context).viewOrderItems();
+      },
       splashColor: Colors.black12,
       highlightColor: Colors.black12,
       borderRadius: BorderRadius.circular(20),

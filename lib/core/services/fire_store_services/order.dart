@@ -4,16 +4,19 @@ import 'package:e_commerce_app/modules/orders/data/model/item_model.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/add_item_to_order_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/add_order_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/delete_item_from_order_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/up_date_order_data_use_case.dart';
 
 abstract class OrderStore {
   Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params);
   Future<void> addItemToOrder(AddItemToOrderParams params);
   Future<void> updateOrderData(UpDateOrderDataParams params);
-  Future<void> deleteOrder(DocumentReference orderRef);
+  Future<void> deleteOrder(DeleteOrderParams params);
   Future<void> addOrder(AddOrderParams params);
   Future<DocumentSnapshot<Map<String, dynamic>>> getOrderData(
       DocumentReference orderRef);
+
+  ///
   Future<QuerySnapshot<Map<String, dynamic>>> getOrderItems(
       DocumentReference orderRef);
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>> streamUsersWhoOrdered();
@@ -69,14 +72,21 @@ class OrderStoreImpl implements OrderStore {
   ) async {
     /// admin and user
     /// base methods (according to the design of the firebase);
-    return await orderRef.collection(FirebaseStrings.items).get();
+    final response = await orderRef.collection(FirebaseStrings.items).get();
+    /*if (response.docs.isEmpty) {
+      await orderRef.delete();
+    }*/
+    return response;
   }
 
   @override
-  Future<void> deleteOrder(DocumentReference orderRef) async {
+  Future<void> deleteOrder(DeleteOrderParams params) async {
     /// admin and user
     /// base methods (according to the design of the firebase);
-    await orderRef.delete();
+    await params.orderRef.delete();
+    for (String id in params.orderItemsIds) {
+      await params.orderRef.collection(FirebaseStrings.items).doc(id).delete();
+    }
   }
 
   @override
@@ -90,10 +100,15 @@ class OrderStoreImpl implements OrderStore {
   Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params) async {
     /// admin and user
     /// base methods (according to the design of the firebase);
-    await params.orderRef
-        .collection(FirebaseStrings.items)
-        .doc(params.itemId)
-        .delete();
+    await params.itemRef.delete();
+    await _deleteOrderIfNOItems(params.itemRef);
+  }
+
+  Future<void> _deleteOrderIfNOItems(DocumentReference itemRef) async {
+    final response = await itemRef.parent.get();
+    if (response.docs.isEmpty) {
+      await itemRef.parent.parent!.delete();
+    }
   }
 
   @override

@@ -18,11 +18,9 @@ class DeleteItemFromOrderUseCase
 }
 
 class DeleteItemFromOrderParams {
-  final DocumentReference orderRef;
-  final String itemId;
+  final DocumentReference itemRef;
 
   DeleteItemFromOrderParams({
-    required this.orderRef,
-    required this.itemId,
+    required this.itemRef,
   });
 }

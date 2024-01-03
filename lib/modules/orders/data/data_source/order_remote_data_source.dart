@@ -61,7 +61,7 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
 
   @override
   Future<void> deleteOrder(DeleteOrderParams params) async {
-    await orderStore.deleteOrder(params.orderRef).catchError((error) {
+    await orderStore.deleteOrder(params).catchError((error) {
       throw ServerException(message: error.toString());
     });
   }
@@ -81,9 +81,17 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
       GetOrderItemsParams params) async {
     return await orderStore.getOrderItems(params.orderRef).then((value) {
       late List<OrderItemEntity> items;
-      items = List<OrderItemEntity>.of(value.docs
-          .map((e) => OrderItemModel.fromJson(json: e.data(), productId: e.id))
-          .toList());
+      items = List<OrderItemEntity>.of(
+        value.docs
+            .map(
+              (e) => OrderItemModel.fromJson(
+                json: e.data(),
+                productId: e.id,
+                ref: e.reference,
+              ),
+            )
+            .toList(),
+      );
       return items;
     }).catchError((error) {
       throw ServerException(message: error.toString());

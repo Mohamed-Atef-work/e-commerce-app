@@ -1,37 +1,78 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/modules/orders/domain/entity/item_entity.dart';
 import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/delete_item_from_order_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/use_case/get_order_items_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/get_user_orders_use_case.dart';
 import 'package:equatable/equatable.dart';
 
 part 'manage_user_orders_state.dart';
 
 class ManageUserOrdersCubit extends Cubit<ManageUserOrdersState> {
-  final GetUserOrdersUseCase _getUserOrdersUseCase;
-  final DeleteOrderUseCase _deleteOrderUseCase;
-  ManageUserOrdersCubit(this._getUserOrdersUseCase, this._deleteOrderUseCase)
-      : super(const ManageUserOrdersState());
-  Future<void> getOrderItems(String uId) async {
-    final result = await _getUserOrdersUseCase.call(uId);
+  final DeleteOrderUseCase _deleteOrder;
+  final GetUserOrdersUseCase _getUserOrders;
+  final GetOrderItemsUseCase _getOrderItems;
+  final DeleteItemFromOrderUseCase _deleteItemFromOrder;
+  ManageUserOrdersCubit(
+    this._deleteOrder,
+    this._getUserOrders,
+    this._getOrderItems,
+    this._deleteItemFromOrder,
+  ) : super(const ManageUserOrdersState());
+
+  Future<void> getOrders(String uId) async {
+    emit(state.copyWith(getOrders: RequestState.loading));
+    final result = await _getUserOrders.call(uId);
     result.fold(
         (l) => emit(
-              state.copyWith(
-                  getOrdersState: RequestState.error, message: l.message),
+              state.copyWith(getOrders: RequestState.error, message: l.message),
             ), (r) {
-      r.listen((orders) {
-        emit(state.copyWith(
-            getOrdersState: RequestState.success, orders: orders));
-      });
+      r.listen(
+        (orders) {
+          emit(
+            state.copyWith(getOrders: RequestState.success, orders: orders),
+          );
+        },
+      );
     });
   }
 
-  Future<void> deleteOrder(DeleteOrderParams params) async {
-    final result = await _deleteOrderUseCase.call(params);
+  Future<void> getOrderItems(DocumentReference orderRef) async {
+    emit(state.copyWith(getOrderItems: RequestState.loading));
+    final result =
+        await _getOrderItems.call(GetOrderItemsParams(orderRef: orderRef));
     emit(result.fold(
-      (l) => state.copyWith(message: l.message),
-      (r) => state.copyWith(deleteOrdersState: RequestState.error),
+      (l) =>
+          state.copyWith(getOrderItems: RequestState.error, message: l.message),
+      (r) => state.copyWith(getOrderItems: RequestState.success, orderItems: r),
     ));
-    print(state.deleteOrdersState);
+    print(state.getOrderItems);
+  }
+
+  Future<void> deleteOrder(DeleteOrderParams params) async {
+    emit(state.copyWith(deleteOrder: RequestState.loading));
+    final result = await _deleteOrder.call(params);
+    emit(
+      result.fold(
+        (l) =>
+            state.copyWith(message: l.message, deleteOrder: RequestState.error),
+        (r) => state.copyWith(deleteOrder: RequestState.success),
+      ),
+    );
+  }
+
+  Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params) async {
+    emit(state.copyWith(deleteOrderItem: RequestState.loading));
+    final result = await _deleteItemFromOrder.call(params);
+    emit(
+      result.fold(
+        (l) => state.copyWith(
+            message: l.message, deleteOrderItem: RequestState.error),
+        (r) => state.copyWith(deleteOrderItem: RequestState.success),
+      ),
+    );
   }
 }

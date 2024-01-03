@@ -16,11 +16,13 @@ class DeleteOrderUseCase extends BaseUseCase<void, DeleteOrderParams> {
   }
 }
 
-class DeleteOrderParams extends Equatable{
+class DeleteOrderParams extends Equatable {
+  final List<String> orderItemsIds;
   final DocumentReference orderRef;
 
-  const DeleteOrderParams({required this.orderRef});
+  const DeleteOrderParams(
+      {required this.orderItemsIds, required this.orderRef});
 
   @override
-  List<Object?> get props => [orderRef];
+  List<Object?> get props => [orderRef, orderItemsIds];
 }

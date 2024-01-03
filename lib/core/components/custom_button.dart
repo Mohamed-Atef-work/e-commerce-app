@@ -7,6 +7,8 @@ class CustomButton extends StatelessWidget {
   final double height;
   final Color? backgroundColor;
   final Color? textColor;
+  final String? fontFamily;
+  final FontWeight? fontWeight;
   /*final double? verticalPadding;
   final double? horizontalPadding;*/
   final String text;
@@ -22,6 +24,8 @@ class CustomButton extends StatelessWidget {
     this.backgroundColor = AppColors.black,
     this.fontSize = 14,
     this.onPressed,
+    this.fontFamily,
+    this.fontWeight,
     /*this.verticalPadding = 0.0,
     this.horizontalPadding = 0.0*/
   });
@@ -52,6 +56,8 @@ class CustomButton extends StatelessWidget {
         text: text,
         fontSize: fontSize,
         textColor: textColor,
+        fontFamily: fontFamily,
+        fontWeight: fontWeight,
       ),
     );
   }

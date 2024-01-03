@@ -5,9 +5,9 @@ import 'package:e_commerce_app/modules/orders/domain/entity/item_entity.dart';
 import 'package:e_commerce_app/modules/orders/presentation/widgets/counting_widget.dart';
 import 'package:flutter/material.dart';
 
-class OrderProductWidget extends StatelessWidget {
+class OrderItemWidget extends StatelessWidget {
   final OrderItemEntity item;
-  const OrderProductWidget(this.item, {super.key});
+  const OrderItemWidget(this.item, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +23,8 @@ class OrderProductWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Image.asset(
-                "assets/images/black_order.png",
+              child: Image.network(
+              item.product.image,
                 fit: BoxFit.contain,
               ),
             ),
