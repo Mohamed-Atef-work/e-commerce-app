@@ -6,6 +6,7 @@ import 'package:e_commerce_app/modules/orders/data/repository/order_data_reposit
 import 'package:e_commerce_app/modules/orders/domain/repository/order_domain_repository.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/get_user_orders_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/up_date_order_data_use_case.dart';
+import 'package:e_commerce_app/modules/orders/presentation/widgets/counting_widget.dart';
 import 'package:flutter/material.dart';
 import 'core/components/custom_text.dart';
 
@@ -17,7 +18,7 @@ class TestScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey,
       body: Center(
-        child: TextButton(
+        child: CountingWidget(1),/*TextButton(
           onPressed: () async {
             final FirebaseFirestore firestore = FirebaseFirestore.instance;
             final OrderStore orderStore = OrderStoreImpl(firestore);
@@ -59,7 +60,7 @@ class TestScreen extends StatelessWidget {
             });
           },
           child: const CustomText(text: "Add"),
-        ),
+        ),*/
       ),
     );
   }

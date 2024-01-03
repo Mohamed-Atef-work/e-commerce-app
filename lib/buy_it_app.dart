@@ -3,7 +3,8 @@ import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorit
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/cart_screen.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/details_screen.dart';
-import 'package:e_commerce_app/modules/orders/presentation/screens/orders_screen.dart';
+import 'package:e_commerce_app/modules/orders/presentation/screens/user_order_products_screen.dart';
+import 'package:e_commerce_app/modules/orders/presentation/screens/view_user_orders_screen.dart';
 import 'package:e_commerce_app/test_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,6 +47,8 @@ class BuyItApp extends StatelessWidget {
           Screens.homeScreen: (context) => const HomeLayoutScreen(),
           Screens.addProductScreen: (context) => const AddProductScreen(),
           Screens.exploreScreen: (context) => const ExploreProductsScreen(),
+          Screens.userOrderProductsScreen: (context) =>
+              const UserOrderProductsScreen(),
           Screens.viewUserOrdersScreen: (context) =>
               const ViewUserOrdersScreen(),
           Screens.adminProductDetailsScreen: (context) =>

@@ -6,6 +6,7 @@ class Screens {
   static const String loginScreen = "login";
   static const String signUpScreen = "signUp";
   static const String viewUserOrdersScreen = "userOrders";
+  static const String userOrderProductsScreen = "UserOrderProducts";
   static const String detailsScreen = "details";
   static const String exploreScreen = "explore";
   static const String favoritesScreen = "favorites";
