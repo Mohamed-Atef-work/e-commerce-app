@@ -64,3 +64,4 @@ class ProductDetailsWidget extends StatelessWidget {
         ],
       );
 }
+

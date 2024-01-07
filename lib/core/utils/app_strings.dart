@@ -38,17 +38,21 @@ class AppStrings {
   static const String productImage = "Product Image";
   static const String productName = "Product Name";
   static const String favorites = "Favorites";
+
   static const String order = "Order";
-  static const String thisOrderIsNoLongerExisted =
-      "This Order Is No Longer Existed";
-  static const String youHaveNoOrders = "You Have No Orders";
+  static const String cart = "Cart";
+  static const String checkOut = "Check Out";
+
   static const String yourOrder = "Your Order";
   static const String yourOrders = "Your Orders";
   static const String addToCart = "Add to cart";
-  static const String cart = "Cart";
+
+  static const String profile = "Profile";
+  static const String youHaveNoOrders = "You Have No Orders";
   static const String cartIsEmpty = "Your Cart Is Empty";
   static const String favoriteIsEmpty = "Your Favorite Is Empty";
-  static const String profile = "Profile";
+  static const String thisOrderIsNoLongerExisted =
+      "This Order Is No Longer Existed";
 
   static const String jackets = "Jackets";
   static const String shirts = "Shirts";

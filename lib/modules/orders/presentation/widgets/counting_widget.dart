@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 
 class CountingWidget extends StatelessWidget {
   final int num;
+  final void Function() plus;
+  final void Function() minus;
   const CountingWidget(
-    this.num, {
-    super.key,
+     {
+    super.key,required this.num,
+    required this.plus,
+    required this.minus,
   });
 
   @override
@@ -29,9 +33,7 @@ class CountingWidget extends StatelessWidget {
               color: Colors.black,
             ),
             child: InkWell(
-              onTap: () {
-                //widget.num++;
-              },
+              onTap: plus,
               child: const Icon(
                 color: Colors.white,
                 Icons.add,
@@ -47,11 +49,7 @@ class CountingWidget extends StatelessWidget {
               color: Colors.black,
             ),
             child: InkWell(
-              onTap: () {
-                // if (widget.num > 1) {
-                // widget.num--;
-                //}
-              },
+              onTap: minus,
               child: const Icon(
                 color: Colors.white,
                 Icons.add,

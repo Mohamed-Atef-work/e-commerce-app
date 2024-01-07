@@ -1,38 +1,36 @@
 import 'package:e_commerce_app/core/components/custom_text.dart';
+import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
-import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
+import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
+import 'package:e_commerce_app/modules/orders/presentation/widgets/counting_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartProductWidget extends StatelessWidget {
   final int index;
-  final ProductEntity product;
-  final void Function() onPressed;
+  //final void Function() onPressed;
 
   const CartProductWidget({
     super.key,
-    required this.product,
-    required this.onPressed,
+    //required this.onPressed,
     required this.index,
   });
 
   @override
   Widget build(BuildContext context) {
+    final controller = BlocProvider.of<ManageCartProductsCubit>(context);
     return Dismissible(
-      key: ValueKey(product.name),
+      key: ValueKey(controller.state.products[index].name),
       onDismissed: (direction) {
-        /// To Do ooo ooo ooo ooo ooo
-        BlocProvider.of<ManageCartProductsCubit>(context)
-            .state
-            .products
-            .removeAt(index);
-        BlocProvider.of<ManageCartProductsCubit>(context).deleteFromCart(
+        /// To Do ooo ooo ooo ooo ooo ..uId..
+        controller.state.products.removeAt(index);
+        controller.deleteFromCart(
           DeleteFromCartParams(
             uId: "uId",
-            productId: product.id!,
-            category: product.category,
+            productId: controller.state.products[index].id!,
+            category: controller.state.products[index].category,
           ),
         );
       },
@@ -42,50 +40,60 @@ class CartProductWidget extends StatelessWidget {
         child: Column(
           children: [
             TextButton.icon(
-              onPressed: onPressed,
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  Screens.detailsScreen,
+                  arguments: controller.state.products[index],
+                );
+              },
               icon: Container(
-                width: 180,
-                height: 167,
+                width: context.width * 0.3,
+                height: context.height * 0.2,
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Image.network(product.image, fit: BoxFit.cover),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                child: Image.network(controller.state.products[index].image,
+                    fit: BoxFit.cover),
               ),
-              label: SizedBox(
-                width: double.infinity,
-                height: 165,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    CustomText(
-                      text: product.name,
-                      fontWeight: FontWeight.w300,
-                      textAlign: TextAlign.left,
-                      fontSize: 20,
-                      textColor: Colors.black,
-                    ),
-                    CustomText(
-                      text: "${product.price} \$",
-                      fontSize: 18,
-                      fontWeight: FontWeight.w300,
-                      textColor: Colors.black,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                    ),
-                    CustomText(
-                      text: product.category,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w300,
-                      textColor: Colors.black,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                    ),
-                  ],
-                ),
+              label: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    children: [
+                      CustomText(
+                        fontSize: 18,
+                        text: controller.state.products[index].name,
+                        textAlign: TextAlign.left,
+                        fontWeight: FontWeight.bold,
+                        textColor: AppColors.black,
+                      ),
+                      SizedBox(
+                        //width: context.width * 0.6,
+                        height: context.height * 0.03,
+                      ),
+                      CountingWidget(
+                        plus: () {
+                          controller.quantityPlus(index);
+                        },
+                        minus: () {
+                          controller.quantityMinus(index);
+                        },
+                        num: controller.state.quantities[index],
+                      ),
+                    ],
+                  ),
+                  //Spacer(),
+                  CustomText(
+                    fontSize: 18,
+                    //textAlign: TextAlign.,
+                    fontWeight: FontWeight.bold,
+                    text:
+                        "\$${int.parse(controller.state.products[index].price) * controller.state.quantities[index]}",
+                    textColor: AppColors.darkBrown,
+                  ),
+                ],
               ),
             ),
             Divider(

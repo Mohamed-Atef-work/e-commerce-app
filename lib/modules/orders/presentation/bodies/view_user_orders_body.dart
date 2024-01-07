@@ -19,12 +19,16 @@ class ViewUserOrdersBody extends StatelessWidget {
       builder: (context, state) {
         if (state.getOrders == RequestState.success &&
             state.orders.isNotEmpty) {
+
+
+
+
           return ListView.builder(
             itemCount: state.orders.length,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) => OrderWidget(state.orders[index]),
           );
-        } else if (state.getOrders == RequestState.success &&
+        } else if (state.getOrders != RequestState.loading &&
             state.orders.isEmpty) {
           return Center(
             child: Column(

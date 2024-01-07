@@ -33,16 +33,16 @@ class HomeView extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: context.width * 0.02),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1 / 1.6,
                     crossAxisSpacing: context.width * 0.01,
                     mainAxisSpacing: context.height * 0.005,
+                    childAspectRatio: 1 / 1.6,
+                    crossAxisCount: 2,
                   ),
                   itemBuilder: (context, index) =>
-                      ProductWithMoreDetailsComponent(
+                      ProductComponent(
                     product: state.products[index],
-                    imageWidth: context.width * 0.48,
-                    imageHeight: context.height * 0.25,
+                    //imageWidth: context.width * 0.48,
+                    //imageHeight: context.height * 0.25,
                   ),
                 );
               }

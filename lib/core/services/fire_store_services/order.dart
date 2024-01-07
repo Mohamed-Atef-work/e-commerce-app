@@ -8,13 +8,13 @@ import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_c
 import 'package:e_commerce_app/modules/orders/domain/use_case/up_date_order_data_use_case.dart';
 
 abstract class OrderStore {
-  Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params);
+  Future<void> addOrder(AddOrderParams params);
+  Future<void> deleteOrder(DeleteOrderParams params);
   Future<void> addItemToOrder(AddItemToOrderParams params);
   Future<void> updateOrderData(UpDateOrderDataParams params);
-  Future<void> deleteOrder(DeleteOrderParams params);
-  Future<void> addOrder(AddOrderParams params);
   Future<DocumentSnapshot<Map<String, dynamic>>> getOrderData(
       DocumentReference orderRef);
+  Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params);
 
   ///
   Future<QuerySnapshot<Map<String, dynamic>>> getOrderItems(
@@ -101,10 +101,10 @@ class OrderStoreImpl implements OrderStore {
     /// admin and user
     /// base methods (according to the design of the firebase);
     await params.itemRef.delete();
-    await _deleteOrderIfNOItems(params.itemRef);
+    await _deleteOrderIfNoItems(params.itemRef);
   }
 
-  Future<void> _deleteOrderIfNOItems(DocumentReference itemRef) async {
+  Future<void> _deleteOrderIfNoItems(DocumentReference itemRef) async {
     final response = await itemRef.parent.get();
     if (response.docs.isEmpty) {
       await itemRef.parent.parent!.delete();

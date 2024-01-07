@@ -25,24 +25,26 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
 
   Future<void> getCartProducts() async {
     if (state.needToReGet) {
-      emit(state.copyWith(getCartState: RequestState.loading));
+      emit(state.copyWith(getCart: RequestState.loading));
 
       /// Handling UID  :) ..........
       final result = await _getCartProductsUseCase(
           const GetCartProductsParams(uId: "uId"));
       emit(
         result.fold(
-          (l) => state.copyWith(
-              message: l.message, getCartState: RequestState.error),
+          (l) =>
+              state.copyWith(message: l.message, getCart: RequestState.error),
           (r) {
             List<ProductEntity> products = [];
             for (CartEntity cart in r) {
               products.addAll(cart.products);
             }
+            List<int> quantities = List.generate(products.length, (index) => 1);
             return state.copyWith(
-              products: products,
               needToReGet: false,
-              getCartState: RequestState.success,
+              products: products,
+              quantities: quantities,
+              getCart: RequestState.success,
             );
           },
         ),
@@ -51,43 +53,69 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
   }
 
   Future<void> addToCart(AddToCartParams params) async {
-    emit(state.copyWith(addState: RequestState.loading));
+    emit(state.copyWith(addToCart: RequestState.loading));
     final result = await _addToCartUseCase.call(params);
     emit(result.fold(
-      (l) => state.copyWith(addState: RequestState.error, message: l.message),
-      (r) => state.copyWith(addState: RequestState.success, needToReGet: true),
+      (l) => state.copyWith(addToCart: RequestState.error, message: l.message),
+      (r) => state.copyWith(addToCart: RequestState.success, needToReGet: true),
     ));
   }
 
   Future<void> deleteFromCart(DeleteFromCartParams params) async {
-    emit(state.copyWith(deleteState: RequestState.loading));
+    emit(state.copyWith(deleteFromCart: RequestState.loading));
     final result = await _deleteFromCartUseCase.call(params);
     emit(result.fold(
-      (l) =>
-          state.copyWith(deleteState: RequestState.error, message: l.message),
-      (r) =>
-          state.copyWith(deleteState: RequestState.success, needToReGet: true),
+      (l) => state.copyWith(
+          deleteFromCart: RequestState.error, message: l.message),
+      (r) => state.copyWith(
+          deleteFromCart: RequestState.success, needToReGet: true),
     ));
   }
 
   Future<void> addOrder() async {
+    emit(state.copyWith(addOrder: RequestState.loading));
+
+    double totalPrice = 0;
+    for (int index = 0; index < state.products.length; index++) {
+      totalPrice = totalPrice +
+          state.quantities[index] * double.parse(state.products[index].price);
+    }
+
     final result = await _addOrderUseCase.call(
       AddOrderParams(
         items: List.generate(
           state.products.length,
           (index) => OrderItemModel(
             product: state.products[index],
-            quantity: 1,
+            quantity: state.quantities[index],
           ),
         ),
-        orderData: const OrderDataModel(
-            date: 'date',
-            name: "name",
-            address: "address",
-            phone: "phone",
-            totalPrice: "34"),
+        orderData: OrderDataModel(
+          date: "date",
+          name: "name",
+          phone: "phone",
+          totalPrice: totalPrice.toString(),
+          address: "address",
+        ),
         uId: "uId",
       ),
     );
+
+    emit(result.fold(
+      (l) => state.copyWith(addOrder: RequestState.error, message: l.message),
+      (r) => state.copyWith(addOrder: RequestState.success),
+    ));
+  }
+
+  void quantityPlus(int index) {
+    state.quantities[index]++;
+    emit(state.copyWith());
+  }
+
+  void quantityMinus(int index) {
+    if (state.quantities[index] > 1) {
+      state.quantities[index]--;
+    }
+    emit(state.copyWith());
   }
 }

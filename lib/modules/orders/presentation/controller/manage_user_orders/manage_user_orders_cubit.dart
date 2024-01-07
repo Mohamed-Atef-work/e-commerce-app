@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -16,6 +18,9 @@ class ManageUserOrdersCubit extends Cubit<ManageUserOrdersState> {
   final GetUserOrdersUseCase _getUserOrders;
   final GetOrderItemsUseCase _getOrderItems;
   final DeleteItemFromOrderUseCase _deleteItemFromOrder;
+
+  StreamSubscription<List<OrderDataEntity>>? ordersSub;
+
   ManageUserOrdersCubit(
     this._deleteOrder,
     this._getUserOrders,
@@ -24,13 +29,15 @@ class ManageUserOrdersCubit extends Cubit<ManageUserOrdersState> {
   ) : super(const ManageUserOrdersState());
 
   Future<void> getOrders(String uId) async {
+    await ordersSub?.cancel();
     emit(state.copyWith(getOrders: RequestState.loading));
     final result = await _getUserOrders.call(uId);
+
     result.fold(
         (l) => emit(
               state.copyWith(getOrders: RequestState.error, message: l.message),
             ), (r) {
-      r.listen(
+      ordersSub = r.listen(
         (orders) {
           emit(
             state.copyWith(getOrders: RequestState.success, orders: orders),
@@ -74,5 +81,11 @@ class ManageUserOrdersCubit extends Cubit<ManageUserOrdersState> {
         (r) => state.copyWith(deleteOrderItem: RequestState.success),
       ),
     );
+  }
+
+  @override
+  Future<void> close() async {
+    await ordersSub?.cancel();
+    return super.close();
   }
 }

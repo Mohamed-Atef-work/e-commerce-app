@@ -24,7 +24,7 @@ class OrderItemWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Image.network(
-              item.product.image,
+                item.product.image,
                 fit: BoxFit.contain,
               ),
             ),
@@ -41,7 +41,7 @@ class OrderItemWidget extends StatelessWidget {
                   width: context.width * 0.6,
                   height: context.height * 0.03,
                 ),
-                CountingWidget(item.quantity),
+                CountingWidget(num:item.quantity,plus: (){},minus: (){},),
               ],
             ),
             CustomText(

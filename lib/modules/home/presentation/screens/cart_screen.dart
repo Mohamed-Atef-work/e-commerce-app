@@ -42,11 +42,11 @@ class CartScreen extends StatelessWidget {
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) => CartProductWidget(
                         index: index,
-                        product: pros[index],
-                        onPressed: () {
-                          Navigator.pushNamed(context, Screens.detailsScreen,
-                              arguments: pros[index]);
-                        },
+                        //product: pros[index],
+                       // onPressed: () {
+                       //   Navigator.pushNamed(context, Screens.detailsScreen,
+                       //       arguments: pros[index]);
+                        //},
                       ),
                     );
                   } else {

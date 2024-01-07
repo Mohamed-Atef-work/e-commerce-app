@@ -18,8 +18,7 @@ class ViewUserOrderItemsBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ManageUserOrdersCubit, ManageUserOrdersState>(
       builder: (context, state) {
-        if (state.getOrderItems == RequestState.success &&
-            state.orderItems.isNotEmpty) {
+        if (state.orderItems.isNotEmpty) {
           return ListView.builder(
             itemCount: state.orderItems.length,
             physics: const BouncingScrollPhysics(),
@@ -42,7 +41,8 @@ class ViewUserOrderItemsBody extends StatelessWidget {
               child: OrderItemWidget(state.orderItems[index]),
             ),
           );
-        } else if (state.deleteOrderItem == RequestState.success) {
+        } else if (state.getOrderItems != RequestState.loading &&
+            state.orderItems.isEmpty) {
           return Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,

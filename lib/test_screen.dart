@@ -18,7 +18,7 @@ class TestScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey,
       body: Center(
-        child: CountingWidget(1),/*TextButton(
+        child: CountingWidget(num : 1, plus: () {  }, minus: () {  },),/*TextButton(
           onPressed: () async {
             final FirebaseFirestore firestore = FirebaseFirestore.instance;
             final OrderStore orderStore = OrderStoreImpl(firestore);
