@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/core/components/custom_text.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
@@ -6,9 +7,9 @@ class CountingWidget extends StatelessWidget {
   final int num;
   final void Function() plus;
   final void Function() minus;
-  const CountingWidget(
-     {
-    super.key,required this.num,
+  const CountingWidget({
+    super.key,
+    required this.num,
     required this.plus,
     required this.minus,
   });
@@ -40,7 +41,11 @@ class CountingWidget extends StatelessWidget {
               ),
             ),
           ),
-          CustomText(text: num.toString()),
+          CustomText(
+            fontSize: 18,
+            text: num.toString(),
+            fontFamily: AppStrings.pacifico,
+          ),
           Container(
             width: 25,
             height: 25,

@@ -81,15 +81,17 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
           state.quantities[index] * double.parse(state.products[index].price);
     }
 
+    final items = List.generate(
+      state.products.length,
+      (index) => OrderItemModel(
+        product: state.products[index],
+        quantity: state.quantities[index],
+      ),
+    );
+
     final result = await _addOrderUseCase.call(
       AddOrderParams(
-        items: List.generate(
-          state.products.length,
-          (index) => OrderItemModel(
-            product: state.products[index],
-            quantity: state.quantities[index],
-          ),
-        ),
+        items: items,
         orderData: OrderDataModel(
           date: "date",
           name: "name",

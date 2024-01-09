@@ -36,17 +36,17 @@ class CartView extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
                   child: CustomButton(
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
                     text: AppStrings.checkOut,
+                    fontWeight: FontWeight.bold,
                     fontFamily: AppStrings.pacifico,
                     onPressed: () {
                       BlocProvider.of<ManageCartProductsCubit>(context)
                           .addOrder();
                     },
-                    width: context.width * 0.5,
+                    width: context.width * 0.7,
                     height: context.height * 0.06,
                   ),
                 )

@@ -92,7 +92,8 @@ class ProductComponent extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.orange.shade300,
+          //color: Colors.orange.shade300,
+          color: AppColors.loginTextFormFieldGray,
           borderRadius: BorderRadius.circular(30),
         ),
         child: Column(
@@ -110,17 +111,17 @@ class ProductComponent extends StatelessWidget {
             ),
             SizedBox(height: height * 0.01),
             CustomText(
-              fontSize: 16,
+              fontSize: 20,
               text: product.category,
               fontFamily: AppStrings.pacifico,
             ),
             SizedBox(height: height * 0.01),
             CustomText(
-              text: "\$${product.price}",
               fontSize: 16,
+              text: product.name,
               textColor: Colors.black,
             ),
-            SizedBox(height: height * 0.01),
+            SizedBox(height: height * 0.02),
             CustomText(
               fontSize: 16,
               text: "\$${product.price}",

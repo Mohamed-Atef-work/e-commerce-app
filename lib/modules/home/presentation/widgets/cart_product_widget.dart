@@ -53,8 +53,10 @@ class CartProductWidget extends StatelessWidget {
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                child: Image.network(controller.state.products[index].image,
-                    fit: BoxFit.cover),
+                child: Image.network(
+                  fit: BoxFit.cover,
+                  controller.state.products[index].image,
+                ),
               ),
               label: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -64,10 +66,10 @@ class CartProductWidget extends StatelessWidget {
                     children: [
                       CustomText(
                         fontSize: 18,
-                        text: controller.state.products[index].name,
                         textAlign: TextAlign.left,
-                        fontWeight: FontWeight.bold,
                         textColor: AppColors.black,
+                        fontWeight: FontWeight.bold,
+                        text: controller.state.products[index].name,
                       ),
                       SizedBox(
                         //width: context.width * 0.6,
