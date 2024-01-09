@@ -16,6 +16,7 @@ class AppStrings {
   static const String add = "Add";
   static const String ok = "Ok";
   static const String update = "Update";
+  static const String updated = "Updated !";
   static const String addAnImage = "Add An Image";
   static const String changeTheImage = "Change The Image";
   static const String edit = "Edit";
@@ -30,6 +31,9 @@ class AppStrings {
   static const String addCategory = "Add Category";
   static const String newCategory = "New Category";
   static const String category = "Category";
+  static const String name = "Name";
+  static const String phone = "Phone";
+  static const String address = "Address";
 
   static const String productDescription = "Product Description";
   static const String productLocation = "Product Location";

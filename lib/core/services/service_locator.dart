@@ -60,6 +60,7 @@ import 'package:e_commerce_app/modules/orders/domain/use_case/get_users_who_orde
 import 'package:e_commerce_app/modules/orders/domain/use_case/up_date_order_data_use_case.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_order_view/user_order_view_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_orders/manage_user_orders_cubit.dart';
+import 'package:e_commerce_app/modules/orders/presentation/controller/update_order_data_controller/update_order_data_cubit.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 
@@ -142,6 +143,7 @@ void _home() {
   sl.registerFactory(() => ManageCartProductsCubit(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => ManageUserOrdersCubit(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => ManageUserOrderViewCubit());
+  sl.registerFactory(() => UpdateOrderDataCubit(sl()));
 
   /// Use Case
   /// <-------------------- Orders ----------------------------->

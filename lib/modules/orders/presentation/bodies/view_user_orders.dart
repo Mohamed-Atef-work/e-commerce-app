@@ -2,10 +2,13 @@ import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/delete_dismissible_background.dart';
 import 'package:e_commerce_app/core/components/edite_dismissible_background.dart';
+import 'package:e_commerce_app/core/services/service_locator.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_case.dart';
+import 'package:e_commerce_app/modules/orders/presentation/controller/update_order_data_controller/update_order_data_cubit.dart';
+import 'package:e_commerce_app/modules/orders/presentation/widgets/update_order_date_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -33,16 +36,24 @@ class ViewUserOrdersBody extends StatelessWidget {
                   );
                   return true;
                 } else {
+                  showBottomSheet(
+                    context: context,
+                    builder: (context) => BlocProvider(
+                      create: (context) => sl<UpdateOrderDataCubit>()
+                        ..orderData(state.orders[index]),
+                      child: const UpDateOrderDataWidget(),
+                    ),
+                  );
                   return false;
                 }
               },
               onDismissed: (DismissDirection direction) {
-                if (direction == DismissDirection.startToEnd) {
-                  BlocProvider.of<ManageUserOrdersCubit>(context)
-                      .state
-                      .orders
-                      .removeAt(index);
-                }
+                //if (direction == DismissDirection.startToEnd) {
+                BlocProvider.of<ManageUserOrdersCubit>(context)
+                    .state
+                    .orders
+                    .removeAt(index);
+                //}
               },
               background: const DeleteDismissibleBackgroundComponent(),
               secondaryBackground: const EditeDismissibleBackgroundComponent(),
