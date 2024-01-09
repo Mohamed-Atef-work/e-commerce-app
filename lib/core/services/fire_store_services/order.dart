@@ -16,6 +16,9 @@ abstract class OrderStore {
       DocumentReference orderRef);
   Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params);
 
+  Future<void> deleteAllOrderItems(
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> items);
+
   ///
   Future<QuerySnapshot<Map<String, dynamic>>> getOrderItems(
       DocumentReference orderRef);
@@ -83,9 +86,17 @@ class OrderStoreImpl implements OrderStore {
   Future<void> deleteOrder(DeleteOrderParams params) async {
     /// admin and user
     /// base methods (according to the design of the firebase);
+
+    final orderItems = await getOrderItems(params.orderRef);
+    await deleteAllOrderItems(orderItems.docs);
     await params.orderRef.delete();
-    for (String id in params.orderItemsIds) {
-      await params.orderRef.collection(FirebaseStrings.items).doc(id).delete();
+  }
+
+  @override
+  Future<void> deleteAllOrderItems(
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> items) async {
+    for (var item in items) {
+      await item.reference.delete();
     }
   }
 
