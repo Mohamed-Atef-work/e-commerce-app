@@ -57,7 +57,7 @@ class CountingWidget extends StatelessWidget {
               onTap: minus,
               child: const Icon(
                 color: Colors.white,
-                Icons.add,
+                Icons.remove,
               ),
             ),
           ),

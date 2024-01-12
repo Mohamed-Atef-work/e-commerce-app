@@ -61,6 +61,7 @@ class ManageUserOrdersCubit extends Cubit<ManageUserOrdersState> {
 
   Future<void> deleteOrder(DeleteOrderParams params) async {
     emit(state.copyWith(deleteOrder: RequestState.loading));
+    print(state.deleteOrder);
     final result = await _deleteOrder.call(params);
     emit(
       result.fold(
@@ -69,6 +70,7 @@ class ManageUserOrdersCubit extends Cubit<ManageUserOrdersState> {
         (r) => state.copyWith(deleteOrder: RequestState.success),
       ),
     );
+    print(state.deleteOrder);
   }
 
   Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params) async {
@@ -81,6 +83,12 @@ class ManageUserOrdersCubit extends Cubit<ManageUserOrdersState> {
         (r) => state.copyWith(deleteOrderItem: RequestState.success),
       ),
     );
+  }
+
+  void dismissOrder(int index) {
+    List<OrderDataEntity> orders = state.orders;
+    orders.removeAt(index);
+    emit(state.copyWith(orders: orders));
   }
 
   @override

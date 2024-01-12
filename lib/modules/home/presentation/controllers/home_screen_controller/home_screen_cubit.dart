@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/core/use_case/base_use_case.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -12,44 +14,58 @@ part 'home_screen_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   final GetAllProductCategoriesUseCase getAllProductCategoriesUseCase;
   final LoadProductsUseCase loadProductsUseCase;
+
+  StreamSubscription<List<ProductEntity>>? productsSub;
+  StreamSubscription<List<ProductCategoryEntity>>? categorySub;
+
   HomeCubit(
     this.loadProductsUseCase,
     this.getAllProductCategoriesUseCase,
   ) : super(const HomeState());
 
-  Future<void> loadProducts() async {
-    emit(state.copyWith(productsState: RequestState.loading));
-    final result = await loadProductsUseCase(
-      LoadProductsParameters(
-          category: state.categories[state.categoryIndex].name),
-    );
-    result.fold((l) {
-      emit(state.copyWith(
-        productsState: RequestState.error,
-        message: l.message,
-      ));
-    }, (stream) {
-      stream.listen((products) {
-        emit(state.copyWith(
-            productsState: RequestState.success, products: products));
+  Future<void> loadCategories() async {
+    await categorySub?.cancel();
+    emit(state.copyWith(categoriesState: RequestState.loading));
+    print("Categories -----------> ${state.categoriesState}");
+    final result = await getAllProductCategoriesUseCase(const NoParameters());
+    result.fold(
+        (l) => emit(
+              state.copyWith(
+                  categoriesState: RequestState.error, message: l.message),
+            ), (stream) {
+      categorySub = stream.listen((categories) {
+        emit(
+          state.copyWith(
+              categoriesState: RequestState.success, categories: categories),
+        );
+        print("Categories -----------> ${state.categoriesState}");
       });
     });
   }
 
-  Future<void> loadCategories() async {
-    emit(state.copyWith(categoriesState: RequestState.loading));
-    final result = await getAllProductCategoriesUseCase(const NoParameters());
-    result.fold((l) {
-      emit(state.copyWith(
-        categoriesState: RequestState.error,
-        message: l.message,
-      ));
-    }, (stream) async {
-      stream.listen((categories) {
-        emit(state.copyWith(
-          categoriesState: RequestState.success,
-          categories: categories,
-        ));
+  Future<void> loadProducts() async {
+    await productsSub?.cancel();
+    emit(state.copyWith(productsState: RequestState.loading));
+    print("products -----------> ${state.productsState}");
+
+    final result = await loadProductsUseCase(
+      LoadProductsParameters(
+          category: state.categories[state.categoryIndex].name),
+    );
+    result.fold(
+        (l) => emit(
+              state.copyWith(
+                  productsState: RequestState.error, message: l.message),
+            ), (stream) {
+      productsSub = stream.listen((products) {
+        emit(
+          state.copyWith(
+              productsState: RequestState.success, products: products),
+        );
+        print(" <----------- update -----------> ");
+
+
+        print("products -----------> ${state.productsState}");
       });
     });
   }
@@ -61,15 +77,24 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<List<ProductCategoryEntity>> _loadFirstCat() async {
-    final stream = await getAllProductCategoriesUseCase(const NoParameters());
+    await categorySub?.cancel();
+    final result = await getAllProductCategoriesUseCase(const NoParameters());
     late Future<List<ProductCategoryEntity>> firstList;
-    stream.fold((l) => null, (r) {
-      firstList = r.first;
+    result.fold((l) => null, (stream) {
+      firstList = stream.first;
     });
     return firstList;
   }
 
   void emitCategoryIndex(int index) {
     emit(state.copyWith(categoryIndex: index));
+    loadProducts();
+  }
+
+  @override
+  Future<void> close() async {
+    await categorySub?.cancel();
+    await productsSub?.cancel();
+    return super.close();
   }
 }

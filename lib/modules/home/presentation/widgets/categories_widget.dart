@@ -16,7 +16,7 @@ class CategoriesWidget extends StatelessWidget {
       padding: const EdgeInsets.only(
         left: 5,
         top: 5,
-        bottom:5,
+        bottom: 5,
       ),
       child: SizedBox(
         height: context.height * 0.065,
@@ -31,16 +31,17 @@ class CategoriesWidget extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) => CategoryComponent(
                   onTap: () {
-                    BlocProvider.of<HomeCubit>(context).emitCategoryIndex(index);
-                    BlocProvider.of<HomeCubit>(context).loadProducts();
+                    BlocProvider.of<HomeCubit>(context)
+                        .emitCategoryIndex(index);
                     print(state.categories[index].id);
                   },
                   category: state.categories[index],
                   backgroundColor: state.categoryIndex == index
                       ? Colors.grey.shade200
                       : Colors.black,
-                  iconAndTextColor:
-                      state.categoryIndex == index ? Colors.black : Colors.white,
+                  iconAndTextColor: state.categoryIndex == index
+                      ? Colors.black
+                      : Colors.white,
                 ),
                 separatorBuilder: (context, index) =>
                     SizedBox(width: context.width * 0.01),

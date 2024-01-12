@@ -35,7 +35,7 @@ class BuyItApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: AppStrings.buyIt,
-        initialRoute: Screens.userOrderScreen,
+        initialRoute: Screens.homeScreen,
         routes: {
           Screens.testScreen: (context) => const TestScreen(),
           Screens.cartScreen: (context) => const CartScreen(),
