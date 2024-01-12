@@ -58,60 +58,42 @@ class UpDateOrderDataWidget extends StatelessWidget {
                 children: [
                   CustomTextFormField(
                     fontSize: 15,
-                    textEditingController:
-                        TextEditingController(text: state.orderData!.name),
                     hintText: AppStrings.name,
+                    prefixIcon: Icons.person,
+                    textEditingController:
+                        BlocProvider.of<UpdateOrderDataCubit>(context).name,
                     validator: (value) =>
                         Validators.stringValidator(value, AppStrings.name),
-                    onChanged: (name) {
-                      BlocProvider.of<UpdateOrderDataCubit>(context).name =
-                          name;
-                      print(
-                          BlocProvider.of<UpdateOrderDataCubit>(context).name);
-                    },
-                    prefixIcon: Icons.person,
                     fillColor: AppColors.loginTextFormFieldGray,
                   ),
                   CustomTextFormField(
                     fontSize: 15,
-                    textEditingController:
-                        TextEditingController(text: state.orderData!.phone),
                     hintText: AppStrings.phone,
+                    prefixIcon: Icons.phone_android,
+                    textEditingController:
+                        BlocProvider.of<UpdateOrderDataCubit>(context).phone,
                     validator: (value) =>
                         Validators.numericValidator(value, AppStrings.phone),
-                    onChanged: (phone) {
-                      BlocProvider.of<UpdateOrderDataCubit>(context).phone =
-                          phone;
-                      print(
-                          BlocProvider.of<UpdateOrderDataCubit>(context).phone);
-                    },
-                    prefixIcon: Icons.phone_android,
                     fillColor: AppColors.loginTextFormFieldGray,
                   ),
                   CustomTextFormField(
                     fontSize: 15,
-                    textEditingController:
-                        TextEditingController(text: state.orderData!.address),
+                    prefixIcon: Icons.place,
                     hintText: AppStrings.address,
+                    textEditingController:
+                        BlocProvider.of<UpdateOrderDataCubit>(context).address,
                     validator: (value) =>
                         Validators.stringValidator(value, AppStrings.address),
-                    onChanged: (address) {
-                      BlocProvider.of<UpdateOrderDataCubit>(context).address =
-                          address;
-                      print(BlocProvider.of<UpdateOrderDataCubit>(context)
-                          .address);
-                    },
-                    prefixIcon: Icons.place,
                     fillColor: AppColors.loginTextFormFieldGray,
                   ),
                   CustomButton(
                     height: 50,
+                    fontSize: 18,
                     onPressed: () {
                       BlocProvider.of<UpdateOrderDataCubit>(context)
                           .updateOrderData();
                     },
                     text: AppStrings.update,
-                    fontSize: 18,
                     width: context.width * 0.7,
                     fontFamily: AppStrings.pacifico,
                   ),

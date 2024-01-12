@@ -11,9 +11,12 @@ part 'update_order_data_state.dart';
 class UpdateOrderDataCubit extends Cubit<UpdateOrderDataState> {
   final UpDateOrderDataUseCase _upDateOrderDataUseCase;
 
-  String? name;
-  String? phone;
-  String? address;
+  //String? name;
+  TextEditingController name = TextEditingController();
+  //String? phone;
+  TextEditingController phone = TextEditingController();
+  //String? address;
+  TextEditingController address = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
 
@@ -21,6 +24,9 @@ class UpdateOrderDataCubit extends Cubit<UpdateOrderDataState> {
       : super(const UpdateOrderDataState());
 
   void orderData(OrderDataEntity orderData) {
+    name.text = state.orderData!.name;
+    phone.text = state.orderData!.phone;
+    address.text = state.orderData!.address;
     emit(state.copyWith(orderData: orderData));
   }
 
@@ -32,19 +38,21 @@ class UpdateOrderDataCubit extends Cubit<UpdateOrderDataState> {
         UpDateOrderDataParams(
           ref: state.orderData!.reference!,
           data: OrderDataModel(
-            name: name ?? state.orderData!.name,
-            phone: phone ?? state.orderData!.phone,
-            address: address ?? state.orderData!.address,
+            name: name.text,
+            phone: phone.text,
+            address: address.text,
             date: state.orderData!.date,
             totalPrice: state.orderData!.totalPrice,
           ),
         ),
       );
-      emit(result.fold(
-        (l) =>
-            state.copyWith(updateState: RequestState.error, message: l.message),
-        (r) => state.copyWith(updateState: RequestState.success),
-      ));
+      emit(
+        result.fold(
+          (l) => state.copyWith(
+              updateState: RequestState.error, message: l.message),
+          (r) => state.copyWith(updateState: RequestState.success),
+        ),
+      );
     }
     print(state.updateState);
   }
