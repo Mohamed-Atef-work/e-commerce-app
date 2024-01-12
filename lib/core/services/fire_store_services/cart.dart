@@ -8,6 +8,7 @@ abstract class CartStore {
   Future<void> deleteFromCart(DeleteFromCartParams params);
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getCartProducts(
       String uId);
+  Future<void> clearCart(List<DeleteFromCartParams> params);
 
   /// < ---------------------------------------------------------------------- >
   Future<List<DocumentReference>> getCartCategories(String uId);
@@ -72,6 +73,12 @@ class CartStoreImpl implements CartStore {
         await categoryRef.collection(FirebaseStrings.products).get();
     final category = categoryRef.id;
     response.docs.map((doc) => {ids.add(doc.id)}).toList();
+
+    /// delete category if There ore No products;
+    if (ids.isEmpty) {
+      await categoryRef.delete();
+    }
+
     return ReturnedIdsAndTheirCategory(
       category: category,
       ids: ids,
@@ -122,8 +129,8 @@ class CartStoreImpl implements CartStore {
       await getCategoryIds(catRef).then((idsAndTheirCategory) async {
         await getProductsOfCategory(
           GetProductsOfOneCategoryParams(
-            category: idsAndTheirCategory.category,
             ids: idsAndTheirCategory.ids,
+            category: idsAndTheirCategory.category,
           ),
         ).then((productsDocs) {
           products.addAll(productsDocs);
@@ -153,6 +160,13 @@ class CartStoreImpl implements CartStore {
       await reference.delete();
     }
     return response;
+  }
+
+  @override
+  Future<void> clearCart(List<DeleteFromCartParams> params) async {
+    for (var param in params) {
+      await deleteFromCart(param);
+    }
   }
 }
 

@@ -18,55 +18,55 @@ class CartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ManageCartProductsCubit, ManageCartProductsState>(
-      builder: (context, state) {
-        if (state.getCart == RequestState.success) {
-          if (state.products.isNotEmpty) {
-            return Column(
-              children: [
-                Expanded(
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: state.products.length,
-                    physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
-                    itemBuilder: (context, index) =>
-                        CartProductWidget(index: index),
-                    separatorBuilder: (context, index) =>
-                        SizedBox(height: context.height * 0.01),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: CustomButton(
-                    fontSize: 18,
-                    text: AppStrings.checkOut,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: AppStrings.pacifico,
-                    onPressed: () {
-                      BlocProvider.of<ManageCartProductsCubit>(context)
-                          .addOrder();
-                    },
-                    width: context.width * 0.7,
-                    height: context.height * 0.06,
-                  ),
-                )
-              ],
-            );
-          } else {
-            return const Center(
-              child: CustomText(
-                fontSize: 25,
-                textColor: AppColors.black,
-                fontWeight: FontWeight.bold,
-                text: AppStrings.cartIsEmpty,
-                fontFamily: AppStrings.pacifico,
+        builder: (context, state) {
+      if (state.getCart == RequestState.loading ||
+          state.deleteFromCart == RequestState.loading ||
+          state.addOrder == RequestState.loading ||
+          state.clearCart == RequestState.loading) {
+        return const LoadingWidget();
+      } else if (state.getCart == RequestState.success &&
+          state.products.isNotEmpty) {
+        return Column(
+          children: [
+            Expanded(
+              child: ListView.separated(
+                shrinkWrap: true,
+                itemCount: state.products.length,
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
+                itemBuilder: (context, index) =>
+                    CartProductWidget(index: index),
+                separatorBuilder: (context, index) =>
+                    SizedBox(height: context.height * 0.01),
               ),
-            );
-          }
-        } else {
-          return const LoadingWidget();
-        }
-      },
-    );
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: CustomButton(
+                fontSize: 18,
+                text: AppStrings.checkOut,
+                fontWeight: FontWeight.bold,
+                fontFamily: AppStrings.pacifico,
+                onPressed: () {
+                  BlocProvider.of<ManageCartProductsCubit>(context).addOrder();
+                },
+                width: context.width * 0.7,
+                height: context.height * 0.06,
+              ),
+            )
+          ],
+        );
+      } else {
+        return const Center(
+          child: CustomText(
+            fontSize: 25,
+            textColor: AppColors.black,
+            fontWeight: FontWeight.bold,
+            text: AppStrings.cartIsEmpty,
+            fontFamily: AppStrings.pacifico,
+          ),
+        );
+      }
+    });
   }
 }

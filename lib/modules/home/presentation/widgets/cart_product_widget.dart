@@ -24,8 +24,8 @@ class CartProductWidget extends StatelessWidget {
     return Dismissible(
       key: ValueKey(controller.state.products[index].name),
       onDismissed: (direction) {
-        /// To Do ooo ooo ooo ooo ooo ..uId..
-        controller.state.products.removeAt(index);
+        /// To Do ooo ooo ooo ooo ooo ..[uId]..
+
         controller.deleteFromCart(
           DeleteFromCartParams(
             uId: "uId",
@@ -33,6 +33,7 @@ class CartProductWidget extends StatelessWidget {
             category: controller.state.products[index].category,
           ),
         );
+        controller.state.products.removeAt(index);
       },
       background: Container(color: Colors.red),
       child: Padding(

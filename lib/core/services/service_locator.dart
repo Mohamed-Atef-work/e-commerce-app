@@ -36,6 +36,7 @@ import 'package:e_commerce_app/modules/home/data/repository/favorite_data_reposi
 import 'package:e_commerce_app/modules/home/domain/repository/favorite_domain_repository.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/clear_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_favorite_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/get_cart_products_use_case.dart';
@@ -140,7 +141,8 @@ void _home() {
   sl.registerFactory(() => HomeCubit(sl(), sl()));
   sl.registerFactory(() => GetFavoriteCubit(sl()));
   sl.registerFactory(() => ManageFavoriteCubit(sl(), sl()));
-  sl.registerFactory(() => ManageCartProductsCubit(sl(), sl(), sl(), sl()));
+  sl.registerFactory(
+      () => ManageCartProductsCubit(sl(), sl(), sl(), sl(), sl()));
   sl.registerFactory(() => ManageUserOrdersCubit(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => ManageUserOrderViewCubit());
   sl.registerFactory(() => UpdateOrderDataCubit(sl()));
@@ -153,13 +155,14 @@ void _home() {
 
   /// <--------------------- Cart ------------------------------->
   sl.registerLazySingleton(() => AddToCartUseCase(sl()));
+  sl.registerLazySingleton(() => ClearCartUseCase(sl()));
   sl.registerLazySingleton(() => DeleteFromCartUseCase(sl()));
   sl.registerLazySingleton(() => GetCartProductsUseCase(sl()));
 
+  /// <-------------------- Orders ------------------------------->
   sl.registerLazySingleton(() => AddOrderUseCase(sl()));
   sl.registerLazySingleton(() => AddItemToOrderUseCase(sl()));
 
-  /// <-------------------- Orders ------------------------------->
   sl.registerLazySingleton(() => GetOrderItemsUseCase(sl()));
   sl.registerLazySingleton(() => GetUserOrdersUseCase(sl()));
   sl.registerLazySingleton(() => GetUsersWhoOrderedUseCase(sl()));

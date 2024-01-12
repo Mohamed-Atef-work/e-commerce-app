@@ -55,8 +55,8 @@ class DetailsScreen extends StatelessWidget {
             },
             child: const CustomText(
               fontSize: 20,
-              text: AppStrings.order,
               textColor: Colors.white,
+              text: AppStrings.addToCart,
               fontWeight: FontWeight.bold,
               fontFamily: AppStrings.pacifico,
             ),

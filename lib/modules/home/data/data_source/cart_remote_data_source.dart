@@ -6,7 +6,9 @@ import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart
 import 'package:e_commerce_app/modules/home/data/models/cart_category_model.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/cart_category_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/cart_entity.dart';
+import 'package:e_commerce_app/modules/home/domain/repository/cart_domain_repository.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/clear_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/get_cart_products_use_case.dart';
 
@@ -15,6 +17,7 @@ abstract class CartBaseRemoteDataSource {
   Future<void> deleteFromCart(DeleteFromCartParams params);
   Future<CartEntity> getProductsOfCategory(CartCategoryEntity params);
   Future<List<CartEntity>> getCartProducts(GetCartProductsParams params);
+  Future<void> clearCart(ClearCartParams params);
 
   //Future<List<ProductEntity>> getProduct(GetProductParams params);
   //Future<List<CartCategoryEntity>> getCartCategories(String uId);
@@ -140,6 +143,14 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
         ),
       );
     }).catchError((error) {
+      print(error.toString());
+      throw ServerException(message: error);
+    });
+  }
+
+  @override
+  Future<void> clearCart(ClearCartParams params) async {
+    await cartStore.clearCart(params.params).catchError((error) {
       print(error.toString());
       throw ServerException(message: error);
     });
