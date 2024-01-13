@@ -15,19 +15,22 @@ class AddToCartUseCase extends BaseUseCase<void, AddToCartParams> {
 }
 
 class AddToCartParams extends Equatable {
+  final String uId;
+  final int quantity;
   final String category;
   final String productId;
-  final String uId;
 
   const AddToCartParams({
+    required this.uId,
+    required this.quantity,
     required this.category,
     required this.productId,
-    required this.uId,
   });
 
   @override
   List<Object?> get props => [
         uId,
+        quantity,
         category,
         productId,
       ];

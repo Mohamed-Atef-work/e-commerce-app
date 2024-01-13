@@ -58,10 +58,14 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
   Future<void> addToCart(AddToCartParams params) async {
     emit(state.copyWith(addToCart: RequestState.loading));
     final result = await _addToCartUseCase.call(params);
-    emit(result.fold(
-      (l) => state.copyWith(addToCart: RequestState.error, message: l.message),
-      (r) => state.copyWith(addToCart: RequestState.success, needToReGet: true),
-    ));
+    emit(
+      result.fold(
+        (l) =>
+            state.copyWith(addToCart: RequestState.error, message: l.message),
+        (r) =>
+            state.copyWith(addToCart: RequestState.success, needToReGet: true),
+      ),
+    );
   }
 
   Future<void> deleteFromCart(DeleteFromCartParams params) async {

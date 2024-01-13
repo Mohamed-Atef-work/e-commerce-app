@@ -5,10 +5,14 @@ import 'package:flutter/material.dart';
 
 class CountingWidget extends StatelessWidget {
   final int num;
+  final double? width;
+  final double height;
   final void Function() plus;
   final void Function() minus;
   const CountingWidget({
     super.key,
+    this.width,
+    this.height = 35,
     required this.num,
     required this.plus,
     required this.minus,
@@ -17,18 +21,19 @@ class CountingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 30,
-      width: context.width * 0.3,
+      height: height,
+      width: width ?? context.width * 0.3,
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
         color: Colors.white30,
+        borderRadius: BorderRadius.circular(25),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            width: 25,
-            height: 25,
+            width: height * 0.71,
+            height: height * 0.71,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.black,
@@ -47,8 +52,8 @@ class CountingWidget extends StatelessWidget {
             fontFamily: AppStrings.pacifico,
           ),
           Container(
-            width: 25,
-            height: 25,
+            width: height * 0.71,
+            height: height * 0.71,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.black,

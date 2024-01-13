@@ -12,9 +12,11 @@ import 'package:e_commerce_app/modules/home/presentation/controllers/manage_favo
 class HeartWihMangeFavoriteCubitProviderWidget extends StatelessWidget {
   final ProductEntity product;
   final Color heartColor;
+  final double? iconsSize;
 
   const HeartWihMangeFavoriteCubitProviderWidget({
     super.key,
+    this.iconsSize,
     required this.product,
     required this.heartColor,
   });
@@ -30,7 +32,10 @@ class HeartWihMangeFavoriteCubitProviderWidget extends StatelessWidget {
           } else {
             return IconButton(
               splashRadius: 20,
-              highlightColor: Colors.transparent,
+              color: Colors.red,
+              iconSize: iconsSize,
+              //splashColor: Colors.red,
+              highlightColor: Colors.red,
               //splashColor: Colors.red,
               onPressed: () {
                 /// to complete the cubit and the module
@@ -43,7 +48,10 @@ class HeartWihMangeFavoriteCubitProviderWidget extends StatelessWidget {
                   ),
                 );
               },
-              icon: Icon(Icons.favorite, color: state.heartColor),
+              icon: Icon(
+                Icons.favorite_border,
+                color: state.heartColor,
+              ),
             );
           }
         },

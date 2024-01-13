@@ -24,10 +24,10 @@ class UpdateOrderDataCubit extends Cubit<UpdateOrderDataState> {
       : super(const UpdateOrderDataState());
 
   void orderData(OrderDataEntity orderData) {
+    emit(state.copyWith(orderData: orderData));
     name.text = state.orderData!.name;
     phone.text = state.orderData!.phone;
     address.text = state.orderData!.address;
-    emit(state.copyWith(orderData: orderData));
   }
 
   Future<void> updateOrderData() async {

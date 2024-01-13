@@ -51,11 +51,14 @@ class ManageUserOrdersCubit extends Cubit<ManageUserOrdersState> {
     emit(state.copyWith(getOrderItems: RequestState.loading));
     final result =
         await _getOrderItems.call(GetOrderItemsParams(orderRef: orderRef));
-    emit(result.fold(
-      (l) =>
-          state.copyWith(getOrderItems: RequestState.error, message: l.message),
-      (r) => state.copyWith(getOrderItems: RequestState.success, orderItems: r),
-    ));
+    emit(
+      result.fold(
+        (l) => state.copyWith(
+            getOrderItems: RequestState.error, message: l.message),
+        (r) =>
+            state.copyWith(getOrderItems: RequestState.success, orderItems: r),
+      ),
+    );
     print(state.getOrderItems);
   }
 
