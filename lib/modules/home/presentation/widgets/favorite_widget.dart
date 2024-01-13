@@ -3,7 +3,9 @@ import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/favorite_entity.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'favorite_product_widget.dart';
 
@@ -31,11 +33,9 @@ class FavoriteWidget extends StatelessWidget {
             favoriteEntity.products.length,
             (index) => FavoriteProductWidget(
               onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  Screens.detailsScreen,
-                  arguments: favoriteEntity.products[index],
-                );
+                BlocProvider.of<ProductDetailsCubit>(context)
+                    .product(favoriteEntity.products[index]);
+                Navigator.pushNamed(context, Screens.detailsScreen);
               },
               product: favoriteEntity.products[index],
             ),

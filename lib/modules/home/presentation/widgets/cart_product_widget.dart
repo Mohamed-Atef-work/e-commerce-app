@@ -4,6 +4,7 @@ import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/widgets/counting_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,11 +43,9 @@ class CartProductWidget extends StatelessWidget {
           children: [
             TextButton.icon(
               onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  Screens.detailsScreen,
-                  arguments: controller.state.products[index],
-                );
+                BlocProvider.of<ProductDetailsCubit>(context)
+                    .product(controller.state.products[index]);
+                Navigator.pushNamed(context, Screens.detailsScreen);
               },
               icon: Container(
                 width: context.width * 0.3,

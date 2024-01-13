@@ -130,7 +130,8 @@ class AdminProductDetailsScreen extends StatelessWidget {
               CustomButton(
                 onPressed: () {
                   /// Navigate To Details
-                  Navigator.pushNamed(context, Screens.detailsScreen,arguments: product);
+                  /// Make Admin Details Screen;
+                  //Navigator.pushNamed(context, Screens.detailsScreen, arguments: product);
                 },
                 width: 0,
                 height: 45,
@@ -142,5 +143,4 @@ class AdminProductDetailsScreen extends StatelessWidget {
       }),
     );
   }
-
 }
