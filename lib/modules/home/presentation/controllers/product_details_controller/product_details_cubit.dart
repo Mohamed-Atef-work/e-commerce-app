@@ -13,12 +13,20 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   /// To Do
   /// You provided this cubit on the top of [ProductsOfCategoryScreen]....
   /// NOT [DetailsScreen]....
+  ///
   ProductDetailsCubit(this._addToCartUseCase)
       : super(const ProductDetailsState());
 
-  Future<void> addToCart(AddToCartParams params) async {
+  Future<void> addToCart({required String uId}) async {
     emit(state.copyWith(addToCart: RequestState.loading));
-    final result = await _addToCartUseCase.call(params);
+    final result = await _addToCartUseCase.call(
+      AddToCartParams(
+        category: state.product!.category,
+        productId: state.product!.id!,
+        quantity: state.quantity,
+        uId: uId,
+      ),
+    );
     emit(
       result.fold(
         (l) =>
