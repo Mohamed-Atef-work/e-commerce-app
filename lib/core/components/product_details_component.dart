@@ -1,7 +1,9 @@
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../modules/admin/domain/entities/product_entity.dart';
 import 'custom_text.dart';
@@ -82,11 +84,8 @@ class ProductComponent extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          Screens.detailsScreen,
-          arguments: product,
-        );
+        BlocProvider.of<ProductDetailsCubit>(context).product(product);
+        Navigator.pushNamed(context, Screens.detailsScreen);
         print(product.id);
         print(product.category);
       },

@@ -139,6 +139,10 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
     );
   }
 
+  void needToReGet(){
+    emit(state.copyWith(needToReGet: true));
+  }
+
   void quantityPlus(int index) {
     state.quantities[index]++;
     emit(state.copyWith());
