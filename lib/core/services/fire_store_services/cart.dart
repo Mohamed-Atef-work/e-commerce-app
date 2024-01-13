@@ -35,7 +35,7 @@ class CartStoreImpl implements CartStore {
         .doc(params.category)
         .collection(FirebaseStrings.products)
         .doc(params.productId)
-        .set(const {});
+        .set({FirebaseStrings.quantity: params.quantity});
     await _setCartCategoryToBeAvailableToFetch(params);
   }
 

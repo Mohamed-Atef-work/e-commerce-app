@@ -3,6 +3,7 @@ class FirebaseStrings {
   static const String productImages = "productImages";
   static const String categories = "categories";
   static const String favorites = "favorites";
+  static const String quantity = "quantity";
   static const String products = "products";
   static const String jackets = "jackets";
   static const String shirts = "shirts";

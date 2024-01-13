@@ -45,6 +45,7 @@ import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_favorite_products_controller/manage_favorite_products_cubit.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
 import 'package:e_commerce_app/modules/orders/data/data_source/order_remote_data_source.dart';
 import 'package:e_commerce_app/modules/home/data/repository/cart_data_repository.dart';
 import 'package:e_commerce_app/modules/orders/data/repository/order_data_repository.dart';
@@ -140,12 +141,12 @@ void _home() {
   sl.registerFactory(() => LayoutCubit());
   sl.registerFactory(() => HomeCubit(sl(), sl()));
   sl.registerFactory(() => GetFavoriteCubit(sl()));
-  sl.registerFactory(() => ManageFavoriteCubit(sl(), sl()));
-  sl.registerFactory(
-      () => ManageCartProductsCubit(sl(), sl(), sl(), sl(), sl()));
-  sl.registerFactory(() => ManageUserOrdersCubit(sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => ProductDetailsCubit(sl()));
   sl.registerFactory(() => ManageUserOrderViewCubit());
   sl.registerFactory(() => UpdateOrderDataCubit(sl()));
+  sl.registerFactory(() => ManageFavoriteCubit(sl(), sl()));
+  sl.registerFactory(() => ManageCartProductsCubit(sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => ManageUserOrdersCubit(sl(), sl(), sl(), sl()));
 
   /// Use Case
   /// <-------------------- Orders ----------------------------->
