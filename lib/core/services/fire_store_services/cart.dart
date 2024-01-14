@@ -12,7 +12,7 @@ abstract class CartStore {
 
   /// < ---------------------------------------------------------------------- >
   Future<List<DocumentReference>> getCartCategories(String uId);
-  Future<IdsAndTheirCategoryAndQuantities> getCategoryIds(
+  Future<ReturnedIdsAndTheirCategory> getCategoryIds(
       DocumentReference categoryRef);
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getProductsOfCategory(
       GetProductsOfOneCategoryParams params);
@@ -35,7 +35,7 @@ class CartStoreImpl implements CartStore {
         .doc(params.category)
         .collection(FirebaseStrings.products)
         .doc(params.productId)
-        .set({FirebaseStrings.quantity: params.quantity});
+        .set(const {});
     await _setCartCategoryToBeAvailableToFetch(params);
   }
 
@@ -49,6 +49,23 @@ class CartStoreImpl implements CartStore {
         .collection(FirebaseStrings.products)
         .doc(params.productId)
         .delete();
+  }
+
+  @override
+  Future<List<DocumentSnapshot<Map<String, dynamic>>>> getCartProducts(
+      String uId) async {
+    return await getCartCategories(uId).then((categoriesRefs) async {
+      return await _getCartProducts(categoriesRefs).then((products) {
+        return products;
+      });
+    });
+  }
+
+  @override
+  Future<void> clearCart(List<DeleteFromCartParams> params) async {
+    for (var param in params) {
+      await deleteFromCart(param);
+    }
   }
 
   @override
@@ -66,43 +83,17 @@ class CartStoreImpl implements CartStore {
   }
 
   @override
-  Future<IdsAndTheirCategoryAndQuantities> getCategoryIds(
+  Future<ReturnedIdsAndTheirCategory> getCategoryIds(
       DocumentReference categoryRef) async {
     List<String> ids = [];
     final response =
         await categoryRef.collection(FirebaseStrings.products).get();
     final category = categoryRef.id;
     response.docs.map((doc) => {ids.add(doc.id)}).toList();
-
-    final List<IdAndQuantity> idsAndQuantities =
-        await _getQuantityAndId(ids: ids, categoryRef: categoryRef);
-
-    /// delete category if There ore No products;
-    if (ids.isEmpty) {
-      await categoryRef.delete();
-    }
-
-    return IdsAndTheirCategoryAndQuantities(
-      idsAndQuantities: idsAndQuantities,
+    return ReturnedIdsAndTheirCategory(
       category: category,
+      ids: ids,
     );
-  }
-
-  Future<List<IdAndQuantity>> _getQuantityAndId({
-    required List<String> ids,
-    required DocumentReference categoryRef,
-  }) async {
-    List<IdAndQuantity> idAndQuantity = [];
-    for (String id in ids) {
-      final response =
-          await categoryRef.collection(FirebaseStrings.products).doc(id).get();
-      idAndQuantity.add(IdAndQuantity.fromJson(
-        id: id,
-        json: response.data()!,
-      ));
-    }
-
-    return idAndQuantity;
   }
 
   @override
@@ -130,45 +121,24 @@ class CartStoreImpl implements CartStore {
     return productsDocs;
   }
 
-  @override
-  Future<List<DocumentSnapshot<Map<String, dynamic>>>> getCartProducts(
-      String uId) async {
-    return await getCartCategories(uId).then((categoriesRefs) async {
-      return await _getCartProducts(categoriesRefs).then((products) {
-        return products;
-      });
-    });
-  }
-
-  Future<List<DocAndQuantity>> _getCartProducts(
+  Future<List<DocumentSnapshot<Map<String, dynamic>>>> _getCartProducts(
       List<DocumentReference> categoriesRefs) async {
     // < --------------------------------------------------------- >
     List<DocumentSnapshot<Map<String, dynamic>>> products = [];
-    List<int> quantities = [];
     // < --------------------------------------------------------- >
     for (DocumentReference catRef in categoriesRefs) {
-      await getCategoryIds(catRef).then((idsAndTheirCategoryAndQuantity) async {
-        List<String> ids = List.generate(
-            idsAndTheirCategoryAndQuantity.idsAndQuantities.length,
-            (index) => idsAndTheirCategoryAndQuantity.idsAndQuantities[index].id);
-        List<int> quantities = List.generate(
-            idsAndTheirCategoryAndQuantity.idsAndQuantities.length,
-                (index) => idsAndTheirCategoryAndQuantity.idsAndQuantities[index].quantity);
-
+      await getCategoryIds(catRef).then((idsAndTheirCategory) async {
         await getProductsOfCategory(
           GetProductsOfOneCategoryParams(
-            category: idsAndTheirCategoryAndQuantity.category,
-            ids: ids,
+            category: idsAndTheirCategory.category,
+            ids: idsAndTheirCategory.ids,
           ),
         ).then((productsDocs) {
           products.addAll(productsDocs);
         });
       });
     }
-
-    final List<DocAndQuantity> finalResult = List.generate(length, (index) => DocAndQuantity(quantity: ,doc: ));
-
-    return finalResult;
+    return products;
   }
 
   Future<void> _setCartCategoryToBeAvailableToFetch(
@@ -191,13 +161,6 @@ class CartStoreImpl implements CartStore {
       await reference.delete();
     }
     return response;
-  }
-
-  @override
-  Future<void> clearCart(List<DeleteFromCartParams> params) async {
-    for (var param in params) {
-      await deleteFromCart(param);
-    }
   }
 }
 
@@ -233,38 +196,12 @@ class CartParams {
   });
 }
 
-class IdsAndTheirCategoryAndQuantities {
+class ReturnedIdsAndTheirCategory {
   final String category;
-  final List<IdAndQuantity> idsAndQuantities;
+  final List<String> ids;
 
-  IdsAndTheirCategoryAndQuantities({
+  ReturnedIdsAndTheirCategory({
     required this.category,
-    required this.idsAndQuantities,
+    required this.ids,
   });
-}
-
-class IdAndQuantity {
-  final int quantity;
-  final String id;
-
-  IdAndQuantity({
-    required this.quantity,
-    required this.id,
-  });
-
-  factory IdAndQuantity.fromJson({
-    required Map<String, dynamic> json,
-    required String id,
-  }) =>
-      IdAndQuantity(
-        quantity: json["quantity"],
-        id: id,
-      );
-}
-
-class DocAndQuantity {
-  final DocumentSnapshot<Map<String, dynamic>> doc;
-  final int quantity;
-
-  DocAndQuantity({required this.doc, required this.quantity});
 }
