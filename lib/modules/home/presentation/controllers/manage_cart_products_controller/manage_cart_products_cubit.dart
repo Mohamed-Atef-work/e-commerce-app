@@ -139,7 +139,7 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
     );
   }
 
-  void needToReGet(){
+  void needToReGet() {
     emit(state.copyWith(needToReGet: true));
   }
 

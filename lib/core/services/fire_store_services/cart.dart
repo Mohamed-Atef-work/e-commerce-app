@@ -12,7 +12,7 @@ abstract class CartStore {
 
   /// < ---------------------------------------------------------------------- >
   Future<List<DocumentReference>> getCartCategories(String uId);
-  Future<ReturnedIdsAndTheirCategory> getCategoryIds(
+  Future<IdsAndTheirCategory> getCategoryIds(
       DocumentReference categoryRef);
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getProductsOfCategory(
       GetProductsOfOneCategoryParams params);
@@ -66,7 +66,7 @@ class CartStoreImpl implements CartStore {
   }
 
   @override
-  Future<ReturnedIdsAndTheirCategory> getCategoryIds(
+  Future<IdsAndTheirCategory> getCategoryIds(
       DocumentReference categoryRef) async {
     List<String> ids = [];
     final response =
@@ -74,15 +74,35 @@ class CartStoreImpl implements CartStore {
     final category = categoryRef.id;
     response.docs.map((doc) => {ids.add(doc.id)}).toList();
 
+    final List<IdAndQuantity> idsAndQuantities =
+        await _getQuantityAndId(ids: ids, categoryRef: categoryRef);
+
     /// delete category if There ore No products;
     if (ids.isEmpty) {
       await categoryRef.delete();
     }
 
-    return ReturnedIdsAndTheirCategory(
+    return IdsAndTheirCategory(
+      idsAndQuantities: idsAndQuantities,
       category: category,
-      ids: ids,
     );
+  }
+
+  Future<List<IdAndQuantity>> _getQuantityAndId({
+    required List<String> ids,
+    required DocumentReference categoryRef,
+  }) async {
+    List<IdAndQuantity> idAndQuantity = [];
+    for (String id in ids) {
+      final response =
+          await categoryRef.collection(FirebaseStrings.products).doc(id).get();
+      idAndQuantity.add(IdAndQuantity.fromJson(
+        id: id,
+        json: response.data()!,
+      ));
+    }
+
+    return idAndQuantity;
   }
 
   @override
@@ -120,24 +140,35 @@ class CartStoreImpl implements CartStore {
     });
   }
 
-  Future<List<DocumentSnapshot<Map<String, dynamic>>>> _getCartProducts(
+  Future<List<DocAndQuantity>> _getCartProducts(
       List<DocumentReference> categoriesRefs) async {
     // < --------------------------------------------------------- >
     List<DocumentSnapshot<Map<String, dynamic>>> products = [];
+    List<int> quantities = [];
     // < --------------------------------------------------------- >
     for (DocumentReference catRef in categoriesRefs) {
-      await getCategoryIds(catRef).then((idsAndTheirCategory) async {
+      await getCategoryIds(catRef).then((idsAndTheirCategoryAndQuantity) async {
+        List<String> ids = List.generate(
+            idsAndTheirCategoryAndQuantity.idsAndQuantities.length,
+            (index) => idsAndTheirCategoryAndQuantity.idsAndQuantities[index].id);
+        List<int> quantities = List.generate(
+            idsAndTheirCategoryAndQuantity.idsAndQuantities.length,
+                (index) => idsAndTheirCategoryAndQuantity.idsAndQuantities[index].quantity);
+
         await getProductsOfCategory(
           GetProductsOfOneCategoryParams(
-            ids: idsAndTheirCategory.ids,
-            category: idsAndTheirCategory.category,
+            category: idsAndTheirCategoryAndQuantity.category,
+            ids: ids,
           ),
         ).then((productsDocs) {
           products.addAll(productsDocs);
         });
       });
     }
-    return products;
+
+    final List<DocAndQuantity> finalResult = List.generate(length, (index) => DocAndQuantity(quantity: ,doc: ));
+
+    return finalResult;
   }
 
   Future<void> _setCartCategoryToBeAvailableToFetch(
@@ -202,12 +233,38 @@ class CartParams {
   });
 }
 
-class ReturnedIdsAndTheirCategory {
+class IdsAndTheirCategory {
   final String category;
   final List<String> ids;
 
-  ReturnedIdsAndTheirCategory({
+  IdsAndTheirCategory({
     required this.category,
     required this.ids,
   });
 }
+
+/*class IdAndQuantity {
+  final int quantity;
+  final String id;
+
+  IdAndQuantity({
+    required this.quantity,
+    required this.id,
+  });
+
+  factory IdAndQuantity.fromJson({
+    required Map<String, dynamic> json,
+    required String id,
+  }) =>
+      IdAndQuantity(
+        quantity: json["quantity"],
+        id: id,
+      );
+}
+
+class DocAndQuantity {
+  final DocumentSnapshot<Map<String, dynamic>> doc;
+  final int quantity;
+
+  DocAndQuantity({required this.doc, required this.quantity});
+}*/
