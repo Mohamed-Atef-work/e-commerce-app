@@ -12,7 +12,7 @@ abstract class CartStore {
 
   /// < ---------------------------------------------------------------------- >
   Future<List<DocumentReference>> getCartCategories(String uId);
-  Future<IdsAndTheirCategory> getCategoryIds(
+  Future<IdsAndTheirCategoryAndQuantities> getCategoryIds(
       DocumentReference categoryRef);
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getProductsOfCategory(
       GetProductsOfOneCategoryParams params);
@@ -66,7 +66,7 @@ class CartStoreImpl implements CartStore {
   }
 
   @override
-  Future<IdsAndTheirCategory> getCategoryIds(
+  Future<IdsAndTheirCategoryAndQuantities> getCategoryIds(
       DocumentReference categoryRef) async {
     List<String> ids = [];
     final response =
@@ -82,7 +82,7 @@ class CartStoreImpl implements CartStore {
       await categoryRef.delete();
     }
 
-    return IdsAndTheirCategory(
+    return IdsAndTheirCategoryAndQuantities(
       idsAndQuantities: idsAndQuantities,
       category: category,
     );
@@ -233,17 +233,17 @@ class CartParams {
   });
 }
 
-class IdsAndTheirCategory {
+class IdsAndTheirCategoryAndQuantities {
   final String category;
-  final List<String> ids;
+  final List<IdAndQuantity> idsAndQuantities;
 
-  IdsAndTheirCategory({
+  IdsAndTheirCategoryAndQuantities({
     required this.category,
-    required this.ids,
+    required this.idsAndQuantities,
   });
 }
 
-/*class IdAndQuantity {
+class IdAndQuantity {
   final int quantity;
   final String id;
 
@@ -267,4 +267,4 @@ class DocAndQuantity {
   final int quantity;
 
   DocAndQuantity({required this.doc, required this.quantity});
-}*/
+}

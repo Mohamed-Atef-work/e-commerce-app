@@ -40,12 +40,12 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
     emit(state.copyWith(product: product));
   }
 
-  void quantityPlus() {
+  void quantityPlus(int index) {
     int quantity = state.quantity + 1;
     emit(state.copyWith(quantity: quantity));
   }
 
-  void quantityMinus() {
+  void quantityMinus(int index) {
     if (state.quantity > 1) {
       int quantity = state.quantity - 1;
       emit(state.copyWith(quantity: quantity));
