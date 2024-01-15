@@ -5,51 +5,83 @@ import 'package:e_commerce_app/modules/home/domain/entities/cart_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/clear_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/get_cart_products_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/get_product_quantities_of_cart_use_case.dart';
 import 'package:e_commerce_app/modules/orders/data/model/item_model.dart';
 import 'package:e_commerce_app/modules/orders/data/model/order_data_model.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/add_order_use_case.dart';
 part 'manage_cart_products_state.dart';
 
 class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
+  final GetCartProductsQuantitiesUseCase _getCartProductsQuantitiesUseCase;
   final GetCartProductsUseCase _getCartProductsUseCase;
   final DeleteFromCartUseCase _deleteFromCartUseCase;
   final ClearCartUseCase _clearCartUseCase;
   final AddOrderUseCase _addOrderUseCase;
 
   ManageCartProductsCubit(
-    this._getCartProductsUseCase,
-    this._deleteFromCartUseCase,
     this._addOrderUseCase,
     this._clearCartUseCase,
+    this._deleteFromCartUseCase,
+    this._getCartProductsUseCase,
+    this._getCartProductsQuantitiesUseCase,
   ) : super(const ManageCartProductsState());
 
-  Future<void> getCartProducts() async {
+  Future<void> getCartProducts(String uId) async {
     if (state.needToReGet) {
       emit(state.copyWith(getCart: RequestState.loading));
 
       /// Handling UID  :) ..........
-      final result = await _getCartProductsUseCase(
-          const GetCartProductsParams(uId: "uId"));
-      emit(
-        result.fold(
-          (l) =>
-              state.copyWith(message: l.message, getCart: RequestState.error),
-          (r) {
-            List<ProductEntity> products = [];
-            for (CartEntity cart in r) {
-              products.addAll(cart.products);
-            }
-            List<int> quantities = List.generate(products.length, (index) => 1);
-            return state.copyWith(
+      final result =
+          await _getCartProductsUseCase(GetCartProductsParams(uId: uId));
+
+      result.fold(
+        (l) {
+          emit(state.copyWith(message: l.message, getCart: RequestState.error));
+        },
+        (r) {
+          List<ProductEntity> products = [];
+          for (CartEntity cart in r) {
+            products.addAll(cart.products);
+          }
+          emit(
+            state.copyWith(
+              getCart: RequestState.success,
               needToReGet: false,
               products: products,
-              quantities: quantities,
-              getCart: RequestState.success,
-            );
-          },
-        ),
+            ),
+          );
+          //List<int> quantities = List.generate(products.length, (index) => 1);
+          getQuantities(uId);
+        },
       );
     }
+  }
+
+  Future<void> getQuantities(String uId) async {
+    emit(state.copyWith(getProductsQuantities: RequestState.loading));
+    final productsParams = List.generate(
+      state.products.length,
+      (index) => GetQuantities(
+          id: state.products[index].id!,
+          category: state.products[index].category),
+    );
+
+    final result = await _getCartProductsQuantitiesUseCase.call(
+      GetQuantitiesParams(
+        productsParams: productsParams,
+        uId: uId,
+      ),
+    );
+    emit(
+      result.fold(
+        (l) => state.copyWith(
+            message: l.message, getProductsQuantities: RequestState.error),
+        (r) => state.copyWith(
+            quantities: r, getProductsQuantities: RequestState.success),
+      ),
+    );
+    print(
+        " _________________________________ ${state.quantities.length} _________________________________");
   }
 
   Future<void> deleteFromCart(DeleteFromCartParams params) async {

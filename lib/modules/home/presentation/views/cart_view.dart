@@ -20,9 +20,10 @@ class CartView extends StatelessWidget {
     return BlocBuilder<ManageCartProductsCubit, ManageCartProductsState>(
         builder: (context, state) {
       if (state.getCart == RequestState.loading ||
-          state.deleteFromCart == RequestState.loading ||
           state.addOrder == RequestState.loading ||
-          state.clearCart == RequestState.loading) {
+          state.clearCart == RequestState.loading ||
+          state.deleteFromCart == RequestState.loading ||
+          state.getProductsQuantities == RequestState.loading) {
         return const LoadingWidget();
       } else if (state.getCart == RequestState.success &&
           state.products.isNotEmpty) {

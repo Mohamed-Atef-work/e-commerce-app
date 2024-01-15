@@ -8,6 +8,7 @@ import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart
 import 'package:e_commerce_app/modules/home/domain/use_cases/clear_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/get_cart_products_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/get_product_quantities_of_cart_use_case.dart';
 
 class CartDataRepo implements CartDomainRepo {
   final CartBaseRemoteDataSource dataSource;
@@ -47,9 +48,20 @@ class CartDataRepo implements CartDomainRepo {
   }
 
   @override
-  Future<Either<Failure, void>> clearCart(ClearCartParams params) async{
+  Future<Either<Failure, void>> clearCart(ClearCartParams params) async {
     try {
       final result = await dataSource.clearCart(params);
+      return Right(result);
+    } on ServerException catch (exception) {
+      return Left(ServerFailure(message: exception.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<int>>> getQuantities(
+      GetQuantitiesParams params) async {
+    try {
+      final result = await dataSource.getQuantities(params);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));

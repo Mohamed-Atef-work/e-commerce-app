@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/core/utils/fire_base_strings.dart';
+import 'package:e_commerce_app/core/fire_base/strings.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/add_new_product_category_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/add_product_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/delete_product_category_use_case.dart';

@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/core/services/fire_store_services/user.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/login_use_case.dart';

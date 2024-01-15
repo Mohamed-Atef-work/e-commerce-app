@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
-import 'package:e_commerce_app/core/services/fire_store_services/favorite.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/favorite.dart';
 import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/home/data/models/favorite_category_model.dart';

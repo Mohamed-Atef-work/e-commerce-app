@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/core/utils/fire_base_strings.dart';
+import 'package:e_commerce_app/core/fire_base/strings.dart';
 
 import '../../../modules/auth/domain/use_cases/store_user_data_use_case.dart';
 

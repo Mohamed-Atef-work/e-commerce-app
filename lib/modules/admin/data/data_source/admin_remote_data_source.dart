@@ -1,14 +1,12 @@
 import 'dart:io';
-
+import 'package:e_commerce_app/core/fire_base/fire_store/product.dart';
 import 'package:e_commerce_app/modules/admin/data/model/product_category_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
-import 'package:e_commerce_app/core/services/fire_storage_service.dart';
-import 'package:e_commerce_app/core/services/fire_store_services/product.dart';
-import 'package:e_commerce_app/core/utils/fire_base_strings.dart';
+import 'package:e_commerce_app/core/fire_base/fire_storage.dart';
+import 'package:e_commerce_app/core/fire_base/strings.dart';
 import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/add_product_use_case.dart';
-
 import '../../domain/entities/product_category_entity.dart';
 import '../../domain/entities/product_entity.dart';
 import '../../domain/use_cases/add_new_product_category_use_case.dart';
@@ -77,7 +75,7 @@ class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
       return stream.map((snapshot) {
         return snapshot.docs
             .map((doc) => ProductModel.formJson(
-          json:doc.data(),
+                  json: doc.data(),
                   productId: doc.id,
                 ))
             .toList();

@@ -1,16 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
-import 'package:e_commerce_app/core/services/fire_store_services/cart.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/cart.dart';
+import 'package:e_commerce_app/core/fire_base/strings.dart';
 import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/home/data/models/cart_category_model.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/cart_category_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/cart_entity.dart';
-import 'package:e_commerce_app/modules/home/domain/repository/cart_domain_repository.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/clear_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/get_cart_products_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/get_product_quantities_of_cart_use_case.dart';
 
 abstract class CartBaseRemoteDataSource {
   Future<void> addToCart(AddToCartParams params);
@@ -18,6 +19,7 @@ abstract class CartBaseRemoteDataSource {
   Future<CartEntity> getProductsOfCategory(CartCategoryEntity params);
   Future<List<CartEntity>> getCartProducts(GetCartProductsParams params);
   Future<void> clearCart(ClearCartParams params);
+  Future<List<int>> getQuantities(GetQuantitiesParams params);
 
   //Future<List<ProductEntity>> getProduct(GetProductParams params);
   //Future<List<CartCategoryEntity>> getCartCategories(String uId);
@@ -154,5 +156,16 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
       print(error.toString());
       throw ServerException(message: error);
     });
+  }
+
+  @override
+  Future<List<int>> getQuantities(GetQuantitiesParams params) async {
+    final result = await cartStore.getQuantities(params).catchError((error) {
+      print(error.toString());
+      throw ServerException(message: error);
+    });
+    final quantities =
+        List<int>.of(result.map((e) => e.data()![FirebaseStrings.quantity]));
+    return quantities;
   }
 }

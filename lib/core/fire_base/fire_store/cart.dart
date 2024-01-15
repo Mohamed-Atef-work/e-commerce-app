@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/core/utils/fire_base_strings.dart';
+import 'package:e_commerce_app/core/fire_base/strings.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/get_product_quantities_of_cart_use_case.dart';
 
 abstract class CartStore {
   Future<void> addToCart(AddToCartParams params);
@@ -9,6 +10,8 @@ abstract class CartStore {
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getCartProducts(
       String uId);
   Future<void> clearCart(List<DeleteFromCartParams> params);
+  Future<List<DocumentSnapshot<Map<String, dynamic>>>> getQuantities(
+      GetQuantitiesParams params);
 
   /// < ---------------------------------------------------------------------- >
   Future<List<DocumentReference>> getCartCategories(String uId);
@@ -21,6 +24,8 @@ abstract class CartStore {
   Future<DocumentSnapshot<Map<String, dynamic>>> getProduct(
       GetProductParams params);
 }
+
+
 
 class CartStoreImpl implements CartStore {
   final FirebaseFirestore store;
@@ -35,7 +40,9 @@ class CartStoreImpl implements CartStore {
         .doc(params.category)
         .collection(FirebaseStrings.products)
         .doc(params.productId)
-        .set(const {});
+        .set({
+      FirebaseStrings.quantity: params.quantity,
+    });
     await _setCartCategoryToBeAvailableToFetch(params);
   }
 
@@ -161,6 +168,25 @@ class CartStoreImpl implements CartStore {
       await reference.delete();
     }
     return response;
+  }
+
+  @override
+  Future<List<DocumentSnapshot<Map<String, dynamic>>>> getQuantities(
+      GetQuantitiesParams params) async {
+    List<DocumentSnapshot<Map<String, dynamic>>> docs = [];
+    for (var product in params.productsParams) {
+      final response = await store
+          .collection(FirebaseStrings.users)
+          .doc(params.uId)
+          .collection(FirebaseStrings.cart)
+          .doc(product.category)
+          .collection(FirebaseStrings.products)
+          .doc(product.id)
+          .get();
+      docs.add(response);
+    }
+
+    return docs;
   }
 }
 

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/core/utils/fire_base_strings.dart';
+import 'package:e_commerce_app/core/fire_base/strings.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
 
 abstract class FavoriteStore {

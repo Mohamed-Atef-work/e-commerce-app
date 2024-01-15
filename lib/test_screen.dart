@@ -1,14 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/core/services/fire_store_services/order.dart';
-import 'package:e_commerce_app/modules/orders/data/data_source/order_remote_data_source.dart';
-import 'package:e_commerce_app/modules/orders/data/model/order_data_model.dart';
-import 'package:e_commerce_app/modules/orders/data/repository/order_data_repository.dart';
-import 'package:e_commerce_app/modules/orders/domain/repository/order_domain_repository.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/get_user_orders_use_case.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/up_date_order_data_use_case.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/order.dart';
+
 import 'package:e_commerce_app/modules/orders/presentation/widgets/counting_widget.dart';
 import 'package:flutter/material.dart';
-import 'core/components/custom_text.dart';
 
 class TestScreen extends StatelessWidget {
   const TestScreen({Key? key}) : super(key: key);

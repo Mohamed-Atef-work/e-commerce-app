@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/core/services/fire_storage_service.dart';
-import 'package:e_commerce_app/core/services/fire_store_services/cart.dart';
-import 'package:e_commerce_app/core/services/fire_store_services/favorite.dart';
-import 'package:e_commerce_app/core/services/fire_store_services/order.dart';
-import 'package:e_commerce_app/core/services/fire_store_services/product.dart';
-import 'package:e_commerce_app/core/services/fire_store_services/user.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/cart.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/favorite.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/order.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/product.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/user.dart';
+import 'package:e_commerce_app/core/fire_base/fire_storage.dart';
 import 'package:e_commerce_app/modules/admin/data/data_source/admin_remote_data_source.dart';
 import 'package:e_commerce_app/modules/admin/data/repository/admin_data_repository.dart';
 import 'package:e_commerce_app/modules/admin/domain/repository/admin_domain_repository.dart';
@@ -40,6 +40,7 @@ import 'package:e_commerce_app/modules/home/domain/use_cases/clear_cart_use_case
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_favorite_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/get_cart_products_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/get_product_quantities_of_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_cubit.dart';
@@ -145,7 +146,8 @@ void _home() {
   sl.registerFactory(() => ManageUserOrderViewCubit());
   sl.registerFactory(() => UpdateOrderDataCubit(sl()));
   sl.registerFactory(() => ManageFavoriteCubit(sl(), sl()));
-  sl.registerFactory(() => ManageCartProductsCubit(sl(), sl(), sl(), sl()));
+  sl.registerFactory(
+      () => ManageCartProductsCubit(sl(), sl(), sl(), sl(), sl()));
   sl.registerFactory(() => ManageUserOrdersCubit(sl(), sl(), sl(), sl()));
 
   /// Use Case
@@ -159,6 +161,7 @@ void _home() {
   sl.registerLazySingleton(() => ClearCartUseCase(sl()));
   sl.registerLazySingleton(() => DeleteFromCartUseCase(sl()));
   sl.registerLazySingleton(() => GetCartProductsUseCase(sl()));
+  sl.registerLazySingleton(() => GetCartProductsQuantitiesUseCase(sl()));
 
   /// <-------------------- Orders ------------------------------->
   sl.registerLazySingleton(() => AddOrderUseCase(sl()));

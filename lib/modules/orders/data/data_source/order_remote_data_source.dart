@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/core/error/exceptions.dart';
-import 'package:e_commerce_app/core/services/fire_store_services/order.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/order.dart';
 import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/orders/data/model/item_model.dart';

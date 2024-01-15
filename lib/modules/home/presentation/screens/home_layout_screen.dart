@@ -44,7 +44,7 @@ class HomeLayoutScreen extends StatelessWidget {
   Widget _body(BuildContext context) {
     LayoutState state = BlocProvider.of<LayoutCubit>(context).state;
     if (state.currentIndex == 0) {
-      BlocProvider.of<ManageCartProductsCubit>(context).getCartProducts();
+      BlocProvider.of<ManageCartProductsCubit>(context).getCartProducts("uId");
       return const CartView();
     } else if (state.currentIndex == 1) {
       return const HomeView();

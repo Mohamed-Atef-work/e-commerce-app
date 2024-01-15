@@ -34,7 +34,8 @@ class BuyItApp extends StatelessWidget {
           create: (context) => sl<ProductDetailsCubit>(),
         ),
         BlocProvider<ManageCartProductsCubit>(
-          create: (context) => sl<ManageCartProductsCubit>()..getCartProducts(),
+          create: (context) =>
+              sl<ManageCartProductsCubit>()..getCartProducts("uId"),
         ),
       ],
       child: MaterialApp(

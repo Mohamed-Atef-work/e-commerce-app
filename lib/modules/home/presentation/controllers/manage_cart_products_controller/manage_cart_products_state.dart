@@ -1,6 +1,7 @@
 part of 'manage_cart_products_cubit.dart';
 
 class ManageCartProductsState {
+  final RequestState getProductsQuantities;
   final List<ProductEntity> products;
   final RequestState deleteFromCart;
   final RequestState clearCart;
@@ -11,14 +12,15 @@ class ManageCartProductsState {
   final String? message;
 
   const ManageCartProductsState({
-    this.message,
-    this.quantities = const [],
-    this.products = const [],
-    this.needToReGet = true,
+    this.getProductsQuantities = RequestState.initial,
     this.deleteFromCart = RequestState.initial,
     this.clearCart = RequestState.initial,
     this.addOrder = RequestState.initial,
     this.getCart = RequestState.initial,
+    this.quantities = const [],
+    this.products = const [],
+    this.needToReGet = true,
+    this.message,
   });
   ManageCartProductsState copyWith({
     String? message,
@@ -29,15 +31,18 @@ class ManageCartProductsState {
     RequestState? clearCart,
     RequestState? deleteFromCart,
     List<ProductEntity>? products,
+    RequestState? getProductsQuantities,
   }) =>
       ManageCartProductsState(
         message: message ?? this.message,
         getCart: getCart ?? this.getCart,
-        products: products ?? this.products,
         addOrder: addOrder ?? this.addOrder,
+        products: products ?? this.products,
         clearCart: clearCart ?? this.clearCart,
         quantities: quantities ?? this.quantities,
         needToReGet: needToReGet ?? this.needToReGet,
         deleteFromCart: deleteFromCart ?? this.deleteFromCart,
+        getProductsQuantities:
+            getProductsQuantities ?? this.getProductsQuantities,
       );
 }
