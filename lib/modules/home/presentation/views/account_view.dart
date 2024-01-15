@@ -5,35 +5,39 @@ import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:flutter/material.dart';
 
-class AccountScreen extends StatelessWidget {
-  const AccountScreen({super.key});
+class AccountView extends StatelessWidget {
+  const AccountView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AccountItemsWidget(
-          onTap: () {
-            Navigator.pushNamed(context, Screens.profileScreen);
-          },
-          icon: Icons.person,
-          name: AppStrings.profile,
-        ),
-        SizedBox(height: context.height * 0.03),
-        AccountItemsWidget(
-          onTap: () {
-            Navigator.pushNamed(context, Screens.userOrderScreen);
-          },
-          name: AppStrings.orders,
-          icon: Icons.shopping_basket,
-        ),
-        SizedBox(height: context.height * 0.03),
-        AccountItemsWidget(
-          onTap: () {},
-          name: AppStrings.address,
-          icon: Icons.location_on_rounded,
-        ),
-      ],
+    return Padding(
+      padding:
+          EdgeInsets.symmetric(horizontal: 5, vertical: context.height * 0.05),
+      child: Column(
+        children: [
+          AccountItemsWidget(
+            onTap: () {
+              Navigator.pushNamed(context, Screens.profileScreen);
+            },
+            icon: Icons.person,
+            name: AppStrings.profile,
+          ),
+          SizedBox(height: context.height * 0.03),
+          AccountItemsWidget(
+            onTap: () {
+              Navigator.pushNamed(context, Screens.userOrderScreen);
+            },
+            name: AppStrings.orders,
+            icon: Icons.shopping_basket,
+          ),
+          SizedBox(height: context.height * 0.03),
+          AccountItemsWidget(
+            onTap: () {},
+            name: AppStrings.address,
+            icon: Icons.location_on_rounded,
+          ),
+        ],
+      ),
     );
   }
 }

@@ -43,7 +43,7 @@ class BuyItApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: AppStrings.buyIt,
-        initialRoute: Screens.accountScreen,
+        initialRoute: Screens.homeScreen,
         theme: ThemeData(scaffoldBackgroundColor: AppColors.primaryColorYellow),
         routes: {
           Screens.testScreen: (context) => const TestScreen(),
@@ -53,7 +53,6 @@ class BuyItApp extends StatelessWidget {
           Screens.adminPanelScreen: (context) => AdminPanelScreen(),
           Screens.detailsScreen: (context) => const DetailsScreen(),
           Screens.profileScreen: (context) => const ProfileScreen(),
-          Screens.accountScreen: (context) => const AccountScreen(),
           Screens.homeScreen: (context) => const HomeLayoutScreen(),
           Screens.userOrderScreen: (context) => const UserOrderScreen(),
           Screens.addProductScreen: (context) => const AddProductScreen(),

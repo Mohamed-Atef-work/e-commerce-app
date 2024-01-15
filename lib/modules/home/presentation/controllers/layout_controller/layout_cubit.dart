@@ -9,6 +9,7 @@ class LayoutCubit extends Cubit<LayoutState> {
     AppStrings.profile,
     AppStrings.categories,
     AppStrings.favorites,
+    AppStrings.account,
   ];
   void newScreen(int index) {
     emit(LayoutState(currentIndex: index, appBarTitle: _titles[index]));

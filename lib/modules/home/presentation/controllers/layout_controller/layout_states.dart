@@ -5,7 +5,7 @@ class LayoutState {
   final String appBarTitle;
 
   const LayoutState({
-    this.currentIndex = 1,
+    this.currentIndex = 0,
     this.appBarTitle = AppStrings.categories,
   });
 }

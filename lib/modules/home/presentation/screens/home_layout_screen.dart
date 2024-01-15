@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/modules/home/presentation/views/account_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
@@ -44,13 +45,15 @@ class HomeLayoutScreen extends StatelessWidget {
   Widget _body(BuildContext context) {
     LayoutState state = BlocProvider.of<LayoutCubit>(context).state;
     if (state.currentIndex == 0) {
+      return const HomeView();
+    } else if (state.currentIndex == 1) {
       BlocProvider.of<ManageCartProductsCubit>(context).getCartProducts("uId");
       return const CartView();
-    } else if (state.currentIndex == 1) {
-      return const HomeView();
+    } else if (state.currentIndex == 2) {
+      return const FavoritesView();
     } else {
       BlocProvider.of<GetFavoriteCubit>(context).getFavorites();
-      return const FavoritesView();
+      return const AccountView();
     }
   }
 
@@ -79,18 +82,23 @@ class HomeLayoutScreen extends StatelessWidget {
         items: const [
           BottomNavigationBarItem(
             label: '',
-            activeIcon: Icon(Icons.shopping_cart, color: Colors.white),
-            icon: Icon(Icons.shopping_cart, color: Colors.black),
-          ),
-          BottomNavigationBarItem(
-            label: '',
             activeIcon: Icon(Icons.home, color: Colors.white),
             icon: Icon(Icons.home, color: Colors.black),
           ),
           BottomNavigationBarItem(
             label: '',
+            activeIcon: Icon(Icons.shopping_cart, color: Colors.white),
+            icon: Icon(Icons.shopping_cart, color: Colors.black),
+          ),
+          BottomNavigationBarItem(
+            label: '',
             activeIcon: Icon(Icons.favorite, color: Colors.white),
             icon: Icon(Icons.favorite, color: Colors.black),
+          ),
+          BottomNavigationBarItem(
+            label: '',
+            activeIcon: Icon(Icons.person_rounded, color: Colors.white),
+            icon: Icon(Icons.person_rounded, color: Colors.black),
           ),
         ],
       );
