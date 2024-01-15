@@ -50,7 +50,7 @@ class AddNewCategoryModelSheetWidget extends StatelessWidget {
                           fontSize: 15,
                           textEditingController: controller.categoryController,
                           validator: (value) => Validators.stringValidator(
-                              value, AppStrings.productCategory),
+                              value, AppStrings.category),
                         ),
                         SizedBox(
                           height: context.height * 0.03,
@@ -116,7 +116,7 @@ class DeleteUpdateCategoryModelSheetWidget extends StatelessWidget {
                           fillColor: AppColors.loginTextFormFieldGray,
                           textEditingController: controller.categoryController,
                           validator: (value) => Validators.stringValidator(
-                              value, AppStrings.productCategory),
+                              value, AppStrings.category),
                         ),
                         SizedBox(
                           height: context.height * 0.03,

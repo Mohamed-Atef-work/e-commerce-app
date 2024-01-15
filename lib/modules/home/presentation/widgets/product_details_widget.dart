@@ -4,7 +4,7 @@ import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart
 import 'package:e_commerce_app/modules/home/presentation/widgets/product_image_widget.dart';
 import 'package:flutter/material.dart';
 
-class ProductDetailsWidget extends StatelessWidget {
+/*class ProductDetailsWidget extends StatelessWidget {
   final ProductEntity product;
   const ProductDetailsWidget({Key? key, required this.product})
       : super(key: key);
@@ -63,5 +63,5 @@ class ProductDetailsWidget extends StatelessWidget {
           const SizedBox(height: 5),
         ],
       );
-}
+}*/
 
