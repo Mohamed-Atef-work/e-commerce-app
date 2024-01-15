@@ -4,6 +4,7 @@ class AppStrings {
   static const String admin = "admin";
   static const String login = "Login";
   static const String buyIt = "Buy It";
+  static const String logout = "Logout";
   static const String signUp = "Sign Up";
   static const String account = "Account";
   static const String iAmAUser = "I'm a User !";
@@ -57,6 +58,11 @@ class AppStrings {
   static const String yourOrders = "Your Orders";
 
   static const String profile = "Profile";
+  static const String myCards = "my Cards";
+  static const String language = "Language";
+  static const String appSettings = "App Settings";
+  static const String editProfile = "Edit Profile";
+  static const String changePassword = "Change Password";
   static const String cartIsEmpty = "Your Cart Is Empty";
   static const String youHaveNoOrders = "You Have No Orders";
 

@@ -33,7 +33,7 @@ class HomeLayoutScreen extends StatelessWidget {
       ],
       child: BlocBuilder<LayoutCubit, LayoutState>(builder: (context, state) {
         return Scaffold(
-          backgroundColor: Colors.amber,
+          //backgroundColor: Colors.amber,
           appBar: _appBar(context),
           body: _body(context),
           bottomNavigationBar: _bottomNavBar(context),
