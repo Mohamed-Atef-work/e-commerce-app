@@ -26,58 +26,47 @@ class OrderWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(20),
       child: Padding(
         padding: const EdgeInsets.all(7.0),
-        child: Column(
+        child: Row(
           children: [
-            Row(
+            Container(
+              width: context.width * 0.15,
+              height: context.height * 0.1,
+              clipBehavior: Clip.antiAlias,
+              margin: const EdgeInsets.only(right: 7),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.grey,
+              ),
+              child: Image.asset(
+                Images.orderImage,
+                fit: BoxFit.contain,
+                color: AppColors.darkBrown.withOpacity(0.001),
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: context.width * 0.15,
-                  height: context.height * 0.1,
-                  clipBehavior: Clip.antiAlias,
-                  margin: const EdgeInsets.only(right: 7),
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.grey,
-                  ),
-                  child: Image.asset(
-                    Images.orderImage,
-                    fit: BoxFit.contain,
-                    color: AppColors.darkBrown.withOpacity(0.001),
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomText(
-                      fontSize: 18,
-                      text: order.name,
-                      fontWeight: FontWeight.bold,
-                      textColor: AppColors.darkBrown,
-                    ),
-                    SizedBox(height: context.height * 0.01),
-                    CustomText(
-                      fontSize: 15,
-                      text: order.date,
-                      textColor: AppColors.darkBrown,
-                    ),
-                  ],
-                ),
-                const Spacer(),
                 CustomText(
-                  fontSize: 22,
-                  textColor: AppColors.black,
+                  fontSize: 18,
+                  text: order.name,
                   fontWeight: FontWeight.bold,
-                  text: "\$${order.totalPrice}",
-                  fontFamily: AppStrings.pacifico,
+                  textColor: AppColors.darkBrown,
+                ),
+                SizedBox(height: context.height * 0.01),
+                CustomText(
+                  fontSize: 15,
+                  text: order.date,
+                  textColor: AppColors.darkBrown,
                 ),
               ],
             ),
-            Divider(
-              height: 20,
-              thickness: 0.5,
-              color: Colors.black,
-              indent: context.width * 0.1,
-              endIndent: context.width * 0.1,
+            const Spacer(),
+            CustomText(
+              fontSize: 22,
+              textColor: AppColors.black,
+              fontWeight: FontWeight.bold,
+              text: "\$${order.totalPrice}",
+              fontFamily: AppStrings.pacifico,
             ),
           ],
         ),

@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/components/divider_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -51,7 +52,8 @@ class ViewUserOrdersBody extends StatelessWidget {
           ),
         );
       } else {
-        return ListView.builder(
+        return ListView.separated(
+          separatorBuilder: (context, index) => const DividerComponent(),
           itemCount: state.orders.length,
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 5),

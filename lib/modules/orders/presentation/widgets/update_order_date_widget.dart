@@ -21,7 +21,17 @@ class UpDateOrderDataWidget extends StatelessWidget {
     return Container(
       height: context.height * 0.6,
       padding: const EdgeInsets.all(10),
-      color: AppColors.primaryColorYellow,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: AppColors.white,
+          style: BorderStyle.solid,
+        ),
+        color: AppColors.primaryColorYellow,
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(25),
+          topLeft: Radius.circular(25),
+        ),
+      ),
       child: BlocBuilder<UpdateOrderDataCubit, UpdateOrderDataState>(
         builder: (context, state) {
           if (state.updateState == RequestState.loading) {
