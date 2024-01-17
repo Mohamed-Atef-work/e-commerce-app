@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
+import 'package:e_commerce_app/core/components/divider_component.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
@@ -37,8 +38,7 @@ class CartView extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
                 itemBuilder: (context, index) =>
                     CartProductWidget(index: index),
-                separatorBuilder: (context, index) =>
-                    SizedBox(height: context.height * 0.01),
+                separatorBuilder: (context, index) => const DividerComponent(),
               ),
             ),
             Padding(
@@ -48,11 +48,11 @@ class CartView extends StatelessWidget {
                 text: AppStrings.checkOut,
                 fontWeight: FontWeight.bold,
                 fontFamily: AppStrings.pacifico,
+                width: context.width * 0.7,
+                height: context.height * 0.06,
                 onPressed: () {
                   BlocProvider.of<ManageCartProductsCubit>(context).addOrder();
                 },
-                width: context.width * 0.7,
-                height: context.height * 0.06,
               ),
             )
           ],

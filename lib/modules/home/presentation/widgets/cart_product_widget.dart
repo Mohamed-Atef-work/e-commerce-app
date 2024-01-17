@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/core/components/custom_text.dart';
+import 'package:e_commerce_app/core/components/dismissible_background.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
@@ -36,76 +37,65 @@ class CartProductWidget extends StatelessWidget {
         );
         controller.state.products.removeAt(index);
       },
-      background: Container(color: Colors.red),
+      background: const DismissibleBackgroundComponent(
+          color: Colors.red, icon: Icons.delete),
+      secondaryBackground: const DismissibleSecondaryBackgroundComponent(
+          color: Colors.red, icon: Icons.delete),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: context.width * 0.01),
-        child: Column(
-          children: [
-            TextButton.icon(
-              onPressed: () {
-                BlocProvider.of<ProductDetailsCubit>(context)
-                    .product(controller.state.products[index]);
-                Navigator.pushNamed(context, Screens.detailsScreen);
-              },
-              icon: Container(
-                width: context.width * 0.3,
-                height: context.height * 0.2,
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                child: Image.network(
-                  fit: BoxFit.cover,
-                  controller.state.products[index].image,
-                ),
-              ),
-              label: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: TextButton.icon(
+          onPressed: () {
+            BlocProvider.of<ProductDetailsCubit>(context)
+                .product(controller.state.products[index]);
+            Navigator.pushNamed(context, Screens.detailsScreen);
+          },
+          icon: Container(
+            width: context.width * 0.3,
+            height: context.height * 0.2,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+            child: Image.network(
+                fit: BoxFit.cover, controller.state.products[index].image),
+          ),
+          label: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Column(
                 children: [
-                  Column(
-                    children: [
-                      CustomText(
-                        fontSize: 18,
-                        textAlign: TextAlign.left,
-                        textColor: AppColors.black,
-                        fontWeight: FontWeight.bold,
-                        text: controller.state.products[index].name,
-                      ),
-                      SizedBox(
-                        //width: context.width * 0.6,
-                        height: context.height * 0.03,
-                      ),
-                      CountingWidget(
-                        plus: () {
-                          controller.quantityPlus(index);
-                        },
-                        minus: () {
-                          controller.quantityMinus(index);
-                        },
-                        num: controller.state.quantities[index],
-                      ),
-                    ],
-                  ),
-                  //Spacer(),
                   CustomText(
                     fontSize: 18,
-                    //textAlign: TextAlign.,
+                    textAlign: TextAlign.left,
+                    textColor: AppColors.black,
                     fontWeight: FontWeight.bold,
-                    text:
-                        "\$${controller.state.products[index].price * controller.state.quantities[index]}",
-                    textColor: AppColors.darkBrown,
+                    text: controller.state.products[index].name,
+                  ),
+                  SizedBox(
+                    //width: context.width * 0.6,
+                    height: context.height * 0.03,
+                  ),
+                  CountingWidget(
+                    plus: () {
+                      controller.quantityPlus(index);
+                    },
+                    minus: () {
+                      controller.quantityMinus(index);
+                    },
+                    num: controller.state.quantities[index],
                   ),
                 ],
               ),
-            ),
-            Divider(
-              height: 20,
-              thickness: 0.5,
-              color: Colors.black,
-              endIndent: context.width * 0.1,
-              indent: context.width * 0.1,
-            ),
-          ],
+              //Spacer(),
+              CustomText(
+                fontSize: 18,
+                //textAlign: TextAlign.,
+                fontWeight: FontWeight.bold,
+                text:
+                    "\$${controller.state.products[index].price * controller.state.quantities[index]}",
+                textColor: AppColors.darkBrown,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -8,8 +8,7 @@ import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/services/service_locator.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
-import 'package:e_commerce_app/core/components/edite_dismissible_background.dart';
-import 'package:e_commerce_app/core/components/delete_dismissible_background.dart';
+import 'package:e_commerce_app/core/components/dismissible_background.dart';
 import 'package:e_commerce_app/modules/orders/presentation/widgets/order_widget.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_case.dart';
 import 'package:e_commerce_app/modules/orders/presentation/widgets/update_order_date_widget.dart';
@@ -55,6 +54,7 @@ class ViewUserOrdersBody extends StatelessWidget {
         return ListView.builder(
           itemCount: state.orders.length,
           physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 5),
           itemBuilder: (context, index) => Dismissible(
             onDismissed: (DismissDirection direction) {
               //if (direction == DismissDirection.startToEnd) {
@@ -80,8 +80,10 @@ class ViewUserOrdersBody extends StatelessWidget {
                 return false;
               }
             },
-            background: const DeleteDismissibleBackgroundComponent(),
-            secondaryBackground: const EditeDismissibleBackgroundComponent(),
+            background: const DismissibleBackgroundComponent(
+                color: Colors.red, icon: Icons.delete),
+            secondaryBackground: const DismissibleSecondaryBackgroundComponent(
+                color: Colors.green, icon: Icons.edit),
             key: ValueKey(state.orders[index].reference),
             child: OrderWidget(state.orders[index]),
           ),

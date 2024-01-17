@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/core/components/delete_dismissible_background.dart';
+import 'package:e_commerce_app/core/components/dismissible_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -65,7 +65,8 @@ class ViewUserOrderItemsBody extends StatelessWidget {
                     .orderItems
                     .removeAt(index);
               },
-              background: const DeleteDismissibleBackgroundComponent(),
+              background: const DismissibleBackgroundComponent(
+                  color: Colors.red, icon: Icons.delete),
               key: ValueKey(state.orderItems[index].product.id),
               child: OrderItemWidget(state.orderItems[index]),
             ),
