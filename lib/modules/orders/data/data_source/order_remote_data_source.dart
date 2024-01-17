@@ -15,16 +15,16 @@ import 'package:e_commerce_app/modules/orders/domain/use_case/get_order_items_us
 import 'package:e_commerce_app/modules/orders/domain/use_case/up_date_order_data_use_case.dart';
 
 abstract class OrderBaseRemoteDataSource {
+  Future<List<OrderItemEntity>> getOrderItems(GetOrderItemsParams params);
+  Future<Stream<List<OrderDataEntity>>> streamOfUserOrders(String userId);
   Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params);
-  Future<void> addItemToOrder(AddItemToOrderParams params);
+  Future<OrderDataEntity> getOrderData(GetOrderDataParams params);
+  Future<List<OrderDataEntity>> getUserOrders(String userId);
   Future<void> updateOrderData(UpDateOrderDataParams params);
+  Future<Stream<List<UserEntity>>> streamUsersWhoOrdered();
+  Future<void> addItemToOrder(AddItemToOrderParams params);
   Future<void> deleteOrder(DeleteOrderParams params);
   Future<void> addOrder(AddOrderParams params);
-  Future<OrderDataEntity> getOrderData(GetOrderDataParams params);
-  Future<List<OrderItemEntity>> getOrderItems(GetOrderItemsParams params);
-  Future<Stream<List<UserEntity>>> streamUsersWhoOrdered();
-  Future<Stream<List<OrderDataEntity>>> streamOfUserOrders(String userId);
-  Future<List<OrderDataEntity>> getUserOrders(String userId);
 }
 
 class OrderRemoteDataSource implements OrderBaseRemoteDataSource {

@@ -32,6 +32,7 @@ class AppStrings {
   static const String invalid = "Invalid ";
   static const String product = "Product";
   static const String details = "Details";
+  static const String pieces = "Pieces";
 
   static const String name = "Name";
   static const String phone = "Phone";

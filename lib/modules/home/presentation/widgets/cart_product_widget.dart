@@ -92,7 +92,7 @@ class CartProductWidget extends StatelessWidget {
                     //textAlign: TextAlign.,
                     fontWeight: FontWeight.bold,
                     text:
-                        "\$${int.parse(controller.state.products[index].price) * controller.state.quantities[index]}",
+                        "\$${controller.state.products[index].price * controller.state.quantities[index]}",
                     textColor: AppColors.darkBrown,
                   ),
                 ],

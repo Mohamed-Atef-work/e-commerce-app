@@ -50,9 +50,9 @@ class HomeLayoutScreen extends StatelessWidget {
       BlocProvider.of<ManageCartProductsCubit>(context).getCartProducts("uId");
       return const CartView();
     } else if (state.currentIndex == 2) {
+      BlocProvider.of<GetFavoriteCubit>(context).getFavorites();
       return const FavoritesView();
     } else {
-      BlocProvider.of<GetFavoriteCubit>(context).getFavorites();
       return const AccountView();
     }
   }
@@ -139,7 +139,7 @@ final List<ProductEntity> _products = List.generate(
     description: "we are testing",
     location: "home",
     category: "jackets",
-    price: "100",
+    price: 100,
     image:
         "https://firebasestorage.googleapis.com/v0/b/ecommerce-39620.appspot.com/o/productImagesIMG-20231030-WA0011.jpg?alt=media&token=ddccf23c-2e3b-420b-a0a4-5cc527aff36b",
     name: "Product details Screen task",

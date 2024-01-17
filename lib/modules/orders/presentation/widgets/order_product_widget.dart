@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/modules/orders/domain/entity/item_entity.dart';
 import 'package:e_commerce_app/modules/orders/presentation/widgets/counting_widget.dart';
@@ -20,6 +21,7 @@ class OrderItemWidget extends StatelessWidget {
               clipBehavior: Clip.antiAlias,
               width: context.width * 0.2,
               height: context.height * 0.12,
+              padding: const EdgeInsets.only(right: 15),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
               ),
@@ -31,25 +33,35 @@ class OrderItemWidget extends StatelessWidget {
             Column(
               children: [
                 CustomText(
-                  fontSize: 18,
+                  fontSize: 20,
                   text: item.product.name,
                   textAlign: TextAlign.left,
-                  fontWeight: FontWeight.bold,
                   textColor: AppColors.black,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: AppStrings.pacifico,
                 ),
                 SizedBox(
-                  width: context.width * 0.6,
+                  //width: context.width * 0.6,
                   height: context.height * 0.03,
                 ),
-                CountingWidget(num:item.quantity,plus: (){},minus: (){},),
+                CustomText(
+                  fontSize: 18,
+                  //textAlign: TextAlign.,
+                  fontWeight: FontWeight.bold,
+                  text: "\$${item.product.price * item.quantity}",
+                  textColor: AppColors.darkBrown,
+                ),
               ],
             ),
+            const Spacer(),
             CustomText(
               fontSize: 18,
               //textAlign: TextAlign.,
               fontWeight: FontWeight.bold,
-              text: "\$${item.product.price}",
               textColor: AppColors.darkBrown,
+              fontFamily: AppStrings.pacifico,
+
+              text: "${item.quantity} ${AppStrings.pieces}",
             ),
           ],
         ),
@@ -57,8 +69,8 @@ class OrderItemWidget extends StatelessWidget {
           height: 20,
           thickness: 0.5,
           color: Colors.black,
-          indent: context.width * 0.1,
-          endIndent: context.width * 0.1,
+          indent: context.width * 0.05,
+          endIndent: context.width * 0.05,
         ),
       ],
     );

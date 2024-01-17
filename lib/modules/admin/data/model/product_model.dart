@@ -17,12 +17,14 @@ class ProductModel extends ProductEntity {
         description: json["productDescription"],
         location: json["productLocation"],
         category: json["productCategory"],
+
+        /// to do ----->
         price: json["productPrice"],
         image: json["productImage"],
         name: json["productName"],
         id: productId,
       );
-  Map<String, String> toJson() => {
+  Map<String, dynamic> toJson() => {
         "productDescription": description,
         "productLocation": location,
         "productCategory": category,

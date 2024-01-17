@@ -15,17 +15,16 @@ abstract class OrderStore {
   Future<DocumentSnapshot<Map<String, dynamic>>> getOrderData(
       DocumentReference orderRef);
   Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params);
-
+  Future<QuerySnapshot<Map<String, dynamic>>> getUserOrders(String userId);
   Future<void> deleteAllOrderItems(
       List<QueryDocumentSnapshot<Map<String, dynamic>>> items);
 
   ///
   Future<QuerySnapshot<Map<String, dynamic>>> getOrderItems(
       DocumentReference orderRef);
-  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> streamUsersWhoOrdered();
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>> streamOfUserOrders(
       String userId);
-  Future<QuerySnapshot<Map<String, dynamic>>> getUserOrders(String userId);
+  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> streamUsersWhoOrdered();
 }
 
 class OrderStoreImpl implements OrderStore {

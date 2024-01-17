@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
@@ -30,17 +31,17 @@ class OrderWidget extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  clipBehavior: Clip.antiAlias,
                   width: context.width * 0.15,
                   height: context.height * 0.1,
+                  clipBehavior: Clip.antiAlias,
                   margin: const EdgeInsets.only(right: 7),
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.grey,
                   ),
                   child: Image.asset(
-                    fit: BoxFit.contain,
                     Images.orderImage,
+                    fit: BoxFit.contain,
                     color: AppColors.darkBrown.withOpacity(0.001),
                   ),
                 ),
@@ -48,38 +49,27 @@ class OrderWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomText(
-                      text: order.name,
                       fontSize: 18,
+                      text: order.name,
                       fontWeight: FontWeight.bold,
                       textColor: AppColors.darkBrown,
                     ),
-                    SizedBox(
-                      height: context.height * 0.01,
-                    ),
+                    SizedBox(height: context.height * 0.01),
                     CustomText(
-                      text: order.date,
                       fontSize: 15,
+                      text: order.date,
                       textColor: AppColors.darkBrown,
                     ),
                   ],
                 ),
                 const Spacer(),
-                Row(
-                  children: [
-                    const CustomText(
-                      fontSize: 22,
-                      textColor: Colors.lightGreen,
-                      text: "\$",
-                      fontWeight: FontWeight.bold,
-                    ),
-                    CustomText(
-                      fontSize: 22,
-                      textColor: Colors.black,
-                      text: order.totalPrice,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ],
-                )
+                CustomText(
+                  fontSize: 22,
+                  textColor: AppColors.black,
+                  fontWeight: FontWeight.bold,
+                  text: "\$${order.totalPrice}",
+                  fontFamily: AppStrings.pacifico,
+                ),
               ],
             ),
             Divider(

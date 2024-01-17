@@ -134,10 +134,10 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
       AddOrderParams(
         items: items,
         orderData: OrderDataModel(
-          date: "date",
+          date: DateTime.now().toString(),
           name: "name",
           phone: "phone",
-          totalPrice: totalPrice.toString(),
+          totalPrice: totalPrice,
           address: "address",
         ),
         uId: "uId",
@@ -155,8 +155,8 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
   double _totalPrice() {
     double totalPrice = 0;
     for (int index = 0; index < state.products.length; index++) {
-      totalPrice = totalPrice +
-          state.quantities[index] * double.parse(state.products[index].price);
+      totalPrice =
+          totalPrice + state.quantities[index] * state.products[index].price;
     }
     return totalPrice;
   }

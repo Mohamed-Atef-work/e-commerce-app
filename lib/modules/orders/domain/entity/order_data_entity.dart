@@ -6,7 +6,7 @@ class OrderDataEntity extends Equatable {
   final String name;
   final String phone;
   final String address;
-  final String totalPrice;
+  final num totalPrice;
   final DocumentReference? reference;
 
   const OrderDataEntity({

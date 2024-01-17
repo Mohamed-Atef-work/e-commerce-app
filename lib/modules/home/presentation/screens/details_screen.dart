@@ -57,8 +57,7 @@ class DetailsScreen extends StatelessWidget {
                   ),
                   CustomText(
                     fontSize: 20,
-                    text:
-                        "\$${int.parse(state.product!.price) * state.quantity}",
+                    text: "\$${state.product!.price * state.quantity}",
                     fontWeight: FontWeight.bold,
                     textColor: AppColors.darkBrown,
                     fontFamily: AppStrings.pacifico,
