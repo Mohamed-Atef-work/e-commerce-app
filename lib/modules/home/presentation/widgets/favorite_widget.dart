@@ -24,8 +24,8 @@ class FavoriteWidget extends StatelessWidget {
             CustomText(
               fontSize: 25,
               fontWeight: FontWeight.bold,
-              fontFamily: AppStrings.pacifico,
               text: favoriteEntity.category,
+              fontFamily: AppStrings.pacifico,
             ),
             SizedBox(height: context.height * 0.01),
           ] +

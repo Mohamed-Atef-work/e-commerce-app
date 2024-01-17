@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/core/components/custom_text.dart';
+import 'package:e_commerce_app/core/components/divider_component.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
@@ -28,8 +29,7 @@ class FavoritesView extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) =>
                   FavoriteWidget(favoriteEntity: state.favorites[index]),
-              separatorBuilder: (context, index) =>
-                  SizedBox(height: context.height * 0.01),
+              separatorBuilder: (context, index) => const DividerComponent(),
             );
           } else {}
           return const Center(

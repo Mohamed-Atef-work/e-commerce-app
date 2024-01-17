@@ -19,9 +19,9 @@ class AccountItemsWidget extends StatelessWidget {
       //hoverColor: Colors.transparent,
       // when putting the mouse on it .
       splashColor: AppColors.loginTextFormFieldGray,
-      // the color is spread gradually.
+      // the color is spread gradually, when pressing on.
       highlightColor: Colors.transparent,
-      // changes all it's color ,when putting the mouse on it .
+      // changes all it's color ,after pressing on it .
       borderRadius: BorderRadius.circular(20),
       onTap: onTap,
       child: Padding(

@@ -1,11 +1,13 @@
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
+import 'package:e_commerce_app/core/components/dismissible_background.dart';
 import 'package:e_commerce_app/core/components/divider_component.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/cart_product_widget.dart';
 import 'package:flutter/material.dart';
@@ -36,8 +38,28 @@ class CartView extends StatelessWidget {
                 itemCount: state.products.length,
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
-                itemBuilder: (context, index) =>
-                    CartProductWidget(index: index),
+                itemBuilder: (context, index) => Dismissible(
+                  key: ValueKey(state.products[index].name),
+                  background: const DismissibleBackgroundComponent(
+                      color: Colors.red, icon: Icons.delete),
+                  secondaryBackground:
+                      const DismissibleSecondaryBackgroundComponent(
+                          color: Colors.red, icon: Icons.delete),
+                  onDismissed: (direction) {
+                    /// To Do ooo ooo ooo ooo ooo ..[uId]..
+
+                    BlocProvider.of<ManageCartProductsCubit>(context)
+                        .deleteFromCart(
+                      DeleteFromCartParams(
+                        uId: "uId",
+                        productId: state.products[index].id!,
+                        category: state.products[index].category,
+                      ),
+                    );
+                    state.products.removeAt(index);
+                  },
+                  child: CartProductWidget(index: index),
+                ),
                 separatorBuilder: (context, index) => const DividerComponent(),
               ),
             ),

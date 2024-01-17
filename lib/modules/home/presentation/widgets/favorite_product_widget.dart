@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/core/components/custom_text.dart';
+import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/heart_with_manage_favorite_cubit_provided_widget.dart';
@@ -16,59 +17,59 @@ class FavoriteProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: context.width * 0.01),
-      child: TextButton.icon(
-        onPressed: onPressed,
-        icon: Container(
-          width: 180,
-          height: 167,
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-          child: Image.network(product.image, fit: BoxFit.cover),
-        ),
-        label: Stack(
-          alignment: Alignment.topRight,
+    return InkWell(
+      onTap: onPressed,
+      borderRadius: BorderRadius.circular(30),
+      //hoverColor: Colors.transparent,
+      // when putting the mouse on it .
+      splashColor: Colors.amber.withOpacity(0.5),
+      // the color is spread gradually, when pressing on.
+      highlightColor: Colors.transparent,
+      // changes all it's color ,after pressing on it .
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            HeartWihMangeFavoriteCubitProviderWidget(
-              heartColor: Colors.red,
-              product: product,
+            Container(
+              width: 170,
+              height: 165,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(20)),
+              child: Image.network(product.image, fit: BoxFit.cover),
             ),
+            SizedBox(width: context.width * 0.02),
             SizedBox(
               height: 165,
-              width: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   CustomText(
+                    maxLines: 3,
+                    fontSize: 18,
                     text: product.name,
-                    fontWeight: FontWeight.w300,
-                    textAlign: TextAlign.left,
-                    fontSize: 20,
                     textColor: Colors.black,
+                    textAlign: TextAlign.left,
+                    fontWeight: FontWeight.w300,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   CustomText(
+                    maxLines: 3,
+                    fontSize: 18,
+                    textColor: Colors.black,
+                    textAlign: TextAlign.left,
                     text: product.description,
-                    fontSize: 18,
                     fontWeight: FontWeight.w300,
-                    textColor: Colors.black,
-                    maxLines: 3,
                     overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                  ),
-                  CustomText(
-                    text: product.location,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w300,
-                    textColor: Colors.black,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
                   ),
                 ],
               ),
             ),
+            const Spacer(),
+            HeartWihMangeFavoriteCubitProviderWidget(
+                product: product, heartColor: Colors.red),
           ],
         ),
       ),
