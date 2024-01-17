@@ -12,7 +12,7 @@ class CartEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-    category,
-    products,
-  ];
+        category,
+        products,
+      ];
 }
