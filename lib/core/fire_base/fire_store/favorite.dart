@@ -79,10 +79,9 @@ class FavoriteStoreImpl implements FavoriteStore {
     List<DocumentSnapshot<Map<String, dynamic>>> products = [];
 
     for (int index = 0; index < productIds.length; index++) {
-      await _getFavProduct(category: category, productId: productIds[index])
-          .then((product) {
-        products.add(product);
-      });
+      final productDoc = await _getFavProduct(
+          category: category, productId: productIds[index]);
+      products.add(productDoc);
     }
     return products;
   }
@@ -110,14 +109,15 @@ class FavoriteStoreImpl implements FavoriteStore {
   /// get Categories;
   // get Fav categories Items;
   /// LOOP
-  // ----> {
+  // -----> {
   /// --------- > get Items of One category;
-  // --------------- > get IDs of One category;
+  // ----------------> get IDs of One category;
   /// ------------------ > LOOP
-  /// ----------------------- > {
+  /// ------------------------> {
   // ---------------------------- > On get One Fav Item;
   /// ------------------------> {
-  /// --- > }
+  // ---------------->
+  // -----> }
 }
 
 /// ///////////////////////////////////////////////////////////
