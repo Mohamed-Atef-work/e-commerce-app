@@ -18,8 +18,8 @@ class AccountView extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, Screens.profileScreen);
             },
-            icon: Icons.person_outline,
             name: AppStrings.profile,
+            icon: Icons.person_outline,
           ),
           SizedBox(height: context.height * 0.03),
           AccountItemsWidget(

@@ -9,14 +9,14 @@ import 'package:e_commerce_app/modules/home/presentation/views/cart_view.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/account_view.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/favorites_view.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_cubit.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/layout_controller/layout_states.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/layout_controller/admin_layout_cubit.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/layout_controller/admin_layout_states.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 
-class HomeLayoutScreen extends StatelessWidget {
-  const HomeLayoutScreen({Key? key}) : super(key: key);
+class AdminLayoutScreen extends StatelessWidget {
+  const AdminLayoutScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +27,12 @@ class HomeLayoutScreen extends StatelessWidget {
             ..loadCategories()
             ..loadProductsOfTheFirstCategory(),
         ),
-        BlocProvider<LayoutCubit>(
-          create: (context) => sl<LayoutCubit>(),
+        BlocProvider<AdminLayoutCubit>(
+          create: (context) => sl<AdminLayoutCubit>(),
         ),
       ],
-      child: BlocBuilder<LayoutCubit, LayoutState>(builder: (context, state) {
+      child: BlocBuilder<AdminLayoutCubit, AdminLayoutState>(
+          builder: (context, state) {
         return Scaffold(
           //backgroundColor: Colors.amber,
           appBar: _appBar(context),
@@ -43,7 +44,7 @@ class HomeLayoutScreen extends StatelessWidget {
   }
 
   Widget _body(BuildContext context) {
-    LayoutState state = BlocProvider.of<LayoutCubit>(context).state;
+    AdminLayoutState state = BlocProvider.of<AdminLayoutCubit>(context).state;
     if (state.currentIndex == 0) {
       return const HomeView();
     } else if (state.currentIndex == 1) {
@@ -66,7 +67,7 @@ class HomeLayoutScreen extends StatelessWidget {
           textColor: AppColors.black,
           fontWeight: FontWeight.bold,
           fontFamily: AppStrings.pacifico,
-          text: BlocProvider.of<LayoutCubit>(context).state.appBarTitle,
+          text: BlocProvider.of<AdminLayoutCubit>(context).state.appBarTitle,
         ),
       );
 
@@ -76,9 +77,9 @@ class HomeLayoutScreen extends StatelessWidget {
         type: BottomNavigationBarType.fixed,
         backgroundColor: AppColors.primaryColorYellow,
         onTap: (index) {
-          BlocProvider.of<LayoutCubit>(context).newScreen(index);
+          BlocProvider.of<AdminLayoutCubit>(context).newScreen(index);
         },
-        currentIndex: BlocProvider.of<LayoutCubit>(context).state.currentIndex,
+        currentIndex: BlocProvider.of<AdminLayoutCubit>(context).state.currentIndex,
         items: const [
           BottomNavigationBarItem(
             label: '',
@@ -87,8 +88,8 @@ class HomeLayoutScreen extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             label: '',
-            activeIcon: Icon(Icons.shopping_cart, color: Colors.white),
-            icon: Icon(Icons.shopping_cart, color: Colors.black),
+            activeIcon: Icon(Icons.shopping_basket, color: Colors.white),
+            icon: Icon(Icons.shopping_basket, color: Colors.black),
           ),
           BottomNavigationBarItem(
             label: '',

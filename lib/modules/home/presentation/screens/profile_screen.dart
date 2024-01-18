@@ -52,8 +52,8 @@ class ProfileScreen extends StatelessWidget {
             ),
             ProfileItemsWidget(
               onTap: () {},
-              icon: Icons.language_outlined,
               name: AppStrings.language,
+              icon: Icons.language_outlined,
             ),
             SizedBox(height: context.height * 0.03),
             AccountItemsWidget(
