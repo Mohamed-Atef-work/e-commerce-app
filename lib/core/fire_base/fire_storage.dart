@@ -1,14 +1,15 @@
 import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart';
-abstract class StorageService{
+
+abstract class StorageService {
   Future<Reference> uploadFile({
     required File file,
     required String collectionName,
   });
   Future<String> downloadUrl(Reference reference);
 }
-class StorageServiceImpl implements StorageService{
+
+class StorageServiceImpl implements StorageService {
   final FirebaseStorage storage;
 
   StorageServiceImpl(this.storage);

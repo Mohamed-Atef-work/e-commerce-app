@@ -11,56 +11,50 @@ class OrderItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Container(
-          clipBehavior: Clip.antiAlias,
-          width: context.width * 0.2,
-          height: context.height * 0.12,
-          padding: const EdgeInsets.only(right: 15),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            width: context.width * 0.2,
+            height: context.height * 0.12,
+            clipBehavior: Clip.antiAlias,
+            padding: const EdgeInsets.only(right: 15),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+            child: Image.network(item.product.image, fit: BoxFit.contain),
           ),
-          child: Image.network(
-            item.product.image,
-            fit: BoxFit.contain,
+          Column(
+            children: [
+              CustomText(
+                fontSize: 20,
+                text: item.product.name,
+                textAlign: TextAlign.left,
+                textColor: AppColors.black,
+                fontWeight: FontWeight.bold,
+                fontFamily: AppStrings.pacifico,
+              ),
+              SizedBox(height: context.height * 0.03),
+              CustomText(
+                fontSize: 18,
+                //textAlign: TextAlign.,
+                fontWeight: FontWeight.bold,
+                textColor: AppColors.darkBrown,
+                text: "\$${item.product.price * item.quantity}",
+              ),
+            ],
           ),
-        ),
-        Column(
-          children: [
-            CustomText(
-              fontSize: 20,
-              text: item.product.name,
-              textAlign: TextAlign.left,
-              textColor: AppColors.black,
-              fontWeight: FontWeight.bold,
-              fontFamily: AppStrings.pacifico,
-            ),
-            SizedBox(
-              //width: context.width * 0.6,
-              height: context.height * 0.03,
-            ),
-            CustomText(
-              fontSize: 18,
-              //textAlign: TextAlign.,
-              fontWeight: FontWeight.bold,
-              text: "\$${item.product.price * item.quantity}",
-              textColor: AppColors.darkBrown,
-            ),
-          ],
-        ),
-        const Spacer(),
-        CustomText(
-          fontSize: 18,
-          //textAlign: TextAlign.,
-          fontWeight: FontWeight.bold,
-          textColor: AppColors.darkBrown,
-          fontFamily: AppStrings.pacifico,
-
-          text: "${item.quantity} ${AppStrings.pieces}",
-        ),
-      ],
+          const Spacer(),
+          CustomText(
+            fontSize: 18,
+            //textAlign: TextAlign.,
+            fontWeight: FontWeight.bold,
+            textColor: AppColors.darkBrown,
+            fontFamily: AppStrings.pacifico,
+            text: "${item.quantity} ${AppStrings.pieces}",
+          ),
+        ],
+      ),
     );
   }
 }

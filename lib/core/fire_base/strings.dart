@@ -8,7 +8,7 @@ class FirebaseStrings {
   static const String jackets = "jackets";
   static const String shirts = "shirts";
   static const String orders = "orders";
-  static const String items = "items";
   static const String users = "users";
+  static const String items = "items";
   static const String cart = "cart";
 }

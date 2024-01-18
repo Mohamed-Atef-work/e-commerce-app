@@ -50,9 +50,9 @@ class ViewUserOrderItemsBody extends StatelessWidget {
           );
         } else {
           return ListView.separated(
+            padding: const EdgeInsets.all(10),
             itemCount: state.orderItems.length,
             physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             itemBuilder: (context, index) => Dismissible(
               key: ValueKey(state.orderItems[index].product.id),
               onDismissed: (_) {

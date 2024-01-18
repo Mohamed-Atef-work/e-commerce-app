@@ -1,9 +1,10 @@
-import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:e_commerce_app/core/utils/extensions.dart';
 
 class DismissibleBackgroundComponent extends StatelessWidget {
-  final IconData icon;
   final Color color;
+  final IconData icon;
+
   const DismissibleBackgroundComponent({
     super.key,
     required this.icon,
@@ -24,8 +25,9 @@ class DismissibleBackgroundComponent extends StatelessWidget {
 }
 
 class DismissibleSecondaryBackgroundComponent extends StatelessWidget {
-  final IconData icon;
   final Color color;
+  final IconData icon;
+
   const DismissibleSecondaryBackgroundComponent({
     super.key,
     required this.icon,

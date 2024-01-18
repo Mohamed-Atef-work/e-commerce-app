@@ -25,7 +25,7 @@ class OrderWidget extends StatelessWidget {
       highlightColor: Colors.black12,
       borderRadius: BorderRadius.circular(20),
       child: Padding(
-        padding: const EdgeInsets.all(7.0),
+        padding: const EdgeInsets.symmetric(horizontal: 5.0),
         child: Row(
           children: [
             Container(
@@ -34,8 +34,8 @@ class OrderWidget extends StatelessWidget {
               clipBehavior: Clip.antiAlias,
               margin: const EdgeInsets.only(right: 7),
               decoration: const BoxDecoration(
-                shape: BoxShape.circle,
                 color: Colors.grey,
+                shape: BoxShape.circle,
               ),
               child: Image.asset(
                 Images.orderImage,

@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/core/components/divider_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -9,6 +8,7 @@ import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/services/service_locator.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/core/components/divider_component.dart';
 import 'package:e_commerce_app/core/components/dismissible_background.dart';
 import 'package:e_commerce_app/modules/orders/presentation/widgets/order_widget.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_case.dart';
@@ -55,8 +55,8 @@ class ViewUserOrdersBody extends StatelessWidget {
         return ListView.separated(
           separatorBuilder: (context, index) => const DividerComponent(),
           itemCount: state.orders.length,
+          padding: const EdgeInsets.all(10),
           physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 5),
           itemBuilder: (context, index) => Dismissible(
             onDismissed: (DismissDirection direction) {
               //if (direction == DismissDirection.startToEnd) {
@@ -82,10 +82,10 @@ class ViewUserOrdersBody extends StatelessWidget {
                 return false;
               }
             },
-            background: const DismissibleBackgroundComponent(
-                color: Colors.red, icon: Icons.delete),
             secondaryBackground: const DismissibleSecondaryBackgroundComponent(
                 color: Colors.green, icon: Icons.edit),
+            background: const DismissibleBackgroundComponent(
+                color: Colors.red, icon: Icons.delete),
             key: ValueKey(state.orders[index].reference),
             child: OrderWidget(state.orders[index]),
           ),
