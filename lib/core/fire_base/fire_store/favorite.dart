@@ -34,19 +34,18 @@ class FavoriteStoreImpl implements FavoriteStore {
     await _setFavCategoryToBeAvailableToFetch(
       FavoriteParameters(
         uId: params.uId,
-        productId: params.productId,
         category: params.category,
+        productId: params.productId,
       ),
-    ).then((value) async {
-      await store
-          .collection(FirebaseStrings.users)
-          .doc(params.uId)
-          .collection(FirebaseStrings.favorites)
-          .doc(params.category)
-          .collection(FirebaseStrings.products)
-          .doc(params.productId)
-          .set(const {});
-    });
+    );
+    await store
+        .collection(FirebaseStrings.users)
+        .doc(params.uId)
+        .collection(FirebaseStrings.favorites)
+        .doc(params.category)
+        .collection(FirebaseStrings.products)
+        .doc(params.productId)
+        .set(const {});
   }
 
   @override
