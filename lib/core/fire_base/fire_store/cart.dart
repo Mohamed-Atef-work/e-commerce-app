@@ -25,8 +25,6 @@ abstract class CartStore {
       GetProductParams params);
 }
 
-
-
 class CartStoreImpl implements CartStore {
   final FirebaseFirestore store;
 
@@ -61,6 +59,11 @@ class CartStoreImpl implements CartStore {
   @override
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getCartProducts(
       String uId) async {
+    final referencesOfCategories = await getCartCategories(uId);
+    final docsOfCartProducts = await _getCartProducts(referencesOfCategories);
+
+    return docsOfCartProducts;
+
     return await getCartCategories(uId).then((categoriesRefs) async {
       return await _getCartProducts(categoriesRefs).then((products) {
         return products;
