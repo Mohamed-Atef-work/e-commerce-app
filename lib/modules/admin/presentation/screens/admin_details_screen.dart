@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/modules/admin/domain/use_cases/delete_product_use_case.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_state.dart';
 import 'package:flutter/material.dart';
@@ -86,12 +85,12 @@ class AdminDetailsScreen extends StatelessWidget {
                           BlocProvider.of<AdminDetailsCubit>(context)
                               .deleteProduct();
                         },
-                        child: const CustomText(
+                        child: CustomText(
                           fontSize: 18,
-                          textColor: Colors.red,
                           text: AppStrings.delete,
                           fontWeight: FontWeight.bold,
                           fontFamily: AppStrings.pacifico,
+                          textColor: Colors.red.withOpacity(0.8),
                         ),
                       ),
                       HeartWihMangeFavoriteCubitProviderWidget(

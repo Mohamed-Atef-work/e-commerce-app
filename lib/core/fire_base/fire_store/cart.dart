@@ -31,17 +31,25 @@ class CartStoreImpl implements CartStore {
   CartStoreImpl(this.store);
   @override
   Future<void> addToCart(AddToCartParams params) async {
-    await store
-        .collection(FirebaseStrings.users)
-        .doc(params.uId)
-        .collection(FirebaseStrings.cart)
-        .doc(params.category)
+    final response = await store
         .collection(FirebaseStrings.products)
+        .doc(FirebaseStrings.categories)
+        .collection(params.category)
         .doc(params.productId)
-        .set({
-      FirebaseStrings.quantity: params.quantity,
-    });
-    await _setCartCategoryToBeAvailableToFetch(params);
+        .get();
+    if (response.exists) {
+      await store
+          .collection(FirebaseStrings.users)
+          .doc(params.uId)
+          .collection(FirebaseStrings.cart)
+          .doc(params.category)
+          .collection(FirebaseStrings.products)
+          .doc(params.productId)
+          .set({
+        FirebaseStrings.quantity: params.quantity,
+      });
+      await _setCartCategoryToBeAvailableToFetch(params);
+    }
   }
 
   @override
@@ -106,12 +114,13 @@ class CartStoreImpl implements CartStore {
   @override
   Future<DocumentSnapshot<Map<String, dynamic>>> getProduct(
       GetProductParams params) async {
-    return await store
+    final response = await store
         .collection(FirebaseStrings.products)
         .doc(FirebaseStrings.categories)
         .collection(params.category)
         .doc(params.productId)
         .get();
+    return response;
   }
 
   @override
@@ -122,7 +131,11 @@ class CartStoreImpl implements CartStore {
       final productDoc = await getProduct(
         GetProductParams(category: params.category, productId: id),
       );
-      productsDocs.add(productDoc);
+
+      ///
+      if (productDoc.exists) {
+        productsDocs.add(productDoc);
+      }
 
       /*.then((productDoc) {
         productsDocs.add(productDoc);

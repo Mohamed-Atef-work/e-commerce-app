@@ -141,7 +141,8 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
         ),
       );
     }).catchError((error) {
-      throw ServerException(message: error);
+      print(error.toString());
+      throw ServerException(message: error.toString());
     });
   }
 

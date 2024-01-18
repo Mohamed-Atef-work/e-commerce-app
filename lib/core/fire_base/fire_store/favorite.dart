@@ -31,21 +31,30 @@ class FavoriteStoreImpl implements FavoriteStore {
 
   @override
   Future<void> addFav(AddDeleteFavoriteParams params) async {
-    await _setFavCategoryToBeAvailableToFetch(
-      FavoriteParameters(
-        uId: params.uId,
-        category: params.category,
-        productId: params.productId,
-      ),
-    );
-    await store
-        .collection(FirebaseStrings.users)
-        .doc(params.uId)
-        .collection(FirebaseStrings.favorites)
-        .doc(params.category)
+    final response = await store
         .collection(FirebaseStrings.products)
+        .doc(FirebaseStrings.categories)
+        .collection(params.category)
         .doc(params.productId)
-        .set(const {});
+        .get();
+
+    if (response.exists) {
+      await _setFavCategoryToBeAvailableToFetch(
+        FavoriteParameters(
+          uId: params.uId,
+          category: params.category,
+          productId: params.productId,
+        ),
+      );
+      await store
+          .collection(FirebaseStrings.users)
+          .doc(params.uId)
+          .collection(FirebaseStrings.favorites)
+          .doc(params.category)
+          .collection(FirebaseStrings.products)
+          .doc(params.productId)
+          .set(const {});
+    }
   }
 
   @override
@@ -81,19 +90,27 @@ class FavoriteStoreImpl implements FavoriteStore {
     for (int index = 0; index < productIds.length; index++) {
       final productDoc = await _getFavProduct(
           category: category, productId: productIds[index]);
-      products.add(productDoc);
+
+      ///
+      if (productDoc.exists) {
+        products.add(productDoc);
+      }
     }
     return products;
   }
 
   Future<DocumentSnapshot<Map<String, dynamic>>> _getFavProduct(
       {required String category, required String productId}) async {
-    return await store
+    final response = await store
         .collection(FirebaseStrings.products)
         .doc(FirebaseStrings.categories)
         .collection(category)
         .doc(productId)
         .get();
+
+    print(response.id);
+
+    return response;
   }
 
   Future<void> _setFavCategoryToBeAvailableToFetch(

@@ -146,7 +146,7 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
       );
     }).catchError((error) {
       print(error.toString());
-      throw ServerException(message: error);
+      throw ServerException(message: error.toString());
     });
   }
 
