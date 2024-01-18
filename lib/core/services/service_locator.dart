@@ -142,7 +142,7 @@ void _home() {
   /// blocs
   //sl.registerFactory(() => ProductDetailsCubit(sl()));
   sl.registerFactory(() => UserLayoutCubit());
-  sl.registerFactory(() => HomeCubit(sl(), sl()));
+  sl.registerFactory(() => ProductsViewCubit(sl(), sl()));
   sl.registerFactory(() => GetFavoriteCubit(sl()));
   sl.registerFactory(() => ProductDetailsCubit(sl()));
   sl.registerFactory(() => ManageUserOrderViewCubit());

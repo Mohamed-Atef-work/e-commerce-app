@@ -4,7 +4,7 @@ import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/services/service_locator.dart';
-import 'package:e_commerce_app/modules/home/presentation/views/home_view.dart';
+import 'package:e_commerce_app/modules/home/presentation/views/products_view.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/cart_view.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/account_view.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
@@ -22,8 +22,8 @@ class UserLayoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<HomeCubit>(
-          create: (context) => sl<HomeCubit>()
+        BlocProvider<ProductsViewCubit>(
+          create: (context) => sl<ProductsViewCubit>()
             ..loadCategories()
             ..loadProductsOfTheFirstCategory(),
         ),
@@ -46,7 +46,7 @@ class UserLayoutScreen extends StatelessWidget {
   Widget _body(BuildContext context) {
     UserLayoutState state = BlocProvider.of<UserLayoutCubit>(context).state;
     if (state.currentIndex == 0) {
-      return const HomeView();
+      return const UserProductsView();
     } else if (state.currentIndex == 1) {
       BlocProvider.of<ManageCartProductsCubit>(context).getCartProducts("uId");
       return const CartView();

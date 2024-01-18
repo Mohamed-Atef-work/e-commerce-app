@@ -1,18 +1,18 @@
-import 'package:e_commerce_app/modules/admin/presentation/views/admin_orders_view.dart';
-import 'package:e_commerce_app/modules/admin/presentation/views/admin_profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/services/service_locator.dart';
-import 'package:e_commerce_app/modules/home/presentation/views/home_view.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/favorites_view.dart';
-import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_layout_controller/admin_layout_cubit.dart';
-import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_layout_controller/admin_layout_states.dart';
+import 'package:e_commerce_app/modules/admin/presentation/views/admin_orders_view.dart';
+import 'package:e_commerce_app/modules/admin/presentation/views/admin_profile_view.dart';
+import 'package:e_commerce_app/modules/admin/presentation/views/admin_products_view.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_layout_controller/admin_layout_cubit.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_layout_controller/admin_layout_states.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 
 class AdminLayoutScreen extends StatelessWidget {
@@ -22,8 +22,8 @@ class AdminLayoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<HomeCubit>(
-          create: (context) => sl<HomeCubit>()
+        BlocProvider<ProductsViewCubit>(
+          create: (context) => sl<ProductsViewCubit>()
             ..loadCategories()
             ..loadProductsOfTheFirstCategory(),
         ),
@@ -46,7 +46,7 @@ class AdminLayoutScreen extends StatelessWidget {
   Widget _body(BuildContext context) {
     AdminLayoutState state = BlocProvider.of<AdminLayoutCubit>(context).state;
     if (state.currentIndex == 0) {
-      return const HomeView();
+      return const AdminProductsView();
     } else if (state.currentIndex == 1) {
       BlocProvider.of<ManageCartProductsCubit>(context).getCartProducts("uId");
       return const AdminOrderView();
@@ -77,7 +77,7 @@ class AdminLayoutScreen extends StatelessWidget {
         type: BottomNavigationBarType.fixed,
         backgroundColor: AppColors.primaryColorYellow,
         onTap: (index) {
-          BlocProvider.of<AdminLayoutCubit>(context).newScreen(index);
+          BlocProvider.of<AdminLayoutCubit>(context).newView(index);
         },
         currentIndex:
             BlocProvider.of<AdminLayoutCubit>(context).state.currentIndex,

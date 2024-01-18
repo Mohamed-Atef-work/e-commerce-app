@@ -11,7 +11,7 @@ class AdminLayoutCubit extends Cubit<AdminLayoutState> {
     AppStrings.favorites,
     AppStrings.profile,
   ];
-  void newScreen(int index) {
+  void newView(int index) {
     emit(AdminLayoutState(currentIndex: index, appBarTitle: _titles[index]));
   }
 }

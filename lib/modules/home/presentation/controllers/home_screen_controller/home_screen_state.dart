@@ -1,7 +1,7 @@
 part of 'home_screen_cubit.dart';
 
 @immutable
-class HomeState {
+class ProductsViewState {
   final RequestState categoriesState;
   final RequestState productsState;
   final List<ProductEntity> products;
@@ -9,7 +9,7 @@ class HomeState {
   final int categoryIndex;
   final String? message;
 
-  const HomeState({
+  const ProductsViewState({
     this.categoriesState = RequestState.initial,
     this.productsState = RequestState.initial,
     this.products = const [],
@@ -17,7 +17,7 @@ class HomeState {
     this.categoryIndex = 0,
     this.message,
   });
-  HomeState copyWith({
+  ProductsViewState copyWith({
     List<ProductEntity>? products,
     List<ProductCategoryEntity>? categories,
     RequestState? productsState,
@@ -25,7 +25,7 @@ class HomeState {
     int? categoryIndex,
     String? message,
   }) =>
-      HomeState(
+      ProductsViewState(
         message: message ?? this.message,
         products: products ?? this.products,
         categories: categories ?? this.categories,

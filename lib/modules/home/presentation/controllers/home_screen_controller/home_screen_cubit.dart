@@ -11,17 +11,17 @@ import 'package:meta/meta.dart';
 
 part 'home_screen_state.dart';
 
-class HomeCubit extends Cubit<HomeState> {
+class ProductsViewCubit extends Cubit<ProductsViewState> {
   final GetAllProductCategoriesUseCase getAllProductCategoriesUseCase;
   final LoadProductsUseCase loadProductsUseCase;
 
   StreamSubscription<List<ProductEntity>>? productsSub;
   StreamSubscription<List<ProductCategoryEntity>>? categorySub;
 
-  HomeCubit(
+  ProductsViewCubit(
     this.loadProductsUseCase,
     this.getAllProductCategoriesUseCase,
-  ) : super(const HomeState());
+  ) : super(const ProductsViewState());
 
   Future<void> loadCategories() async {
     await categorySub?.cancel();

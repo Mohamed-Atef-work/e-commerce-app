@@ -1,5 +1,16 @@
-
+import 'package:e_commerce_app/core/components/app_bar.dart';
+import 'package:e_commerce_app/core/components/custom_button.dart';
+import 'package:e_commerce_app/core/components/custom_text.dart';
+import 'package:e_commerce_app/core/constants/colors.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
+import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/modules/home/presentation/widgets/heart_with_manage_favorite_cubit_provided_widget.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
 
 class AdminDetailsScreen extends StatelessWidget {
   const AdminDetailsScreen({
@@ -8,10 +19,8 @@ class AdminDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox();
-    /*return Scaffold(
-      backgroundColor: AppColors.primaryColorYellow,
-      appBar: appBar(title: AppStrings.details),
+    return Scaffold(
+      appBar: appBar(title: AppStrings.productDetails),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
@@ -32,8 +41,8 @@ class AdminDetailsScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20)),
                       child: Image.network(
-                        state.product!.image,
                         fit: BoxFit.fill,
+                        state.product!.image,
                         width: double.infinity,
                         height: double.infinity,
                       ),
@@ -48,10 +57,10 @@ class AdminDetailsScreen extends StatelessWidget {
                   ),
                   CustomText(
                     fontSize: 20,
-                    text: "\$${state.product!.price * state.quantity}",
                     fontWeight: FontWeight.bold,
                     textColor: AppColors.darkBrown,
                     fontFamily: AppStrings.pacifico,
+                    text: "\$${state.product!.price * state.quantity}",
                   ),
                   SizedBox(height: context.height * 0.03),
                   CustomText(
@@ -63,19 +72,6 @@ class AdminDetailsScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CountingWidget(
-                        num: state.quantity,
-                        height: 40,
-                        plus: () {
-                          BlocProvider.of<ProductDetailsCubit>(context)
-                              .quantityPlus();
-                        },
-                        minus: () {
-                          BlocProvider.of<ProductDetailsCubit>(context)
-                              .quantityMinus();
-                        },
-                        width: context.width * 0.8,
-                      ),
                       HeartWihMangeFavoriteCubitProviderWidget(
                         heartColor: Colors.white,
                         product: state.product!,
@@ -88,18 +84,15 @@ class AdminDetailsScreen extends StatelessWidget {
                     alignment: Alignment.center,
                     child: CustomButton(
                       fontSize: 18,
-                      text: AppStrings.addToCart,
+                      text: AppStrings.edit,
                       fontWeight: FontWeight.bold,
+                      width: context.width * 0.9,
+                      height: context.height * 0.07,
                       fontFamily: AppStrings.pacifico,
                       onPressed: () {
                         /// To Do o o o o o o o
-                        BlocProvider.of<ProductDetailsCubit>(context)
-                            .addToCart(uId: 'uId');
-                        BlocProvider.of<ManageCartProductsCubit>(context)
-                            .needToReGet();
+                        Navigator.pushNamed(context, Screens.addProductScreen);
                       },
-                      width: context.width * 0.9,
-                      height: context.height * 0.07,
                     ),
                   )
                 ],
@@ -108,7 +101,7 @@ class AdminDetailsScreen extends StatelessWidget {
           },
         ),
       ),
-    );*/
+    );
   }
 
 /*  @override

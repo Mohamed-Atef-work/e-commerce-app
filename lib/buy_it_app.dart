@@ -63,8 +63,7 @@ class BuyItApp extends StatelessWidget {
           Screens.exploreScreen: (context) => const ExploreProductsScreen(),
           Screens.userLayoutScreen: (context) => const UserLayoutScreen(),
           Screens.adminLayoutScreen: (context) => const AdminLayoutScreen(),
-          Screens.adminProductDetailsScreen: (context) =>
-              const AdminDetailsScreen(),
+          Screens.adminDetailsScreen: (context) => const AdminDetailsScreen(),
           //Screens.productsOfCategory: (context) => const ProductsOfCategoryScreen(),
         },
       ),

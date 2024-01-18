@@ -20,7 +20,7 @@ class CategoriesWidget extends StatelessWidget {
       ),
       child: SizedBox(
         height: context.height * 0.065,
-        child: BlocBuilder<HomeCubit, HomeState>(
+        child: BlocBuilder<ProductsViewCubit, ProductsViewState>(
           builder: (context, state) {
             if (state.categoriesState == RequestState.loading) {
               return const LoadingWidget();
@@ -31,7 +31,7 @@ class CategoriesWidget extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) => CategoryComponent(
                   onTap: () {
-                    BlocProvider.of<HomeCubit>(context)
+                    BlocProvider.of<ProductsViewCubit>(context)
                         .emitCategoryIndex(index);
                     print(state.categories[index].id);
                   },
