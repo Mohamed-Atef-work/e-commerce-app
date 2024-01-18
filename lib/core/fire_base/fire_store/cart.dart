@@ -119,11 +119,14 @@ class CartStoreImpl implements CartStore {
       GetProductsOfOneCategoryParams params) async {
     List<DocumentSnapshot<Map<String, dynamic>>> productsDocs = [];
     for (String id in params.ids) {
-      await getProduct(
-              GetProductParams(category: params.category, productId: id))
-          .then((productDoc) {
+      final productDoc = await getProduct(
+        GetProductParams(category: params.category, productId: id),
+      );
+      productsDocs.add(productDoc);
+
+      /*.then((productDoc) {
         productsDocs.add(productDoc);
-      });
+      });*/
     }
     return productsDocs;
   }
@@ -141,8 +144,8 @@ class CartStoreImpl implements CartStore {
           category: idsAndTheirCategory.category,
         ),
       );
-
       products.addAll(docsOfCategoryProducts);
+
       /*await getCategoryIds(catRef).then((idsAndTheirCategory) async {
         await getProductsOfCategory(
           GetProductsOfOneCategoryParams(
@@ -183,7 +186,7 @@ class CartStoreImpl implements CartStore {
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getQuantities(
       GetQuantitiesParams params) async {
     List<DocumentSnapshot<Map<String, dynamic>>> docs = [];
-    for (var product in params.productsParams) {
+    for (GetQuantities product in params.productsParams) {
       final response = await store
           .collection(FirebaseStrings.users)
           .doc(params.uId)
@@ -200,8 +203,8 @@ class CartStoreImpl implements CartStore {
 }
 
 class GetProductsOfOneCategoryParams {
-  final String category;
   final List<String> ids;
+  final String category;
 
   GetProductsOfOneCategoryParams({
     required this.category,
@@ -236,7 +239,7 @@ class ReturnedIdsAndTheirCategory {
   final List<String> ids;
 
   ReturnedIdsAndTheirCategory({
-    required this.category,
     required this.ids,
+    required this.category,
   });
 }
