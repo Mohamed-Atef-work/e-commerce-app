@@ -100,10 +100,7 @@ class CartStoreImpl implements CartStore {
         await categoryRef.collection(FirebaseStrings.products).get();
     final category = categoryRef.id;
     response.docs.map((doc) => {ids.add(doc.id)}).toList();
-    return ReturnedIdsAndTheirCategory(
-      category: category,
-      ids: ids,
-    );
+    return ReturnedIdsAndTheirCategory(category: category, ids: ids);
   }
 
   @override
@@ -137,7 +134,16 @@ class CartStoreImpl implements CartStore {
     List<DocumentSnapshot<Map<String, dynamic>>> products = [];
     // < --------------------------------------------------------- >
     for (DocumentReference catRef in categoriesRefs) {
-      await getCategoryIds(catRef).then((idsAndTheirCategory) async {
+      final idsAndTheirCategory = await getCategoryIds(catRef);
+      final docsOfCategoryProducts = await getProductsOfCategory(
+        GetProductsOfOneCategoryParams(
+          ids: idsAndTheirCategory.ids,
+          category: idsAndTheirCategory.category,
+        ),
+      );
+
+      products.addAll(docsOfCategoryProducts);
+      /*await getCategoryIds(catRef).then((idsAndTheirCategory) async {
         await getProductsOfCategory(
           GetProductsOfOneCategoryParams(
             category: idsAndTheirCategory.category,
@@ -146,7 +152,7 @@ class CartStoreImpl implements CartStore {
         ).then((productsDocs) {
           products.addAll(productsDocs);
         });
-      });
+      });*/
     }
     return products;
   }
