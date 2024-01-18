@@ -12,7 +12,7 @@ import 'package:e_commerce_app/core/services/service_locator.dart';
 import 'modules/home/presentation/screens/user_layout_screen.dart';
 import 'modules/admin/presentation/screens/admin_panel_screen.dart';
 import 'modules/admin/presentation/screens/admin_add_product_screen.dart';
-import 'modules/admin/presentation/screens/admin_product_details_screen.dart';
+import 'modules/admin/presentation/screens/admin_details_screen.dart';
 import 'modules/admin/presentation/screens/admin_explore_products_screen.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/cart_screen.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/details_screen.dart';
@@ -30,20 +30,25 @@ class BuyItApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<GetFavoriteCubit>(
-          create: (context) => sl<GetFavoriteCubit>()..getFavorites(),
-        ),
+        /// shared < ----------------------------------------------------------- >
         BlocProvider<ProductDetailsCubit>(
           create: (context) => sl<ProductDetailsCubit>(),
+        ),
+
+        /// User < ----------------------------------------------------------- >
+        BlocProvider<GetFavoriteCubit>(
+          create: (context) => sl<GetFavoriteCubit>()..getFavorites(),
         ),
         BlocProvider<ManageCartProductsCubit>(
           create: (context) =>
               sl<ManageCartProductsCubit>()..getCartProducts("uId"),
         ),
+
+        /// Admin < ----------------------------------------------------------- >
       ],
       child: MaterialApp(
         title: AppStrings.buyIt,
-        initialRoute: Screens.userLayoutScreen,
+        initialRoute: Screens.adminLayoutScreen,
         theme: ThemeData(scaffoldBackgroundColor: AppColors.primaryColorYellow),
         routes: {
           Screens.testScreen: (context) => const TestScreen(),

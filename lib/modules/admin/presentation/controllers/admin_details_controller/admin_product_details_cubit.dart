@@ -6,11 +6,11 @@ import '../../../domain/use_cases/delete_product_use_case.dart';
 import '../../../domain/use_cases/load_product_use_case.dart';
 import 'admin_product_details_state.dart';
 
-class AdminProductDetailsCubit extends Cubit<AdminProductDetailsState> {
+class AdminDetailsCubit extends Cubit<AdminDetailsState> {
   final LoadProductsUseCase loadProductsUseCase;
   final DeleteProductUseCase deleteProductUseCase;
-  AdminProductDetailsCubit(this.loadProductsUseCase, this.deleteProductUseCase)
-      : super(const AdminProductDetailsState());
+  AdminDetailsCubit(this.loadProductsUseCase, this.deleteProductUseCase)
+      : super(const AdminDetailsState());
 
   void emitProduct(ProductEntity product) {
     emit(state.copyWith(selectedProduct: product));

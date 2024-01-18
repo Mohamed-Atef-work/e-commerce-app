@@ -1,11 +1,11 @@
 import 'package:e_commerce_app/core/components/product_component.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_product_details_cubit.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_product_details_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/components/loading_widget.dart';
 import '../../../../core/utils/enums.dart';
-import '../controllers/admin_product_details_controller/admin_product_details_cubit.dart';
-import '../controllers/admin_product_details_controller/admin_product_details_state.dart';
 
 class AdminProductsWidget extends StatelessWidget {
   const AdminProductsWidget({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class AdminProductsWidget extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     return SizedBox(
       height: height * 0.3,
-      child: BlocBuilder<AdminProductDetailsCubit, AdminProductDetailsState>(
+      child: BlocBuilder<AdminDetailsCubit, AdminDetailsState>(
         buildWhen: (previous, current) =>
             previous.productsState != current.productsState ||
             previous.deleteState != current.productsState,
@@ -29,7 +29,7 @@ class AdminProductsWidget extends StatelessWidget {
               itemCount: state.products!.length,
               itemBuilder: (context, index) => ProductComponent(
                 onTap: () {
-                  BlocProvider.of<AdminProductDetailsCubit>(context)
+                  BlocProvider.of<AdminDetailsCubit>(context)
                       .emitSelectedProduct(index);
                 },
                 name: state.products![index].name,

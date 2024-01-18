@@ -6,8 +6,8 @@ class UserLayoutCubit extends Cubit<UserLayoutState> {
   UserLayoutCubit() : super(const UserLayoutState());
 
   final List<String> _titles = [
-    AppStrings.profile,
-    AppStrings.categories,
+    AppStrings.products,
+    AppStrings.cart,
     AppStrings.favorites,
     AppStrings.account,
   ];

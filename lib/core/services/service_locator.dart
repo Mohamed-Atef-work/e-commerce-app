@@ -19,10 +19,10 @@ import 'package:e_commerce_app/modules/admin/domain/use_cases/load_product_use_c
 import 'package:e_commerce_app/modules/admin/domain/use_cases/up_date_product_category_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/upload_product_image_use_case.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/add_product_controller/add_product_cubit.dart';
-import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_product_details_controller/admin_product_details_cubit.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_product_details_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/categories_model_sheet_controller_in_edit_add_screen/categories_model_sheet_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/explore_product_controller/explore_product_cubit.dart';
-import 'package:e_commerce_app/modules/admin/presentation/controllers/layout_controller/admin_layout_cubit.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_layout_controller/admin_layout_cubit.dart';
 import 'package:e_commerce_app/modules/auth/data/data_source/auth_remote_data_source.dart';
 import 'package:e_commerce_app/modules/auth/data/repository/auth_data_repository.dart';
 import 'package:e_commerce_app/modules/auth/domain/repository/auth_domain_repository.dart';
@@ -93,7 +93,7 @@ void _admin() {
   /// blocs
   sl.registerFactory(() => AdminLayoutCubit());
   sl.registerFactory(() => ExploreProductsCubit(sl()));
-  sl.registerFactory(() => AdminProductDetailsCubit(sl(), sl()));
+  sl.registerFactory(() => AdminDetailsCubit(sl(), sl()));
   sl.registerFactory(() => CategoriesModelSheetCubit(sl(), sl(), sl()));
   sl.registerFactory(() => EditAddProductCubit(sl(), sl(), sl(), sl(), sl()));
 

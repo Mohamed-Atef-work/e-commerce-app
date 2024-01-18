@@ -3,28 +3,28 @@ import 'package:equatable/equatable.dart';
 import '../../../../../core/utils/enums.dart';
 import '../../../domain/entities/product_entity.dart';
 
-class AdminProductDetailsState extends Equatable {
+class AdminDetailsState extends Equatable {
   final ProductEntity? selectedProduct;
   final List<ProductEntity>? products;
   final RequestState? deleteState;
   final RequestState? productsState;
   final String? message;
 
-  const AdminProductDetailsState({
+  const AdminDetailsState({
     this.deleteState = RequestState.initial,
     this.productsState = RequestState.initial,
     this.products = const [],
     this.selectedProduct,
     this.message = "",
   });
-  AdminProductDetailsState copyWith({
+  AdminDetailsState copyWith({
     ProductEntity? selectedProduct,
     List<ProductEntity>? products,
     RequestState? deleteState,
     RequestState? productsState,
     String? message,
   }) =>
-      AdminProductDetailsState(
+      AdminDetailsState(
         selectedProduct: selectedProduct ?? this.selectedProduct,
         deleteState: deleteState ?? this.deleteState,
         productsState: productsState ?? this.productsState,

@@ -1,17 +1,5 @@
+
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/components/app_bar.dart';
-import '../../../../core/components/custom_button.dart';
-import '../../../../core/components/custom_text.dart';
-import '../../../../core/constants/colors.dart';
-import '../../../../core/services/service_locator.dart';
-import '../../../../core/utils/app_strings.dart';
-import '../../../../core/utils/screens_strings.dart';
-import '../../domain/entities/product_entity.dart';
-import '../../domain/use_cases/delete_product_use_case.dart';
-import '../controllers/admin_product_details_controller/admin_product_details_cubit.dart';
-import '../controllers/admin_product_details_controller/admin_product_details_state.dart';
-import '../widgets/admin_details_screen_products_widget.dart';
 
 class AdminDetailsScreen extends StatelessWidget {
   const AdminDetailsScreen({
