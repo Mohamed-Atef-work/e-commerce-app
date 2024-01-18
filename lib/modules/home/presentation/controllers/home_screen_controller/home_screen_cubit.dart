@@ -64,7 +64,6 @@ class HomeCubit extends Cubit<HomeState> {
         );
         print(" <----------- update -----------> ");
 
-
         print("products -----------> ${state.productsState}");
       });
     });

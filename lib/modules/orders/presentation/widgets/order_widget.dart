@@ -25,7 +25,7 @@ class OrderWidget extends StatelessWidget {
       highlightColor: Colors.black12,
       borderRadius: BorderRadius.circular(20),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+        padding: const EdgeInsets.all(5.0),
         child: Row(
           children: [
             Container(

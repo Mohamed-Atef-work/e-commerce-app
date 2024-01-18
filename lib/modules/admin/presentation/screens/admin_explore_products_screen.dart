@@ -1,16 +1,15 @@
-import 'package:e_commerce_app/core/fire_base/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:e_commerce_app/core/components/loading_widget.dart';
-import 'package:e_commerce_app/core/constants/colors.dart';
-import 'package:e_commerce_app/core/services/service_locator.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/core/constants/colors.dart';
+import 'package:e_commerce_app/core/fire_base/strings.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
+import 'package:e_commerce_app/core/components/custom_text.dart';
+import 'package:e_commerce_app/core/services/service_locator.dart';
+import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/modules/admin/presentation/widgets/explore_screen_product_widget.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/explore_product_controller/explore_product_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/explore_product_controller/explore_product_state.dart';
-import 'package:e_commerce_app/modules/admin/presentation/widgets/explore_screen_product_widget.dart';
-
-import '../../../../core/components/custom_text.dart';
-import '../../../../core/utils/app_strings.dart';
 
 class ExploreProductsScreen extends StatelessWidget {
   const ExploreProductsScreen({Key? key}) : super(key: key);

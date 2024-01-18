@@ -1,16 +1,15 @@
-import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
+import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
+import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/services/service_locator.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
-import 'package:e_commerce_app/modules/admin/presentation/widgets/add_product_buttons.dart';
 import 'package:e_commerce_app/modules/admin/presentation/widgets/add_product_form.dart';
+import 'package:e_commerce_app/modules/admin/presentation/widgets/add_product_buttons.dart';
 import 'package:e_commerce_app/modules/admin/presentation/widgets/manage_product_local_image_widget.dart';
-
-import '../../../../core/utils/app_strings.dart';
-import '../controllers/add_product_controller/add_product_cubit.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/add_product_controller/add_product_cubit.dart';
 
 class AddProductScreen extends StatelessWidget {
   const AddProductScreen({Key? key}) : super(key: key);
