@@ -19,7 +19,7 @@ import 'package:e_commerce_app/modules/admin/domain/use_cases/load_product_use_c
 import 'package:e_commerce_app/modules/admin/domain/use_cases/up_date_product_category_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/upload_product_image_use_case.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/add_product_controller/add_product_cubit.dart';
-import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_product_details_cubit.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/categories_model_sheet_controller_in_edit_add_screen/categories_model_sheet_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/explore_product_controller/explore_product_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_layout_controller/admin_layout_cubit.dart';
@@ -78,14 +78,14 @@ void serviceLocatorInit() {
 }
 
 void _init() {
-  sl.registerLazySingleton(() => FirebaseFirestore.instance);
   sl.registerLazySingleton(() => FirebaseStorage.instance);
-  sl.registerLazySingleton<StorageService>(() => StorageServiceImpl(sl()));
+  sl.registerLazySingleton(() => FirebaseFirestore.instance);
+  sl.registerLazySingleton<CartStore>(() => CartStoreImpl(sl()));
   sl.registerLazySingleton<UserStore>(() => UserStoreImpl(sl()));
+  sl.registerLazySingleton<OrderStore>(() => OrderStoreImpl(sl()));
   sl.registerLazySingleton<ProductStore>(() => ProductStoreImpl(sl()));
   sl.registerLazySingleton<FavoriteStore>(() => FavoriteStoreImpl(sl()));
-  sl.registerLazySingleton<CartStore>(() => CartStoreImpl(sl()));
-  sl.registerLazySingleton<OrderStore>(() => OrderStoreImpl(sl()));
+  sl.registerLazySingleton<StorageService>(() => StorageServiceImpl(sl()));
 }
 
 void _admin() {
@@ -93,7 +93,7 @@ void _admin() {
   /// blocs
   sl.registerFactory(() => AdminLayoutCubit());
   sl.registerFactory(() => ExploreProductsCubit(sl()));
-  sl.registerFactory(() => AdminDetailsCubit(sl(), sl()));
+  sl.registerFactory(() => AdminDetailsCubit(sl()));
   sl.registerFactory(() => CategoriesModelSheetCubit(sl(), sl(), sl()));
   sl.registerFactory(() => EditAddProductCubit(sl(), sl(), sl(), sl(), sl()));
 
@@ -154,8 +154,8 @@ void _home() {
 
   /// Use Case
   /// <-------------------- Orders ----------------------------->
-  sl.registerLazySingleton(() => GetFavoritesUseCase(sl()));
   sl.registerLazySingleton(() => AddFavoriteUseCase(sl()));
+  sl.registerLazySingleton(() => GetFavoritesUseCase(sl()));
   sl.registerLazySingleton(() => DeleteFavoriteUseCase(sl()));
 
   /// <--------------------- Cart ------------------------------->

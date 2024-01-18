@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/modules/admin/presentation/screens/admin_layout_screen.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 
 import 'core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +11,14 @@ import 'modules/auth/presentation/screens/sign_up_screen.dart';
 import 'package:e_commerce_app/core/services/service_locator.dart';
 import 'modules/home/presentation/screens/user_layout_screen.dart';
 import 'modules/admin/presentation/screens/admin_panel_screen.dart';
-import 'modules/admin/presentation/screens/admin_add_product_screen.dart';
 import 'modules/admin/presentation/screens/admin_details_screen.dart';
+import 'modules/admin/presentation/screens/admin_add_product_screen.dart';
 import 'modules/admin/presentation/screens/admin_explore_products_screen.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/cart_screen.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/details_screen.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/profile_screen.dart';
 import 'package:e_commerce_app/modules/orders/presentation/screens/user_order_screen.dart';
+import 'package:e_commerce_app/modules/admin/presentation/screens/admin_layout_screen.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
@@ -30,21 +31,24 @@ class BuyItApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        /// shared < ----------------------------------------------------------- >
-        BlocProvider<ProductDetailsCubit>(
-          create: (context) => sl<ProductDetailsCubit>(),
-        ),
-
-        /// User < ----------------------------------------------------------- >
+        /// shared < --------------------------------------------------------- >
         BlocProvider<GetFavoriteCubit>(
           create: (context) => sl<GetFavoriteCubit>()..getFavorites(),
         ),
+
+        /// User < ----------------------------------------------------------- >
         BlocProvider<ManageCartProductsCubit>(
           create: (context) =>
               sl<ManageCartProductsCubit>()..getCartProducts("uId"),
         ),
+        BlocProvider<ProductDetailsCubit>(
+          create: (context) => sl<ProductDetailsCubit>(),
+        ),
 
         /// Admin < ----------------------------------------------------------- >
+        BlocProvider<AdminDetailsCubit>(
+          create: (context) => sl<AdminDetailsCubit>(),
+        ),
       ],
       child: MaterialApp(
         title: AppStrings.buyIt,
@@ -59,9 +63,9 @@ class BuyItApp extends StatelessWidget {
           Screens.detailsScreen: (context) => const DetailsScreen(),
           Screens.profileScreen: (context) => const ProfileScreen(),
           Screens.userOrderScreen: (context) => const UserOrderScreen(),
+          Screens.userLayoutScreen: (context) => const UserLayoutScreen(),
           Screens.addProductScreen: (context) => const AddProductScreen(),
           Screens.exploreScreen: (context) => const ExploreProductsScreen(),
-          Screens.userLayoutScreen: (context) => const UserLayoutScreen(),
           Screens.adminLayoutScreen: (context) => const AdminLayoutScreen(),
           Screens.adminDetailsScreen: (context) => const AdminDetailsScreen(),
           //Screens.productsOfCategory: (context) => const ProductsOfCategoryScreen(),

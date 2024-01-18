@@ -61,13 +61,15 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
 
   void decideAddOrUpdate(ProductEntity? productToBeUpdated) {
     if (productToBeUpdated != null) {
-      emit(state.copyWith(
-        thereIsImage: true,
-        imageState: ImageState.network,
-        imageButtonText: AppStrings.changeTheImage,
-        addUpdateButtonText: AppStrings.update,
-        productToBeUpdated: productToBeUpdated,
-      ));
+      emit(
+        state.copyWith(
+          thereIsImage: true,
+          imageState: ImageState.network,
+          imageButtonText: AppStrings.changeTheImage,
+          addUpdateButtonText: AppStrings.update,
+          productToBeUpdated: productToBeUpdated,
+        ),
+      );
       nameController.text = productToBeUpdated.name;
       priceController.text = productToBeUpdated.price.toString();
       //categoryController.text = productToBeUpdated.category;

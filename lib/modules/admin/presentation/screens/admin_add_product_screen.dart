@@ -28,9 +28,7 @@ class AddProductScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl<EditAddProductCubit>()
         ..getCategories()
-        ..decideAddOrUpdate(
-          arguments?["product"],
-        ),
+        ..decideAddOrUpdate(arguments?["product"]),
       child: Scaffold(
         backgroundColor: AppColors.primaryColorYellow,
         appBar: AppBar(

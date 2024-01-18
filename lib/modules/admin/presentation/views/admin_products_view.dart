@@ -4,6 +4,7 @@ import 'package:e_commerce_app/core/components/product_details_component.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/categories_widget.dart';
@@ -43,7 +44,7 @@ class AdminProductsView extends StatelessWidget {
                   itemBuilder: (context, index) => ProductComponent(
                     product: state.products[index],
                     onPressed: () {
-                      BlocProvider.of<ProductDetailsCubit>(context)
+                      BlocProvider.of<AdminDetailsCubit>(context)
                           .product(state.products[index]);
                       Navigator.pushNamed(context, Screens.adminDetailsScreen);
                     },

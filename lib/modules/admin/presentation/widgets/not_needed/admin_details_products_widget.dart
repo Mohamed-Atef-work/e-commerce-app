@@ -1,13 +1,4 @@
-import 'package:e_commerce_app/core/components/product_component.dart';
-import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_product_details_cubit.dart';
-import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_product_details_state.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/components/loading_widget.dart';
-import '../../../../core/utils/enums.dart';
-
-class AdminProductsWidget extends StatelessWidget {
+/*class AdminProductsWidget extends StatelessWidget {
   const AdminProductsWidget({Key? key}) : super(key: key);
 
   @override
@@ -17,10 +8,9 @@ class AdminProductsWidget extends StatelessWidget {
       height: height * 0.3,
       child: BlocBuilder<AdminDetailsCubit, AdminDetailsState>(
         buildWhen: (previous, current) =>
-            previous.productsState != current.productsState ||
-            previous.deleteState != current.productsState,
+            previous.deleteState != current.deleteState,
         builder: (context, state) {
-          if (state.productsState == RequestState.success) {
+          if (state.deleteState == RequestState.loading) {
             return ListView.separated(
               scrollDirection: Axis.horizontal,
               separatorBuilder: (context, index) => const SizedBox(
@@ -43,4 +33,4 @@ class AdminProductsWidget extends StatelessWidget {
       ),
     );
   }
-}
+}*/
