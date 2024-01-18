@@ -64,11 +64,11 @@ class CartStoreImpl implements CartStore {
 
     return docsOfCartProducts;
 
-    return await getCartCategories(uId).then((categoriesRefs) async {
+    /*return await getCartCategories(uId).then((categoriesRefs) async {
       return await _getCartProducts(categoriesRefs).then((products) {
         return products;
       });
-    });
+    });*/
   }
 
   @override
