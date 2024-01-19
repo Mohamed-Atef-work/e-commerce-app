@@ -1,3 +1,5 @@
+import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
@@ -13,7 +15,6 @@ import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_layout_controller/admin_layout_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_layout_controller/admin_layout_states.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 
 class AdminLayoutScreen extends StatelessWidget {
   const AdminLayoutScreen({Key? key}) : super(key: key);
@@ -22,13 +23,13 @@ class AdminLayoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<AdminLayoutCubit>(
+          create: (context) => sl<AdminLayoutCubit>(),
+        ),
         BlocProvider<ProductsViewCubit>(
           create: (context) => sl<ProductsViewCubit>()
             ..loadCategories()
             ..loadProductsOfTheFirstCategory(),
-        ),
-        BlocProvider<AdminLayoutCubit>(
-          create: (context) => sl<AdminLayoutCubit>(),
         ),
       ],
       child: BlocBuilder<AdminLayoutCubit, AdminLayoutState>(
@@ -37,6 +38,23 @@ class AdminLayoutScreen extends StatelessWidget {
           //backgroundColor: Colors.amber,
           appBar: _appBar(context),
           body: _body(context),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: FloatingActionButton(
+              hoverColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              onPressed: () {
+                Navigator.pushNamed(context, Screens.addProductScreen);
+              },
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              backgroundColor: AppColors.loginTextFormFieldGray,
+              child: const Icon(Icons.add, size: 30),
+            ),
+          ),
           bottomNavigationBar: _bottomNavBar(context),
         );
       }),
@@ -48,7 +66,6 @@ class AdminLayoutScreen extends StatelessWidget {
     if (state.currentIndex == 0) {
       return const AdminProductsView();
     } else if (state.currentIndex == 1) {
-      BlocProvider.of<ManageCartProductsCubit>(context).getCartProducts("uId");
       return const AdminOrderView();
     } else if (state.currentIndex == 2) {
       BlocProvider.of<GetFavoriteCubit>(context).getFavorites();
@@ -73,8 +90,9 @@ class AdminLayoutScreen extends StatelessWidget {
 
   BottomNavigationBar _bottomNavBar(BuildContext context) =>
       BottomNavigationBar(
-        unselectedItemColor: Colors.orange,
+        //unselectedItemColor: Colors.orange,
         type: BottomNavigationBarType.fixed,
+        fixedColor: AppColors.primaryColorYellow,
         backgroundColor: AppColors.primaryColorYellow,
         onTap: (index) {
           BlocProvider.of<AdminLayoutCubit>(context).newView(index);
@@ -89,13 +107,25 @@ class AdminLayoutScreen extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             label: '',
-            activeIcon: Icon(Icons.shopping_basket, color: Colors.white),
-            icon: Icon(Icons.shopping_basket, color: Colors.black),
+            activeIcon: Padding(
+              padding: EdgeInsets.only(right: 5.0),
+              child: Icon(Icons.shopping_basket, color: Colors.white),
+            ),
+            icon: Padding(
+              padding: EdgeInsets.only(right: 5.0),
+              child: Icon(Icons.shopping_basket, color: Colors.black),
+            ),
           ),
           BottomNavigationBarItem(
             label: '',
-            activeIcon: Icon(Icons.favorite, color: Colors.white),
-            icon: Icon(Icons.favorite, color: Colors.black),
+            activeIcon: Padding(
+              padding: EdgeInsets.only(left: 5.0),
+              child: Icon(Icons.favorite, color: Colors.white),
+            ),
+            icon: Padding(
+              padding: EdgeInsets.only(left: 5.0),
+              child: Icon(Icons.favorite, color: Colors.black),
+            ),
           ),
           BottomNavigationBarItem(
             label: '',
@@ -104,6 +134,16 @@ class AdminLayoutScreen extends StatelessWidget {
           ),
         ],
       );
+
+  /*BottomAppBar _bottom(BuildContext context) => BottomAppBar(
+        height: 65,
+        elevation: 1,
+        color: AppColors.primaryColorYellow,
+        shape: const CircularNotchedRectangle(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: List.generate(, (index) => null),
+        ),);*/
 }
 
 //

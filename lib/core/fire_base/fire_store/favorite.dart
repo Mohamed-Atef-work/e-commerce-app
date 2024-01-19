@@ -87,9 +87,9 @@ class FavoriteStoreImpl implements FavoriteStore {
   }) async {
     List<DocumentSnapshot<Map<String, dynamic>>> products = [];
 
-    for (int index = 0; index < productIds.length; index++) {
-      final productDoc = await _getFavProduct(
-          category: category, productId: productIds[index]);
+    for (String id in productIds) {
+      final productDoc =
+          await _getFavProduct(category: category, productId: id);
 
       ///
       if (productDoc.exists) {

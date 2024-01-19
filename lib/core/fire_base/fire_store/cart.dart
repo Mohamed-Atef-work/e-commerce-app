@@ -137,6 +137,7 @@ class CartStoreImpl implements CartStore {
         productsDocs.add(productDoc);
       }
 
+      print(id);
       /*.then((productDoc) {
         productsDocs.add(productDoc);
       });*/
