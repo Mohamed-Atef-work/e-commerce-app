@@ -1,17 +1,17 @@
-import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
-import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
-import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/components/app_bar.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/heart_with_manage_favorite_cubit_provided_widget.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_state.dart';
 
 class AdminDetailsScreen extends StatelessWidget {
   const AdminDetailsScreen({
@@ -28,6 +28,15 @@ class AdminDetailsScreen extends StatelessWidget {
           builder: (context, state) {
             if (state.deleteState == RequestState.loading) {
               return const LoadingWidget();
+            } else if (state.deleteState == RequestState.success) {
+              return const Center(
+                child: CustomText(
+                  fontSize: 25,
+                  text: AppStrings.deleted,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: AppStrings.pacifico,
+                ),
+              );
             } else {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -112,7 +121,8 @@ class AdminDetailsScreen extends StatelessWidget {
                       fontFamily: AppStrings.pacifico,
                       onPressed: () {
                         /// To Do o o o o o o o
-                        Navigator.pushNamed(context, Screens.addProductScreen);
+                        Navigator.pushNamed(context, Screens.addProductScreen,
+                            arguments: {"product": state.product!});
                       },
                     ),
                   )

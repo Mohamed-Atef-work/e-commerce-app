@@ -1,8 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:e_commerce_app/core/constants/colors.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
+import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/add_product_controller/add_product_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/add_product_controller/add_product_state.dart';
 
@@ -11,7 +14,6 @@ class ManageProductImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
     final controller = BlocProvider.of<EditAddProductCubit>(context);
     return BlocBuilder<EditAddProductCubit, EditAddProductState>(
       buildWhen: (previous, current) =>
@@ -19,19 +21,30 @@ class ManageProductImageWidget extends StatelessWidget {
       builder: (context, state) {
         switch (state.imageState) {
           case ImageState.noImage:
-            return SizedBox(
-              height: height * 0.1,
+            return Container(
+              width: double.infinity,
+              height: context.height * 0.3,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: AppColors.loginTextFormFieldGray),
+              child: const Center(
+                child: CustomText(
+                  fontSize: 20,
+                  text: AppStrings.image,
+                  fontFamily: AppStrings.pacifico,
+                ),
+              ),
             );
           case ImageState.network:
             return Image.network(
               controller.state.productToBeUpdated!.image,
-              height: height * 0.3,
+              height: context.height * 0.3,
               fit: BoxFit.contain,
             );
           case ImageState.local:
             return Image.file(
               File(controller.state.imagePath!),
-              height: height * 0.3,
+              height: context.height * 0.3,
               fit: BoxFit.contain,
             );
         }

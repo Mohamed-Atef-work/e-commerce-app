@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,7 +17,7 @@ class ProductCategoriesWidget extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return SizedBox(
-      height: height * 0.065,
+      height: 45,
       child: BlocBuilder<EditAddProductCubit, EditAddProductState>(
         builder: (context, state) {
           if (state.getCategoriesState == RequestState.loading) {
@@ -39,9 +40,9 @@ class ProductCategoriesWidget extends StatelessWidget {
                               builder: (context) =>
                                   const AddNewCategoryModelSheetWidget());
                         },
-                        splashRadius: 23,
-                        //hoverColor: Colors.white,
-                        highlightColor: Colors.white,
+                        splashRadius: 25,
+                        //hoverColor: Colors.transparent,
+                        highlightColor: AppColors.loginTextFormFieldGray,
                         icon: const Icon(Icons.add, color: Colors.white),
                       ),
                     )
@@ -58,9 +59,8 @@ class ProductCategoriesWidget extends StatelessWidget {
                           ? Colors.black
                           : Colors.white,
                     ),
-              separatorBuilder: (context, index) => SizedBox(
-                width: width * 0.01,
-              ),
+              separatorBuilder: (context, index) =>
+                  SizedBox(width: width * 0.01),
             );
           }
         },

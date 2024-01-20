@@ -25,11 +25,11 @@ class ProductModel extends ProductEntity {
         id: productId,
       );
   Map<String, dynamic> toJson() => {
-        "productDescription": description,
-        "productLocation": location,
-        "productCategory": category,
-        "productPrice": price,
-        "productImage": image,
-        "productName": name,
+        "description": description,
+        "location": location,
+        "category": category,
+        "price": price,
+        "image": image,
+        "name": name,
       };
 }

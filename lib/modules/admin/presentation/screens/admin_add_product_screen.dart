@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
+import 'package:e_commerce_app/core/components/app_bar.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/services/service_locator.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
@@ -16,9 +17,6 @@ class AddProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
-
     Map<String, ProductEntity>? arguments;
     if (ModalRoute.of(context)?.settings.arguments != null) {
       arguments = ModalRoute.of(context)?.settings.arguments
@@ -31,34 +29,22 @@ class AddProductScreen extends StatelessWidget {
         ..decideAddOrUpdate(arguments?["product"]),
       child: Scaffold(
         backgroundColor: AppColors.primaryColorYellow,
-        appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: AppColors.primaryColorYellow,
-          centerTitle: true,
-          title: const CustomText(
-            text: AppStrings.admin,
-            fontSize: 30,
-            fontFamily: AppStrings.pacifico,
-            fontWeight: FontWeight.bold,
-            textColor: AppColors.black,
-          ),
-        ),
+        appBar: appBar(title: AppStrings.admin),
         body: ListView(
-          padding: EdgeInsets.symmetric(
-            horizontal: width * 0.01,
-          ),
           physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.only(
+              left: context.width * 0.01,
+              right: context.width * 0.01,
+              bottom: context.height * 0.02),
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: height * 0.01,
-              ),
+              padding: EdgeInsets.symmetric(vertical: context.height * 0.01),
               child: const ManageProductImageWidget(),
             ),
             Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: 15,
                 vertical: context.height * 0.01,
+                horizontal: 15,
               ),
               child: const CustomText(
                 text: AppStrings.categories,

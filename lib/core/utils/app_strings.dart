@@ -20,8 +20,10 @@ class AppStrings {
   static const String changeTheImage = "Change The Image";
   static const String addAnImage = "Add An Image";
   static const String updated = "Updated !";
+  static const String deleted = "Deleted !";
   static const String delete = "Delete";
   static const String update = "Update";
+  static const String image = "Image ......";
   static const String edit = "Edit";
   static const String add = "Add";
   static const String ok = "Ok";

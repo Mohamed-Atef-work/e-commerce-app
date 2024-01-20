@@ -9,11 +9,11 @@ import 'package:e_commerce_app/modules/home/domain/entities/favorite_entity.dart
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
 
 abstract class FavoriteBaseRemoteDataSource {
+  Future<void> addFav(AddDeleteFavoriteParams params);
   Future<List<FavoriteEntity>> getFavorites(String uId);
+  Future<void> deleteFav(AddDeleteFavoriteParams params);
   Future<List<FavoriteCategoryEntity>> getFavCategories(String uId);
   Future<FavoriteEntity> getFavOfOneCategory(FavoriteCategoryEntity category);
-  Future<void> addFav(AddDeleteFavoriteParams params);
-  Future<void> deleteFav(AddDeleteFavoriteParams params);
 }
 
 class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
@@ -32,6 +32,20 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
 
   @override
   Future<List<FavoriteCategoryEntity>> getFavCategories(String uId) async {
+    final favoriteCategories = await favoriteStore.getFavCategories(uId);
+    final categories = List<FavoriteCategoryEntity>.of(
+      favoriteCategories.docs
+          .map(
+            (cateDoc) => FavoriteCategoryModel.fromJson(
+              reference: cateDoc.reference,
+              id: cateDoc.id,
+            ),
+          )
+          .toList(),
+    );
+
+    return categories;
+
     return await favoriteStore.getFavCategories(uId).then(
 
         ///

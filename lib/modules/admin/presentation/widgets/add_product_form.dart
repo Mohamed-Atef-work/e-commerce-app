@@ -20,66 +20,50 @@ class AddProductFormWidget extends StatelessWidget {
       child: Column(
         children: [
           const ProductCategoriesWidget(),
-          SizedBox(
-            height: height * 0.01,
-          ),
+          SizedBox(height: height * 0.01),
           CustomTextFormField(
             textEditingController: controller.nameController,
             onChanged: (value) {
               //controller.productName = value!;
             },
-            validator: (value) => Validators.stringValidator(
-              value,
-              AppStrings.productName,
-            ),
+            validator: (value) =>
+                Validators.stringValidator(value, AppStrings.productName),
             fillColor: AppColors.loginTextFormFieldGray,
             hintText: AppStrings.productName,
             fontSize: 18,
           ),
-          SizedBox(
-            height: height * 0.01,
-          ),
+          SizedBox(height: height * 0.01),
           CustomTextFormField(
             textEditingController: controller.priceController,
             onChanged: (value) {
               //controller.productPrice = value!;
             },
-            validator: (value) => Validators.numericValidator(
-              value,
-              AppStrings.productPrice,
-            ),
+            validator: (value) =>
+                Validators.numericValidator(value, AppStrings.productPrice),
             fillColor: AppColors.loginTextFormFieldGray,
             hintText: AppStrings.productPrice,
             fontSize: 18,
           ),
-          SizedBox(
-            height: height * 0.01,
-          ),
+          SizedBox(height: height * 0.01),
           CustomTextFormField(
             textEditingController: controller.descriptionController,
             onChanged: (value) {
               //controller.productDescription = value!;
             },
             validator: (value) => Validators.stringValidator(
-              value,
-              AppStrings.productDescription,
-            ),
+                value, AppStrings.productDescription),
             fillColor: AppColors.loginTextFormFieldGray,
             hintText: AppStrings.productDescription,
             fontSize: 18,
           ),
-          SizedBox(
-            height: height * 0.01,
-          ),
+          SizedBox(height: height * 0.01),
           CustomTextFormField(
             textEditingController: controller.locationController,
             onChanged: (value) {
               //controller.productLocation = value!;
             },
-            validator: (value) => Validators.stringValidator(
-              value,
-              AppStrings.productLocation,
-            ),
+            validator: (value) =>
+                Validators.stringValidator(value, AppStrings.productLocation),
             fillColor: AppColors.loginTextFormFieldGray,
             hintText: AppStrings.productLocation,
             fontSize: 18,
