@@ -14,9 +14,7 @@ import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_deta
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_state.dart';
 
 class AdminDetailsScreen extends StatelessWidget {
-  const AdminDetailsScreen({
-    super.key,
-  });
+  const AdminDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

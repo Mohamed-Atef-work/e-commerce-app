@@ -18,7 +18,7 @@ abstract class CartStore {
   Future<ReturnedIdsAndTheirCategory> getCategoryIds(
       DocumentReference categoryRef);
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getProductsOfCategory(
-      GetProductsOfOneCategoryParams params);
+      GetProductsOfOneCategoryParams params, String uId);
   Future<QuerySnapshot<Map<String, dynamic>>> getCartProductsIdsOfCategory(
       DocumentReference reference);
   Future<DocumentSnapshot<Map<String, dynamic>>> getProduct(
@@ -68,15 +68,10 @@ class CartStoreImpl implements CartStore {
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getCartProducts(
       String uId) async {
     final referencesOfCategories = await getCartCategories(uId);
-    final docsOfCartProducts = await _getCartProducts(referencesOfCategories);
+    final docsOfCartProducts =
+        await _getCartProducts(referencesOfCategories, uId);
 
     return docsOfCartProducts;
-
-    /*return await getCartCategories(uId).then((categoriesRefs) async {
-      return await _getCartProducts(categoriesRefs).then((products) {
-        return products;
-      });
-    });*/
   }
 
   @override
@@ -96,7 +91,7 @@ class CartStoreImpl implements CartStore {
         .get();
     response.docs.map((doc) {
       docsRefs.add(doc.reference);
-    }).toList();
+    });
     return docsRefs;
   }
 
@@ -125,51 +120,42 @@ class CartStoreImpl implements CartStore {
 
   @override
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getProductsOfCategory(
-      GetProductsOfOneCategoryParams params) async {
+      GetProductsOfOneCategoryParams params, String uId) async {
     List<DocumentSnapshot<Map<String, dynamic>>> productsDocs = [];
     for (String id in params.ids) {
       final productDoc = await getProduct(
         GetProductParams(category: params.category, productId: id),
       );
 
-      ///
       if (productDoc.exists) {
         productsDocs.add(productDoc);
+      } else {
+        await deleteFromCart(
+          DeleteFromCartParams(
+              uId: uId, productId: productDoc.id, category: params.category),
+        );
       }
 
-      print(id);
-      /*.then((productDoc) {
-        productsDocs.add(productDoc);
-      });*/
+      print(productDoc.id);
+      print(productDoc.exists);
     }
     return productsDocs;
   }
 
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> _getCartProducts(
-      List<DocumentReference> categoriesRefs) async {
+      List<DocumentReference> categoriesRefs, String uId) async {
     // < --------------------------------------------------------- >
     List<DocumentSnapshot<Map<String, dynamic>>> products = [];
     // < --------------------------------------------------------- >
     for (DocumentReference catRef in categoriesRefs) {
       final idsAndTheirCategory = await getCategoryIds(catRef);
       final docsOfCategoryProducts = await getProductsOfCategory(
-        GetProductsOfOneCategoryParams(
-          ids: idsAndTheirCategory.ids,
-          category: idsAndTheirCategory.category,
-        ),
-      );
-      products.addAll(docsOfCategoryProducts);
-
-      /*await getCategoryIds(catRef).then((idsAndTheirCategory) async {
-        await getProductsOfCategory(
           GetProductsOfOneCategoryParams(
-            category: idsAndTheirCategory.category,
             ids: idsAndTheirCategory.ids,
+            category: idsAndTheirCategory.category,
           ),
-        ).then((productsDocs) {
-          products.addAll(productsDocs);
-        });
-      });*/
+          uId);
+      products.addAll(docsOfCategoryProducts);
     }
     return products;
   }

@@ -39,7 +39,7 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
 
   @override
   Future<List<FavoriteEntity>> getFavorites(String uId) async {
-    final categories = await _getFavCategories(uId).catchError((error) {
+    final categories = await _getCategories(uId).catchError((error) {
       print(error.toString());
       throw ServerException(message: error.toString());
     });
@@ -51,7 +51,7 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
     return favoriteEntities;
   }
 
-  Future<List<FavoriteCategoryEntity>> _getFavCategories(String uId) async {
+  Future<List<FavoriteCategoryEntity>> _getCategories(String uId) async {
     final categoriesDocs = await favoriteStore.getCategories(uId);
     final categories = List<FavoriteCategoryEntity>.of(
       categoriesDocs.docs.map(
@@ -74,17 +74,19 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
       /// When all fvs are deleted from a Category ...........
       /// It still can be accessed Which Creates an EMPTY model .......
       /// That make problems in the UI :) .......
-      final favoriteEntity = await _getFavOfOneCategory(category, uId);
-      favorites.add(favoriteEntity);
+      final favoriteEntity = await _getEntityOfOneCategory(category, uId);
+      if (favoriteEntity.products.isNotEmpty) {
+        favorites.add(favoriteEntity);
+      }
     }
     return favorites;
   }
 
-  Future<FavoriteEntity> _getFavOfOneCategory(
+  Future<FavoriteEntity> _getEntityOfOneCategory(
       FavoriteCategoryEntity category, String uId) async {
     final ids = await _getIdsOfOneCategory(category.reference);
-    final favoriteEntity = await _getProductsOfOneCategory(
-        category: category.id, productsIds: ids, uId: uId);
+    final favoriteEntity =
+        await _getEntityByIds(category: category.id, ids: ids, uId: uId);
     return favoriteEntity;
   }
 
@@ -98,13 +100,13 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
     return productsIds;
   }
 
-  Future<FavoriteEntity> _getProductsOfOneCategory({
-    required List<String> productsIds,
+  Future<FavoriteEntity> _getEntityByIds({
+    required List<String> ids,
     required String category,
     required String uId,
   }) async {
     final productsDocs = await favoriteStore.getProductsOfCategory(
-        productIds: productsIds, category: category, uId: uId);
+        ids: ids, category: category, uId: uId);
     final products = List<ProductEntity>.of(
       productsDocs.map(
           (doc) => ProductModel.formJson(json: doc.data()!, productId: doc.id)),

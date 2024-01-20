@@ -57,104 +57,87 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
 
   @override
   Future<List<int>> getQuantities(GetQuantitiesParams params) async {
-    final result = await cartStore.getQuantities(params).catchError((error) {
+    final quantitiesDocs =
+        await cartStore.getQuantities(params).catchError((error) {
       print(error.toString());
       throw ServerException(message: error);
     });
-    final quantities =
-        List<int>.of(result.map((e) => e.data()![FirebaseStrings.quantity]));
+    final quantities = List<int>.of(
+        quantitiesDocs.map((e) => e.data()![FirebaseStrings.quantity]));
     return quantities;
   }
 
   @override
   Future<List<CartEntity>> getCartProducts(GetCartProductsParams params) async {
-    return await _getCartCategories(params.uId).then((categories) async {
-      ///
-      return await _getCart(categories).then((favorites) {
-        return favorites;
-      });
-
-      ///
+    final categories = await _getCartCategories(params.uId).catchError((error) {
+      print(error.toString());
+      throw ServerException(message: error);
     });
+
+    final cartEntities =
+        await _getCart(categories, params.uId).catchError((error) {
+      print(error.toString());
+      throw ServerException(message: error);
+    });
+
+    return cartEntities;
   }
 
   Future<List<CartCategoryEntity>> _getCartCategories(String uId) async {
-    return await cartStore.getCartCategories(uId).then((categories) {
-      return List<CartCategoryEntity>.of(
-        categories
-            .map(
-              (cateDoc) => CartCategoryModel.fromJson(
-                reference: cateDoc,
-                id: cateDoc.id,
-              ),
-            )
-            .toList(),
-      );
-    }).catchError((error) {
-      throw ServerException(message: error.code);
-    });
+    final categoriesDocs = await cartStore.getCartCategories(uId);
+    final categories = List<CartCategoryEntity>.of(
+      categoriesDocs.map(
+        (cateDoc) =>
+            CartCategoryModel.fromJson(reference: cateDoc, id: cateDoc.id),
+      ),
+    );
+
+    return categories;
   }
 
   /// Just Extra clean , I'm not sure if it's clean or not :)
-  Future<List<CartEntity>> _getCart(List<CartCategoryEntity> category) async {
-    List<CartEntity> favorites = [];
+  Future<List<CartEntity>> _getCart(
+      List<CartCategoryEntity> categories, String uId) async {
+    List<CartEntity> cartEntities = [];
 
     ///
-    for (int i = 0; i < category.length; i++) {
+    for (CartCategoryEntity category in categories) {
       /// There is a problem with the data base Which ........
       /// When all fav are deleted from a Category ...........
       /// It still can be accessed Which Creates an EMPTY model .......
       /// That make problems in the UI :) .......
-      await _getProductsOfCategory(category[i]).then((favoriteEntity) {
-        if (favoriteEntity.products.isNotEmpty) {
-          favorites.add(favoriteEntity);
-        }
-      });
-
+      final cartEntity = await _getEntityOfOneCategory(category, uId);
+      if (cartEntity.products.isNotEmpty) {
+        cartEntities.add(cartEntity);
+      }
     }
-    return favorites;
+    return cartEntities;
   }
 
-  Future<CartEntity> _getProductsOfCategory(CartCategoryEntity category) async {
-    return await _getIdsOfOneCategory(category.reference).then((ids) async {
-      return await _getProductsOfOneCategory(
-              GetProductsOfOneCategoryParams(category: category.id, ids: ids))
-          .then((fav) {
-        return fav;
-      });
-    });
+  Future<CartEntity> _getEntityOfOneCategory(
+      CartCategoryEntity category, String uId) async {
+    final ids = await _getIdsOfOneCategory(category.reference);
+    final cartEntity = await _getEntityByIds(
+        GetProductsOfOneCategoryParams(category: category.id, ids: ids), uId);
+    return cartEntity;
   }
 
   Future<List<String>> _getIdsOfOneCategory(
       DocumentReference categoryRef) async {
-    return await cartStore
-        .getCartProductsIdsOfCategory(categoryRef)
-        .then((favorites) {
-      return List<String>.of(favorites.docs.map((favDoc) => favDoc.id));
-    }).catchError((error) {
-      throw ServerException(message: error);
-    });
+    final idsDocs = await cartStore.getCartProductsIdsOfCategory(categoryRef);
+    final ids = List<String>.of(idsDocs.docs.map((favDoc) => favDoc.id));
+    return ids;
   }
 
-  Future<CartEntity> _getProductsOfOneCategory(
-      GetProductsOfOneCategoryParams params) async {
-    return await cartStore.getProductsOfCategory(params).then((products) {
-      return CartEntity(
-        category: params.category,
-        products: List<ProductEntity>.of(
-          products
-              .map(
-                (doc) => ProductModel.formJson(
-                  json: doc.data()!,
-                  productId: doc.id,
-                ),
-              )
-              .toList(),
-        ),
-      );
-    }).catchError((error) {
-      print(error.toString());
-      throw ServerException(message: error.toString());
-    });
+  Future<CartEntity> _getEntityByIds(
+      GetProductsOfOneCategoryParams params, uId) async {
+    final productsDocs = await cartStore.getProductsOfCategory(params, uId);
+    final products = List<ProductEntity>.of(
+      productsDocs.map(
+          (doc) => ProductModel.formJson(json: doc.data()!, productId: doc.id)),
+    );
+    final cartEntity =
+        CartEntity(category: params.category, products: products);
+    return cartEntity;
   }
 }

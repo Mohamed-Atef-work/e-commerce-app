@@ -7,7 +7,7 @@ abstract class FavoriteStore {
   Future<QuerySnapshot<Map<String, dynamic>>> getProductsIdsOfCategory(
       DocumentReference reference);
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getProductsOfCategory(
-      {required List<String> productIds,
+      {required List<String> ids,
       required String category,
       required String uId});
 
@@ -83,16 +83,15 @@ class FavoriteStoreImpl implements FavoriteStore {
 
   @override
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getProductsOfCategory({
-    required List<String> productIds,
+    required List<String> ids,
     required String category,
     required String uId,
   }) async {
     List<DocumentSnapshot<Map<String, dynamic>>> products = [];
 
-    for (String id in productIds) {
+    for (String id in ids) {
       final productDoc = await _getProduct(category: category, productId: id);
 
-      ///
       if (productDoc.exists) {
         products.add(productDoc);
       } else {

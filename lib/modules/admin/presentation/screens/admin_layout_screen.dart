@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
@@ -31,11 +32,13 @@ class AdminLayoutScreen extends StatelessWidget {
             ..loadCategories()
             ..loadProductsOfTheFirstCategory(),
         ),
+        /*BlocProvider<AdminDetailsCubit>(
+          create: (context) => sl<AdminDetailsCubit>(),
+        ),*/
       ],
       child: BlocBuilder<AdminLayoutCubit, AdminLayoutState>(
           builder: (context, state) {
         return Scaffold(
-          //backgroundColor: Colors.amber,
           appBar: _appBar(context),
           body: _body(context),
           floatingActionButtonLocation:
