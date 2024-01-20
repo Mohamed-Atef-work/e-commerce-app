@@ -74,11 +74,15 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
       throw ServerException(message: error);
     });
 
+    print(categories.length);
+
     final cartEntities =
         await _getCart(categories, params.uId).catchError((error) {
       print(error.toString());
       throw ServerException(message: error);
     });
+
+    print(cartEntities.length);
 
     return cartEntities;
   }
@@ -86,11 +90,14 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
   Future<List<CartCategoryEntity>> _getCartCategories(String uId) async {
     final categoriesDocs = await cartStore.getCartCategories(uId);
     final categories = List<CartCategoryEntity>.of(
-      categoriesDocs.map(
-        (cateDoc) =>
-            CartCategoryModel.fromJson(reference: cateDoc, id: cateDoc.id),
-      ),
+      categoriesDocs
+          .map((cateDoc) =>
+              CartCategoryModel.fromJson(reference: cateDoc, id: cateDoc.id))
+          .toList(),
     );
+
+    print(
+        "_________________Cart Categories Length________________${categories.length}");
 
     return categories;
   }

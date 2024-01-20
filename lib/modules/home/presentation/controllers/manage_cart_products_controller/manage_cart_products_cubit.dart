@@ -45,13 +45,17 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
           }
           emit(
             state.copyWith(
-              getCart: RequestState.success,
               needToReGet: false,
               products: products,
+              getCart: RequestState.success,
             ),
           );
+          print(state.products.length);
           //List<int> quantities = List.generate(products.length, (index) => 1);
-          getQuantities(uId);
+
+          if (state.products.isNotEmpty) {
+            getQuantities(uId);
+          }
         },
       );
     }

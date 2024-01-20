@@ -91,7 +91,7 @@ class CartStoreImpl implements CartStore {
         .get();
     response.docs.map((doc) {
       docsRefs.add(doc.reference);
-    });
+    }).toList();
     return docsRefs;
   }
 
