@@ -10,10 +10,9 @@ abstract class FavoriteDomainRepository {
   Future<Either<Failure, void>> addFavorite(AddDeleteFavoriteParams parameters);
   Future<Either<Failure, void>> deleteFavorite(
       AddDeleteFavoriteParams parameters);
-  Future<Either<Failure, FavoriteEntity>> getFavOfOneCategory(
-      GetFavOfOneCategoryParams parameters);
   Future<Either<Failure, List<FavoriteEntity>>> getFavorites(
       GetFavoritesParams parameters);
+//Future<Either<Failure, FavoriteEntity>> getFavOfOneCategory(GetFavOfOneCategoryParams parameters);
 }
 
 /// < ======================================================================== >

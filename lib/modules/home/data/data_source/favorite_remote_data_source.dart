@@ -12,8 +12,6 @@ abstract class FavoriteBaseRemoteDataSource {
   Future<void> addFav(AddDeleteFavoriteParams params);
   Future<List<FavoriteEntity>> getFavorites(String uId);
   Future<void> deleteFav(AddDeleteFavoriteParams params);
-  Future<List<FavoriteCategoryEntity>> getFavCategories(String uId);
-  Future<FavoriteEntity> getFavOfOneCategory(FavoriteCategoryEntity category);
 }
 
 class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
@@ -31,36 +29,37 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
   }
 
   @override
-  Future<List<FavoriteCategoryEntity>> getFavCategories(String uId) async {
-    final categoriesDocs = await favoriteStore.getFavCategories(uId);
-    final categories = List<FavoriteCategoryEntity>.of(
-      categoriesDocs.docs.map(
-        (cateDoc) => FavoriteCategoryModel.fromJson(
-          reference: cateDoc.reference,
-          id: cateDoc.id,
-        ),
-      ),
-    );
-
-    return categories;
-  }
-
-  @override
-  Future<FavoriteEntity> getFavOfOneCategory(
-      FavoriteCategoryEntity category) async {
-    final idsOfOneCategory = await _getIdsOfOneCategory(category.reference);
-    final favoriteEntity = await _getProductsOfOneCategory(
-      productsIds: idsOfOneCategory,
-      category: category.id,
-    );
-    return favoriteEntity;
+  Future<void> deleteFav(AddDeleteFavoriteParams params) {
+    return favoriteStore.deleteFav(params).then((value) {
+      print("<---------- Deleted ---------->");
+    }).catchError((error) {
+      throw ServerException(message: error);
+    });
   }
 
   @override
   Future<List<FavoriteEntity>> getFavorites(String uId) async {
-    final categories = await getFavCategories(uId);
-    final favoriteEntities = _getFavorites(categories);
+    final categories = await _getFavCategories(uId).catchError((error) {
+      print(error.toString());
+      throw ServerException(message: error.toString());
+    });
+    final favoriteEntities = _getFavorites(categories).catchError((error) {
+      print(error.toString());
+      throw ServerException(message: error.toString());
+    });
     return favoriteEntities;
+  }
+
+  Future<List<FavoriteCategoryEntity>> _getFavCategories(String uId) async {
+    final categoriesDocs = await favoriteStore.getFavCategories(uId);
+    final categories = List<FavoriteCategoryEntity>.of(
+      categoriesDocs.docs.map(
+        (cateDoc) => FavoriteCategoryModel.fromJson(
+            reference: cateDoc.reference, id: cateDoc.id),
+      ),
+    );
+
+    return categories;
   }
 
   /// Just Extra clean , I'm not sure if it's clean or not :)
@@ -74,59 +73,43 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
       /// When all fvs are deleted from a Category ...........
       /// It still can be accessed Which Creates an EMPTY model .......
       /// That make problems in the UI :) .......
-      final favoriteEntity = await getFavOfOneCategory(category);
+      final favoriteEntity = await _getFavOfOneCategory(category);
       favorites.add(favoriteEntity);
     }
     return favorites;
   }
 
+  Future<FavoriteEntity> _getFavOfOneCategory(
+      FavoriteCategoryEntity category) async {
+    final ids = await _getIdsOfOneCategory(category.reference);
+    final favoriteEntity = await _getProductsOfOneCategory(
+        category: category.id, productsIds: ids);
+    return favoriteEntity;
+  }
+
   Future<List<String>> _getIdsOfOneCategory(
       DocumentReference categoryRef) async {
-    final productsIdsDocs = await favoriteStore
-        .getFavProductsIdsOfCategory(categoryRef)
-        .catchError((error) {
-      throw ServerException(message: error);
-    });
+    final productsIdsDocs =
+        await favoriteStore.getFavProductsIdsOfCategory(categoryRef);
     final productsIds =
         List<String>.of(productsIdsDocs.docs.map((favDoc) => favDoc.id));
 
     return productsIds;
   }
 
-  Future<FavoriteEntity> _getProductsOfOneCategory({
-    required List<String> productsIds,
-    required String category,
-  }) async {
-    final productsDocs = await favoriteStore
-        .getFavProductsOfCategory(
-      productIds: productsIds,
-      category: category,
-    )
-        .catchError((error) {
-      print(error.toString());
-      throw ServerException(message: error.toString());
-    });
+  Future<FavoriteEntity> _getProductsOfOneCategory(
+      {required List<String> productsIds, required String category}) async {
+    final productsDocs = await favoriteStore.getFavProductsOfCategory(
+        productIds: productsIds, category: category);
     final products = List<ProductEntity>.of(
       productsDocs.map(
-        (doc) => ProductModel.formJson(
-          json: doc.data()!,
-          productId: doc.id,
-        ),
-      ),
+          (doc) => ProductModel.formJson(json: doc.data()!, productId: doc.id)),
     );
 
     final favoriteEntity =
         FavoriteEntity(category: category, products: products);
-    return favoriteEntity;
-  }
 
-  @override
-  Future<void> deleteFav(AddDeleteFavoriteParams params) {
-    return favoriteStore.deleteFav(params).then((value) {
-      print("<---------- Deleted ---------->");
-    }).catchError((error) {
-      throw ServerException(message: error);
-    });
+    return favoriteEntity;
   }
 }
 
