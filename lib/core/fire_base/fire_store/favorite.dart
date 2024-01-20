@@ -4,13 +4,16 @@ import 'package:e_commerce_app/core/fire_base/strings.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
 
 abstract class FavoriteStore {
-  Future<List<DocumentSnapshot<Map<String, dynamic>>>> getFavProductsOfCategory(
-      {required List<String> productIds, required String category});
-  Future<QuerySnapshot<Map<String, dynamic>>> getFavProductsIdsOfCategory(
+  Future<QuerySnapshot<Map<String, dynamic>>> getProductsIdsOfCategory(
       DocumentReference reference);
-  Future<QuerySnapshot<Map<String, dynamic>>> getFavCategories(String uId);
-  Future<void> addFav(AddDeleteFavoriteParams params);
+  Future<List<DocumentSnapshot<Map<String, dynamic>>>> getProductsOfCategory(
+      {required List<String> productIds,
+      required String category,
+      required String uId});
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getCategories(String uId);
   Future<void> deleteFav(AddDeleteFavoriteParams parameters);
+  Future<void> addFav(AddDeleteFavoriteParams params);
 }
 
 class FavoriteStoreImpl implements FavoriteStore {
@@ -58,8 +61,7 @@ class FavoriteStoreImpl implements FavoriteStore {
   }
 
   @override
-  Future<QuerySnapshot<Map<String, dynamic>>> getFavCategories(
-      String uId) async {
+  Future<QuerySnapshot<Map<String, dynamic>>> getCategories(String uId) async {
     return await store
         .collection(FirebaseStrings.users)
         .doc(uId)
@@ -68,38 +70,42 @@ class FavoriteStoreImpl implements FavoriteStore {
   }
 
   @override
-  Future<QuerySnapshot<Map<String, dynamic>>> getFavProductsIdsOfCategory(
+  Future<QuerySnapshot<Map<String, dynamic>>> getProductsIdsOfCategory(
       DocumentReference reference) async {
     final response = await reference.collection(FirebaseStrings.products).get();
     if (response.docs.isEmpty) {
       /// Solving the second part of database problem :) .....
-      /// Deleting categories that doesn't contain [Favs] :) .....
+      /// Deleting categories that doesn't contain [Fvs] :) .....
       await reference.delete();
     }
     return response;
   }
 
   @override
-  Future<List<DocumentSnapshot<Map<String, dynamic>>>>
-      getFavProductsOfCategory({
+  Future<List<DocumentSnapshot<Map<String, dynamic>>>> getProductsOfCategory({
     required List<String> productIds,
     required String category,
+    required String uId,
   }) async {
     List<DocumentSnapshot<Map<String, dynamic>>> products = [];
 
     for (String id in productIds) {
-      final productDoc =
-          await _getFavProduct(category: category, productId: id);
+      final productDoc = await _getProduct(category: category, productId: id);
 
       ///
       if (productDoc.exists) {
         products.add(productDoc);
+      } else {
+        await deleteFav(
+          AddDeleteFavoriteParams(
+              uId: uId, productId: productDoc.id, category: category),
+        );
       }
     }
     return products;
   }
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> _getFavProduct(
+  Future<DocumentSnapshot<Map<String, dynamic>>> _getProduct(
       {required String category, required String productId}) async {
     final response = await store
         .collection(FirebaseStrings.products)
@@ -109,6 +115,7 @@ class FavoriteStoreImpl implements FavoriteStore {
         .get();
 
     print(response.id);
+    print(response.exists);
 
     return response;
   }

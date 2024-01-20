@@ -15,12 +15,11 @@ import 'package:e_commerce_app/modules/home/domain/use_cases/get_product_quantit
 
 abstract class CartBaseRemoteDataSource {
   Future<void> addToCart(AddToCartParams params);
-  Future<void> deleteFromCart(DeleteFromCartParams params);
-  Future<CartEntity> getProductsOfCategory(CartCategoryEntity params);
-  Future<List<CartEntity>> getCartProducts(GetCartProductsParams params);
   Future<void> clearCart(ClearCartParams params);
+  Future<void> deleteFromCart(DeleteFromCartParams params);
   Future<List<int>> getQuantities(GetQuantitiesParams params);
-
+  Future<List<CartEntity>> getCartProducts(GetCartProductsParams params);
+  //Future<CartEntity> _getProductsOfCategory(CartCategoryEntity params);
   //Future<List<ProductEntity>> getProduct(GetProductParams params);
   //Future<List<CartCategoryEntity>> getCartCategories(String uId);
 }
@@ -48,6 +47,37 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
     });
   }
 
+  @override
+  Future<void> clearCart(ClearCartParams params) async {
+    await cartStore.clearCart(params.params).catchError((error) {
+      print(error.toString());
+      throw ServerException(message: error);
+    });
+  }
+
+  @override
+  Future<List<int>> getQuantities(GetQuantitiesParams params) async {
+    final result = await cartStore.getQuantities(params).catchError((error) {
+      print(error.toString());
+      throw ServerException(message: error);
+    });
+    final quantities =
+        List<int>.of(result.map((e) => e.data()![FirebaseStrings.quantity]));
+    return quantities;
+  }
+
+  @override
+  Future<List<CartEntity>> getCartProducts(GetCartProductsParams params) async {
+    return await _getCartCategories(params.uId).then((categories) async {
+      ///
+      return await _getCart(categories).then((favorites) {
+        return favorites;
+      });
+
+      ///
+    });
+  }
+
   Future<List<CartCategoryEntity>> _getCartCategories(String uId) async {
     return await cartStore.getCartCategories(uId).then((categories) {
       return List<CartCategoryEntity>.of(
@@ -65,31 +95,8 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
     });
   }
 
-  @override
-  Future<CartEntity> getProductsOfCategory(CartCategoryEntity category) async {
-    return await _getIdsOfOneCategory(category.reference).then((ids) async {
-      return await _getProductsOfOneCategory(
-              GetProductsOfOneCategoryParams(category: category.id, ids: ids))
-          .then((fav) {
-        return fav;
-      });
-    });
-  }
-
-  @override
-  Future<List<CartEntity>> getCartProducts(GetCartProductsParams params) async {
-    return await _getCartCategories(params.uId).then((categories) async {
-      ///
-      return await _getCarts(categories).then((favorites) {
-        return favorites;
-      });
-
-      ///
-    });
-  }
-
   /// Just Extra clean , I'm not sure if it's clean or not :)
-  Future<List<CartEntity>> _getCarts(List<CartCategoryEntity> category) async {
+  Future<List<CartEntity>> _getCart(List<CartCategoryEntity> category) async {
     List<CartEntity> favorites = [];
 
     ///
@@ -98,23 +105,24 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
       /// When all fav are deleted from a Category ...........
       /// It still can be accessed Which Creates an EMPTY model .......
       /// That make problems in the UI :) .......
-      await getProductsOfCategory(category[i]).then((favoriteEntity) {
+      await _getProductsOfCategory(category[i]).then((favoriteEntity) {
         if (favoriteEntity.products.isNotEmpty) {
           favorites.add(favoriteEntity);
         }
       });
 
-      ///
-      /*await _getIdsOfOneCategory(category[i].reference).then((ids) async {
-        await _getProductsOfOneCategory(
-          category: category[i].id,
-          productsIds: ids,
-        ).then((fav) {
-          favorites.add(fav);
-        });
-      });*/
     }
     return favorites;
+  }
+
+  Future<CartEntity> _getProductsOfCategory(CartCategoryEntity category) async {
+    return await _getIdsOfOneCategory(category.reference).then((ids) async {
+      return await _getProductsOfOneCategory(
+              GetProductsOfOneCategoryParams(category: category.id, ids: ids))
+          .then((fav) {
+        return fav;
+      });
+    });
   }
 
   Future<List<String>> _getIdsOfOneCategory(
@@ -148,24 +156,5 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
       print(error.toString());
       throw ServerException(message: error.toString());
     });
-  }
-
-  @override
-  Future<void> clearCart(ClearCartParams params) async {
-    await cartStore.clearCart(params.params).catchError((error) {
-      print(error.toString());
-      throw ServerException(message: error);
-    });
-  }
-
-  @override
-  Future<List<int>> getQuantities(GetQuantitiesParams params) async {
-    final result = await cartStore.getQuantities(params).catchError((error) {
-      print(error.toString());
-      throw ServerException(message: error);
-    });
-    final quantities =
-        List<int>.of(result.map((e) => e.data()![FirebaseStrings.quantity]));
-    return quantities;
   }
 }
