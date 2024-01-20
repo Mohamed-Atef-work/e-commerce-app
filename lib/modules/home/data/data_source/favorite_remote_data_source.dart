@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/favorite.dart';
 import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
+import 'package:e_commerce_app/modules/home/domain/entities/favorite_entity.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/home/data/models/favorite_category_model.dart';
-import 'package:e_commerce_app/modules/home/domain/entities/favorite_category_entity.dart';
-import 'package:e_commerce_app/modules/home/domain/entities/favorite_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/entities/favorite_category_entity.dart';
 
 abstract class FavoriteBaseRemoteDataSource {
   Future<void> addFav(AddDeleteFavoriteParams params);
@@ -32,132 +32,92 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
 
   @override
   Future<List<FavoriteCategoryEntity>> getFavCategories(String uId) async {
-    final favoriteCategories = await favoriteStore.getFavCategories(uId);
+    final categoriesDocs = await favoriteStore.getFavCategories(uId);
     final categories = List<FavoriteCategoryEntity>.of(
-      favoriteCategories.docs
-          .map(
-            (cateDoc) => FavoriteCategoryModel.fromJson(
-              reference: cateDoc.reference,
-              id: cateDoc.id,
-            ),
-          )
-          .toList(),
+      categoriesDocs.docs.map(
+        (cateDoc) => FavoriteCategoryModel.fromJson(
+          reference: cateDoc.reference,
+          id: cateDoc.id,
+        ),
+      ),
     );
 
     return categories;
-
-    return await favoriteStore.getFavCategories(uId).then(
-
-        ///
-        (categories) {
-      return List<FavoriteCategoryEntity>.of(
-        categories.docs
-            .map(
-              (cateDoc) => FavoriteCategoryModel.fromJson(
-                  id: cateDoc.id, reference: cateDoc.reference),
-            )
-            .toList(),
-      );
-
-      ///
-    }).catchError((error) {
-      throw ServerException(message: error.code);
-    });
   }
 
   @override
   Future<FavoriteEntity> getFavOfOneCategory(
       FavoriteCategoryEntity category) async {
-    return await _getIdsOfOneCategory(category.reference).then((ids) async {
-      return await _getProductsOfOneCategory(
-        category: category.id,
-        productsIds: ids,
-      ).then((fav) {
-        return fav;
-      });
-    });
+    final idsOfOneCategory = await _getIdsOfOneCategory(category.reference);
+    final favoriteEntity = await _getProductsOfOneCategory(
+      productsIds: idsOfOneCategory,
+      category: category.id,
+    );
+    return favoriteEntity;
   }
 
   @override
   Future<List<FavoriteEntity>> getFavorites(String uId) async {
-    return await getFavCategories(uId).then((categories) async {
-      ///
-      return await _getFavorites(categories).then((favorites) {
-        return favorites;
-      });
-
-      ///
-    });
+    final categories = await getFavCategories(uId);
+    final favoriteEntities = _getFavorites(categories);
+    return favoriteEntities;
   }
 
   /// Just Extra clean , I'm not sure if it's clean or not :)
   Future<List<FavoriteEntity>> _getFavorites(
-      List<FavoriteCategoryEntity> category) async {
+      List<FavoriteCategoryEntity> categories) async {
     List<FavoriteEntity> favorites = [];
 
     ///
-    for (int i = 0; i < category.length; i++) {
-      /// There is a problem with the data base Which ........
-      /// When all fav are deleted from a Category ...........
+    for (FavoriteCategoryEntity category in categories) {
+      /// There is a problem with the dataBase Which ........
+      /// When all fvs are deleted from a Category ...........
       /// It still can be accessed Which Creates an EMPTY model .......
       /// That make problems in the UI :) .......
-      await getFavOfOneCategory(category[i]).then((favoriteEntity) {
-        if (favoriteEntity.products.isNotEmpty) {
-          favorites.add(favoriteEntity);
-        }
-      });
-
-      ///
-      /*await _getIdsOfOneCategory(category[i].reference).then((ids) async {
-        await _getProductsOfOneCategory(
-          category: category[i].id,
-          productsIds: ids,
-        ).then((fav) {
-          favorites.add(fav);
-        });
-      });*/
+      final favoriteEntity = await getFavOfOneCategory(category);
+      favorites.add(favoriteEntity);
     }
     return favorites;
   }
 
   Future<List<String>> _getIdsOfOneCategory(
       DocumentReference categoryRef) async {
-    return await favoriteStore
+    final productsIdsDocs = await favoriteStore
         .getFavProductsIdsOfCategory(categoryRef)
-        .then((favorites) {
-      return List<String>.of(favorites.docs.map((favDoc) => favDoc.id));
-    }).catchError((error) {
+        .catchError((error) {
       throw ServerException(message: error);
     });
+    final productsIds =
+        List<String>.of(productsIdsDocs.docs.map((favDoc) => favDoc.id));
+
+    return productsIds;
   }
 
   Future<FavoriteEntity> _getProductsOfOneCategory({
-    required String category,
     required List<String> productsIds,
+    required String category,
   }) async {
-    return await favoriteStore
+    final productsDocs = await favoriteStore
         .getFavProductsOfCategory(
       productIds: productsIds,
       category: category,
     )
-        .then((products) {
-      return FavoriteEntity(
-        category: category,
-        products: List<ProductEntity>.of(
-          products
-              .map(
-                (doc) => ProductModel.formJson(
-                  json: doc.data()!,
-                  productId: doc.id,
-                ),
-              )
-              .toList(),
-        ),
-      );
-    }).catchError((error) {
+        .catchError((error) {
       print(error.toString());
       throw ServerException(message: error.toString());
     });
+    final products = List<ProductEntity>.of(
+      productsDocs.map(
+        (doc) => ProductModel.formJson(
+          json: doc.data()!,
+          productId: doc.id,
+        ),
+      ),
+    );
+
+    final favoriteEntity =
+        FavoriteEntity(category: category, products: products);
+    return favoriteEntity;
   }
 
   @override
