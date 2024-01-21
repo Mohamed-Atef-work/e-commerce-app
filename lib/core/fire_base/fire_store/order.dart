@@ -88,13 +88,13 @@ class OrderStoreImpl implements OrderStore {
 
     final orderItems = await getOrderItems(params.orderRef);
     await deleteAllOrderItems(orderItems.docs);
-    await params.orderRef.delete();
-
-    /// delete the user if he hasn't orders...
-    final orders = await getUserOrders(params.uId);
-    if (orders.docs.isEmpty) {
-      await params.orderRef.parent.parent!.delete();
-    }
+    await params.orderRef.delete().then((value) async {
+      /// delete the user if he hasn't orders...
+      final orders = await getUserOrders(params.uId);
+      if (orders.docs.isEmpty) {
+        await params.orderRef.parent.parent!.delete();
+      }
+    });
   }
 
   @override

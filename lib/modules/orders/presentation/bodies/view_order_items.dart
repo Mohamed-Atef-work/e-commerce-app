@@ -29,14 +29,12 @@ class ViewUserOrderItemsBody extends StatelessWidget {
             ),
           );
         } else {
-          return Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.all(10),
-              itemCount: state.orderItems.length,
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) => OrderItemWidget(index),
-              separatorBuilder: (context, index) => const DividerComponent(),
-            ),
+          return ListView.separated(
+            padding: const EdgeInsets.all(10),
+            itemCount: state.orderItems.length,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) => OrderItemWidget(index),
+            separatorBuilder: (context, index) => const DividerComponent(),
           );
         }
       },

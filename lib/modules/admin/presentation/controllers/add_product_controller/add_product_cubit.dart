@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:e_commerce_app/core/use_case/base_use_case.dart';
+import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/get_all_product_categories.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -149,12 +150,14 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
         "< -------------------------------------------_addProduct----------------------------------------------- >");
     final addProductResult = await addProductUseCase(
       AddProductParameters(
-        productDescription: descriptionController.text,
-        productCategory: state.categories![state.categoryIndex].name,
-        productLocation: locationController.text,
-        productPrice: int.parse(priceController.text),
-        productName: nameController.text,
-        productImage: imageUrl,
+        product: ProductModel(
+          description: descriptionController.text,
+          category: state.categories![state.categoryIndex].name,
+          location: locationController.text,
+          price: int.parse(priceController.text),
+          name: nameController.text,
+          image: imageUrl,
+        ),
       ),
     );
 

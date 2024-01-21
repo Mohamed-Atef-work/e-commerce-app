@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/core/use_case/base_use_case.dart';
+import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
+import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/admin/domain/repository/admin_domain_repository.dart';
 
 class AddProductUseCase extends BaseUseCase<void, AddProductParameters> {
@@ -17,28 +19,9 @@ class AddProductUseCase extends BaseUseCase<void, AddProductParameters> {
 }
 
 class AddProductParameters {
-  final String productDescription;
-  final String productLocation;
-  final String productCategory;
-  final int productPrice;
-  final String productImage;
-  final String productName;
+  final ProductModel product;
 
   const AddProductParameters({
-    required this.productDescription,
-    required this.productLocation,
-    required this.productCategory,
-    required this.productPrice,
-    required this.productImage,
-    required this.productName,
+    required this.product,
   });
-
-  Map<String, dynamic> toJson() => {
-        "productName": productName,
-        "productPrice": productPrice,
-        "productDescription": productDescription,
-        "productCategory": productCategory,
-        "productImage": productImage,
-        "productLocation": productLocation,
-      };
 }

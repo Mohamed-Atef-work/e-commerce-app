@@ -28,12 +28,12 @@ class ProductStoreImpl implements ProductStore {
 
   ProductStoreImpl(this.store);
   @override
-  Future<void> addProduct(AddProductParameters product) async {
+  Future<void> addProduct(AddProductParameters parameters) async {
     await store
         .collection(FirebaseStrings.products)
         .doc(FirebaseStrings.categories)
-        .collection(product.productCategory)
-        .add(product.toJson());
+        .collection(parameters.product.category)
+        .add(parameters.product.toJson());
   }
 
   @override

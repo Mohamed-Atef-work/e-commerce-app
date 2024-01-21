@@ -31,22 +31,20 @@ class ViewUserOrdersBody extends StatelessWidget {
           ),
         );
       } else {
-        return Expanded(
-          child: ListView.separated(
-            itemCount: state.orders.length,
-            padding: const EdgeInsets.all(10),
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) => OrderWidget(
-              index: index,
-              onPressed: () {
-                BlocProvider.of<OrderItemsCubit>(context)
-                    .getOrderItems(state.orders[index].reference!);
-                BlocProvider.of<ManageUserOrderViewCubit>(context)
-                    .viewOrderItems();
-              },
-            ),
-            separatorBuilder: (context, index) => const DividerComponent(),
+        return ListView.separated(
+          itemCount: state.orders.length,
+          padding: const EdgeInsets.all(10),
+          physics: const BouncingScrollPhysics(),
+          itemBuilder: (context, index) => OrderWidget(
+            index: index,
+            onPressed: () {
+              BlocProvider.of<OrderItemsCubit>(context)
+                  .getOrderItems(state.orders[index].reference!);
+              BlocProvider.of<ManageUserOrderViewCubit>(context)
+                  .viewOrderItems();
+            },
           ),
+          separatorBuilder: (context, index) => const DividerComponent(),
         );
       }
     });

@@ -131,8 +131,8 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
       return stream.map((event) {
         /*return List<UserEntity>.of(
             event.docs.map((e) => UserModel.fromJson(e.data(), id: e.id)));*/
-        return List<UserEntity>.of(
-            event.docs.map((e) => UserEntity(id: e.id, name: "name", email: "email")));
+        return List<UserEntity>.of(event.docs
+            .map((e) => UserEntity(id: e.id, name: "name", email: "email")));
       });
     }).catchError((error) {
       throw ServerException(message: error.toString());

@@ -81,7 +81,7 @@ class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
             .toList();
       });
     }).catchError((error) {
-      throw ServerException(message: error.code);
+      throw ServerException(message: error.toString());
     });
   }
 

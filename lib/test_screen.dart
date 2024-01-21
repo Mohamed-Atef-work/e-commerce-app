@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/order.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/product.dart';
+import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/add_product_use_case.dart';
 
@@ -20,13 +21,17 @@ class TestScreen extends StatelessWidget {
           onPressed: () async {
             final FirebaseFirestore firestore = FirebaseFirestore.instance;
             final ProductStore store = ProductStoreImpl(firestore);
-            await store.addProduct(const AddProductParameters(
-                productDescription: "productDescription",
-                productLocation: "productLocation",
-                productCategory: "suit shirts",
-                productPrice: 20,
-                productImage: "productImage",
-                productName: "productName"));
+            await store.addProduct(
+              const AddProductParameters(
+                product: ProductModel(
+                    description: "productDescription",
+                    location: "productLocation",
+                    category: "suit shirts",
+                    price: 20,
+                    image: "productImage",
+                    name: "productName"),
+              ),
+            );
           },
           child: const CustomText(text: "Add"),
         ),

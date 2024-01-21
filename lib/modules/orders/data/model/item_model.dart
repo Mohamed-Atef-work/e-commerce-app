@@ -14,10 +14,10 @@ class OrderItemModel extends OrderItemEntity {
     required Map<String, dynamic> json,
   }) =>
       OrderItemModel(
+        ref: ref,
         quantity: json["quantity"],
         product:
             ProductModel.formJson(productId: productId, json: json["item"]),
-        ref: ref,
       );
 
   Map<String, dynamic> toJson() => {
