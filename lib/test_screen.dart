@@ -1,4 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/order.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/product.dart';
+import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
+import 'package:e_commerce_app/modules/admin/domain/use_cases/add_product_use_case.dart';
 
 import 'package:e_commerce_app/modules/orders/presentation/widgets/counting_widget.dart';
 import 'package:flutter/material.dart';
@@ -11,49 +16,20 @@ class TestScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey,
       body: Center(
-        child: CountingWidget(num : 1, plus: () {  }, minus: () {  },),/*TextButton(
+        child: TextButton(
           onPressed: () async {
             final FirebaseFirestore firestore = FirebaseFirestore.instance;
-            final OrderStore orderStore = OrderStoreImpl(firestore);
-            final OrderBaseRemoteDataSource baseDataSource =
-                OrderRemoteDataSource(orderStore);
-            final OrderDomainRepo domainRepo = OrderDataRepo(baseDataSource);
-            final GetUserOrdersUseCase getOrders =
-                GetUserOrdersUseCase(domainRepo);
-            // Add Order ---------------------> Done :) ;
-            // Up data Order data ------------> Done :) ;
-            // Add Order items ---------------> Done :) ;
-            // Get Order items ---------------> Done :) ;
-            // Get Order Data  ---------------> Done :) ;
-            await getOrders.call("uId").then((result) async {
-              result.fold((l) => null, (r) async {
-                r.map((event) {
-                  print(event.first.totalPrice);
-
-                  UpDateOrderDataUseCase(domainRepo)
-                      .call(
-                    UpDateOrderDataParams(
-                      ref: event.first.reference!,
-                      data: OrderDataModel(
-                        name: " Modified",
-                        address: " Modified",
-                        phone: " Modified",
-                        totalPrice: " Modified",
-                        date: DateTime.now().toString(),
-                      ),
-                    ),
-                  )
-                      .then((value) {
-                    value.fold((l) {
-                      print(l.message);
-                    }, (r) {});
-                  });
-                }).toList();
-              });
-            });
+            final ProductStore store = ProductStoreImpl(firestore);
+            await store.addProduct(const AddProductParameters(
+                productDescription: "productDescription",
+                productLocation: "productLocation",
+                productCategory: "suit shirts",
+                productPrice: 20,
+                productImage: "productImage",
+                productName: "productName"));
           },
           child: const CustomText(text: "Add"),
-        ),*/
+        ),
       ),
     );
   }

@@ -52,7 +52,7 @@ class BuyItApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: AppStrings.buyIt,
-        initialRoute: Screens.adminLayoutScreen,
+        initialRoute: Screens.userLayoutScreen,
         theme: ThemeData(scaffoldBackgroundColor: AppColors.primaryColorYellow),
         routes: {
           Screens.testScreen: (context) => const TestScreen(),

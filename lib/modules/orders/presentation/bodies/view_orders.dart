@@ -1,22 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
-import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
-import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
-import 'package:e_commerce_app/core/components/custom_button.dart';
-import 'package:e_commerce_app/core/services/service_locator.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/components/divider_component.dart';
-import 'package:e_commerce_app/core/components/dismissible_background.dart';
 import 'package:e_commerce_app/modules/orders/presentation/widgets/order_widget.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_case.dart';
-import 'package:e_commerce_app/modules/orders/presentation/widgets/update_order_date_widget.dart';
-import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_orders/manage_user_orders_cubit.dart';
-import 'package:e_commerce_app/modules/orders/presentation/controller/update_order_data_controller/update_order_data_cubit.dart';
+import 'package:e_commerce_app/modules/orders/presentation/controller/order_items_controller/order_items_cubit.dart';
+import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_order_view/user_order_view_cubit.dart';
+import 'package:e_commerce_app/modules/orders/presentation/controller/get_user_orders_controller/get_user_orders_cubit.dart';
 
 class ViewUserOrdersBody extends StatelessWidget {
+  const ViewUserOrdersBody({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<GetUserOrdersCubit, GetUserOrdersState>(
+        builder: (context, state) {
+      if (state.deleteOrder == RequestState.loading ||
+          state.getOrders == RequestState.loading) {
+        return const LoadingWidget();
+      } else if (state.getOrders == RequestState.success &&
+          state.orders.isEmpty) {
+        return const Center(
+          child: CustomText(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            fontFamily: AppStrings.pacifico,
+            text: AppStrings.youHaveNoOrders,
+          ),
+        );
+      } else {
+        return Expanded(
+          child: ListView.separated(
+            itemCount: state.orders.length,
+            padding: const EdgeInsets.all(10),
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) => OrderWidget(
+              index: index,
+              onPressed: () {
+                BlocProvider.of<OrderItemsCubit>(context)
+                    .getOrderItems(state.orders[index].reference!);
+                BlocProvider.of<ManageUserOrderViewCubit>(context)
+                    .viewOrderItems();
+              },
+            ),
+            separatorBuilder: (context, index) => const DividerComponent(),
+          ),
+        );
+      }
+    });
+  }
+}
+
+/*class ViewUserOrdersBody extends StatelessWidget {
   const ViewUserOrdersBody({Key? key}) : super(key: key);
 
   @override
@@ -93,4 +130,4 @@ class ViewUserOrdersBody extends StatelessWidget {
       }
     });
   }
-}
+}*/

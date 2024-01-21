@@ -152,7 +152,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
         productDescription: descriptionController.text,
         productCategory: state.categories![state.categoryIndex].name,
         productLocation: locationController.text,
-        productPrice: priceController.text,
+        productPrice: int.parse(priceController.text),
         productName: nameController.text,
         productImage: imageUrl,
       ),

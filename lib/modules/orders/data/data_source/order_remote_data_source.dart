@@ -129,8 +129,10 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
   Future<Stream<List<UserEntity>>> streamUsersWhoOrdered() async {
     return await orderStore.streamUsersWhoOrdered().then((stream) {
       return stream.map((event) {
+        /*return List<UserEntity>.of(
+            event.docs.map((e) => UserModel.fromJson(e.data(), id: e.id)));*/
         return List<UserEntity>.of(
-            event.docs.map((e) => UserModel.fromJson(e.data(), id: e.id)));
+            event.docs.map((e) => UserEntity(id: e.id, name: "name", email: "email")));
       });
     }).catchError((error) {
       throw ServerException(message: error.toString());

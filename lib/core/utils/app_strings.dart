@@ -68,6 +68,7 @@ class AppStrings {
   static const String changePassword = "Change Password";
   static const String cartIsEmpty = "Your Cart Is Empty";
   static const String youHaveNoOrders = "You Have No Orders";
+  static const String thereIsNoOrders = "There Is No Orders";
 
   static const String favoriteIsEmpty = "Your Favorite Is Empty";
   static const String thisOrderIsNoLongerExisted =

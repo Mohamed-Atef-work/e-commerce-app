@@ -20,7 +20,7 @@ class AddProductParameters {
   final String productDescription;
   final String productLocation;
   final String productCategory;
-  final String productPrice;
+  final int productPrice;
   final String productImage;
   final String productName;
 
@@ -33,7 +33,7 @@ class AddProductParameters {
     required this.productName,
   });
 
-  Map<String, String> toJson() => {
+  Map<String, dynamic> toJson() => {
         "productName": productName,
         "productPrice": productPrice,
         "productDescription": productDescription,

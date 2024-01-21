@@ -62,8 +62,12 @@ import 'package:e_commerce_app/modules/orders/domain/use_case/get_order_items_us
 import 'package:e_commerce_app/modules/orders/domain/use_case/get_user_orders_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/get_users_who_ordered_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/up_date_order_data_use_case.dart';
+import 'package:e_commerce_app/modules/orders/presentation/controller/get_user_orders_controller/get_user_orders_cubit.dart';
+import 'package:e_commerce_app/modules/orders/presentation/controller/get_users_who_ordered_controller/get_users_who_ordered_cubit.dart';
+import 'package:e_commerce_app/modules/orders/presentation/controller/manage_admin_order_view/admin_order_view_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_order_view/user_order_view_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_orders/manage_user_orders_cubit.dart';
+import 'package:e_commerce_app/modules/orders/presentation/controller/order_items_controller/order_items_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/update_order_data_controller/update_order_data_cubit.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -96,6 +100,10 @@ void _admin() {
   sl.registerFactory(() => AdminDetailsCubit(sl()));
   sl.registerFactory(() => CategoriesModelSheetCubit(sl(), sl(), sl()));
   sl.registerFactory(() => EditAddProductCubit(sl(), sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => OrderItemsCubit(sl(), sl()));
+  sl.registerFactory(() => GetUserOrdersCubit(sl(), sl()));
+  sl.registerFactory(() => GetUsersWhoOrderedCubit(sl()));
+  sl.registerFactory(() => ManageAdminOrderViewCubit());
 
   /// Repositories
   sl.registerLazySingleton<AdminRepositoryDomain>(
