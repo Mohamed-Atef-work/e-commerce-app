@@ -36,7 +36,8 @@ class OrderStoreImpl implements OrderStore {
   @override
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>>
       streamUsersWhoOrdered() async {
-    return store.collection(FirebaseStrings.orders).snapshots();
+    final response = store.collection(FirebaseStrings.orders).snapshots();
+    return response;
   }
 
   /// take from this method the references of a user orders;
@@ -124,6 +125,14 @@ class OrderStoreImpl implements OrderStore {
     final response = await itemRef.parent.get();
     if (response.docs.isEmpty) {
       await itemRef.parent.parent!.delete();
+    }
+    await _deleteUserIfNoOrders(itemRef);
+  }
+
+  Future<void> _deleteUserIfNoOrders(DocumentReference itemRef) async {
+    final response = await itemRef.parent.parent!.parent.get();
+    if (response.docs.isEmpty) {
+      await itemRef.parent.parent!.parent.parent!.delete();
     }
   }
 

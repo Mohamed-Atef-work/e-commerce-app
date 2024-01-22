@@ -19,10 +19,21 @@ class AdminDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(title: AppStrings.productDetails),
+      appBar: appBar(
+        title: AppStrings.productDetails,
+        leading: IconButton(
+          onPressed: () {
+            BlocProvider.of<AdminDetailsCubit>(context).reset();
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: BlocBuilder<AdminDetailsCubit, AdminDetailsState>(
+          buildWhen: (current, previous) =>
+              current.deleteState != previous.deleteState,
           builder: (context, state) {
             if (state.deleteState == RequestState.loading) {
               return const LoadingWidget();

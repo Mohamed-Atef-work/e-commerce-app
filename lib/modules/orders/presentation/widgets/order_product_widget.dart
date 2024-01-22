@@ -10,7 +10,9 @@ import 'package:e_commerce_app/modules/orders/presentation/controller/order_item
 
 class OrderItemWidget extends StatelessWidget {
   final int index;
-  const OrderItemWidget(this.index, {super.key});
+  final void Function() onPressed;
+  const OrderItemWidget(
+      {super.key, required this.index, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -33,52 +35,63 @@ class OrderItemWidget extends StatelessWidget {
           color: Colors.red, icon: Icons.delete),
       secondaryBackground: const DismissibleSecondaryBackgroundComponent(
           color: Colors.red, icon: Icons.delete),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Container(
-              width: context.width * 0.2,
-              height: context.height * 0.12,
-              clipBehavior: Clip.antiAlias,
-              padding: const EdgeInsets.only(right: 15),
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(15)),
-              child: Image.network(state.orderItems[index].product.image,
-                  fit: BoxFit.contain),
-            ),
-            Column(
-              children: [
-                CustomText(
-                  fontSize: 20,
-                  textAlign: TextAlign.left,
-                  textColor: AppColors.black,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: AppStrings.pacifico,
-                  text: state.orderItems[index].product.name,
-                ),
-                SizedBox(height: context.height * 0.03),
-                CustomText(
-                  fontSize: 18,
-                  //textAlign: TextAlign.,
-                  fontWeight: FontWeight.bold,
-                  textColor: AppColors.darkBrown,
-                  text:
-                      "\$${state.orderItems[index].product.price * state.orderItems[index].quantity}",
-                ),
-              ],
-            ),
-            const Spacer(),
-            CustomText(
-              fontSize: 18,
-              //textAlign: TextAlign.,
-              fontWeight: FontWeight.bold,
-              textColor: AppColors.darkBrown,
-              fontFamily: AppStrings.pacifico,
-              text: "${state.orderItems[index].quantity} ${AppStrings.pieces}",
-            ),
-          ],
+      child: InkWell(
+        onTap: onPressed,
+        //hoverColor: Colors.transparent,
+        // when putting the mouse on it .
+        splashColor: AppColors.loginTextFormFieldGray,
+        // the color is spread gradually, when pressing on.
+        highlightColor: Colors.transparent,
+        // changes all it's color ,after pressing on it .
+        borderRadius: BorderRadius.circular(20),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                width: context.width * 0.2,
+                height: context.height * 0.12,
+                clipBehavior: Clip.antiAlias,
+                padding: const EdgeInsets.all(10),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                child: Image.network(state.orderItems[index].product.image,
+                    fit: BoxFit.contain),
+              ),
+              Column(
+                children: [
+                  CustomText(
+                    fontSize: 20,
+                    textAlign: TextAlign.left,
+                    textColor: AppColors.black,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: AppStrings.pacifico,
+                    text: state.orderItems[index].product.name,
+                  ),
+                  SizedBox(height: context.height * 0.03),
+                  CustomText(
+                    fontSize: 18,
+                    //textAlign: TextAlign.,
+                    fontWeight: FontWeight.bold,
+                    textColor: AppColors.darkBrown,
+                    text:
+                        "\$${state.orderItems[index].product.price * state.orderItems[index].quantity}",
+                  ),
+                ],
+              ),
+              const Spacer(),
+              CustomText(
+                fontSize: 18,
+                //textAlign: TextAlign.,
+                fontWeight: FontWeight.bold,
+                textColor: AppColors.darkBrown,
+                fontFamily: AppStrings.pacifico,
+                text:
+                    "${state.orderItems[index].quantity} ${AppStrings.pieces}",
+              ),
+            ],
+          ),
         ),
       ),
     );

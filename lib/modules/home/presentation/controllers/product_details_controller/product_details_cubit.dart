@@ -40,6 +40,11 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
     emit(state.copyWith(product: product));
   }
 
+  void reset() {
+    emit(state.copyWith(
+        message: "", quantity: 1, addToCart: RequestState.initial));
+  }
+
   void quantityPlus() {
     int quantity = state.quantity + 1;
     emit(state.copyWith(quantity: quantity));

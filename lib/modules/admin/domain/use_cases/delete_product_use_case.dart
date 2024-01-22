@@ -18,11 +18,11 @@ class DeleteProductParameters extends Equatable {
   final String productId;
   final String category;
 
-  const DeleteProductParameters(this.productId,this.category);
+  const DeleteProductParameters(this.productId, this.category);
 
   @override
   List<Object?> get props => [
         productId,
-    category,
+        category,
       ];
 }

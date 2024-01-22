@@ -25,4 +25,8 @@ class AdminDetailsCubit extends Cubit<AdminDetailsState> {
       ),
     );
   }
+
+  void reset() {
+    emit(state.copyWith(message: "", deleteState: RequestState.initial));
+  }
 }

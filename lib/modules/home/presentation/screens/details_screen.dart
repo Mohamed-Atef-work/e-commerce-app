@@ -20,7 +20,16 @@ class DetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColorYellow,
-      appBar: appBar(title: AppStrings.details),
+      appBar: appBar(
+        title: AppStrings.details,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+            BlocProvider.of<ProductDetailsCubit>(context).reset();
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: BlocBuilder<ProductDetailsCubit, ProductDetailsState>(

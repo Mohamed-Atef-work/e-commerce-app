@@ -1,3 +1,5 @@
+import 'package:e_commerce_app/core/utils/screens_strings.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -63,7 +65,14 @@ class ViewOrderItemsForAdmin extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   itemCount: state.orderItems.length,
                   physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) => OrderItemWidget(index),
+                  itemBuilder: (context, index) => OrderItemWidget(
+                    index: index,
+                    onPressed: () {
+                      BlocProvider.of<AdminDetailsCubit>(context)
+                          .product(state.orderItems[index].product);
+                      Navigator.pushNamed(context, Screens.adminDetailsScreen);
+                    },
+                  ),
                   separatorBuilder: (context, index) =>
                       const DividerComponent(),
                 ),

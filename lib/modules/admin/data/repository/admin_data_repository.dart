@@ -112,7 +112,8 @@ class AdminRepositoryData implements AdminRepositoryDomain {
   }
 
   @override
-  Future<Either<Failure, void>> deleteProductCategory(DeleteProductsCategoryParameters parameters) async{
+  Future<Either<Failure, void>> deleteProductCategory(
+      DeleteProductsCategoryParameters parameters) async {
     try {
       final result = await dataSource.deleteProductCategory(parameters);
       return Right(result);
@@ -122,7 +123,8 @@ class AdminRepositoryData implements AdminRepositoryDomain {
   }
 
   @override
-  Future<Either<Failure, void>> upDateProductCategory(UpDateProductsCategoryParameters parameters) async{
+  Future<Either<Failure, void>> upDateProductCategory(
+      UpDateProductsCategoryParameters parameters) async {
     try {
       final result = await dataSource.upDateProductCategory(parameters);
       return Right(result);
