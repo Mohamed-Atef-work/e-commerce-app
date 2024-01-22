@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
@@ -52,7 +53,7 @@ class UserLayoutScreen extends StatelessWidget {
       return const CartView();
     } else if (state.currentIndex == 2) {
       BlocProvider.of<GetFavoriteCubit>(context).getFavorites();
-      return const FavoritesView();
+      return const FavoritesView<ProductDetailsCubit>();
     } else {
       return const AccountView();
     }

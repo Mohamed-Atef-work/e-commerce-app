@@ -72,7 +72,7 @@ class AdminLayoutScreen extends StatelessWidget {
       return const AdminOrderView();
     } else if (state.currentIndex == 2) {
       BlocProvider.of<GetFavoriteCubit>(context).getFavorites();
-      return const FavoritesView();
+      return const FavoritesView<AdminDetailsCubit>();
     } else {
       return const AdminProfileView();
     }
