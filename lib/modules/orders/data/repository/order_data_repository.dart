@@ -106,7 +106,7 @@ class OrderDataRepo implements OrderDomainRepo {
   }
 
   @override
-  Future<Either<Failure, Stream<List<UserEntity>>>>
+  Future<Either<Failure, Stream<List<String>>>>
       streamUsersWhoOrdered() async {
     try {
       final result = await dataSource.streamUsersWhoOrdered();

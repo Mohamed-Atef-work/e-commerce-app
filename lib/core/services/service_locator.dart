@@ -26,6 +26,7 @@ import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_layo
 import 'package:e_commerce_app/modules/auth/data/data_source/auth_remote_data_source.dart';
 import 'package:e_commerce_app/modules/auth/data/repository/auth_data_repository.dart';
 import 'package:e_commerce_app/modules/auth/domain/repository/auth_domain_repository.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/get_user_data_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/login_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/sign_up_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/store_user_data_use_case.dart';
@@ -102,7 +103,7 @@ void _admin() {
   sl.registerFactory(() => EditAddProductCubit(sl(), sl(), sl(), sl(), sl()));
   sl.registerFactory(() => OrderItemsCubit(sl(), sl()));
   sl.registerFactory(() => GetUserOrdersCubit(sl(), sl()));
-  sl.registerFactory(() => GetUsersWhoOrderedCubit(sl()));
+  sl.registerFactory(() => GetUsersWhoOrderedCubit(sl(),sl()));
   sl.registerFactory(() => ManageAdminOrderViewCubit());
 
   /// Repositories
@@ -135,6 +136,7 @@ void _auth() {
   /// UseCases
   sl.registerLazySingleton(() => LoginInUseCase(sl()));
   sl.registerLazySingleton(() => SignUpUseCase(sl()));
+  sl.registerLazySingleton(() => GetUserDataUseCase(sl()));
   sl.registerLazySingleton(() => StoreUserDataUseCase(sl()));
 
   /// Repositories

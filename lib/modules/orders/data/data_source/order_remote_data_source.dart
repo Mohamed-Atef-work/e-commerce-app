@@ -21,7 +21,7 @@ abstract class OrderBaseRemoteDataSource {
   Future<OrderDataEntity> getOrderData(GetOrderDataParams params);
   Future<List<OrderDataEntity>> getUserOrders(String userId);
   Future<void> updateOrderData(UpDateOrderDataParams params);
-  Future<Stream<List<UserEntity>>> streamUsersWhoOrdered();
+  Future<Stream<List<String>>> streamUsersWhoOrdered();
   Future<void> addItemToOrder(AddItemToOrderParams params);
   Future<void> deleteOrder(DeleteOrderParams params);
   Future<void> addOrder(AddOrderParams params);
@@ -126,13 +126,12 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
   }
 
   @override
-  Future<Stream<List<UserEntity>>> streamUsersWhoOrdered() async {
+  Future<Stream<List<String>>> streamUsersWhoOrdered() async {
     return await orderStore.streamUsersWhoOrdered().then((stream) {
       return stream.map((event) {
         /*return List<UserEntity>.of(
             event.docs.map((e) => UserModel.fromJson(e.data(), id: e.id)));*/
-        return List<UserEntity>.of(event.docs
-            .map((e) => UserEntity(id: e.id, name: "name", email: "email")));
+        return List<String>.of(event.docs.map((e) => e.id));
       });
     }).catchError((error) {
       throw ServerException(message: error.toString());

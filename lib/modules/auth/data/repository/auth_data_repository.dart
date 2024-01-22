@@ -1,4 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/get_user_data_use_case.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/core/error/failure.dart';
@@ -53,6 +55,17 @@ class AuthRepositoryData implements AuthRepositoryDomain {
       StoreUserDataParameters parameters) async {
     try {
       final result = await authBaseRemoteDatSource.storeUserDate(parameters);
+      return Right(result);
+    } on ServerException catch (exception) {
+      return Left(ServerFailure(message: exception.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserEntity>> getUserData(
+      GetUserDataParameters parameters) async {
+    try {
+      final result = await authBaseRemoteDatSource.getUserData(parameters);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));

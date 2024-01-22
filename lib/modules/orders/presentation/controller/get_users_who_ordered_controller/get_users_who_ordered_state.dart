@@ -2,24 +2,32 @@ part of 'get_users_who_ordered_cubit.dart';
 
 @immutable
 class GetUsersWhoOrderedState {
-  final List<UserEntity> users;
-  final RequestState usersState;
   final String message;
+  //final List<String> usersIds;
+  final List<UserEntity> usersData;
+  final RequestState usersDataState;
+  //final RequestState usersIdsState;
 
   const GetUsersWhoOrderedState({
-    this.usersState = RequestState.initial,
-    this.users = const [],
+    //this.usersIdsState = RequestState.initial,
+    this.usersDataState = RequestState.initial,
+    //this.usersIds = const [],
+    this.usersData = const [],
     this.message = "",
   });
 
   GetUsersWhoOrderedState copyWith({
-    List<UserEntity>? users,
-    RequestState? usersState,
     String? message,
+    //List<String>? usersIds,
+    List<UserEntity>? usersData,
+    RequestState? usersDataState,
+    //RequestState? usersIdsState,
   }) =>
       GetUsersWhoOrderedState(
-        usersState: usersState ?? this.usersState,
+        usersData: usersData ?? this.usersData,
         message: message ?? this.message,
-        users: users ?? this.users,
+        //usersIds: usersIds ?? this.usersIds,
+        usersDataState: usersDataState ?? this.usersDataState,
+        //usersIdsState: usersIdsState ?? this.usersIdsState,
       );
 }

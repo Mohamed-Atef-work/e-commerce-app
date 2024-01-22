@@ -16,10 +16,10 @@ class ViewUsersWhoOrderedBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GetUsersWhoOrderedCubit, GetUsersWhoOrderedState>(
         builder: (context, state) {
-      if (state.usersState == RequestState.loading) {
+      if (state.usersDataState == RequestState.loading) {
         return const LoadingWidget();
-      } else if (state.usersState == RequestState.success &&
-          state.users.isEmpty) {
+      } else if (state.usersDataState == RequestState.success &&
+          state.usersData.isEmpty) {
         return const Center(
           child: CustomText(
             fontSize: 25,
@@ -30,17 +30,17 @@ class ViewUsersWhoOrderedBody extends StatelessWidget {
         );
       } else {
         return ListView.separated(
-          itemCount: state.users.length,
+          itemCount: state.usersData.length,
           padding: const EdgeInsets.all(10),
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) => TextButton(
             onPressed: () {
               /// ..............................................................
               BlocProvider.of<GetUserOrdersCubit>(context)
-                  .getOrders(state.users[index].id);
+                  .getOrders(state.usersData[index].id);
               BlocProvider.of<ManageAdminOrderViewCubit>(context).viewOrders();
             },
-            child: Text(state.users[index].email),
+            child: Text(state.usersData[index].email),
           ),
           separatorBuilder: (context, index) => const DividerComponent(),
         );
