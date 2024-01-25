@@ -12,7 +12,7 @@ import '../../domain/use_cases/store_user_data_use_case.dart';
 abstract class AuthBaseRemoteDatSource {
   Future<UserCredential> signIn(LoginParameters parameters);
   Future<UserCredential> signUp(SignUpParameters parameters);
-  Future<void> storeUserDate(StoreUserDataParameters parameters);
+  Future<void> storeUserDate(StoreUserDataParams parameters);
   Future<UserEntity> getUserData(GetUserDataParameters parameters);
 }
 
@@ -54,7 +54,7 @@ class AuthRemoteDatSourceImpl implements AuthBaseRemoteDatSource {
   }
 
   @override
-  Future<void> storeUserDate(StoreUserDataParameters parameters) async {
+  Future<void> storeUserDate(StoreUserDataParams parameters) async {
     await userStore
         .storeUserData(parameters)
         .then((value) {})

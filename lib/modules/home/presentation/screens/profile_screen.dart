@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
@@ -20,7 +21,9 @@ class ProfileScreen extends StatelessWidget {
           children: [
             SizedBox(height: context.height * 0.03),
             ProfileItemsWidget(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, Screens.editProfile);
+              },
               icon: Icons.person_outline,
               name: AppStrings.editProfile,
             ),

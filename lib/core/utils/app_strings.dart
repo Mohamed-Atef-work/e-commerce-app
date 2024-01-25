@@ -2,6 +2,7 @@ class AppStrings {
   static const String pacifico = "Pacifico";
 
   static const String admin = "admin";
+  static const String profile = "Profile";
   static const String login = "Login";
   static const String buyIt = "Buy It";
   static const String logout = "Logout";
@@ -25,6 +26,7 @@ class AppStrings {
   static const String update = "Update";
   static const String image = "Image ......";
   static const String edit = "Edit";
+  static const String hiThere = "Hi There ";
   static const String add = "Add";
   static const String ok = "Ok";
 
@@ -37,6 +39,7 @@ class AppStrings {
   static const String pieces = "Pieces";
 
   static const String name = "Name";
+  static const String email = "email";
   static const String phone = "Phone";
   static const String address = "Address";
   static const String category = "Category";
@@ -60,7 +63,6 @@ class AppStrings {
   static const String addToCart = "Add to cart";
   static const String yourOrders = "Your Orders";
 
-  static const String profile = "Profile";
   static const String myCards = "my Cards";
   static const String language = "Language";
   static const String appSettings = "App Settings";

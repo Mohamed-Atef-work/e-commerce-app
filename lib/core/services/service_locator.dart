@@ -70,6 +70,8 @@ import 'package:e_commerce_app/modules/orders/presentation/controller/manage_use
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_orders/manage_user_orders_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/order_items_controller/order_items_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/update_order_data_controller/update_order_data_cubit.dart';
+import 'package:e_commerce_app/modules/shared/domain/use_cases/update_profile_use_case.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/up_date_profile_controller/update_profile_cubit.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 
@@ -103,7 +105,7 @@ void _admin() {
   sl.registerFactory(() => EditAddProductCubit(sl(), sl(), sl(), sl(), sl()));
   sl.registerFactory(() => OrderItemsCubit(sl(), sl()));
   sl.registerFactory(() => GetUserOrdersCubit(sl(), sl()));
-  sl.registerFactory(() => GetUsersWhoOrderedCubit(sl(),sl()));
+  sl.registerFactory(() => GetUsersWhoOrderedCubit(sl(), sl()));
   sl.registerFactory(() => ManageAdminOrderViewCubit());
 
   /// Repositories
@@ -132,11 +134,14 @@ void _auth() {
   /// blocs
   sl.registerFactory(() => LoginBloc(sl()));
   sl.registerFactory(() => SignUpBloc(sl(), sl()));
+  sl.registerFactory(() => UpdateProfileCubit(sl()));
 
   /// UseCases
+
   sl.registerLazySingleton(() => LoginInUseCase(sl()));
   sl.registerLazySingleton(() => SignUpUseCase(sl()));
   sl.registerLazySingleton(() => GetUserDataUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateProfileUseCase(sl()));
   sl.registerLazySingleton(() => StoreUserDataUseCase(sl()));
 
   /// Repositories

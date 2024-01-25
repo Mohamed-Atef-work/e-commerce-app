@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/store_user_data_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,13 +44,17 @@ class SignUpBloc extends Cubit<SignUpState> {
 
   Future<void> _storeUserDate() async {
     emit(state.copyWith(storeUserDataState: RequestState.loading));
-    final result = await storeUserDataUseCase.call(StoreUserDataParameters(
-      name: name!,
-      email: email!,
-      address: "address",
-      phone: "phone",
-      id: state.userCredential!.user!.uid,
-    ));
+    final result = await storeUserDataUseCase.call(
+      StoreUserDataParams(
+        userModel: UserModel(
+          name: name!,
+          email: email!,
+          address: "address",
+          phone: "phone",
+          id: state.userCredential!.user!.uid,
+        ),
+      ),
+    );
     emit(result.fold(
         (l) => state.copyWith(storeUserDataState: RequestState.error),
         (r) => state.copyWith(storeUserDataState: RequestState.success)));

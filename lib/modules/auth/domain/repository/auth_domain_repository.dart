@@ -10,8 +10,7 @@ import '../use_cases/store_user_data_use_case.dart';
 abstract class AuthRepositoryDomain {
   Future<Either<Failure, UserCredential>> signIn(LoginParameters parameters);
   Future<Either<Failure, UserCredential>> signUp(SignUpParameters parameters);
-  Future<Either<Failure, void>> storeUserData(
-      StoreUserDataParameters parameters);
-  Future<Either<Failure, UserEntity>> getUserData(GetUserDataParameters parameters);
+  Future<Either<Failure, void>> storeUserData(StoreUserDataParams parameters);
+  Future<Either<Failure, UserEntity>> getUserData(
+      GetUserDataParameters parameters);
 }
-

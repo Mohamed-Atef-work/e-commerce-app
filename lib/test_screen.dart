@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/modules/shared/presentation/widgets/edit_profile_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
@@ -13,31 +14,34 @@ class TestScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey,
+    return const Scaffold(
+      //backgroundColor: Colors.grey,
       body: Center(
-        child: TextButton(
-          onPressed: () async {
-            final FirebaseFirestore firestore = FirebaseFirestore.instance;
-            final ProductStore store = ProductStoreImpl(firestore);
-            await store.addProduct(
-              const AddProductParameters(
-                product: ProductModel(
-                    description: "productDescription",
-                    location: "productLocation",
-                    category: "suit shirts",
-                    price: 20,
-                    image: "productImage",
-                    name: "productName"),
-              ),
-            );
-          },
-          child: const CustomText(text: "Add"),
-        ),
       ),
     );
   }
 }
+
+
+
+/*TextButton(
+onPressed: () async {
+final FirebaseFirestore firestore = FirebaseFirestore.instance;
+final ProductStore store = ProductStoreImpl(firestore);
+await store.addProduct(
+const AddProductParameters(
+product: ProductModel(
+description: "productDescription",
+location: "productLocation",
+category: "suit shirts",
+price: 20,
+image: "productImage",
+name: "productName"),
+),
+);
+},
+child: const CustomText(text: "Add"),
+)*/
 
 /*Future<List<DocumentSnapshot<Map<String, dynamic>>>>
     getFavoriteProductsOfCategory({

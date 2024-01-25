@@ -36,7 +36,7 @@ class OrderWidget extends StatelessWidget {
           );
           return true;
         } else {
-          showBottomSheet(
+          showModalBottomSheet(
             context: context,
             builder: (context) => BlocProvider(
               create: (context) =>

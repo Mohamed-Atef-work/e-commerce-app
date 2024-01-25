@@ -52,7 +52,7 @@ class AuthRepositoryData implements AuthRepositoryDomain {
 
   @override
   Future<Either<Failure, void>> storeUserData(
-      StoreUserDataParameters parameters) async {
+      StoreUserDataParams parameters) async {
     try {
       final result = await authBaseRemoteDatSource.storeUserDate(parameters);
       return Right(result);

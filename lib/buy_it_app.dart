@@ -1,3 +1,5 @@
+import 'package:e_commerce_app/modules/shared/presentation/screens/edit_profile_screen.dart';
+
 import 'core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'core/utils/screens_strings.dart';
@@ -51,10 +53,11 @@ class BuyItApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: AppStrings.buyIt,
-        initialRoute: Screens.adminLayoutScreen,
+        initialRoute: Screens.editProfile,
         theme: ThemeData(scaffoldBackgroundColor: AppColors.primaryColorYellow),
         routes: {
           Screens.testScreen: (context) => const TestScreen(),
+          Screens.editProfile: (context) => const EditProfileScreen(),
           Screens.cartScreen: (context) => const CartScreen(),
           Screens.loginScreen: (context) => const LoginScreen(),
           Screens.signUpScreen: (context) => const SignUpScreen(),
