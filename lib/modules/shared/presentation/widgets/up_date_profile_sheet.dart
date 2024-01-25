@@ -37,25 +37,12 @@ class UpDateProfileWidget extends StatelessWidget {
             if (state.updateState == RequestState.loading) {
               return const LoadingWidget();
             } else if (state.updateState == RequestState.success) {
-              return Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const CustomText(
-                      fontSize: 25,
-                      text: AppStrings.updated,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: AppStrings.pacifico,
-                    ),
-                    SizedBox(height: context.height * 0.03),
-                    CustomButton(
-                      onPressed: () {},
-                      text: AppStrings.ok,
-                      fontFamily: AppStrings.pacifico,
-                      width: context.height * 0.1,
-                      height: context.height * 0.05,
-                    ),
-                  ],
+              return const Center(
+                child: CustomText(
+                  fontSize: 25,
+                  text: AppStrings.updated,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: AppStrings.pacifico,
                 ),
               );
             } else {
@@ -82,6 +69,15 @@ class UpDateProfileWidget extends StatelessWidget {
                           BlocProvider.of<UpdateProfileCubit>(context).phone,
                       validator: (value) =>
                           Validators.numericValidator(value, AppStrings.phone),
+                      fillColor: AppColors.loginTextFormFieldGray,
+                    ),
+                    CustomTextFormField(
+                      fontSize: 15,
+                      hintText: AppStrings.email,
+                      prefixIcon: Icons.email,
+                      textEditingController:
+                          BlocProvider.of<UpdateProfileCubit>(context).email,
+                      validator: (value) => Validators.emailValidator(value),
                       fillColor: AppColors.loginTextFormFieldGray,
                     ),
                     CustomButton(

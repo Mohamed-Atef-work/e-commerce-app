@@ -19,7 +19,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
   //String? phone;
   TextEditingController phone = TextEditingController();
   //String? address;
-  TextEditingController address = TextEditingController();
+  TextEditingController email = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
 
@@ -27,7 +27,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
     emit(state.copyWith(userEntity: userEntity));
     name.text = state.userEntity!.name;
     phone.text = state.userEntity!.phone!;
-    address.text = state.userEntity!.address!;
+    email.text = state.userEntity!.address!;
   }
 
   Future<void> updateOrderData() async {
@@ -38,10 +38,10 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
         StoreUserDataParams(
           userModel: UserModel(
             name: name.text,
+            email: email.text,
             phone: phone.text,
-            id: "uId",
             address: "address",
-            email: "atef9463@gmail.com",
+            id: "uId",
           ),
         ),
       );
