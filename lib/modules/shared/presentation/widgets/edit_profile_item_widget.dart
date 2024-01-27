@@ -16,7 +16,7 @@ class EditProfileItemWidget extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.loginTextFormFieldGray,
+          color: AppColors.whiteGray,
           borderRadius: BorderRadius.circular(50),
           border: Border.all(style: BorderStyle.solid, color: Colors.white),
         ),

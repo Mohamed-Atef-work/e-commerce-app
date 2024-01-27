@@ -45,7 +45,7 @@ class AddNewCategoryModelSheetWidget extends StatelessWidget {
                     child: Column(
                       children: [
                         CustomTextFormField(
-                          fillColor: AppColors.loginTextFormFieldGray,
+
                           hintText: AppStrings.newCategory,
                           fontSize: 15,
                           textEditingController: controller.categoryController,
@@ -113,7 +113,7 @@ class DeleteUpdateCategoryModelSheetWidget extends StatelessWidget {
                         CustomTextFormField(
                           fontSize: 15,
                           hintText: AppStrings.category,
-                          fillColor: AppColors.loginTextFormFieldGray,
+
                           textEditingController: controller.categoryController,
                           validator: (value) => Validators.stringValidator(
                               value, AppStrings.category),

@@ -20,7 +20,7 @@ class ProfileItemsWidget extends StatelessWidget {
       // when putting the mouse on it .
       highlightColor: Colors.transparent,
       // changes all it's color ,when putting the mouse on it .
-      splashColor: AppColors.loginTextFormFieldGray,
+      splashColor: AppColors.whiteGray,
       // the color is spread gradually.
       borderRadius: BorderRadius.circular(20),
       onTap: onTap,

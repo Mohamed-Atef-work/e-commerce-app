@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +53,7 @@ class AdminLayoutScreen extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
-              backgroundColor: AppColors.loginTextFormFieldGray,
+              backgroundColor: AppColors.whiteGray,
               child: const Icon(Icons.add, size: 30),
             ),
           ),

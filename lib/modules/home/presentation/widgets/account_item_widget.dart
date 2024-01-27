@@ -18,7 +18,7 @@ class AccountItemsWidget extends StatelessWidget {
     return InkWell(
       //hoverColor: Colors.transparent,
       // when putting the mouse on it .
-      splashColor: AppColors.loginTextFormFieldGray,
+      splashColor: AppColors.whiteGray,
       // the color is spread gradually, when pressing on.
       highlightColor: Colors.transparent,
       // changes all it's color ,after pressing on it .

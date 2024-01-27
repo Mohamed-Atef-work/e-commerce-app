@@ -16,6 +16,9 @@ class AppStrings {
   static const String haveAnAccount = "Have an Account ? ";
   static const String invalidPassword = "Invalid password";
   static const String enterYourPassword = "Enter Your Password";
+  static const String oldPassword = "Old Password";
+  static const String newPassword = "New Password";
+  static const String confirmPassword = "Confirm Password";
   static const String doNotHaveAnAccount = "Don't have an Account ? ";
 
   static const String changeTheImage = "Change The Image";

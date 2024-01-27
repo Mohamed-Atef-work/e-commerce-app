@@ -31,7 +31,7 @@ class SignUpFormWidget extends StatelessWidget {
               print(BlocProvider.of<SignUpBloc>(context).name);
             },
             prefixIcon: Icons.person,
-            fillColor: AppColors.loginTextFormFieldGray,
+
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.02,
@@ -45,7 +45,7 @@ class SignUpFormWidget extends StatelessWidget {
               print(BlocProvider.of<SignUpBloc>(context).email);
             },
             prefixIcon: Icons.email,
-            fillColor: AppColors.loginTextFormFieldGray,
+
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.02,
@@ -59,7 +59,7 @@ class SignUpFormWidget extends StatelessWidget {
               print(BlocProvider.of<SignUpBloc>(context).password);
             },
             prefixIcon: Icons.lock,
-            fillColor: AppColors.loginTextFormFieldGray,
+
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: height * 0.05),

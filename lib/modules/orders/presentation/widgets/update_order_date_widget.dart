@@ -47,9 +47,7 @@ class UpDateOrderDataWidget extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontFamily: AppStrings.pacifico,
                   ),
-                  SizedBox(
-                    height: context.height * 0.03
-                  ),
+                  SizedBox(height: context.height * 0.03),
                   CustomButton(
                     onPressed: () {},
                     text: AppStrings.ok,
@@ -74,7 +72,6 @@ class UpDateOrderDataWidget extends StatelessWidget {
                         BlocProvider.of<UpdateOrderDataCubit>(context).name,
                     validator: (value) =>
                         Validators.stringValidator(value, AppStrings.name),
-                    fillColor: AppColors.loginTextFormFieldGray,
                   ),
                   CustomTextFormField(
                     fontSize: 15,
@@ -84,7 +81,6 @@ class UpDateOrderDataWidget extends StatelessWidget {
                         BlocProvider.of<UpdateOrderDataCubit>(context).phone,
                     validator: (value) =>
                         Validators.numericValidator(value, AppStrings.phone),
-                    fillColor: AppColors.loginTextFormFieldGray,
                   ),
                   CustomTextFormField(
                     fontSize: 15,
@@ -94,7 +90,6 @@ class UpDateOrderDataWidget extends StatelessWidget {
                         BlocProvider.of<UpdateOrderDataCubit>(context).address,
                     validator: (value) =>
                         Validators.stringValidator(value, AppStrings.address),
-                    fillColor: AppColors.loginTextFormFieldGray,
                   ),
                   CustomButton(
                     height: 50,

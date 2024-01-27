@@ -19,7 +19,7 @@ class CustomTextFormField extends StatelessWidget {
     this.textEditingController,
     this.labelText,
     this.hintTextColor,
-    this.fillColor,
+    this.fillColor = AppColors.whiteGray,
     this.validator,
     this.onChanged,
     required this.hintText,

@@ -59,7 +59,7 @@ class UpDateProfileWidget extends StatelessWidget {
                           BlocProvider.of<UpdateProfileCubit>(context).name,
                       validator: (value) =>
                           Validators.stringValidator(value, AppStrings.name),
-                      fillColor: AppColors.loginTextFormFieldGray,
+                      fillColor: AppColors.whiteGray,
                     ),
                     CustomTextFormField(
                       fontSize: 15,
@@ -69,7 +69,7 @@ class UpDateProfileWidget extends StatelessWidget {
                           BlocProvider.of<UpdateProfileCubit>(context).phone,
                       validator: (value) =>
                           Validators.numericValidator(value, AppStrings.phone),
-                      fillColor: AppColors.loginTextFormFieldGray,
+                      fillColor: AppColors.whiteGray,
                     ),
                     CustomTextFormField(
                       fontSize: 15,
@@ -78,7 +78,7 @@ class UpDateProfileWidget extends StatelessWidget {
                       textEditingController:
                           BlocProvider.of<UpdateProfileCubit>(context).email,
                       validator: (value) => Validators.emailValidator(value),
-                      fillColor: AppColors.loginTextFormFieldGray,
+                      fillColor: AppColors.whiteGray,
                     ),
                     CustomButton(
                       height: 50,

@@ -71,6 +71,8 @@ import 'package:e_commerce_app/modules/orders/presentation/controller/manage_use
 import 'package:e_commerce_app/modules/orders/presentation/controller/order_items_controller/order_items_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/update_order_data_controller/update_order_data_cubit.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/update_profile_use_case.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/address_controller/edit_address_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/change_password_controller/change_password_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/up_date_profile_controller/update_profile_cubit.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -78,10 +80,13 @@ import 'package:get_it/get_it.dart';
 final sl = GetIt.instance;
 
 void serviceLocatorInit() {
+  _init();
   _auth();
   _admin();
-  _home();
-  _init();
+  _user();
+  _shared();
+  _orders();
+  _favorite();
 }
 
 void _init() {
@@ -99,14 +104,12 @@ void _admin() {
   // < --------------------------------- Admin -------------------------------- >
   /// blocs
   sl.registerFactory(() => AdminLayoutCubit());
-  sl.registerFactory(() => ExploreProductsCubit(sl()));
   sl.registerFactory(() => AdminDetailsCubit(sl()));
+  sl.registerFactory(() => ExploreProductsCubit(sl()));
+  sl.registerFactory(() => ManageAdminOrderViewCubit());
+  sl.registerFactory(() => GetUsersWhoOrderedCubit(sl(), sl()));
   sl.registerFactory(() => CategoriesModelSheetCubit(sl(), sl(), sl()));
   sl.registerFactory(() => EditAddProductCubit(sl(), sl(), sl(), sl(), sl()));
-  sl.registerFactory(() => OrderItemsCubit(sl(), sl()));
-  sl.registerFactory(() => GetUserOrdersCubit(sl(), sl()));
-  sl.registerFactory(() => GetUsersWhoOrderedCubit(sl(), sl()));
-  sl.registerFactory(() => ManageAdminOrderViewCubit());
 
   /// Repositories
   sl.registerLazySingleton<AdminRepositoryDomain>(
@@ -118,14 +121,13 @@ void _admin() {
 
   /// UseCases
   sl.registerLazySingleton(() => AddProductUseCase(sl()));
-  sl.registerLazySingleton(() => LoadProductsUseCase(sl()));
   sl.registerLazySingleton(() => UpdateProductUseCase(sl()));
   sl.registerLazySingleton(() => DeleteProductUseCase(sl()));
+  sl.registerLazySingleton(() => GetUsersWhoOrderedUseCase(sl()));
   sl.registerLazySingleton(() => UploadProductImageUseCase(sl()));
   sl.registerLazySingleton(() => AddNewProductCategoryUseCase(sl()));
   sl.registerLazySingleton(() => UpdateProductCategoryUseCase(sl()));
   sl.registerLazySingleton(() => DeleteProductsCategoryUseCase(sl()));
-  sl.registerLazySingleton(() => GetAllProductCategoriesUseCase(sl()));
   sl.registerLazySingleton(() => DownloadProductImageUrlUseCase(sl()));
 }
 
@@ -137,9 +139,8 @@ void _auth() {
   sl.registerFactory(() => UpdateProfileCubit(sl()));
 
   /// UseCases
-
-  sl.registerLazySingleton(() => LoginInUseCase(sl()));
   sl.registerLazySingleton(() => SignUpUseCase(sl()));
+  sl.registerLazySingleton(() => LoginInUseCase(sl()));
   sl.registerLazySingleton(() => GetUserDataUseCase(sl()));
   sl.registerLazySingleton(() => UpdateProfileUseCase(sl()));
   sl.registerLazySingleton(() => StoreUserDataUseCase(sl()));
@@ -153,25 +154,20 @@ void _auth() {
       () => AuthRemoteDatSourceImpl(sl()));
 }
 
-void _home() {
+void _user() {
   /// blocs
-  //sl.registerFactory(() => ProductDetailsCubit(sl()));
   sl.registerFactory(() => UserLayoutCubit());
-  sl.registerFactory(() => ProductsViewCubit(sl(), sl()));
-  sl.registerFactory(() => GetFavoriteCubit(sl()));
   sl.registerFactory(() => ProductDetailsCubit(sl()));
   sl.registerFactory(() => ManageUserOrderViewCubit());
-  sl.registerFactory(() => UpdateOrderDataCubit(sl()));
-  sl.registerFactory(() => ManageFavoriteCubit(sl(), sl()));
+  sl.registerFactory(() => ProductsViewCubit(sl(), sl()));
   sl.registerFactory(
       () => ManageCartProductsCubit(sl(), sl(), sl(), sl(), sl()));
   sl.registerFactory(() => ManageUserOrdersCubit(sl(), sl(), sl(), sl()));
 
   /// Use Case
-  /// <-------------------- Orders ----------------------------->
-  sl.registerLazySingleton(() => AddFavoriteUseCase(sl()));
-  sl.registerLazySingleton(() => GetFavoritesUseCase(sl()));
-  sl.registerLazySingleton(() => DeleteFavoriteUseCase(sl()));
+  /// <-------------------- Orders ------------------------------->
+  sl.registerLazySingleton(() => AddOrderUseCase(sl()));
+  sl.registerLazySingleton(() => AddItemToOrderUseCase(sl()));
 
   /// <--------------------- Cart ------------------------------->
   sl.registerLazySingleton(() => AddToCartUseCase(sl()));
@@ -180,32 +176,54 @@ void _home() {
   sl.registerLazySingleton(() => GetCartProductsUseCase(sl()));
   sl.registerLazySingleton(() => GetCartProductsQuantitiesUseCase(sl()));
 
-  /// <-------------------- Orders ------------------------------->
-  sl.registerLazySingleton(() => AddOrderUseCase(sl()));
-  sl.registerLazySingleton(() => AddItemToOrderUseCase(sl()));
-
-  sl.registerLazySingleton(() => GetOrderItemsUseCase(sl()));
-  sl.registerLazySingleton(() => GetUserOrdersUseCase(sl()));
-  sl.registerLazySingleton(() => GetUsersWhoOrderedUseCase(sl()));
-
-  sl.registerLazySingleton(() => UpDateOrderDataUseCase(sl()));
-
-  sl.registerLazySingleton(() => DeleteOrderUseCase(sl()));
-  sl.registerLazySingleton(() => DeleteItemFromOrderUseCase(sl()));
-
   /// Repositories
-  sl.registerLazySingleton<FavoriteDomainRepository>(
-      () => FavoriteDataRepository(sl()));
   sl.registerLazySingleton<CartDomainRepo>(() => CartDataRepo(sl()));
-  sl.registerLazySingleton<OrderDomainRepo>(() => OrderDataRepo(sl()));
 
   /// Data Sources
-  sl.registerLazySingleton<FavoriteBaseRemoteDataSource>(
-      () => FavoriteRemoteDataSource(sl()));
   sl.registerLazySingleton<CartBaseRemoteDataSource>(
       () => CartRemoteDataSource(sl()));
+}
+
+void _shared() {
+  sl.registerFactory(() => EditAddressCubit());
+  sl.registerFactory(() => ChangePasswordCubit());
+
+  sl.registerLazySingleton(() => LoadProductsUseCase(sl()));
+  sl.registerLazySingleton(() => GetAllProductCategoriesUseCase(sl()));
+}
+
+void _favorite() {
+  /// Bloc
+  sl.registerFactory(() => GetFavoriteCubit(sl()));
+  sl.registerFactory(() => ManageFavoriteCubit(sl(), sl()));
+
+  /// UseCases
+  sl.registerLazySingleton(() => AddFavoriteUseCase(sl()));
+  sl.registerLazySingleton(() => GetFavoritesUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteFavoriteUseCase(sl()));
+
+  /// Repository
+  sl.registerLazySingleton<FavoriteDomainRepository>(
+      () => FavoriteDataRepository(sl()));
+
+  /// Data Source
+  sl.registerLazySingleton<FavoriteBaseRemoteDataSource>(
+      () => FavoriteRemoteDataSource(sl()));
+}
+
+void _orders() {
+  sl.registerFactory(() => UpdateOrderDataCubit(sl()));
+  sl.registerFactory(() => OrderItemsCubit(sl(), sl()));
+  sl.registerFactory(() => GetUserOrdersCubit(sl(), sl()));
+
+  sl.registerLazySingleton(() => DeleteOrderUseCase(sl()));
+  sl.registerLazySingleton(() => GetOrderItemsUseCase(sl()));
+  sl.registerLazySingleton(() => GetUserOrdersUseCase(sl()));
+  sl.registerLazySingleton(() => UpDateOrderDataUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteItemFromOrderUseCase(sl()));
+
+  sl.registerLazySingleton<OrderDomainRepo>(() => OrderDataRepo(sl()));
+
   sl.registerLazySingleton<OrderBaseRemoteDataSource>(
       () => OrderRemoteDataSource(sl()));
-
-  /// External
 }

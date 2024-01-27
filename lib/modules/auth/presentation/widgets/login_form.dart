@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/validators.dart';
@@ -18,8 +19,6 @@ class LoginFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
     return Form(
       key: BlocProvider.of<LoginBloc>(context).formKey,
       child: Column(
@@ -35,11 +34,9 @@ class LoginFormWidget extends StatelessWidget {
               //LoginController().email = value!;
             },
             prefixIcon: Icons.email,
-            fillColor: AppColors.loginTextFormFieldGray,
+
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
-          ),
+          SizedBox(height: context.height * 0.02),
           CustomTextFormField(
             hintText: AppStrings.enterYourPassword,
             fontSize: 15,
@@ -50,12 +47,10 @@ class LoginFormWidget extends StatelessWidget {
               //LoginController().password = value;
             },
             prefixIcon: Icons.lock,
-            fillColor: AppColors.loginTextFormFieldGray,
+
           ),
           Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: height * 0.05,
-            ),
+            padding: EdgeInsets.symmetric(vertical: context.height * 0.05),
             child: BlocBuilder<LoginBloc, LoginState>(
                 buildWhen: (previousState, currentState) =>
                     previousState.requestState != currentState.requestState,
@@ -65,13 +60,13 @@ class LoginFormWidget extends StatelessWidget {
                       "<------------------------ Hi Iam being built ------------------------>");
                   return state.requestState == RequestState.loading
                       ? SizedBox(
-                          height: height * 0.05,
+                          height: context.height * 0.05,
                           child:
                               const Center(child: CircularProgressIndicator()))
                       : CustomButton(
-                          width: width * 0.4,
-                          height: height * 0.05,
                           text: AppStrings.login,
+                          width: context.width * 0.4,
+                          height: context.height * 0.05,
                           onPressed: () {
                             BlocProvider.of<LoginBloc>(context)
                                 .add(const SignInEvent());

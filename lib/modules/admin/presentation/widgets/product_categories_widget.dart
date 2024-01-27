@@ -42,7 +42,7 @@ class ProductCategoriesWidget extends StatelessWidget {
                         },
                         splashRadius: 25,
                         //hoverColor: Colors.transparent,
-                        highlightColor: AppColors.loginTextFormFieldGray,
+                        highlightColor: AppColors.whiteGray,
                         icon: const Icon(Icons.add, color: Colors.white),
                       ),
                     )

@@ -28,7 +28,6 @@ class AddProductFormWidget extends StatelessWidget {
             },
             validator: (value) =>
                 Validators.stringValidator(value, AppStrings.productName),
-            fillColor: AppColors.loginTextFormFieldGray,
             hintText: AppStrings.productName,
             fontSize: 18,
           ),
@@ -40,7 +39,6 @@ class AddProductFormWidget extends StatelessWidget {
             },
             validator: (value) =>
                 Validators.numericValidator(value, AppStrings.productPrice),
-            fillColor: AppColors.loginTextFormFieldGray,
             hintText: AppStrings.productPrice,
             fontSize: 18,
           ),
@@ -52,7 +50,6 @@ class AddProductFormWidget extends StatelessWidget {
             },
             validator: (value) => Validators.stringValidator(
                 value, AppStrings.productDescription),
-            fillColor: AppColors.loginTextFormFieldGray,
             hintText: AppStrings.productDescription,
             fontSize: 18,
           ),
@@ -64,7 +61,6 @@ class AddProductFormWidget extends StatelessWidget {
             },
             validator: (value) =>
                 Validators.stringValidator(value, AppStrings.productLocation),
-            fillColor: AppColors.loginTextFormFieldGray,
             hintText: AppStrings.productLocation,
             fontSize: 18,
           ),

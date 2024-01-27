@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/modules/shared/presentation/controller/change_password_controller/change_password_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/address_controller/edit_address_cubit.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/services/service_locator.dart';
@@ -12,17 +12,17 @@ import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
-class ChangePasswordScreen extends StatelessWidget {
-  const ChangePasswordScreen({super.key});
+class EditAddressScreen extends StatelessWidget {
+  const EditAddressScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(title: AppStrings.changePassword),
       body: BlocProvider(
-        create: (context) => sl<ChangePasswordCubit>(),
+        create: (context) => sl<EditAddressCubit>(),
         child: Form(
-          key: BlocProvider.of<ChangePasswordCubit>(context).formKey,
+          key: BlocProvider.of<EditAddressCubit>(context).formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -32,7 +32,7 @@ class ChangePasswordScreen extends StatelessWidget {
                 fillColor: AppColors.whiteGray,
                 hintText: AppStrings.oldPassword,
                 textEditingController:
-                    BlocProvider.of<ChangePasswordCubit>(context).oldPassword,
+                    BlocProvider.of<EditAddressCubit>(context).city,
                 validator: (value) => Validators.passwordValidator(value),
               ),
               SizedBox(height: context.height * 0.01),
@@ -42,7 +42,7 @@ class ChangePasswordScreen extends StatelessWidget {
                 fillColor: AppColors.whiteGray,
                 hintText: AppStrings.newPassword,
                 textEditingController:
-                    BlocProvider.of<ChangePasswordCubit>(context).newPassword,
+                    BlocProvider.of<EditAddressCubit>(context).street,
                 validator: (value) => Validators.passwordValidator(value),
               ),
               SizedBox(height: context.height * 0.01),
@@ -52,12 +52,11 @@ class ChangePasswordScreen extends StatelessWidget {
                 fillColor: AppColors.whiteGray,
                 hintText: AppStrings.confirmPassword,
                 textEditingController:
-                    BlocProvider.of<ChangePasswordCubit>(context)
-                        .confirmPassword,
+                    BlocProvider.of<EditAddressCubit>(context).apartment,
                 validator: (value) => Validators.passwordValidator(value),
               ),
               SizedBox(height: context.height * 0.01),
-              BlocBuilder<ChangePasswordCubit, ChangePasswordState>(
+              BlocBuilder<EditAddressCubit, EditAddressState>(
                 builder: (context, state) {
                   if (state.changeState == RequestState.loading) {
                     return const LoadingWidget();

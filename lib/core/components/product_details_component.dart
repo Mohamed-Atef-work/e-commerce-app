@@ -74,7 +74,8 @@ class ProductComponent extends StatelessWidget {
   final ProductEntity product;
   const ProductComponent({
     super.key,
-    required this.product, required this.onPressed,
+    required this.product,
+    required this.onPressed,
   });
 
   @override
@@ -85,7 +86,7 @@ class ProductComponent extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           //color: Colors.orange.shade300,
-          color: AppColors.loginTextFormFieldGray,
+          color: AppColors.whiteGray,
           borderRadius: BorderRadius.circular(30),
         ),
         child: Column(
