@@ -14,5 +14,7 @@ class EditAddressCubit extends Cubit<EditAddressState> {
 
   final formKey = GlobalKey<FormState>();
 
-  Future<void> changePassword() async {}
+  Future<void> updateAddress() async {
+    if(formKey.currentState!.validate()){}
+  }
 }

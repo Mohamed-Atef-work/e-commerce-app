@@ -1,3 +1,6 @@
+import 'package:e_commerce_app/modules/shared/presentation/controller/address_controller/edit_address_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/screens/address_screen.dart';
+import 'package:e_commerce_app/modules/shared/presentation/screens/change_password_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/edit_profile_screen.dart';
 
 import 'core/utils/app_strings.dart';
@@ -53,11 +56,10 @@ class BuyItApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: AppStrings.buyIt,
-        initialRoute: Screens.editProfile,
+        initialRoute: Screens.userLayoutScreen,
         theme: ThemeData(scaffoldBackgroundColor: AppColors.primaryColorYellow),
         routes: {
           Screens.testScreen: (context) => const TestScreen(),
-          Screens.editProfile: (context) => const EditProfileScreen(),
           Screens.cartScreen: (context) => const CartScreen(),
           Screens.loginScreen: (context) => const LoginScreen(),
           Screens.signUpScreen: (context) => const SignUpScreen(),
@@ -69,7 +71,12 @@ class BuyItApp extends StatelessWidget {
           Screens.addProductScreen: (context) => const AddProductScreen(),
           Screens.exploreScreen: (context) => const ExploreProductsScreen(),
           Screens.adminLayoutScreen: (context) => const AdminLayoutScreen(),
+          Screens.editProfileScreen: (context) => const EditProfileScreen(),
+          Screens.editAddressScreen: (context) => const EditAddressScreen(),
           Screens.adminDetailsScreen: (context) => const AdminDetailsScreen(),
+          Screens.changePasswordScreen: (context) =>
+              const ChangePasswordScreen(),
+
           //Screens.productsOfCategory: (context) => const ProductsOfCategoryScreen(),
         },
       ),

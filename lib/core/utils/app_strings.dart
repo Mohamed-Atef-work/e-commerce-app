@@ -40,6 +40,9 @@ class AppStrings {
   static const String product = "Product";
   static const String details = "Details";
   static const String pieces = "Pieces";
+  static const String city = "City";
+  static const String street = "Street";
+  static const String apartment = "Apartment";
 
   static const String name = "Name";
   static const String email = "email";

@@ -1,7 +1,6 @@
-import 'package:bloc/bloc.dart';
-import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:e_commerce_app/core/utils/enums.dart';
 
 part 'change_password_state.dart';
 
@@ -15,6 +14,8 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   final formKey = GlobalKey<FormState>();
 
   Future<void> changePassword() async {
-    if (newPassword.text == confirmPassword.text) {}
+    if (formKey.currentState!.validate()) {
+      if (newPassword.text == confirmPassword.text) {}
+    }
   }
 }
