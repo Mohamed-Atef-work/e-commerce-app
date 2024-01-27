@@ -19,47 +19,47 @@ abstract class OrderBaseRemoteDataSource {
   Future<OrderDataEntity> getOrderData(GetOrderDataParams params);
   Future<List<OrderDataEntity>> getUserOrders(String userId);
   Future<void> updateOrderData(UpDateOrderDataParams params);
-  Future<Stream<List<String>>> streamUsersWhoOrdered();
   Future<void> addItemToOrder(AddItemToOrderParams params);
+  Future<Stream<List<String>>> streamUsersWhoOrdered();
   Future<void> deleteOrder(DeleteOrderParams params);
   Future<void> addOrder(AddOrderParams params);
 }
 
 class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
-  final OrderStore orderStore;
+  final OrderStore _orderStore;
 
-  OrderRemoteDataSource(this.orderStore);
+  OrderRemoteDataSource(this._orderStore);
   @override
   Future<void> updateOrderData(UpDateOrderDataParams params) async {
-    await orderStore.updateOrderData(params).catchError((error) {
+    await _orderStore.updateOrderData(params).catchError((error) {
       throw ServerException(message: error.toString());
     });
   }
 
   @override
   Future<void> addItemToOrder(AddItemToOrderParams params) async {
-    await orderStore.addItemToOrder(params).catchError((error) {
+    await _orderStore.addItemToOrder(params).catchError((error) {
       throw ServerException(message: error.toString());
     });
   }
 
   @override
   Future<void> addOrder(AddOrderParams params) async {
-    await orderStore.addOrder(params).catchError((error) {
+    await _orderStore.addOrder(params).catchError((error) {
       throw ServerException(message: error.toString());
     });
   }
 
   @override
   Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params) async {
-    await orderStore.deleteItemFromOrder(params).catchError((error) {
+    await _orderStore.deleteItemFromOrder(params).catchError((error) {
       throw ServerException(message: error.toString());
     });
   }
 
   @override
   Future<void> deleteOrder(DeleteOrderParams params) async {
-    await orderStore.deleteOrder(params).catchError((error) {
+    await _orderStore.deleteOrder(params).catchError((error) {
       throw ServerException(message: error.toString());
     });
   }
@@ -67,7 +67,7 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
   @override
   Future<OrderDataEntity> getOrderData(GetOrderDataParams params) async {
     final orderDataDoc =
-        await orderStore.getOrderData(params.orderRef).catchError((error) {
+        await _orderStore.getOrderData(params.orderRef).catchError((error) {
       throw ServerException(message: error.toString());
     });
 
@@ -80,7 +80,7 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
   Future<List<OrderItemEntity>> getOrderItems(
       GetOrderItemsParams params) async {
     final orderItemsDocs =
-        await orderStore.getOrderItems(params.orderRef).catchError((error) {
+        await _orderStore.getOrderItems(params.orderRef).catchError((error) {
       throw ServerException(message: error.toString());
     });
 
@@ -101,7 +101,7 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
   @override
   Future<List<OrderDataEntity>> getUserOrders(String userId) async {
     final ordersDataDocs =
-        await orderStore.getUserOrders(userId).catchError((error) {
+        await _orderStore.getUserOrders(userId).catchError((error) {
       throw ServerException(message: error.toString());
     });
 
@@ -117,7 +117,7 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
   Future<Stream<List<OrderDataEntity>>> streamOfUserOrders(
       String userId) async {
     final docsStream =
-        await orderStore.streamOfUserOrders(userId).catchError((error) {
+        await _orderStore.streamOfUserOrders(userId).catchError((error) {
       throw ServerException(message: error.toString());
     });
 
@@ -133,7 +133,7 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
   @override
   Future<Stream<List<String>>> streamUsersWhoOrdered() async {
     final idsDocsStream =
-        await orderStore.streamUsersWhoOrdered().catchError((error) {
+        await _orderStore.streamUsersWhoOrdered().catchError((error) {
       throw ServerException(message: error.toString());
     });
 
