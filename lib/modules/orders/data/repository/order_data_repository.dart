@@ -106,10 +106,10 @@ class OrderDataRepo implements OrderDomainRepo {
   }
 
   @override
-  Future<Either<Failure, Stream<List<String>>>>
-      streamUsersWhoOrdered() async {
+  Future<Either<Failure, void>> updateOrderData(
+      UpDateOrderDataParams params) async {
     try {
-      final result = await dataSource.streamUsersWhoOrdered();
+      final result = await dataSource.updateOrderData(params);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));
@@ -117,10 +117,10 @@ class OrderDataRepo implements OrderDomainRepo {
   }
 
   @override
-  Future<Either<Failure, void>> updateOrderData(
-      UpDateOrderDataParams params) async {
+  Future<Either<Failure, Stream<List<UserEntity>>>>
+      streamUsersWhoOrdered() async {
     try {
-      final result = await dataSource.updateOrderData(params);
+      final result = await dataSource.streamUsersWhoOrdered();
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));

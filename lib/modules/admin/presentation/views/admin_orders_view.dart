@@ -21,7 +21,7 @@ class AdminOrderView extends StatelessWidget {
           create: (context) => sl<ManageAdminOrderViewCubit>(),
         ),
         BlocProvider(
-            create: (context) => sl<GetUsersWhoOrderedCubit>()..getUsers()),
+            create: (context) => sl<GetUsersWhoOrderedCubit>()..getUsersTwo()),
         BlocProvider(
           create: (context) => sl<GetUserOrdersCubit>(),
         ),

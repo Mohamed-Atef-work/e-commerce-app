@@ -23,7 +23,7 @@ abstract class OrderDomainRepo {
       GetOrderDataParams parameters);
   Future<Either<Failure, List<OrderItemEntity>>> getOrderItems(
       GetOrderItemsParams params);
-  Future<Either<Failure, Stream<List<String>>>> streamUsersWhoOrdered();
+  Future<Either<Failure, Stream<List<UserEntity>>>> streamUsersWhoOrdered();
   Future<Either<Failure, Stream<List<OrderDataEntity>>>> streamOfUserOrders(
       String userId);
   Future<Either<Failure, List<OrderDataEntity>>> getUserOrders(String userId);

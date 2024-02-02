@@ -1,5 +1,8 @@
 import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/order.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/user.dart';
+import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
+import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/orders/data/model/item_model.dart';
 import 'package:e_commerce_app/modules/orders/domain/entity/item_entity.dart';
 import 'package:e_commerce_app/modules/orders/data/model/order_data_model.dart';
@@ -20,15 +23,16 @@ abstract class OrderBaseRemoteDataSource {
   Future<List<OrderDataEntity>> getUserOrders(String userId);
   Future<void> updateOrderData(UpDateOrderDataParams params);
   Future<void> addItemToOrder(AddItemToOrderParams params);
-  Future<Stream<List<String>>> streamUsersWhoOrdered();
+  Future<Stream<List<UserEntity>>> streamUsersWhoOrdered();
   Future<void> deleteOrder(DeleteOrderParams params);
   Future<void> addOrder(AddOrderParams params);
 }
 
 class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
   final OrderStore _orderStore;
+  final UserStore _userStore;
 
-  OrderRemoteDataSource(this._orderStore);
+  OrderRemoteDataSource(this._orderStore, this._userStore);
   @override
   Future<void> updateOrderData(UpDateOrderDataParams params) async {
     await _orderStore.updateOrderData(params).catchError((error) {
@@ -130,8 +134,7 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
     return ordersStream;
   }
 
-  @override
-  Future<Stream<List<String>>> streamUsersWhoOrdered() async {
+  Future<Stream<List<String>>> _streamUsersIds() async {
     final idsDocsStream =
         await _orderStore.streamUsersWhoOrdered().catchError((error) {
       throw ServerException(message: error.toString());
@@ -142,5 +145,27 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
     });
 
     return idsStream;
+  }
+
+  @override
+  Future<Stream<List<UserEntity>>> streamUsersWhoOrdered() async {
+    final usersIdsStream = await _streamUsersIds().catchError((error) {
+      throw ServerException(message: error.toString());
+    });
+    return _usersStream(usersIdsStream);
+  }
+
+  Stream<List<UserEntity>> _usersStream(Stream<List<String>> idsStream) async* {
+    await for (List<String> ids in idsStream) {
+      final users = await _getUsersData(ids);
+      yield users;
+    }
+  }
+
+  Future<List<UserEntity>> _getUsersData(List<String> ids) async {
+    final usersDocs = await _userStore.getGroupUserData(ids);
+    final users = List<UserEntity>.of(
+        usersDocs.map((e) => UserModel.fromJson(e.data()!, id: e.id)).toList());
+    return users;
   }
 }

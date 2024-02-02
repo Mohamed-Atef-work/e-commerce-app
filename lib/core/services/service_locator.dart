@@ -107,7 +107,7 @@ void _admin() {
   sl.registerFactory(() => AdminDetailsCubit(sl()));
   sl.registerFactory(() => ExploreProductsCubit(sl()));
   sl.registerFactory(() => ManageAdminOrderViewCubit());
-  sl.registerFactory(() => GetUsersWhoOrderedCubit(sl(), sl()));
+  sl.registerFactory(() => GetUsersWhoOrderedCubit(sl()));
   sl.registerFactory(() => CategoriesModelSheetCubit(sl(), sl(), sl()));
   sl.registerFactory(() => EditAddProductCubit(sl(), sl(), sl(), sl(), sl()));
 
@@ -225,5 +225,5 @@ void _orders() {
   sl.registerLazySingleton<OrderDomainRepo>(() => OrderDataRepo(sl()));
 
   sl.registerLazySingleton<OrderBaseRemoteDataSource>(
-      () => OrderRemoteDataSource(sl()));
+      () => OrderRemoteDataSource(sl(), sl()));
 }
