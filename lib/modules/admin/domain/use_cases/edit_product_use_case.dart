@@ -21,7 +21,7 @@ class UpdateProductParameters {
   const UpdateProductParameters({required this.product});
 }
 
-class UpdateProductParameterss {
+/*class UpdateProductParameterss {
   final String productDescription;
   final String productLocation;
   final String productCategory;
@@ -48,4 +48,4 @@ class UpdateProductParameterss {
         "productPrice": productPrice,
         "productName": productName,
       };
-}
+}*/

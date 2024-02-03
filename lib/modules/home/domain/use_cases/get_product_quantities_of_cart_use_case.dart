@@ -16,18 +16,18 @@ class GetCartProductsQuantitiesUseCase
 }
 
 class GetQuantities {
-  final String id;
   final String category;
+  final String id;
 
   GetQuantities({required this.id, required this.category});
 }
 
 class GetQuantitiesParams {
-  final String uId;
   final List<GetQuantities> productsParams;
+  final String uId;
 
   GetQuantitiesParams({
-    required this.uId,
     required this.productsParams,
+    required this.uId,
   });
 }

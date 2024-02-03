@@ -19,11 +19,11 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
   final AddOrderUseCase _addOrderUseCase;
 
   ManageCartProductsCubit(
-    this._addOrderUseCase,
-    this._clearCartUseCase,
-    this._deleteFromCartUseCase,
-    this._getCartProductsUseCase,
     this._getCartProductsQuantitiesUseCase,
+    this._getCartProductsUseCase,
+    this._deleteFromCartUseCase,
+    this._clearCartUseCase,
+    this._addOrderUseCase,
   ) : super(const ManageCartProductsState());
 
   Future<void> getCartProducts(String uId) async {

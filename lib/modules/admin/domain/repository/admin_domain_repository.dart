@@ -17,14 +17,14 @@ import '../use_cases/up_date_product_category_use_case.dart';
 abstract class AdminRepositoryDomain {
   Future<Either<Failure, Reference>> uploadProductImage(File parameters);
   Future<Either<Failure, void>> addProduct(AddProductParameters parameters);
-  Future<Either<Failure, void>> deleteProduct(
-      DeleteProductParameters parameters);
   Future<Either<Failure, void>> editProduct(UpdateProductParameters parameters);
   Future<Either<Failure, String>> downloadProductImageUrl(Reference parameters);
   Future<Either<Failure, Stream<List<ProductEntity>>>> loadProducts(
       LoadProductsParameters parameters);
   Future<Either<Failure, Stream<List<ProductCategoryEntity>>>>
       getAllProductCategories();
+  Future<Either<Failure, void>> deleteProduct(
+      DeleteProductParameters parameters);
   Future<Either<Failure, void>> addNewProductCategory(
       AddNewProductsCategoryParameters parameters);
   Future<Either<Failure, void>> deleteProductCategory(
