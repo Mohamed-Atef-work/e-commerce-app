@@ -134,6 +134,14 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
     return ordersStream;
   }
 
+  @override
+  Future<Stream<List<UserEntity>>> streamUsersWhoOrdered() async {
+    final usersIdsStream = await _streamUsersIds();
+    final usersStream = _usersStream(usersIdsStream);
+
+    return usersStream;
+  }
+
   Future<Stream<List<String>>> _streamUsersIds() async {
     final idsDocsStream =
         await _orderStore.streamUsersWhoOrdered().catchError((error) {
@@ -147,14 +155,6 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
     return idsStream;
   }
 
-  @override
-  Future<Stream<List<UserEntity>>> streamUsersWhoOrdered() async {
-    final usersIdsStream = await _streamUsersIds().catchError((error) {
-      throw ServerException(message: error.toString());
-    });
-    return _usersStream(usersIdsStream);
-  }
-
   Stream<List<UserEntity>> _usersStream(Stream<List<String>> idsStream) async* {
     await for (List<String> ids in idsStream) {
       final users = await _getUsersData(ids);
@@ -163,7 +163,10 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
   }
 
   Future<List<UserEntity>> _getUsersData(List<String> ids) async {
-    final usersDocs = await _userStore.getGroupUserData(ids);
+    final usersDocs =
+        await _userStore.getGroupUserData(ids).catchError((error) {
+      throw ServerException(message: error.toString());
+    });
     final users = List<UserEntity>.of(
         usersDocs.map((e) => UserModel.fromJson(e.data()!, id: e.id)).toList());
     return users;

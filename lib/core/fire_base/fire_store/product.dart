@@ -41,9 +41,9 @@ class ProductStoreImpl implements ProductStore {
     await store
         .collection(FirebaseStrings.products)
         .doc(FirebaseStrings.categories)
-        .collection(parameters.productCategory)
-        .doc(parameters.productId)
-        .update(parameters.toJson());
+        .collection(parameters.product.category)
+        .doc(parameters.product.id)
+        .update(parameters.product.toJson());
   }
 
   @override

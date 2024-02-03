@@ -112,14 +112,15 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
         "< -------------------------------------------_upDateProduct----------------------------------------------- >");
     final result = await updateProductUseCase(
       UpdateProductParameters(
-        productDescription: descriptionController.text,
-        productId: state.productToBeUpdated!.id!,
-        productCategory: state.categories![state.categoryIndex].name,
-        productLocation: locationController.text,
-        productPrice: priceController.text,
-        productName: nameController.text,
-        productImage: productImage,
-      ),
+          product: ProductModel(
+        image: productImage,
+        name: nameController.text,
+        id: state.productToBeUpdated!.id!,
+        location: locationController.text,
+        price: int.parse(priceController.text),
+        description: descriptionController.text,
+        category: state.categories![state.categoryIndex].name,
+      )),
     );
     result.fold(
       (l) => emit(
