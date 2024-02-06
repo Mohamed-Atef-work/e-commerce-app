@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/components/logo.dart';
@@ -14,36 +15,31 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
-
     return BlocProvider<SignUpBloc>(
       create: (context) => sl<SignUpBloc>(),
       child: Scaffold(
         backgroundColor: AppColors.primaryColorYellow,
         body: ListView(
           padding: EdgeInsets.only(
-            top: height * 0.1,
-            right: width * 0.05,
-            left: width * 0.05,
+            top: context.height * 0.1,
+            right: context.width * 0.05,
+            left: context.width * 0.05,
           ),
           children: [
             const LogoWidget(),
-            SizedBox(
-              height: height * 0.06,
-            ),
+            SizedBox(height: context.height * 0.06),
             SignUpFormWidget(),
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomText(
-                  text: AppStrings.haveAnAccount,
                   fontSize: 15,
+                  text: AppStrings.haveAnAccount,
                   textColor: AppColors.white,
                 ),
                 CustomText(
-                  text: AppStrings.login,
                   fontSize: 15,
+                  text: AppStrings.login,
                   textColor: AppColors.black,
                 ),
               ],

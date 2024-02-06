@@ -1,29 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:e_commerce_app/core/utils/validators.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
+import 'package:e_commerce_app/core/components/custom_button.dart';
+import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/sign_up_controller/sign_up_bloc.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/sign_up_controller/sign_up_states.dart';
-
-import '../../../../core/components/custom_button.dart';
-import '../../../../core/components/custom_text_form_field.dart';
-import '../../../../core/constants/colors.dart';
-import '../../../../core/utils/app_strings.dart';
-import '../../../../core/utils/validators.dart';
 
 class SignUpFormWidget extends StatelessWidget {
   const SignUpFormWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
     return Form(
       key: BlocProvider.of<SignUpBloc>(context).formKey,
       child: Column(
         children: [
           CustomTextFormField(
-            hintText: AppStrings.enterYourName,
             fontSize: 15,
+            hintText: AppStrings.enterYourName,
             validator: (value) =>
                 Validators.stringValidator(value, AppStrings.enterYourName),
             onChanged: (name) {
@@ -31,10 +28,9 @@ class SignUpFormWidget extends StatelessWidget {
               print(BlocProvider.of<SignUpBloc>(context).name);
             },
             prefixIcon: Icons.person,
-
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
+            height: context.height * 0.02,
           ),
           CustomTextFormField(
             hintText: AppStrings.enterYourEmail,
@@ -45,10 +41,9 @@ class SignUpFormWidget extends StatelessWidget {
               print(BlocProvider.of<SignUpBloc>(context).email);
             },
             prefixIcon: Icons.email,
-
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
+            height: context.height * 0.02,
           ),
           CustomTextFormField(
             hintText: AppStrings.enterYourPassword,
@@ -59,10 +54,9 @@ class SignUpFormWidget extends StatelessWidget {
               print(BlocProvider.of<SignUpBloc>(context).password);
             },
             prefixIcon: Icons.lock,
-
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: height * 0.05),
+            padding: EdgeInsets.symmetric(vertical: context.height * 0.05),
             child: BlocBuilder<SignUpBloc, SignUpState>(
                 buildWhen: (previousState, currentState) =>
                     previousState.signUpState != currentState.signUpState,
@@ -71,12 +65,12 @@ class SignUpFormWidget extends StatelessWidget {
                       "<------------------------ Hi Iam being built ------------------------>");
                   return state.signUpState == RequestState.loading
                       ? SizedBox(
-                          height: height * 0.05,
+                          height: context.height * 0.05,
                           child:
                               const Center(child: CircularProgressIndicator()))
                       : CustomButton(
-                          width: width * 0.3,
-                          height: height * 0.05,
+                          width: context.width * 0.3,
+                          height: context.height * 0.05,
                           text: AppStrings.signUp,
                           onPressed: () {
                             BlocProvider.of<SignUpBloc>(context).signUp();

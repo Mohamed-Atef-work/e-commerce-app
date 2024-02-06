@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/core/fire_base/fire_auth/user_auth.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/cart.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/favorite.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/order.dart';
@@ -30,6 +31,8 @@ import 'package:e_commerce_app/modules/auth/domain/use_cases/get_user_data_use_c
 import 'package:e_commerce_app/modules/auth/domain/use_cases/login_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/sign_up_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/store_user_data_use_case.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/update_password.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_bloc.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/sign_up_controller/sign_up_bloc.dart';
 import 'package:e_commerce_app/modules/home/data/data_source/cart_remote_data_source.dart';
@@ -72,8 +75,10 @@ import 'package:e_commerce_app/modules/orders/presentation/controller/order_item
 import 'package:e_commerce_app/modules/orders/presentation/controller/update_order_data_controller/update_order_data_cubit.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/update_profile_use_case.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/address_controller/edit_address_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/change_email_controller/change_email_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/change_password_controller/change_password_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/up_date_profile_controller/update_profile_cubit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 
@@ -90,8 +95,10 @@ void serviceLocatorInit() {
 }
 
 void _init() {
+  sl.registerLazySingleton(() => FirebaseAuth.instance);
   sl.registerLazySingleton(() => FirebaseStorage.instance);
   sl.registerLazySingleton(() => FirebaseFirestore.instance);
+  sl.registerLazySingleton<UserAuth>(() => UserAuthImpl(sl()));
   sl.registerLazySingleton<CartStore>(() => CartStoreImpl(sl()));
   sl.registerLazySingleton<UserStore>(() => UserStoreImpl(sl()));
   sl.registerLazySingleton<OrderStore>(() => OrderStoreImpl(sl()));
@@ -151,7 +158,7 @@ void _auth() {
 
   /// Data Sources
   sl.registerLazySingleton<AuthBaseRemoteDatSource>(
-      () => AuthRemoteDatSourceImpl(sl()));
+      () => AuthRemoteDatSourceImpl(sl(), sl()));
 }
 
 void _user() {
@@ -186,7 +193,8 @@ void _user() {
 
 void _shared() {
   sl.registerFactory(() => EditAddressCubit());
-  sl.registerFactory(() => ChangePasswordCubit());
+  sl.registerFactory(() => ChangePasswordCubit(sl()));
+  sl.registerFactory(() => ChangeEmailCubit(sl()));
 
   sl.registerLazySingleton(() => LoadProductsUseCase(sl()));
   sl.registerLazySingleton(() => GetAllProductCategoriesUseCase(sl()));
@@ -201,6 +209,8 @@ void _favorite() {
   sl.registerLazySingleton(() => AddFavoriteUseCase(sl()));
   sl.registerLazySingleton(() => GetFavoritesUseCase(sl()));
   sl.registerLazySingleton(() => DeleteFavoriteUseCase(sl()));
+  sl.registerLazySingleton(() => UpdatePasswordUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateEmailUseCase(sl()));
 
   /// Repository
   sl.registerLazySingleton<FavoriteDomainRepository>(

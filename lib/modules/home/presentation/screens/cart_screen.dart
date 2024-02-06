@@ -42,9 +42,9 @@ class CartScreen extends StatelessWidget {
                       itemBuilder: (context, index) => CartProductWidget(
                         index: index,
                         //product: pros[index],
-                       // onPressed: () {
-                       //   Navigator.pushNamed(context, Screens.detailsScreen,
-                       //       arguments: pros[index]);
+                        // onPressed: () {
+                        //   Navigator.pushNamed(context, Screens.detailsScreen,
+                        //       arguments: pros[index]);
                         //},
                       ),
                     );
