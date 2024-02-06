@@ -34,8 +34,8 @@ class SignUpScreen extends StatelessWidget {
               children: [
                 CustomText(
                   fontSize: 15,
-                  text: AppStrings.haveAnAccount,
                   textColor: AppColors.white,
+                  text: AppStrings.haveAnAccount,
                 ),
                 CustomText(
                   fontSize: 15,

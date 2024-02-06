@@ -1,3 +1,5 @@
+import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -42,9 +44,7 @@ class SignUpFormWidget extends StatelessWidget {
             },
             prefixIcon: Icons.email,
           ),
-          SizedBox(
-            height: context.height * 0.02,
-          ),
+          SizedBox(height: context.height * 0.02),
           CustomTextFormField(
             hintText: AppStrings.enterYourPassword,
             fontSize: 15,
@@ -57,27 +57,34 @@ class SignUpFormWidget extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: context.height * 0.05),
-            child: BlocBuilder<SignUpBloc, SignUpState>(
-                buildWhen: (previousState, currentState) =>
-                    previousState.signUpState != currentState.signUpState,
-                builder: (context, state) {
-                  print(
-                      "<------------------------ Hi Iam being built ------------------------>");
-                  return state.signUpState == RequestState.loading
-                      ? SizedBox(
-                          height: context.height * 0.05,
-                          child:
-                              const Center(child: CircularProgressIndicator()))
-                      : CustomButton(
-                          width: context.width * 0.3,
-                          height: context.height * 0.05,
-                          text: AppStrings.signUp,
-                          onPressed: () {
-                            BlocProvider.of<SignUpBloc>(context).signUp();
-                          }
-                          //SignUpController().formKey.currentState!.validate();
-                          );
-                }),
+            child: BlocConsumer<SignUpBloc, SignUpState>(
+                listener: (context, state) {
+              if (state.logInState == RequestState.success &&
+                  state.signInState == RequestState.success &&
+                  state.storeUserDataState == RequestState.success) {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    Screens.userLayoutScreen, (route) => false);
+              }
+            }, builder: (context, state) {
+              if (state.logInState == RequestState.loading ||
+                  state.signInState == RequestState.loading ||
+                  state.storeUserDataState == RequestState.loading) {
+                return SizedBox(
+                  height: context.height * 0.05,
+                  child: const LoadingWidget(),
+                );
+              } else {
+                return CustomButton(
+                    text: AppStrings.signUp,
+                    width: context.width * 0.3,
+                    height: context.height * 0.05,
+                    onPressed: () {
+                      BlocProvider.of<SignUpBloc>(context).signUp();
+                    }
+                    //SignUpController().formKey.currentState!.validate();
+                    );
+              }
+            }),
           ),
         ],
       ),

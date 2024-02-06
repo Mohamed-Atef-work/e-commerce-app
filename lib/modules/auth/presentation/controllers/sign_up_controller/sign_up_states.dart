@@ -5,23 +5,27 @@ import 'package:e_commerce_app/core/utils/enums.dart';
 class SignUpState extends Equatable {
   final RequestState? storeUserDataState;
   final UserCredential? userCredential;
-  final RequestState? signUpState;
+  final RequestState? logInState;
+  final RequestState? signInState;
   final String? errorMessage;
 
   const SignUpState({
     this.storeUserDataState = RequestState.initial,
-    this.signUpState = RequestState.initial,
+    this.signInState = RequestState.initial,
+    this.logInState = RequestState.initial,
     this.userCredential,
     this.errorMessage,
   });
   SignUpState copyWith({
     String? errorMessage,
-    RequestState? signUpState,
+    RequestState? logInState,
+    RequestState? signInState,
     UserCredential? userCredential,
     RequestState? storeUserDataState,
   }) =>
       SignUpState(
-        signUpState: signUpState ?? this.signUpState,
+        logInState: logInState ?? this.logInState,
+        signInState: signInState ?? this.signInState,
         errorMessage: errorMessage ?? this.errorMessage,
         userCredential: userCredential ?? this.userCredential,
         storeUserDataState: storeUserDataState ?? this.storeUserDataState,
@@ -32,6 +36,7 @@ class SignUpState extends Equatable {
         storeUserDataState,
         userCredential,
         errorMessage,
-        signUpState,
+        logInState,
+        signInState,
       ];
 }

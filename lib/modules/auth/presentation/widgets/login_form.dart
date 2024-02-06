@@ -1,3 +1,5 @@
+import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -26,7 +28,6 @@ class LoginFormWidget extends StatelessWidget {
             onChanged: (email) {
               BlocProvider.of<LoginBloc>(context).email = email;
               print(BlocProvider.of<LoginBloc>(context).email);
-
               //LoginController().email = value!;
             },
             prefixIcon: Icons.email,
@@ -45,26 +46,37 @@ class LoginFormWidget extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: context.height * 0.05),
-            child: BlocBuilder<LoginBloc, LoginState>(
+            child: BlocConsumer<LoginBloc, LoginState>(
+                listener: (context, state) {
+                  if (state.requestState == RequestState.success) {
+                    if (state.adminUser == AdminUser.user) {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          Screens.userLayoutScreen, (route) => false);
+                    } else {
+                      Navigator.of(context)
+                          .pushNamed(Screens.adminLayoutScreen);
+                    }
+                  }
+                },
                 buildWhen: (previousState, currentState) =>
                     previousState.requestState != currentState.requestState,
                 builder: (context, state) {
                   print(
                       "<------------------------ Hi Iam being built ------------------------>");
-                  return state.requestState == RequestState.loading
-                      ? SizedBox(
-                          height: context.height * 0.05,
-                          child:
-                              const Center(child: CircularProgressIndicator()))
-                      : CustomButton(
-                          text: AppStrings.login,
-                          width: context.width * 0.4,
-                          height: context.height * 0.05,
-                          onPressed: () {
-                            BlocProvider.of<LoginBloc>(context)
-                                .add(const SignInEvent());
-                          },
-                        );
+
+                  if (state.requestState == RequestState.loading) {
+                    return const LoadingWidget();
+                  } else {
+                    return CustomButton(
+                      text: AppStrings.login,
+                      width: context.width * 0.4,
+                      height: context.height * 0.05,
+                      onPressed: () {
+                        BlocProvider.of<LoginBloc>(context)
+                            .add(const SignInEvent());
+                      },
+                    );
+                  }
                 }),
           ),
         ],

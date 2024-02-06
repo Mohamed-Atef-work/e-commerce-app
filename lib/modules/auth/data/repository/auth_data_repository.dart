@@ -95,6 +95,7 @@ class AuthRepositoryData implements AuthRepositoryDomain {
     } on ServerException catch (serverException) {
       print(
           "<--------------------------- In The Left --------------------------->");
+      print(serverException.message);
       return Left(ServerFailure(message: serverException.message));
     }
   }

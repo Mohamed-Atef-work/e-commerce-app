@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:e_commerce_app/buy_it_app.dart';
 import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/login_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/store_user_data_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,24 +12,28 @@ import 'package:e_commerce_app/modules/auth/presentation/controllers/sign_up_con
 import '../../../domain/use_cases/sign_up_use_case.dart';
 
 class SignUpBloc extends Cubit<SignUpState> {
-  final SignUpUseCase signUpUseCase;
-  final StoreUserDataUseCase storeUserDataUseCase;
+  final SignUpUseCase _signUpUseCase;
+  final LoginInUseCase _loginInUseCase;
+  final StoreUserDataUseCase _storeUserDataUseCase;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String? name, email, password;
-  SignUpBloc(this.signUpUseCase, this.storeUserDataUseCase)
+  SignUpBloc(
+      this._signUpUseCase, this._storeUserDataUseCase, this._loginInUseCase)
       : super(const SignUpState());
 
   Future<void> signUp() async {
     if (formKey.currentState!.validate()) {
-      await _signUp().then((_) async {
-        await _storeUserDate();
+      _signUp().then((_) {
+        _signIN().then((_) {
+          _storeUserDate();
+        });
       });
     }
   }
 
   Future<void> _signUp() async {
-    emit(state.copyWith(signUpState: RequestState.loading));
-    final result = await signUpUseCase(
+    emit(state.copyWith(logInState: RequestState.loading));
+    final result = await _signUpUseCase(
       SignUpParameters(
         name: name!,
         email: email!,
@@ -36,15 +42,15 @@ class SignUpBloc extends Cubit<SignUpState> {
     );
     emit(result.fold(
       (l) => state.copyWith(
-          signUpState: RequestState.error, errorMessage: l.message),
+          logInState: RequestState.error, errorMessage: l.message),
       (r) =>
-          state.copyWith(signUpState: RequestState.success, userCredential: r),
+          state.copyWith(logInState: RequestState.success, userCredential: r),
     ));
   }
 
   Future<void> _storeUserDate() async {
     emit(state.copyWith(storeUserDataState: RequestState.loading));
-    final result = await storeUserDataUseCase.call(
+    final result = await _storeUserDataUseCase.call(
       StoreUserDataParams(
         userModel: UserModel(
           name: name!,
@@ -58,5 +64,23 @@ class SignUpBloc extends Cubit<SignUpState> {
     emit(result.fold(
         (l) => state.copyWith(storeUserDataState: RequestState.error),
         (r) => state.copyWith(storeUserDataState: RequestState.success)));
+  }
+
+  Future<void> _signIN() async {
+    emit(state.copyWith(signInState: RequestState.loading));
+
+    final result = await _loginInUseCase.call(
+      LoginParameters(email: email!, password: password!),
+    );
+    emit(result.fold(
+      (l) => state.copyWith(
+          signInState: RequestState.error, errorMessage: l.message),
+      (r) {
+        uId = r.user!.uid;
+        print(uId);
+        return state.copyWith(
+            signInState: RequestState.success, userCredential: r);
+      },
+    ));
   }
 }

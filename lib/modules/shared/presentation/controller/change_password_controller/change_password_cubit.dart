@@ -19,14 +19,17 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   Future<void> changePassword() async {
     if (formKey.currentState!.validate()) {
       if (newPassword.text == confirmPassword.text) {
-        state.copyWith(changeState: RequestState.loading);
+        emit(state.copyWith(changeState: RequestState.loading));
         final result = await _updatePasswordUseCase.call(UpdatePasswordParams(
             currentPassword: oldPassword.text, newPassword: newPassword.text));
-        emit(result.fold(
-          (l) => state.copyWith(
-              changeState: RequestState.error, message: l.message),
-          (r) => state.copyWith(changeState: RequestState.success),
-        ));
+        emit(
+          result.fold(
+            (l) => state.copyWith(
+                changeState: RequestState.error, message: l.message),
+            (r) => state.copyWith(changeState: RequestState.success),
+          ),
+        );
+        if(result.isRight()){oldPassword.text = "";newPassword.text = "";confirmPassword.text = "";}
       }
     }
   }

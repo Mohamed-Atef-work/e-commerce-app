@@ -142,7 +142,7 @@ void _auth() {
   // < --------------------------------- Auth --------------------------------- >
   /// blocs
   sl.registerFactory(() => LoginBloc(sl()));
-  sl.registerFactory(() => SignUpBloc(sl(), sl()));
+  sl.registerFactory(() => SignUpBloc(sl(), sl(),sl()));
   sl.registerFactory(() => UpdateProfileCubit(sl()));
 
   /// UseCases
