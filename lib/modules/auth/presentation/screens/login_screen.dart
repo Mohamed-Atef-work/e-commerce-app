@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/components/logo.dart';
@@ -33,44 +34,50 @@ class LoginScreen extends StatelessWidget {
             const LogoWidget(),
             SizedBox(height: context.height * 0.06),
             const LoginFormWidget(),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CustomText(
-                  text: AppStrings.doNotHaveAnAccount,
+                const CustomText(
                   fontSize: 15,
                   textColor: AppColors.white,
+                  text: AppStrings.doNotHaveAnAccount,
                 ),
-                CustomText(
-                  text: AppStrings.signUp,
-                  fontSize: 15,
-                  textColor: AppColors.black,
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(Screens.signUpScreen);
+                  },
+                  child: const CustomText(
+                    fontSize: 15,
+                    text: AppStrings.signUp,
+                    textColor: AppColors.black,
+                  ),
                 ),
               ],
             ),
             Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: context.width * 0.23,
                 vertical: context.height * 0.03,
+                horizontal: context.width * 0.23,
               ),
               child: BlocBuilder<LoginBloc, LoginState>(
-                  buildWhen: (previousState, currentState) =>
-                      previousState.adminUser != currentState.adminUser,
-                  //bloc: sl<LoginBloc>(),
-                  builder: (context, state) => GestureDetector(
-                        onTap: () {
-                          BlocProvider.of<LoginBloc>(context)
-                              .add(const ToggleAdminAndUserEvent());
-                        },
-                        child: CustomText(
-                          text: state.adminUser == AdminUser.admin
-                              ? AppStrings.iAmAnAdmin
-                              : AppStrings.iAmAUser,
-                          fontSize: 15,
-                          textColor: AppColors.black,
-                          textAlign: TextAlign.center,
-                        ),
-                      )),
+                buildWhen: (previousState, currentState) =>
+                    previousState.adminUser != currentState.adminUser,
+                builder: (context, state) => GestureDetector(
+                  onTap: () {
+                    BlocProvider.of<LoginBloc>(context)
+                        .add(const ToggleAdminAndUserEvent());
+                  },
+                  child: CustomText(
+                    fontSize: 15,
+                    textColor: AppColors.black,
+                    textAlign: TextAlign.center,
+                    text: state.adminUser == AdminUser.admin
+                        ? AppStrings.iAmAnAdmin
+                        : AppStrings.iAmAUser,
+                  ),
+                ),
+              ),
             ),
           ],
         ),

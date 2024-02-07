@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/components/logo.dart';
@@ -28,19 +29,25 @@ class SignUpScreen extends StatelessWidget {
           children: [
             const LogoWidget(),
             SizedBox(height: context.height * 0.06),
-            SignUpFormWidget(),
-            const Row(
+            const SignUpFormWidget(),
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CustomText(
+                const CustomText(
                   fontSize: 15,
                   textColor: AppColors.white,
                   text: AppStrings.haveAnAccount,
                 ),
-                CustomText(
-                  fontSize: 15,
-                  text: AppStrings.login,
-                  textColor: AppColors.black,
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(Screens.loginScreen);
+                  },
+                  child: const CustomText(
+                    fontSize: 15,
+                    text: AppStrings.login,
+                    textColor: AppColors.black,
+                  ),
                 ),
               ],
             ),

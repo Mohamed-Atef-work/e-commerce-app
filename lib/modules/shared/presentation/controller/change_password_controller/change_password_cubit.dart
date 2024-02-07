@@ -29,7 +29,11 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
             (r) => state.copyWith(changeState: RequestState.success),
           ),
         );
-        if(result.isRight()){oldPassword.text = "";newPassword.text = "";confirmPassword.text = "";}
+        if (result.isRight()) {
+          oldPassword.text = "";
+          newPassword.text = "";
+          confirmPassword.text = "";
+        }
       }
     }
   }

@@ -4,12 +4,12 @@ import 'package:e_commerce_app/core/utils/enums.dart';
 
 class LoginState extends Equatable {
   final UserCredential? userCredential;
-  final RequestState requestState;
+  final RequestState loginState;
   final String? errorMessage;
   final AdminUser adminUser;
 
   const LoginState({
-    this.requestState = RequestState.initial,
+    this.loginState = RequestState.initial,
     this.adminUser = AdminUser.user,
     this.userCredential,
     this.errorMessage,
@@ -17,14 +17,14 @@ class LoginState extends Equatable {
 
   LoginState copyWith({
     UserCredential? userCredential,
-    RequestState? requestState,
+    RequestState? loginState,
     String? errorMessage,
     AdminUser? adminUser,
   }) =>
       LoginState(
         userCredential: userCredential ?? this.userCredential,
         errorMessage: errorMessage ?? this.errorMessage,
-        requestState: requestState ?? this.requestState,
+        loginState: loginState ?? this.loginState,
         adminUser: adminUser ?? this.adminUser,
       );
 
@@ -32,7 +32,7 @@ class LoginState extends Equatable {
   List<Object?> get props => [
         userCredential,
         errorMessage,
-        requestState,
+        loginState,
         adminUser,
       ];
 }

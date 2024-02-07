@@ -48,23 +48,23 @@ class LoginFormWidget extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: context.height * 0.05),
             child: BlocConsumer<LoginBloc, LoginState>(
                 listener: (context, state) {
-                  if (state.requestState == RequestState.success) {
+                  if (state.loginState == RequestState.success) {
                     if (state.adminUser == AdminUser.user) {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          Screens.userLayoutScreen, (route) => false);
+                      Navigator.of(context)
+                          .pushReplacementNamed(Screens.userLayoutScreen);
                     } else {
                       Navigator.of(context)
-                          .pushNamed(Screens.adminLayoutScreen);
+                          .pushReplacementNamed(Screens.adminLayoutScreen);
                     }
                   }
                 },
                 buildWhen: (previousState, currentState) =>
-                    previousState.requestState != currentState.requestState,
+                    previousState.loginState != currentState.loginState,
                 builder: (context, state) {
                   print(
                       "<------------------------ Hi Iam being built ------------------------>");
 
-                  if (state.requestState == RequestState.loading) {
+                  if (state.loginState == RequestState.loading) {
                     return const LoadingWidget();
                   } else {
                     return CustomButton(

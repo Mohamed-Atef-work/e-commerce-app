@@ -27,7 +27,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
       SignInEvent event, Emitter<LoginState> emit) async {
     if (formKey.currentState!.validate()) {
       emit(
-        state.copyWith(requestState: RequestState.loading),
+        state.copyWith(loginState: RequestState.loading),
       );
 
       final result = await loginInUseCase.call(
@@ -35,12 +35,12 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
       );
       emit(result.fold(
         (l) => state.copyWith(
-            requestState: RequestState.error, errorMessage: l.message),
+            loginState: RequestState.error, errorMessage: l.message),
         (r) {
           uId = r.user!.uid;
           print(uId);
           return state.copyWith(
-              requestState: RequestState.success, userCredential: r);
+              loginState: RequestState.success, userCredential: r);
         },
       ));
     }

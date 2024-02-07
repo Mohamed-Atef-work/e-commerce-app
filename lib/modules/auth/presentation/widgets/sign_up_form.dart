@@ -59,15 +59,12 @@ class SignUpFormWidget extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: context.height * 0.05),
             child: BlocConsumer<SignUpBloc, SignUpState>(
                 listener: (context, state) {
-              if (state.logInState == RequestState.success &&
-                  state.signInState == RequestState.success &&
+              if (state.signUpState == RequestState.success &&
                   state.storeUserDataState == RequestState.success) {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    Screens.userLayoutScreen, (route) => false);
+                Navigator.of(context).pushReplacementNamed(Screens.loginScreen);
               }
             }, builder: (context, state) {
-              if (state.logInState == RequestState.loading ||
-                  state.signInState == RequestState.loading ||
+              if (state.signUpState == RequestState.loading ||
                   state.storeUserDataState == RequestState.loading) {
                 return SizedBox(
                   height: context.height * 0.05,
@@ -80,9 +77,7 @@ class SignUpFormWidget extends StatelessWidget {
                     height: context.height * 0.05,
                     onPressed: () {
                       BlocProvider.of<SignUpBloc>(context).signUp();
-                    }
-                    //SignUpController().formKey.currentState!.validate();
-                    );
+                    });
               }
             }),
           ),
