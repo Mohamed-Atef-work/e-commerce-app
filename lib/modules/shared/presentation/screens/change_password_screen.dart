@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/change_password_controller/change_password_cubit.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
@@ -24,7 +25,13 @@ class ChangePasswordScreen extends StatelessWidget {
 
         return Scaffold(
           appBar: appBar(title: AppStrings.changePassword, height: 80),
-          body: BlocBuilder<ChangePasswordCubit, ChangePasswordState>(
+          body: BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
+            listener: (context, state) {
+              if (state.changeState == RequestState.success) {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    Screens.loginScreen, (route) => false);
+              }
+            },
             builder: (context, state) {
               if (state.changeState == RequestState.loading) {
                 return const LoadingWidget();
@@ -45,7 +52,7 @@ class ChangePasswordScreen extends StatelessWidget {
                                 oldPassword: !state.oldPassword);
                           },
                         ),
-                        SizedBox(height: context.height * 0.02),
+                        _sizedBox(context.height * 0.02),
                         PasswordTextFormField(
                           obSecure: state.newPassword,
                           hintText: AppStrings.newPassword,
@@ -55,7 +62,7 @@ class ChangePasswordScreen extends StatelessWidget {
                                 newPassword: !state.newPassword);
                           },
                         ),
-                        SizedBox(height: context.height * 0.02),
+                        _sizedBox(context.height * 0.02),
                         PasswordTextFormField(
                           obSecure: state.confirmPassword,
                           hintText: AppStrings.confirmPassword,
@@ -65,7 +72,7 @@ class ChangePasswordScreen extends StatelessWidget {
                                 confirmPassword: !state.confirmPassword);
                           },
                         ),
-                        SizedBox(height: context.height * 0.02),
+                        _sizedBox(context.height * 0.02),
                         CustomButton(
                           height: 50,
                           fontSize: 18,
@@ -87,4 +94,6 @@ class ChangePasswordScreen extends StatelessWidget {
       }),
     );
   }
+
+  _sizedBox(double height) => SizedBox(height: height);
 }

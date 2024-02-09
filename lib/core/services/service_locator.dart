@@ -142,7 +142,7 @@ void _auth() {
   // < --------------------------------- Auth --------------------------------- >
   /// blocs
   sl.registerFactory(() => LoginBloc(sl()));
-  sl.registerFactory(() => SignUpBloc(sl(), sl(),sl()));
+  sl.registerFactory(() => SignUpBloc(sl(), sl(), sl()));
   sl.registerFactory(() => UpdateProfileCubit(sl()));
 
   /// UseCases
@@ -192,7 +192,7 @@ void _user() {
 }
 
 void _shared() {
-  sl.registerFactory(() => EditAddressCubit());
+  sl.registerFactory(() => EditAddressCubit(sl()));
   sl.registerFactory(() => ChangePasswordCubit(sl()));
   sl.registerFactory(() => ChangeEmailCubit(sl()));
 

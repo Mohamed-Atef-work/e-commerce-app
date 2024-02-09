@@ -6,7 +6,7 @@ import '../constants/colors.dart';
 class CustomTextFormField extends StatelessWidget {
   final bool? obSecure;
   final String hintText;
-  final double fontSize;
+  final double? fontSize;
   final Color? fillColor;
   final String? labelText;
   final IconData? prefixIcon;
@@ -26,9 +26,9 @@ class CustomTextFormField extends StatelessWidget {
     this.suffixIcon,
     this.suffixPressed,
     this.hintTextColor,
+    this.fontSize = 15,
     this.obSecure = false,
     required this.hintText,
-    required this.fontSize,
     this.textEditingController,
     this.fillColor = AppColors.whiteGray,
   });

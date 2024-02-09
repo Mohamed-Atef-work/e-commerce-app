@@ -43,6 +43,7 @@ class AppStrings {
   static const String city = "City";
   static const String street = "Street";
   static const String apartment = "Apartment";
+  static const String buildingBloc = "building Bloc";
 
   static const String name = "Name";
   static const String email = "email";

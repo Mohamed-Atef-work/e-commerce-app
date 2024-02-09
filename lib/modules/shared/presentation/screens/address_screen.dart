@@ -33,16 +33,14 @@ class EditAddressScreen extends StatelessWidget {
                   CustomTextFormField(
                     fontSize: 15,
                     hintText: AppStrings.city,
-                    fillColor: AppColors.whiteGray,
                     prefixIcon: Icons.location_on_outlined,
                     textEditingController:
                         BlocProvider.of<EditAddressCubit>(context).city,
                     validator: (value) =>
                         Validators.stringValidator(value, AppStrings.city),
                   ),
-                  SizedBox(height: context.height * 0.02),
+                  _sizedBox(context.height * 0.02),
                   CustomTextFormField(
-                    fontSize: 15,
                     prefixIcon: Icons.add_road,
                     hintText: AppStrings.street,
                     fillColor: AppColors.whiteGray,
@@ -51,18 +49,25 @@ class EditAddressScreen extends StatelessWidget {
                     validator: (value) =>
                         Validators.stringValidator(value, AppStrings.street),
                   ),
-                  SizedBox(height: context.height * 0.02),
+                  _sizedBox(context.height * 0.02),
                   CustomTextFormField(
-                    fontSize: 15,
                     prefixIcon: Icons.apartment,
-                    fillColor: AppColors.whiteGray,
+                    hintText: AppStrings.buildingBloc,
+                    textEditingController:
+                        BlocProvider.of<EditAddressCubit>(context).bloc,
+                    validator: (value) => Validators.stringValidator(
+                        value, AppStrings.buildingBloc),
+                  ),
+                  _sizedBox(context.height * 0.02),
+                  CustomTextFormField(
+                    prefixIcon: Icons.home,
                     hintText: AppStrings.apartment,
                     textEditingController:
                         BlocProvider.of<EditAddressCubit>(context).apartment,
-                    validator: (value) =>
-                        Validators.stringValidator(value, AppStrings.apartment),
+                    validator: (value) => Validators.numericValidator(
+                        value, AppStrings.apartment),
                   ),
-                  SizedBox(height: context.height * 0.02),
+                  _sizedBox(context.height * 0.02),
                   BlocBuilder<EditAddressCubit, EditAddressState>(
                     builder: (context, state) {
                       if (state.changeState == RequestState.loading) {
@@ -90,4 +95,6 @@ class EditAddressScreen extends StatelessWidget {
       }),
     );
   }
+
+  _sizedBox(double height) => SizedBox(height: height);
 }
