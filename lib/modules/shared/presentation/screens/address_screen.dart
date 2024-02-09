@@ -5,7 +5,6 @@ import 'package:e_commerce_app/core/services/service_locator.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/app_bar.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
-import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/validators.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -20,22 +19,21 @@ class EditAddressScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl<EditAddressCubit>(),
       child: Builder(builder: (context) {
+        final controller = BlocProvider.of<EditAddressCubit>(context);
         return Scaffold(
           appBar: appBar(title: AppStrings.address),
           body: Padding(
             padding:
                 EdgeInsets.only(top: context.height * 0.1, left: 10, right: 10),
             child: Form(
-              key: BlocProvider.of<EditAddressCubit>(context).formKey,
+              key: controller.formKey,
               child: Column(
                 //mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   CustomTextFormField(
-                    fontSize: 15,
                     hintText: AppStrings.city,
                     prefixIcon: Icons.location_on_outlined,
-                    textEditingController:
-                        BlocProvider.of<EditAddressCubit>(context).city,
+                    textEditingController: controller.city,
                     validator: (value) =>
                         Validators.stringValidator(value, AppStrings.city),
                   ),
@@ -43,9 +41,7 @@ class EditAddressScreen extends StatelessWidget {
                   CustomTextFormField(
                     prefixIcon: Icons.add_road,
                     hintText: AppStrings.street,
-                    fillColor: AppColors.whiteGray,
-                    textEditingController:
-                        BlocProvider.of<EditAddressCubit>(context).street,
+                    textEditingController: controller.street,
                     validator: (value) =>
                         Validators.stringValidator(value, AppStrings.street),
                   ),
@@ -53,8 +49,7 @@ class EditAddressScreen extends StatelessWidget {
                   CustomTextFormField(
                     prefixIcon: Icons.apartment,
                     hintText: AppStrings.buildingBloc,
-                    textEditingController:
-                        BlocProvider.of<EditAddressCubit>(context).bloc,
+                    textEditingController: controller.bloc,
                     validator: (value) => Validators.stringValidator(
                         value, AppStrings.buildingBloc),
                   ),
@@ -62,8 +57,7 @@ class EditAddressScreen extends StatelessWidget {
                   CustomTextFormField(
                     prefixIcon: Icons.home,
                     hintText: AppStrings.apartment,
-                    textEditingController:
-                        BlocProvider.of<EditAddressCubit>(context).apartment,
+                    textEditingController: controller.apartment,
                     validator: (value) => Validators.numericValidator(
                         value, AppStrings.apartment),
                   ),
@@ -77,8 +71,7 @@ class EditAddressScreen extends StatelessWidget {
                           height: 50,
                           fontSize: 18,
                           onPressed: () {
-                            BlocProvider.of<EditAddressCubit>(context)
-                                .updateAddress();
+                            controller.updateAddress();
                           },
                           text: AppStrings.update,
                           width: context.width * 0.7,

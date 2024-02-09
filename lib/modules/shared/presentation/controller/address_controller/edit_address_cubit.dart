@@ -34,6 +34,14 @@ class EditAddressCubit extends Cubit<EditAddressState> {
           ),
         ),
       );
+
+      if (result.isRight()) {
+        apartment.text = "";
+        street.text = "";
+        city.text = "";
+        bloc.text = "";
+      }
+
       emit(
         result.fold(
           (l) => state.copyWith(
