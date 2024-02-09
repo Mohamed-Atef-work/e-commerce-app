@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/validators.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/colors.dart';
@@ -62,4 +63,57 @@ class CustomTextFormField extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         borderSide: const BorderSide(color: AppColors.white),
       );
+}
+
+class PasswordTextFormField extends StatelessWidget {
+  final bool obSecure;
+  final String hintText;
+  final String? labelText;
+  final void Function(String?)? onChanged;
+  final void Function()? suffixPressed;
+  final TextEditingController textEditingController;
+
+  const PasswordTextFormField({
+    super.key,
+    this.onChanged,
+    this.labelText,
+    required this.obSecure,
+    required this.hintText,
+    required this.suffixPressed,
+    required this.textEditingController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      onChanged: onChanged,
+      obscureText: obSecure,
+      cursorColor: AppColors.white,
+      controller: textEditingController,
+      validator: (value) => Validators.passwordValidator(value),
+      decoration: InputDecoration(
+        filled: true,
+        border: _border(),
+        hintText: hintText,
+        labelText: labelText,
+        fillColor: AppColors.whiteGray,
+        enabledBorder: _border(),
+        focusedBorder: _border(),
+        hintStyle: const TextStyle(fontSize: 15),
+        prefixIcon: const Icon(Icons.lock, color: AppColors.primaryColorYellow),
+        suffixIcon: Padding(
+          padding: const EdgeInsets.only(right: 5),
+          child: IconButton(
+              onPressed: suffixPressed, icon: Icon(_suffixIcon(obSecure))),
+        ),
+      ),
+    );
+  }
+
+  _border() => OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: const BorderSide(color: AppColors.white),
+      );
+  _suffixIcon(bool obSecure) =>
+      obSecure ? Icons.remove_red_eye : Icons.panorama_fish_eye_outlined;
 }

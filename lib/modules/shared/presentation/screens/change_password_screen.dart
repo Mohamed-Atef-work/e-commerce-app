@@ -36,32 +36,36 @@ class ChangePasswordScreen extends StatelessWidget {
                     key: controller.formKey,
                     child: Column(
                       children: [
-                        _passwordField(
+                        PasswordTextFormField(
+                          obSecure: state.oldPassword,
+                          hintText: AppStrings.oldPassword,
+                          textEditingController: controller.oldPassword,
                           suffixPressed: () {
                             controller.obSecure(
                                 oldPassword: !state.oldPassword);
                           },
-                          obSecure: state.oldPassword,
-                          passwordController: controller.oldPassword,
                         ),
                         SizedBox(height: context.height * 0.02),
-                        _passwordField(
+                        PasswordTextFormField(
+                          obSecure: state.newPassword,
+                          hintText: AppStrings.newPassword,
+                          textEditingController: controller.newPassword,
                           suffixPressed: () {
                             controller.obSecure(
                                 newPassword: !state.newPassword);
                           },
-                          obSecure: state.newPassword,
-                          passwordController: controller.newPassword,
                         ),
                         SizedBox(height: context.height * 0.02),
-                        _passwordField(
+                        PasswordTextFormField(
+                          obSecure: state.confirmPassword,
+                          hintText: AppStrings.confirmPassword,
+                          textEditingController: controller.confirmPassword,
                           suffixPressed: () {
                             controller.obSecure(
                                 confirmPassword: !state.confirmPassword);
                           },
-                          obSecure: state.confirmPassword,
-                          passwordController: controller.confirmPassword,
                         ),
+                        SizedBox(height: context.height * 0.02),
                         CustomButton(
                           height: 50,
                           fontSize: 18,
@@ -83,24 +87,4 @@ class ChangePasswordScreen extends StatelessWidget {
       }),
     );
   }
-
-  _passwordField({
-    required bool obSecure,
-    required void Function() suffixPressed,
-    required TextEditingController passwordController,
-  }) =>
-      CustomTextFormField(
-        fontSize: 15,
-        obSecure: obSecure,
-        prefixIcon: Icons.lock,
-        suffixPressed: suffixPressed,
-        fillColor: AppColors.whiteGray,
-        hintText: AppStrings.oldPassword,
-        suffixIcon: _suffixIcon(obSecure),
-        textEditingController: passwordController,
-        validator: (value) => Validators.passwordValidator(value),
-      );
-
-  _suffixIcon(bool oldPassword) =>
-      oldPassword ? Icons.remove_red_eye : Icons.panorama_fish_eye_outlined;
 }
