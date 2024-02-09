@@ -20,72 +20,87 @@ class ChangePasswordScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl<ChangePasswordCubit>(),
       child: Builder(builder: (context) {
+        final controller = BlocProvider.of<ChangePasswordCubit>(context);
+
         return Scaffold(
-            appBar: appBar(title: AppStrings.changePassword, height: 80),
-            body: Padding(
-              padding: EdgeInsets.only(
-                  top: context.height * 0.1, left: 10, right: 10),
-              child: Form(
-                key: BlocProvider.of<ChangePasswordCubit>(context).formKey,
-                child: Column(
-                  children: [
-                    CustomTextFormField(
-                      fontSize: 15,
-                      prefixIcon: Icons.lock,
-                      fillColor: AppColors.whiteGray,
-                      hintText: AppStrings.oldPassword,
-                      textEditingController:
-                          BlocProvider.of<ChangePasswordCubit>(context)
-                              .oldPassword,
-                      validator: (value) => Validators.passwordValidator(value),
+          appBar: appBar(title: AppStrings.changePassword, height: 80),
+          body: BlocBuilder<ChangePasswordCubit, ChangePasswordState>(
+            builder: (context, state) {
+              if (state.changeState == RequestState.loading) {
+                return const LoadingWidget();
+              } else {
+                return Padding(
+                  padding: EdgeInsets.only(
+                      top: context.height * 0.1, left: 10, right: 10),
+                  child: Form(
+                    key: controller.formKey,
+                    child: Column(
+                      children: [
+                        _passwordField(
+                          suffixPressed: () {
+                            controller.obSecure(
+                                oldPassword: !state.oldPassword);
+                          },
+                          obSecure: state.oldPassword,
+                          passwordController: controller.oldPassword,
+                        ),
+                        SizedBox(height: context.height * 0.02),
+                        _passwordField(
+                          suffixPressed: () {
+                            controller.obSecure(
+                                newPassword: !state.newPassword);
+                          },
+                          obSecure: state.newPassword,
+                          passwordController: controller.newPassword,
+                        ),
+                        SizedBox(height: context.height * 0.02),
+                        _passwordField(
+                          suffixPressed: () {
+                            controller.obSecure(
+                                confirmPassword: !state.confirmPassword);
+                          },
+                          obSecure: state.confirmPassword,
+                          passwordController: controller.confirmPassword,
+                        ),
+                        CustomButton(
+                          height: 50,
+                          fontSize: 18,
+                          onPressed: () {
+                            controller.changePassword();
+                          },
+                          text: AppStrings.update,
+                          width: context.width * 0.7,
+                          fontFamily: AppStrings.pacifico,
+                        ),
+                      ],
                     ),
-                    SizedBox(height: context.height * 0.02),
-                    CustomTextFormField(
-                      fontSize: 15,
-                      prefixIcon: Icons.lock,
-                      fillColor: AppColors.whiteGray,
-                      hintText: AppStrings.newPassword,
-                      textEditingController:
-                          BlocProvider.of<ChangePasswordCubit>(context)
-                              .newPassword,
-                      validator: (value) => Validators.passwordValidator(value),
-                    ),
-                    SizedBox(height: context.height * 0.02),
-                    CustomTextFormField(
-                      fontSize: 15,
-                      prefixIcon: Icons.lock,
-                      fillColor: AppColors.whiteGray,
-                      hintText: AppStrings.confirmPassword,
-                      textEditingController:
-                          BlocProvider.of<ChangePasswordCubit>(context)
-                              .confirmPassword,
-                      validator: (value) => Validators.passwordValidator(value),
-                    ),
-                    SizedBox(height: context.height * 0.02),
-                    BlocBuilder<ChangePasswordCubit, ChangePasswordState>(
-                      builder: (context, state) {
-                        if (state.changeState == RequestState.loading) {
-                          return const LoadingWidget();
-                        } else {
-                          return CustomButton(
-                            height: 50,
-                            fontSize: 18,
-                            onPressed: () {
-                              BlocProvider.of<ChangePasswordCubit>(context)
-                                  .changePassword();
-                            },
-                            text: AppStrings.update,
-                            width: context.width * 0.7,
-                            fontFamily: AppStrings.pacifico,
-                          );
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ));
+                  ),
+                );
+              }
+            },
+          ),
+        );
       }),
     );
   }
+
+  _passwordField({
+    required bool obSecure,
+    required void Function() suffixPressed,
+    required TextEditingController passwordController,
+  }) =>
+      CustomTextFormField(
+        fontSize: 15,
+        obSecure: obSecure,
+        prefixIcon: Icons.lock,
+        suffixPressed: suffixPressed,
+        fillColor: AppColors.whiteGray,
+        hintText: AppStrings.oldPassword,
+        suffixIcon: _suffixIcon(obSecure),
+        textEditingController: passwordController,
+        validator: (value) => Validators.passwordValidator(value),
+      );
+
+  _suffixIcon(bool oldPassword) =>
+      oldPassword ? Icons.remove_red_eye : Icons.panorama_fish_eye_outlined;
 }

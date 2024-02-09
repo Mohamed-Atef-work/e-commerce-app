@@ -16,44 +16,57 @@ class SignUpFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = BlocProvider.of<SignUpBloc>(context);
+
     return Form(
-      key: BlocProvider.of<SignUpBloc>(context).formKey,
+      key: controller.formKey,
       child: Column(
         children: [
           CustomTextFormField(
             fontSize: 15,
+            prefixIcon: Icons.person,
             hintText: AppStrings.enterYourName,
             validator: (value) =>
                 Validators.stringValidator(value, AppStrings.enterYourName),
             onChanged: (name) {
-              BlocProvider.of<SignUpBloc>(context).name = name;
-              print(BlocProvider.of<SignUpBloc>(context).name);
+              controller.name = name;
+              print(controller.name);
             },
-            prefixIcon: Icons.person,
-          ),
-          SizedBox(
-            height: context.height * 0.02,
-          ),
-          CustomTextFormField(
-            hintText: AppStrings.enterYourEmail,
-            fontSize: 15,
-            validator: (value) => Validators.emailValidator(value),
-            onChanged: (email) {
-              BlocProvider.of<SignUpBloc>(context).email = email;
-              print(BlocProvider.of<SignUpBloc>(context).email);
-            },
-            prefixIcon: Icons.email,
           ),
           SizedBox(height: context.height * 0.02),
           CustomTextFormField(
-            hintText: AppStrings.enterYourPassword,
             fontSize: 15,
-            validator: (value) => Validators.passwordValidator(value),
-            onChanged: (password) {
-              BlocProvider.of<SignUpBloc>(context).password = password;
-              print(BlocProvider.of<SignUpBloc>(context).password);
+            prefixIcon: Icons.email,
+            hintText: AppStrings.enterYourEmail,
+            validator: (value) => Validators.emailValidator(value),
+            onChanged: (email) {
+              controller.email = email;
+              print(controller.email);
             },
-            prefixIcon: Icons.lock,
+          ),
+          SizedBox(height: context.height * 0.02),
+          BlocBuilder<SignUpBloc, SignUpState>(
+            buildWhen: (previous, current) =>
+                previous.obSecure != current.obSecure,
+            builder: (context, state) {
+              return CustomTextFormField(
+                fontSize: 15,
+                prefixIcon: Icons.lock,
+                obSecure: state.obSecure,
+                suffixIcon: state.obSecure
+                    ? Icons.remove_red_eye
+                    : Icons.panorama_fish_eye,
+                suffixPressed: () {
+                  controller.obSecure();
+                },
+                hintText: AppStrings.enterYourPassword,
+                validator: (value) => Validators.passwordValidator(value),
+                onChanged: (password) {
+                  controller.password = password;
+                  print(controller.password);
+                },
+              );
+            },
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: context.height * 0.05),
@@ -76,7 +89,7 @@ class SignUpFormWidget extends StatelessWidget {
                     width: context.width * 0.3,
                     height: context.height * 0.05,
                     onPressed: () {
-                      BlocProvider.of<SignUpBloc>(context).signUp();
+                      controller.signUp();
                     });
               }
             }),

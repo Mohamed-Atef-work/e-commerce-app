@@ -18,17 +18,17 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
     this.loginInUseCase,
   ) : super(const LoginState()) {
     on<ToggleAdminAndUserEvent>(_toggleAdminUserEvent);
+
+    on<ObSecureEvent>(_obSecureEvent);
+    on<SignInEvent>(_signInEvent);
     /*on<TakePasswordEvent>(_takePasswordEvent);
     on<TakeEmailEvent>(_takeEmailEvent);*/
-    on<SignInEvent>(_signInEvent);
   }
 
   FutureOr<void> _signInEvent(
       SignInEvent event, Emitter<LoginState> emit) async {
     if (formKey.currentState!.validate()) {
-      emit(
-        state.copyWith(loginState: RequestState.loading),
-      );
+      emit(state.copyWith(loginState: RequestState.loading));
 
       final result = await loginInUseCase.call(
         LoginParameters(email: email!, password: password!),
@@ -52,6 +52,10 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
       adminUser:
           state.adminUser == AdminUser.admin ? AdminUser.user : AdminUser.admin,
     ));
+  }
+
+  FutureOr<void> _obSecureEvent(ObSecureEvent event, Emitter<LoginState> emit) {
+    emit(state.copyWith(obSecure: !state.obSecure));
   }
 
   /*FutureOr<void> _takeEmailEvent(

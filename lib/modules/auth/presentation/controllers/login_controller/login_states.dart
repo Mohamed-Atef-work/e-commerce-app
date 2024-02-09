@@ -7,10 +7,12 @@ class LoginState extends Equatable {
   final RequestState loginState;
   final String? errorMessage;
   final AdminUser adminUser;
+  final bool obSecure;
 
   const LoginState({
     this.loginState = RequestState.initial,
     this.adminUser = AdminUser.user,
+    this.obSecure = true,
     this.userCredential,
     this.errorMessage,
   });
@@ -20,12 +22,14 @@ class LoginState extends Equatable {
     RequestState? loginState,
     String? errorMessage,
     AdminUser? adminUser,
+    bool? obSecure,
   }) =>
       LoginState(
         userCredential: userCredential ?? this.userCredential,
         errorMessage: errorMessage ?? this.errorMessage,
         loginState: loginState ?? this.loginState,
         adminUser: adminUser ?? this.adminUser,
+        obSecure: obSecure ?? this.obSecure,
       );
 
   @override
@@ -34,5 +38,6 @@ class LoginState extends Equatable {
         errorMessage,
         loginState,
         adminUser,
+        obSecure,
       ];
 }

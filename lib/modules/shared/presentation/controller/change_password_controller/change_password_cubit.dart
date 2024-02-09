@@ -37,4 +37,14 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
       }
     }
   }
+
+  void obSecure({bool? oldPassword, newPassword, confirmPassword}) {
+    emit(
+      state.copyWith(
+        newPassword: newPassword,
+        oldPassword: oldPassword,
+        confirmPassword: confirmPassword,
+      ),
+    );
+  }
 }

@@ -1,12 +1,12 @@
-import 'package:e_commerce_app/core/components/loading_widget.dart';
-import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/validators.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
+import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
+import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_bloc.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_states.dart';
@@ -17,32 +17,43 @@ class LoginFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = BlocProvider.of<LoginBloc>(context);
+
     return Form(
-      key: BlocProvider.of<LoginBloc>(context).formKey,
+      key: controller.formKey,
       child: Column(
         children: [
           CustomTextFormField(
             fontSize: 15,
-            hintText: AppStrings.enterYourEmail,
-            validator: (value) => Validators.emailValidator(value),
             onChanged: (email) {
-              BlocProvider.of<LoginBloc>(context).email = email;
-              print(BlocProvider.of<LoginBloc>(context).email);
-              //LoginController().email = value!;
+              controller.email = email;
             },
             prefixIcon: Icons.email,
+            hintText: AppStrings.enterYourEmail,
+            validator: (value) => Validators.emailValidator(value),
           ),
           SizedBox(height: context.height * 0.02),
-          CustomTextFormField(
-            fontSize: 15,
-            hintText: AppStrings.enterYourPassword,
-            validator: (value) => Validators.passwordValidator(value),
-            onChanged: (password) {
-              BlocProvider.of<LoginBloc>(context).password = password;
-              print(BlocProvider.of<LoginBloc>(context).password);
-              //LoginController().password = value;
+          BlocBuilder<LoginBloc, LoginState>(
+            buildWhen: (previous, current) =>
+                previous.obSecure != current.obSecure,
+            builder: (context, state) {
+              return CustomTextFormField(
+                fontSize: 15,
+                prefixIcon: Icons.lock,
+                obSecure: state.obSecure,
+                suffixIcon: state.obSecure
+                    ? Icons.remove_red_eye
+                    : Icons.panorama_fish_eye,
+                suffixPressed: () {
+                  controller.add(const ObSecureEvent());
+                },
+                onChanged: (password) {
+                  controller.password = password;
+                },
+                hintText: AppStrings.enterYourPassword,
+                validator: (value) => Validators.passwordValidator(value),
+              );
             },
-            prefixIcon: Icons.lock,
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: context.height * 0.05),
@@ -72,8 +83,7 @@ class LoginFormWidget extends StatelessWidget {
                       width: context.width * 0.4,
                       height: context.height * 0.05,
                       onPressed: () {
-                        BlocProvider.of<LoginBloc>(context)
-                            .add(const SignInEvent());
+                        controller.add(const SignInEvent());
                       },
                     );
                   }

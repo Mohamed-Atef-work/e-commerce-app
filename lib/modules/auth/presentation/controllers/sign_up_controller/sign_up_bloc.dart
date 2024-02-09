@@ -28,6 +28,10 @@ class SignUpBloc extends Cubit<SignUpState> {
     }
   }
 
+  void obSecure() {
+    emit(state.copyWith(obSecure: !state.obSecure));
+  }
+
   Future<void> _signUp() async {
     emit(state.copyWith(signUpState: RequestState.loading));
     final result = await _signUpUseCase(

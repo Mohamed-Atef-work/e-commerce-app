@@ -16,6 +16,12 @@ class ToggleAdminAndUserEvent extends LoginEvents {
   List<Object?> get props => [];
 }
 
+class ObSecureEvent extends LoginEvents {
+  const ObSecureEvent();
+  @override
+  List<Object?> get props => [];
+}
+
 /*class TakePasswordEvent extends LoginEvents {
   final String password;
 
