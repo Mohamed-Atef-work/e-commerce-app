@@ -1,6 +1,7 @@
 class FirebaseStrings {
   static const String productCategories = "productCategories";
   static const String productImages = "productImages";
+  static const String userPassword = "userPassword";
   static const String categories = "categories";
   static const String favorites = "favorites";
   static const String quantity = "quantity";
@@ -14,6 +15,8 @@ class FirebaseStrings {
   static const String phone = "phone";
   static const String email = "email";
   static const String image = "image";
+  static const String user = "user";
   static const String cart = "cart";
   static const String name = "name";
+  static const String id = "id";
 }

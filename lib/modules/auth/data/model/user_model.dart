@@ -17,6 +17,13 @@ class UserModel extends UserEntity {
         phone: json[FirebaseStrings.phone] ?? "",
         address: json[FirebaseStrings.address] ?? "",
       );
+  factory UserModel.localJson(Map<String, dynamic> json) => UserModel(
+        id: json[FirebaseStrings.id],
+        name: json[FirebaseStrings.name],
+        email: json[FirebaseStrings.email],
+        phone: json[FirebaseStrings.phone],
+        address: json[FirebaseStrings.address],
+      );
 
   Map<String, String> toJson() => {
         FirebaseStrings.name: name,
