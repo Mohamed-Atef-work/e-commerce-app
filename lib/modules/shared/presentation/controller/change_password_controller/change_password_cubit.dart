@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/update_password.dart';
+
 part 'change_password_state.dart';
 
 class ChangePasswordCubit extends Cubit<ChangePasswordState> {
@@ -18,7 +19,8 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
 
   Future<void> changePassword() async {
     if (formKey.currentState!.validate()) {
-      if (newPassword.text == confirmPassword.text) {
+      if (newPassword.text == confirmPassword.text &&
+          confirmPassword.text != oldPassword.text) {
         emit(state.copyWith(changeState: RequestState.loading));
         final result = await _updatePasswordUseCase.call(UpdatePasswordParams(
             currentPassword: oldPassword.text, newPassword: newPassword.text));

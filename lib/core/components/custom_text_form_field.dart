@@ -71,7 +71,7 @@ class PasswordTextFormField extends StatelessWidget {
   final String? labelText;
   final void Function(String?)? onChanged;
   final void Function()? suffixPressed;
-  final TextEditingController textEditingController;
+  final TextEditingController? textEditingController;
 
   const PasswordTextFormField({
     super.key,
@@ -80,7 +80,7 @@ class PasswordTextFormField extends StatelessWidget {
     required this.obSecure,
     required this.hintText,
     required this.suffixPressed,
-    required this.textEditingController,
+    this.textEditingController,
   });
 
   @override

@@ -37,13 +37,8 @@ class LoginFormWidget extends StatelessWidget {
             buildWhen: (previous, current) =>
                 previous.obSecure != current.obSecure,
             builder: (context, state) {
-              return CustomTextFormField(
-                fontSize: 15,
-                prefixIcon: Icons.lock,
+              return PasswordTextFormField(
                 obSecure: state.obSecure,
-                suffixIcon: state.obSecure
-                    ? Icons.remove_red_eye
-                    : Icons.panorama_fish_eye,
                 suffixPressed: () {
                   controller.add(const ObSecureEvent());
                 },
@@ -51,7 +46,6 @@ class LoginFormWidget extends StatelessWidget {
                   controller.password = password;
                 },
                 hintText: AppStrings.enterYourPassword,
-                validator: (value) => Validators.passwordValidator(value),
               );
             },
           ),

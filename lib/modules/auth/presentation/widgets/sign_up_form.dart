@@ -49,18 +49,12 @@ class SignUpFormWidget extends StatelessWidget {
             buildWhen: (previous, current) =>
                 previous.obSecure != current.obSecure,
             builder: (context, state) {
-              return CustomTextFormField(
-                fontSize: 15,
-                prefixIcon: Icons.lock,
+              return PasswordTextFormField(
                 obSecure: state.obSecure,
-                suffixIcon: state.obSecure
-                    ? Icons.remove_red_eye
-                    : Icons.panorama_fish_eye,
+                hintText: AppStrings.enterYourPassword,
                 suffixPressed: () {
                   controller.obSecure();
                 },
-                hintText: AppStrings.enterYourPassword,
-                validator: (value) => Validators.passwordValidator(value),
                 onChanged: (password) {
                   controller.password = password;
                   print(controller.password);
