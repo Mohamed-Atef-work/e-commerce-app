@@ -1,4 +1,5 @@
-import 'package:e_commerce_app/modules/shared/presentation/controller/address_controller/edit_address_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/shared_password_controller/shared_password_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/shared_user_data_controller/shared_user_data_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/address_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/change_password_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/edit_profile_screen.dart';
@@ -34,10 +35,26 @@ class BuyItApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
+      providers: _providers(),
+      child: MaterialApp(
+        routes: _routes(),
+        title: AppStrings.buyIt,
+        initialRoute: Screens.loginScreen,
+        theme: ThemeData(scaffoldBackgroundColor: AppColors.primaryColorYellow),
+      ),
+    );
+  }
+
+  _providers() => [
         /// shared < --------------------------------------------------------- >
         BlocProvider<GetFavoriteCubit>(
           create: (context) => sl<GetFavoriteCubit>()..getFavorites(),
+        ),
+        BlocProvider<SharedUserDataCubit>(
+          create: (context) => sl<SharedUserDataCubit>(),
+        ),
+        BlocProvider<SharedPasswordCubit>(
+          create: (context) => sl<SharedPasswordCubit>(),
         ),
 
         /// User < ----------------------------------------------------------- >
@@ -53,35 +70,26 @@ class BuyItApp extends StatelessWidget {
         BlocProvider<AdminDetailsCubit>(
           create: (context) => sl<AdminDetailsCubit>(),
         ),
-      ],
-      child: MaterialApp(
-        title: AppStrings.buyIt,
-        initialRoute: Screens.loginScreen,
-        theme: ThemeData(scaffoldBackgroundColor: AppColors.primaryColorYellow),
-        routes: {
-          Screens.testScreen: (context) => const TestScreen(),
-          Screens.cartScreen: (context) => const CartScreen(),
-          Screens.loginScreen: (context) => const LoginScreen(),
-          Screens.signUpScreen: (context) => const SignUpScreen(),
-          Screens.adminPanelScreen: (context) => AdminPanelScreen(),
-          Screens.detailsScreen: (context) => const DetailsScreen(),
-          Screens.profileScreen: (context) => const ProfileScreen(),
-          Screens.userOrderScreen: (context) => const UserOrderScreen(),
-          Screens.userLayoutScreen: (context) => const UserLayoutScreen(),
-          Screens.addProductScreen: (context) => const AddProductScreen(),
-          Screens.exploreScreen: (context) => const ExploreProductsScreen(),
-          Screens.adminLayoutScreen: (context) => const AdminLayoutScreen(),
-          Screens.editProfileScreen: (context) => const EditProfileScreen(),
-          Screens.editAddressScreen: (context) => const EditAddressScreen(),
-          Screens.adminDetailsScreen: (context) => const AdminDetailsScreen(),
-          Screens.changePasswordScreen: (context) =>
-              const ChangePasswordScreen(),
+      ];
 
-          //Screens.productsOfCategory: (context) => const ProductsOfCategoryScreen(),
-        },
-      ),
-    );
-  }
+  _routes() => {
+        Screens.testScreen: (context) => const TestScreen(),
+        Screens.cartScreen: (context) => const CartScreen(),
+        Screens.loginScreen: (context) => const LoginScreen(),
+        Screens.signUpScreen: (context) => const SignUpScreen(),
+        Screens.adminPanelScreen: (context) => AdminPanelScreen(),
+        Screens.detailsScreen: (context) => const DetailsScreen(),
+        Screens.profileScreen: (context) => const ProfileScreen(),
+        Screens.userOrderScreen: (context) => const UserOrderScreen(),
+        Screens.userLayoutScreen: (context) => const UserLayoutScreen(),
+        Screens.addProductScreen: (context) => const AddProductScreen(),
+        Screens.exploreScreen: (context) => const ExploreProductsScreen(),
+        Screens.adminLayoutScreen: (context) => const AdminLayoutScreen(),
+        Screens.editProfileScreen: (context) => const EditProfileScreen(),
+        Screens.editAddressScreen: (context) => const EditAddressScreen(),
+        Screens.adminDetailsScreen: (context) => const AdminDetailsScreen(),
+        Screens.changePasswordScreen: (context) => const ChangePasswordScreen(),
+      };
 }
 
 String? uId;

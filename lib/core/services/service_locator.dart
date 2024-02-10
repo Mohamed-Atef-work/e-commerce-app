@@ -73,14 +73,20 @@ import 'package:e_commerce_app/modules/orders/presentation/controller/manage_use
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_orders/manage_user_orders_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/order_items_controller/order_items_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/update_order_data_controller/update_order_data_cubit.dart';
+import 'package:e_commerce_app/modules/shared/data/local_data_source.dart';
+import 'package:e_commerce_app/modules/shared/data/repository.dart';
+import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/update_profile_use_case.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/address_controller/edit_address_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/change_email_controller/change_email_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/change_password_controller/change_password_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/shared_password_controller/shared_password_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/shared_user_data_controller/shared_user_data_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/up_date_profile_controller/update_profile_cubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
 
@@ -98,6 +104,7 @@ void _init() {
   sl.registerLazySingleton(() => FirebaseAuth.instance);
   sl.registerLazySingleton(() => FirebaseStorage.instance);
   sl.registerLazySingleton(() => FirebaseFirestore.instance);
+  sl.registerLazySingleton(() => SharedPreferences.getInstance());
   sl.registerLazySingleton<UserAuth>(() => UserAuthImpl(sl()));
   sl.registerLazySingleton<CartStore>(() => CartStoreImpl(sl()));
   sl.registerLazySingleton<UserStore>(() => UserStoreImpl(sl()));
@@ -195,6 +202,12 @@ void _shared() {
   sl.registerFactory(() => EditAddressCubit(sl()));
   sl.registerFactory(() => ChangePasswordCubit(sl()));
   sl.registerFactory(() => ChangeEmailCubit(sl()));
+  sl.registerFactory(() => SharedPasswordCubit(sl()));
+  sl.registerFactory(() => SharedUserDataCubit(sl()));
+
+  sl.registerLazySingleton<SharedDomainRepo>(() => SharedDataRepo(sl()));
+  sl.registerLazySingleton<SharedLocalDataSource>(
+      () => SharedLocalDataSourceImpl(sl()));
 
   sl.registerLazySingleton(() => LoadProductsUseCase(sl()));
   sl.registerLazySingleton(() => GetAllProductCategoriesUseCase(sl()));
