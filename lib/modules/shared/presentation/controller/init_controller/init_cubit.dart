@@ -12,7 +12,7 @@ class InitCubit extends Cubit<InitState> {
   InitCubit(this._initUseCase) : super(const InitState());
 
   void init() async {
-    emit(state.copyWith(dataState: RequestState.initial));
+    emit(state.copyWith(dataState: RequestState.loading));
     final result = await _initUseCase(const NoParameters());
     emit(
       result.fold(

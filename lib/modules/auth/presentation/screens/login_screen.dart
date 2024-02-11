@@ -11,7 +11,7 @@ import 'package:e_commerce_app/modules/auth/presentation/controllers/login_contr
 
 import '../../../../core/components/custom_text.dart';
 import '../../../../core/constants/colors.dart';
-import '../../../../core/services/service_locator/init.dart';
+import '../../../../core/services/service_locator/sl.dart';
 import '../widgets/login_form.dart';
 
 class LoginScreen extends StatelessWidget {

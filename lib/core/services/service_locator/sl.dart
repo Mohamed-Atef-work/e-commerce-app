@@ -1,5 +1,5 @@
-import 'package:e_commerce_app/core/services/service_locator/init_service.dart';
 import 'package:get_it/get_it.dart';
+import 'package:e_commerce_app/core/services/service_locator/init_service.dart';
 import 'package:e_commerce_app/core/services/service_locator/auth_service.dart';
 import 'package:e_commerce_app/core/services/service_locator/user_service.dart';
 import 'package:e_commerce_app/core/services/service_locator/order_service.dart';

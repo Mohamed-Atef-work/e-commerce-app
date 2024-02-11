@@ -6,7 +6,7 @@ import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/fire_base/strings.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
-import 'package:e_commerce_app/core/services/service_locator/init.dart';
+import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/modules/admin/presentation/widgets/explore_screen_product_widget.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/explore_product_controller/explore_product_cubit.dart';

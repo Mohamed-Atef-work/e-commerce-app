@@ -28,13 +28,21 @@ class SharedLocalDataSourceImpl implements SharedLocalDataSource {
     try {
       final jsonString =
           await _localDataBaseService.read<String>(FirebaseStrings.user);
+      print("------------- Trying -------- dataSource -------- ");
+
       if (jsonString == null) {
+        print("------------- Trying -------- dataSource ---- Null ---- ");
         throw const LocalDataBaseException(message: kThereIsNoData);
       }
       final userJson = jsonDecode(jsonString);
       return UserModel.fromLocalJson(userJson);
     } catch (e) {
-      throw (LocalDataBaseException(message: e.toString()));
+      print("oOoOoOops! ------- dataSource ------- ${e.toString()}");
+      if (e is LocalDataBaseException) {
+        rethrow;
+      } else {
+        throw LocalDataBaseException(message: e.toString());
+      }
     }
   }
 
@@ -48,50 +56,13 @@ class SharedLocalDataSourceImpl implements SharedLocalDataSource {
       }
       return response;
     } catch (e) {
-      throw (LocalDataBaseException(message: e.toString()));
+      print("oOoOoOops! ------- dataSource ------- ${e.toString()}");
+      if (e is LocalDataBaseException) {
+        rethrow;
+      } else {
+        throw LocalDataBaseException(message: e.toString());
+      }
     }
-  }
-
-  @override
-  Future<bool> saveUserData(UserModel user) async {
-    final jsonString = user.toJson();
-    final userJson = jsonEncode(jsonString);
-    final result = await _localDataBaseService
-        .save<String>(FirebaseStrings.user, userJson)
-        .catchError((error) {
-      throw (LocalDataBaseException(message: error.toString()));
-    });
-    return result;
-  }
-
-  @override
-  Future<bool> deleteUserData() async {
-    final result = await _localDataBaseService
-        .delete(FirebaseStrings.user)
-        .catchError((error) {
-      throw (LocalDataBaseException(message: error.toString()));
-    });
-    return result;
-  }
-
-  @override
-  Future<bool> saveUserPassword(String password) async {
-    final result = await _localDataBaseService
-        .save<String>(FirebaseStrings.userPassword, password)
-        .catchError((error) {
-      throw (LocalDataBaseException(message: error.toString()));
-    });
-    return result;
-  }
-
-  @override
-  Future<bool> deleteUserPassword() async {
-    final result = await _localDataBaseService
-        .delete(FirebaseStrings.userPassword)
-        .catchError((error) {
-      throw (LocalDataBaseException(message: error.toString()));
-    });
-    return result;
   }
 
   @override
@@ -105,8 +76,55 @@ class SharedLocalDataSourceImpl implements SharedLocalDataSource {
       final json = jsonDecode(response);
       return json[FirebaseStrings.userOrAdmin];
     } catch (e) {
-      throw (LocalDataBaseException(message: e.toString()));
+      print("oOoOoOops! ------- dataSource ------- ${e.toString()}");
+      if (e is LocalDataBaseException) {
+        rethrow;
+      } else {
+        throw LocalDataBaseException(message: e.toString());
+      }
     }
+  }
+
+  @override
+  Future<bool> saveUserData(UserModel user) async {
+    final jsonString = user.toJson();
+    final userJson = jsonEncode(jsonString);
+    final result = await _localDataBaseService
+        .save<String>(FirebaseStrings.user, userJson)
+        .catchError((error) {
+      throw LocalDataBaseException(message: error.toString());
+    });
+    return result;
+  }
+
+  @override
+  Future<bool> deleteUserData() async {
+    final result = await _localDataBaseService
+        .delete(FirebaseStrings.user)
+        .catchError((error) {
+      throw LocalDataBaseException(message: error.toString());
+    });
+    return result;
+  }
+
+  @override
+  Future<bool> saveUserPassword(String password) async {
+    final result = await _localDataBaseService
+        .save<String>(FirebaseStrings.userPassword, password)
+        .catchError((error) {
+      throw LocalDataBaseException(message: error.toString());
+    });
+    return result;
+  }
+
+  @override
+  Future<bool> deleteUserPassword() async {
+    final result = await _localDataBaseService
+        .delete(FirebaseStrings.userPassword)
+        .catchError((error) {
+      throw LocalDataBaseException(message: error.toString());
+    });
+    return result;
   }
 
   @override
@@ -116,7 +134,7 @@ class SharedLocalDataSourceImpl implements SharedLocalDataSource {
     final result = await _localDataBaseService
         .save<String>(FirebaseStrings.userOrAdmin, userAdminJson)
         .catchError((error) {
-      throw (LocalDataBaseException(message: error.toString()));
+      throw LocalDataBaseException(message: error.toString());
     });
     return result;
   }

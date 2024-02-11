@@ -15,7 +15,7 @@ import 'package:e_commerce_app/test_screen.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'modules/auth/presentation/screens/login_screen.dart';
 import 'modules/auth/presentation/screens/sign_up_screen.dart';
-import 'package:e_commerce_app/core/services/service_locator/init.dart';
+import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'modules/home/presentation/screens/user_layout_screen.dart';
 import 'modules/admin/presentation/screens/admin_panel_screen.dart';
 import 'modules/admin/presentation/screens/admin_details_screen.dart';

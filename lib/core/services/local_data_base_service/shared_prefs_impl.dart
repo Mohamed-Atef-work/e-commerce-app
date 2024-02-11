@@ -1,36 +1,49 @@
-import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:e_commerce_app/core/services/local_data_base_service/local_data_base_interface.dart';
 
 class PrefsImpl implements LocalDataBaseService {
-  late final SharedPreferences _prefs;
+  final SharedPreferences _prefs;
 
-  PrefsImpl() {
+  PrefsImpl(this._prefs);
+
+/*  PrefsImpl() {
     initializePrefs();
+  }
+
+  PrefsImpl._(); // Private constructor
+
+  static Future<PrefsImpl> create() async {
+    var instance = PrefsImpl._();
+    await instance.initializePrefs();
+    return instance;
   }
 
   initializePrefs() async {
     _prefs = await SharedPreferences.getInstance();
-  }
+  }*/
 
   @override
   Future<bool> delete(String key) async => await _prefs.remove(key);
 
   @override
   Future<R?> read<R>(String key) async {
-    if (R is int) {
+    //print("------------- Trying -------- interFace -------- ");
+
+    if (R == int) {
       return _prefs.getInt(key) as R?;
-    } else if (R is bool) {
+    } else if (R == bool) {
       return _prefs.getBool(key) as R?;
-    } else if (R is double) {
+    } else if (R == double) {
       return _prefs.getDouble(key) as R?;
-    } else if (R is String) {
+    } else if (R == String) {
+      print("------------- Trying -------- interFace ---- String ---- ");
+
       return _prefs.getString(key) as R?;
-    } else if (R is List<String>) {
+    } else if (R == List<String>) {
       return _prefs.getStringList(key) as R?;
     } else {
-      throw const LocalDataBaseException(
-          message: 'Invalid data type You want to red');
+      print("oOoOoOops! ------- interFace ------- ");
+      throw Exception('Invalid data type You want to read');
     }
   }
 
@@ -47,8 +60,7 @@ class PrefsImpl implements LocalDataBaseService {
     } else if (value is List<String>) {
       return await _prefs.setStringList(key, value);
     } else {
-      throw const LocalDataBaseException(
-          message: 'Invalid data type You want to save');
+      throw Exception('Invalid data type You want to save');
     }
   }
 

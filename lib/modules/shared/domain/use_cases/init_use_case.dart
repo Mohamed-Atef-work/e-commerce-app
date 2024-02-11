@@ -25,8 +25,9 @@ class InitUseCase extends BaseUseCase<InitEntity, NoParameters> {
       (user) => passwordEither.fold(
         (passwordFailure) => Left(passwordFailure),
         (password) => userAdminEither.fold(
-            (userAdminEitherFailure) => Left(userAdminEitherFailure),
-            (adminUser) async => await _login(user, password, adminUser)),
+          (userAdminEitherFailure) => Left(userAdminEitherFailure),
+          (adminUser) async => await _login(user, password, adminUser),
+        ),
       ),
     );
   }
@@ -39,8 +40,8 @@ class InitUseCase extends BaseUseCase<InitEntity, NoParameters> {
       (userCredential) => Right(
         InitEntity(
           userCredential: userCredential,
-          userEntity: user,
           adminUser: adminUser,
+          userEntity: user,
         ),
       ),
     );

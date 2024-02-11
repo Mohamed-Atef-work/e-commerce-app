@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/core/services/service_locator/init.dart';
+import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/modules/admin/data/data_source/admin_remote_data_source.dart';
 import 'package:e_commerce_app/modules/admin/data/repository/admin_data_repository.dart';
 import 'package:e_commerce_app/modules/admin/domain/repository/admin_domain_repository.dart';
