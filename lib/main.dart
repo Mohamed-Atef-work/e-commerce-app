@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:e_commerce_app/buy_it_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'core/services/service_locator.dart';
+import 'core/services/service_locator/init.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
 

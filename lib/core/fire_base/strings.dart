@@ -2,6 +2,7 @@ class FirebaseStrings {
   static const String productCategories = "productCategories";
   static const String productImages = "productImages";
   static const String userPassword = "userPassword";
+  static const String userOrAdmin = "userOrAdmin";
   static const String categories = "categories";
   static const String favorites = "favorites";
   static const String quantity = "quantity";

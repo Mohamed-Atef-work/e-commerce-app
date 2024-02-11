@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/core/services/service_locator.dart';
+import 'package:e_commerce_app/core/services/service_locator/init.dart';
 import 'package:e_commerce_app/modules/home/data/data_source/cart_remote_data_source.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/clear_cart_use_case.dart';

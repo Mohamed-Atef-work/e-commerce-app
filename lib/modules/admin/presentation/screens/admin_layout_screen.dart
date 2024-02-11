@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
-import 'package:e_commerce_app/core/services/service_locator.dart';
+import 'package:e_commerce_app/core/services/service_locator/init.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/favorites_view.dart';
 import 'package:e_commerce_app/modules/admin/presentation/views/admin_orders_view.dart';

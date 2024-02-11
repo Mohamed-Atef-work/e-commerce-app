@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/core/services/service_locator.dart';
+import 'package:e_commerce_app/core/services/service_locator/init.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/update_password.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/get_favorites_use_case.dart';

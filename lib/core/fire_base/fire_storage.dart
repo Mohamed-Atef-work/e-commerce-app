@@ -2,11 +2,9 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 
 abstract class StorageService {
-  Future<Reference> uploadFile({
-    required File file,
-    required String collectionName,
-  });
   Future<String> downloadUrl(Reference reference);
+  Future<Reference> uploadFile(
+      {required File file, required String collectionName});
 }
 
 class StorageServiceImpl implements StorageService {
@@ -15,8 +13,8 @@ class StorageServiceImpl implements StorageService {
   StorageServiceImpl(this.storage);
   @override
   Future<Reference> uploadFile({
-    required File file,
     required String collectionName,
+    required File file,
   }) async {
     final fileLastSegment = Uri.file(file.path).pathSegments.last;
     final Reference storageReference =

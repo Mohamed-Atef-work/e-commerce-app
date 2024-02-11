@@ -14,7 +14,7 @@ import 'package:e_commerce_app/modules/admin/presentation/controllers/categories
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/services/service_locator.dart';
+import '../../../../core/services/service_locator/init.dart';
 
 class AddNewCategoryModelSheetWidget extends StatelessWidget {
   const AddNewCategoryModelSheetWidget({Key? key}) : super(key: key);

@@ -4,7 +4,7 @@ import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/components/logo.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
-import 'package:e_commerce_app/core/services/service_locator.dart';
+import 'package:e_commerce_app/core/services/service_locator/init.dart';
 import 'package:e_commerce_app/core/animation/custom_fading_widget.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/init_controller/init_cubit.dart';
 
@@ -18,7 +18,7 @@ class SplashScreen extends StatelessWidget {
         child: BlocListener<InitCubit, InitState>(
           listener: (context, state) {
             if (state.dataState == RequestState.success) {
-              if (state.message == kThereIsNoUser) {
+              if (state.message == kThereIsNoData) {
                 Navigator.of(context).pushReplacementNamed(Screens.loginScreen);
               } else {
                 // if User ----> userLayOut .
