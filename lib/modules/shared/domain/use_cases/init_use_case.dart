@@ -15,8 +15,8 @@ class InitUseCase extends BaseUseCase<InitEntity, NoParameters> {
 
   @override
   Future<Either<Failure, InitEntity>> call(NoParameters parameters) async {
-    final userEither = await _sharedRepo.getUserDataLocally();
-    final passwordEither = await _sharedRepo.getUserPasswordLocally();
+    final userEither = _sharedRepo.getUserDataLocally();
+    final passwordEither = _sharedRepo.getUserPasswordLocally();
 
     return userEither.fold(
       (userFailure) => Left(userFailure),

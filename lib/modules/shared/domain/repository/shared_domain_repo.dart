@@ -4,9 +4,9 @@ import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 
 abstract class SharedDomainRepo {
+  Either<Failure, UserEntity> getUserDataLocally();
+  Either<Failure, String> getUserPasswordLocally();
   Future<Either<Failure, void>> deleteUserDataLocally();
-  Future<Either<Failure, UserEntity>> getUserDataLocally();
-  Future<Either<Failure, String>> getUserPasswordLocally();
   Future<Either<Failure, void>> deleteUserPasswordLocally();
   Future<Either<Failure, void>> saveUserDataLocally(UserModel user);
   Future<Either<Failure, void>> saveUserPasswordLocally(String password);
