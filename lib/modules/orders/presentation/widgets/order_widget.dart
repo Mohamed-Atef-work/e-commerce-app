@@ -10,7 +10,9 @@ import 'package:e_commerce_app/core/components/dismissible_background.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_case.dart';
 import 'package:e_commerce_app/modules/orders/presentation/widgets/update_order_date_widget.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/get_user_orders_controller/get_user_orders_cubit.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/update_order_data_controller/update_order_data_cubit.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 
 class OrderWidget extends StatelessWidget {
   final int index;
@@ -98,7 +100,7 @@ class OrderWidget extends StatelessWidget {
                 fontSize: 22,
                 textColor: AppColors.black,
                 fontWeight: FontWeight.bold,
-                fontFamily: AppStrings.pacifico,
+                fontFamily: kPacifico,
                 text: "\$${state.orders[index].totalPrice}",
               ),
             ],

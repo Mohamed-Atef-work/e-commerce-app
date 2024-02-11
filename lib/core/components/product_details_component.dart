@@ -1,12 +1,11 @@
+import 'custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
-import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
+import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
-
-import '../../modules/admin/domain/entities/product_entity.dart';
-import 'custom_text.dart';
 
 class ProductWithMoreDetailsComponent extends StatelessWidget {
   final ProductEntity product;
@@ -106,7 +105,7 @@ class ProductComponent extends StatelessWidget {
             CustomText(
               fontSize: 20,
               text: product.category,
-              fontFamily: AppStrings.pacifico,
+              fontFamily: kPacifico,
             ),
             SizedBox(height: height * 0.01),
             CustomText(

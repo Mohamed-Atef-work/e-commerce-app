@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -31,7 +32,7 @@ class ExploreProductsScreen extends StatelessWidget {
           title: const CustomText(
             text: AppStrings.products,
             fontSize: 30,
-            fontFamily: AppStrings.pacifico,
+            fontFamily: kPacifico,
             fontWeight: FontWeight.bold,
             textColor: AppColors.black,
           ),

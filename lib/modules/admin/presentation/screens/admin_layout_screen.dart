@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +86,7 @@ class AdminLayoutScreen extends StatelessWidget {
           fontSize: 30,
           textColor: AppColors.black,
           fontWeight: FontWeight.bold,
-          fontFamily: AppStrings.pacifico,
+          fontFamily: kPacifico,
           text: BlocProvider.of<AdminLayoutCubit>(context).state.appBarTitle,
         ),
       );

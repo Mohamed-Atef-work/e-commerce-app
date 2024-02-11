@@ -8,6 +8,7 @@ import 'package:e_commerce_app/modules/shared/presentation/widgets/edit_profile_
 import 'package:e_commerce_app/modules/shared/presentation/widgets/up_date_profile_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
@@ -62,7 +63,7 @@ class EditProfileScreen extends StatelessWidget {
             textColor: Colors.black,
             textAlign: TextAlign.center,
             text: "${AppStrings.hiThere} Mohamed !",
-            fontFamily: AppStrings.pacifico,
+            fontFamily: kPacifico,
           ),
           SizedBox(height: context.height * 0.03),
           const EditProfileItemWidget(

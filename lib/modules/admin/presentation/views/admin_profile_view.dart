@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
@@ -44,7 +45,7 @@ class AdminProfileView extends StatelessWidget {
               textColor: Colors.black,
               fontWeight: FontWeight.bold,
               text: AppStrings.appSettings,
-              fontFamily: AppStrings.pacifico,
+              fontFamily: kPacifico,
             ),
           ),
           ProfileItemsWidget(

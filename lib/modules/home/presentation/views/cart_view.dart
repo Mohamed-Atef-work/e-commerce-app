@@ -5,6 +5,7 @@ import 'package:e_commerce_app/core/components/divider_component.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
@@ -67,7 +68,7 @@ class CartView extends StatelessWidget {
                 fontSize: 18,
                 text: AppStrings.checkOut,
                 fontWeight: FontWeight.bold,
-                fontFamily: AppStrings.pacifico,
+                fontFamily: kPacifico,
                 width: context.width * 0.7,
                 height: context.height * 0.06,
                 onPressed: () {
@@ -84,7 +85,7 @@ class CartView extends StatelessWidget {
             textColor: AppColors.black,
             fontWeight: FontWeight.bold,
             text: AppStrings.cartIsEmpty,
-            fontFamily: AppStrings.pacifico,
+            fontFamily: kPacifico,
           ),
         );
       }

@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
             CustomText(
               fontSize: 25,
               fontWeight: FontWeight.bold,
-              fontFamily: AppStrings.pacifico,
+              fontFamily: kPacifico,
               text: cartEntity.category,
             ),
             SizedBox(height: context.height * 0.01),

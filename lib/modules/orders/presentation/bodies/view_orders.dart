@@ -9,6 +9,7 @@ import 'package:e_commerce_app/modules/orders/presentation/widgets/order_widget.
 import 'package:e_commerce_app/modules/orders/presentation/controller/order_items_controller/order_items_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_order_view/user_order_view_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/get_user_orders_controller/get_user_orders_cubit.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 
 class ViewUserOrdersBody extends StatelessWidget {
   const ViewUserOrdersBody({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class ViewUserOrdersBody extends StatelessWidget {
           child: CustomText(
             fontSize: 25,
             fontWeight: FontWeight.bold,
-            fontFamily: AppStrings.pacifico,
+            fontFamily: kPacifico,
             text: AppStrings.youHaveNoOrders,
           ),
         );
@@ -70,12 +71,12 @@ class ViewUserOrdersBody extends StatelessWidget {
               const CustomText(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
-                fontFamily: AppStrings.pacifico,
+                fontFamily: kPacifico,
                 text: AppStrings.youHaveNoOrders,
               ),
               CustomButton(
                 text: AppStrings.ok,
-                fontFamily: AppStrings.pacifico,
+                fontFamily: kPacifico,
                 onPressed: () {
                   Navigator.pushNamedAndRemoveUntil(
                       context, Screens.homeScreen, (route) => false);

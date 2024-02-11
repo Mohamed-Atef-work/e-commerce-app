@@ -8,6 +8,7 @@ import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorit
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_state.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/favorite_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FavoritesView<CubitName> extends StatelessWidget {
@@ -36,7 +37,7 @@ class FavoritesView<CubitName> extends StatelessWidget {
                 fontSize: 25,
                 textColor: AppColors.black,
                 fontWeight: FontWeight.bold,
-                fontFamily: AppStrings.pacifico,
+                fontFamily: kPacifico,
                 text: AppStrings.favoriteIsEmpty,
               ),
             );

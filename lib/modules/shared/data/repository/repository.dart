@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
-import 'package:e_commerce_app/modules/shared/data/local_data_source.dart';
+import 'package:e_commerce_app/modules/shared/data/data_source/local_data_source.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
 

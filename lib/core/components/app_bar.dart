@@ -1,7 +1,6 @@
+import 'package:e_commerce_app/core/constants/colors.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:flutter/material.dart';
-
-import '../constants/colors.dart';
-import '../utils/app_strings.dart';
 import 'custom_text.dart';
 
 PreferredSizeWidget appBar({
@@ -21,7 +20,7 @@ PreferredSizeWidget appBar({
       title: CustomText(
         text: title,
         fontSize: titleSize ?? 30,
-        fontFamily: AppStrings.pacifico,
+        fontFamily: kPacifico,
         fontWeight: FontWeight.bold,
         textColor: AppColors.black,
       ),

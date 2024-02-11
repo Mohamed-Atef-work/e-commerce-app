@@ -73,8 +73,8 @@ import 'package:e_commerce_app/modules/orders/presentation/controller/manage_use
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_orders/manage_user_orders_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/order_items_controller/order_items_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/update_order_data_controller/update_order_data_cubit.dart';
-import 'package:e_commerce_app/modules/shared/data/local_data_source.dart';
-import 'package:e_commerce_app/modules/shared/data/repository.dart';
+import 'package:e_commerce_app/modules/shared/data/data_source/local_data_source.dart';
+import 'package:e_commerce_app/modules/shared/data/repository/repository.dart';
 import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/update_profile_use_case.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/address_controller/edit_address_cubit.dart';

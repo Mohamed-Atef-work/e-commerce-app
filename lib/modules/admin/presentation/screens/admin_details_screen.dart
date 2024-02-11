@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -43,7 +44,7 @@ class AdminDetailsScreen extends StatelessWidget {
                   fontSize: 25,
                   text: AppStrings.deleted,
                   fontWeight: FontWeight.bold,
-                  fontFamily: AppStrings.pacifico,
+                  fontFamily: kPacifico,
                 ),
               );
             } else {
@@ -72,13 +73,13 @@ class AdminDetailsScreen extends StatelessWidget {
                     text: state.product!.name,
                     fontWeight: FontWeight.bold,
                     textColor: AppColors.darkBrown,
-                    fontFamily: AppStrings.pacifico,
+                    fontFamily: kPacifico,
                   ),
                   CustomText(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     textColor: AppColors.darkBrown,
-                    fontFamily: AppStrings.pacifico,
+                    fontFamily: kPacifico,
                     text: "\$${state.product!.price}",
                   ),
                   SizedBox(height: context.height * 0.03),
@@ -107,7 +108,7 @@ class AdminDetailsScreen extends StatelessWidget {
                           fontSize: 18,
                           text: AppStrings.delete,
                           fontWeight: FontWeight.bold,
-                          fontFamily: AppStrings.pacifico,
+                          fontFamily: kPacifico,
                           textColor: Colors.red.withOpacity(0.8),
                         ),
                       ),
@@ -127,7 +128,7 @@ class AdminDetailsScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       width: context.width * 0.9,
                       height: context.height * 0.07,
-                      fontFamily: AppStrings.pacifico,
+                      fontFamily: kPacifico,
                       onPressed: () {
                         /// To Do o o o o o o o
                         Navigator.pushNamed(context, Screens.addProductScreen,

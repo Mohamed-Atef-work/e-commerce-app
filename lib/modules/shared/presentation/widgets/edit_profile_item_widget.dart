@@ -2,6 +2,7 @@ import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class EditProfileItemWidget extends StatelessWidget {
@@ -30,7 +31,7 @@ class EditProfileItemWidget extends StatelessWidget {
               text: "$title :",
               textColor: Colors.black,
               fontWeight: FontWeight.bold,
-              fontFamily: AppStrings.pacifico,
+              fontFamily: kPacifico,
             ),
             CustomText(
               fontSize: 20,

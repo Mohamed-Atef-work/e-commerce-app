@@ -10,6 +10,7 @@ import 'package:e_commerce_app/core/utils/validators.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/update_order_data_controller/update_order_data_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 
 class UpDateOrderDataWidget extends StatelessWidget {
   const UpDateOrderDataWidget({
@@ -45,13 +46,13 @@ class UpDateOrderDataWidget extends StatelessWidget {
                     fontSize: 25,
                     text: AppStrings.updated,
                     fontWeight: FontWeight.bold,
-                    fontFamily: AppStrings.pacifico,
+                    fontFamily: kPacifico,
                   ),
                   SizedBox(height: context.height * 0.03),
                   CustomButton(
                     onPressed: () {},
                     text: AppStrings.ok,
-                    fontFamily: AppStrings.pacifico,
+                    fontFamily: kPacifico,
                     width: context.height * 0.1,
                     height: context.height * 0.05,
                   ),
@@ -100,7 +101,7 @@ class UpDateOrderDataWidget extends StatelessWidget {
                     },
                     text: AppStrings.update,
                     width: context.width * 0.7,
-                    fontFamily: AppStrings.pacifico,
+                    fontFamily: kPacifico,
                   ),
                 ],
               ),

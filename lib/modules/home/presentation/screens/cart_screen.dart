@@ -5,6 +5,7 @@ import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/cart.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
@@ -70,7 +71,7 @@ class CartScreen extends StatelessWidget {
               text: AppStrings.order,
               textColor: Colors.white,
               fontWeight: FontWeight.bold,
-              fontFamily: AppStrings.pacifico,
+              fontFamily: kPacifico,
             ),
           ),
         ],

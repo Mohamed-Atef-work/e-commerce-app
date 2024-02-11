@@ -10,6 +10,7 @@ import 'package:e_commerce_app/core/utils/validators.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 
 class EditAddressScreen extends StatelessWidget {
   const EditAddressScreen({super.key});
@@ -75,7 +76,7 @@ class EditAddressScreen extends StatelessWidget {
                           },
                           text: AppStrings.update,
                           width: context.width * 0.7,
-                          fontFamily: AppStrings.pacifico,
+                          fontFamily: kPacifico,
                         );
                       }
                     },

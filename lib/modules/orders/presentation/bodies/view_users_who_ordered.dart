@@ -8,6 +8,7 @@ import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_admin_order_view/admin_order_view_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 
 class ViewUsersWhoOrderedBody extends StatelessWidget {
   const ViewUsersWhoOrderedBody({super.key});
@@ -24,7 +25,7 @@ class ViewUsersWhoOrderedBody extends StatelessWidget {
           child: CustomText(
             fontSize: 25,
             fontWeight: FontWeight.bold,
-            fontFamily: AppStrings.pacifico,
+            fontFamily: kPacifico,
             text: AppStrings.thereIsNoOrders,
           ),
         );

@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
@@ -48,12 +49,12 @@ class ProfileScreen extends StatelessWidget {
                 top: context.height * 0.03,
                 bottom: context.height * 0.03,
               ),
-              child: const CustomText(
+              child:  CustomText(
                 fontSize: 25,
                 textColor: Colors.black,
                 fontWeight: FontWeight.bold,
                 text: AppStrings.appSettings,
-                fontFamily: AppStrings.pacifico,
+                fontFamily: kPacifico,
               ),
             ),
             ProfileItemsWidget(

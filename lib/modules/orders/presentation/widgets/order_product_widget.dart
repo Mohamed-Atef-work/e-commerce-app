@@ -7,6 +7,7 @@ import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/dismissible_background.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/delete_item_from_order_use_case.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/order_items_controller/order_items_cubit.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 
 class OrderItemWidget extends StatelessWidget {
   final int index;
@@ -66,7 +67,7 @@ class OrderItemWidget extends StatelessWidget {
                     textAlign: TextAlign.left,
                     textColor: AppColors.black,
                     fontWeight: FontWeight.bold,
-                    fontFamily: AppStrings.pacifico,
+                    fontFamily: kPacifico,
                     text: state.orderItems[index].product.name,
                   ),
                   SizedBox(height: context.height * 0.03),
@@ -86,7 +87,7 @@ class OrderItemWidget extends StatelessWidget {
                 //textAlign: TextAlign.,
                 fontWeight: FontWeight.bold,
                 textColor: AppColors.darkBrown,
-                fontFamily: AppStrings.pacifico,
+                fontFamily: kPacifico,
                 text:
                     "${state.orderItems[index].quantity} ${AppStrings.pieces}",
               ),

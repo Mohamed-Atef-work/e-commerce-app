@@ -9,6 +9,7 @@ import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/components/divider_component.dart';
 import 'package:e_commerce_app/modules/orders/presentation/widgets/order_product_widget.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/order_items_controller/order_items_cubit.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 
 class ViewUserOrderItemsBody extends StatelessWidget {
   const ViewUserOrderItemsBody({super.key});
@@ -26,7 +27,7 @@ class ViewUserOrderItemsBody extends StatelessWidget {
             child: CustomText(
               fontSize: 25,
               fontWeight: FontWeight.bold,
-              fontFamily: AppStrings.pacifico,
+              fontFamily: kPacifico,
               text: AppStrings.thisOrderIsNoLongerExisted,
             ),
           );
@@ -70,12 +71,12 @@ class ViewUserOrderItemsBody extends StatelessWidget {
                 const CustomText(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
-                  fontFamily: AppStrings.pacifico,
+                  fontFamily: kPacifico,
                   text: AppStrings.thisOrderIsNoLongerExisted,
                 ),
                 CustomButton(
                   text: AppStrings.ok,
-                  fontFamily: AppStrings.pacifico,
+                  fontFamily: kPacifico,
                   onPressed: () {
                     BlocProvider.of<ManageUserOrderViewCubit>(context)
                         .viewOrders();

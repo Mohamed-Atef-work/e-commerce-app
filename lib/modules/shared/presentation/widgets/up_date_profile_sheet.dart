@@ -11,6 +11,7 @@ import 'package:e_commerce_app/core/utils/validators.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/up_date_profile_controller/update_profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 
 class UpDateProfileWidget extends StatelessWidget {
   const UpDateProfileWidget({
@@ -42,7 +43,7 @@ class UpDateProfileWidget extends StatelessWidget {
                   fontSize: 25,
                   text: AppStrings.updated,
                   fontWeight: FontWeight.bold,
-                  fontFamily: AppStrings.pacifico,
+                  fontFamily: kPacifico,
                 ),
               );
             } else {
@@ -89,7 +90,7 @@ class UpDateProfileWidget extends StatelessWidget {
                       },
                       text: AppStrings.update,
                       width: context.width * 0.7,
-                      fontFamily: AppStrings.pacifico,
+                      fontFamily: kPacifico,
                     ),
                   ],
                 ),

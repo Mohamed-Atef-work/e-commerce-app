@@ -1,6 +1,4 @@
 class AppStrings {
-  static const String pacifico = "Pacifico";
-
   static const String admin = "admin";
   static const String profile = "Profile";
   static const String login = "Login";

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -31,7 +32,7 @@ class ManageProductImageWidget extends StatelessWidget {
                 child: CustomText(
                   fontSize: 20,
                   text: AppStrings.image,
-                  fontFamily: AppStrings.pacifico,
+                  fontFamily: kPacifico,
                 ),
               ),
             );

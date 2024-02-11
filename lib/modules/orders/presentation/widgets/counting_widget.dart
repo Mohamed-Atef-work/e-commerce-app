@@ -2,6 +2,7 @@ import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 
 class CountingWidget extends StatelessWidget {
   final int num;
@@ -49,7 +50,7 @@ class CountingWidget extends StatelessWidget {
           CustomText(
             fontSize: 18,
             text: num.toString(),
-            fontFamily: AppStrings.pacifico,
+            fontFamily: kPacifico,
           ),
           Container(
             width: height * 0.71,

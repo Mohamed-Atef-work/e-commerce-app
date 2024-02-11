@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -62,14 +63,14 @@ class DetailsScreen extends StatelessWidget {
                     text: state.product!.name,
                     fontWeight: FontWeight.bold,
                     textColor: AppColors.darkBrown,
-                    fontFamily: AppStrings.pacifico,
+                    fontFamily: kPacifico,
                   ),
                   CustomText(
                     fontSize: 20,
                     text: "\$${state.product!.price * state.quantity}",
                     fontWeight: FontWeight.bold,
                     textColor: AppColors.darkBrown,
-                    fontFamily: AppStrings.pacifico,
+                    fontFamily: kPacifico,
                   ),
                   SizedBox(height: context.height * 0.03),
                   CustomText(
@@ -108,7 +109,7 @@ class DetailsScreen extends StatelessWidget {
                       fontSize: 18,
                       text: AppStrings.addToCart,
                       fontWeight: FontWeight.bold,
-                      fontFamily: AppStrings.pacifico,
+                      fontFamily: kPacifico,
                       onPressed: () {
                         /// To Do o o o o o o o
                         BlocProvider.of<ProductDetailsCubit>(context)
@@ -180,7 +181,7 @@ class DetailsScreen extends StatelessWidget {
               textColor: Colors.white,
               text: AppStrings.addToCart,
               fontWeight: FontWeight.bold,
-              fontFamily: AppStrings.pacifico,
+              fontFamily: kPacifico,
             ),
           ),
         ],

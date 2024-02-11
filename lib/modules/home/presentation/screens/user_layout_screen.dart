@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -67,7 +68,7 @@ class UserLayoutScreen extends StatelessWidget {
           fontSize: 30,
           textColor: AppColors.black,
           fontWeight: FontWeight.bold,
-          fontFamily: AppStrings.pacifico,
+          fontFamily: kPacifico,
           text: BlocProvider.of<UserLayoutCubit>(context).state.appBarTitle,
         ),
       );
