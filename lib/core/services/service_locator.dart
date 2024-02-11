@@ -76,10 +76,12 @@ import 'package:e_commerce_app/modules/orders/presentation/controller/update_ord
 import 'package:e_commerce_app/modules/shared/data/data_source/local_data_source.dart';
 import 'package:e_commerce_app/modules/shared/data/repository/repository.dart';
 import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
+import 'package:e_commerce_app/modules/shared/domain/use_cases/init_use_case.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/update_profile_use_case.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/address_controller/edit_address_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/change_email_controller/change_email_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/change_password_controller/change_password_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/init_controller/init_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/shared_password_controller/shared_password_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/shared_user_data_controller/shared_user_data_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/up_date_profile_controller/update_profile_cubit.dart';
@@ -199,6 +201,7 @@ void _user() {
 }
 
 void _shared() {
+  sl.registerFactory(() => InitCubit(sl()));
   sl.registerFactory(() => EditAddressCubit(sl()));
   sl.registerFactory(() => ChangePasswordCubit(sl()));
   sl.registerFactory(() => ChangeEmailCubit(sl()));
@@ -209,6 +212,7 @@ void _shared() {
   sl.registerLazySingleton<SharedLocalDataSource>(
       () => SharedLocalDataSourceImpl(sl()));
 
+  sl.registerLazySingleton(() => InitUseCase(sl(), sl()));
   sl.registerLazySingleton(() => LoadProductsUseCase(sl()));
   sl.registerLazySingleton(() => GetAllProductCategoriesUseCase(sl()));
 }

@@ -1,3 +1,6 @@
+import 'package:e_commerce_app/core/utils/constants.dart';
+import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:e_commerce_app/core/utils/images.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/app_strings.dart';
@@ -8,26 +11,24 @@ class LogoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
     return SizedBox(
-      height: height * 0.2,
+      height: context.height * 0.2,
       child: Stack(
         alignment: Alignment.center,
         children: [
           Image.asset(
-            "assets/images/icons/login_buy_icon.png",
+            Images.logoIcon,
             fit: BoxFit.contain,
-            width: width * 0.3,
-            height: width * 0.3,
+            width: context.width * 0.3,
+            height: context.width * 0.3,
           ),
           const Positioned(
             bottom: 0,
             child: CustomText(
+              fontSize: 20,
+              fontFamily: kPacifico,
               text: AppStrings.buyIt,
               fontWeight: FontWeight.bold,
-              fontSize: 20,
-              fontFamily: "Pacifico",
             ),
           ),
         ],

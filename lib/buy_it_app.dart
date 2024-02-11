@@ -1,8 +1,11 @@
+import 'package:e_commerce_app/modules/shared/presentation/controller/init_controller/init_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/init_controller/init_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/shared_password_controller/shared_password_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/shared_user_data_controller/shared_user_data_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/address_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/change_password_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/edit_profile_screen.dart';
+import 'package:e_commerce_app/modules/shared/presentation/screens/splash_screen.dart';
 
 import 'core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +42,7 @@ class BuyItApp extends StatelessWidget {
       child: MaterialApp(
         routes: _routes(),
         title: AppStrings.buyIt,
-        initialRoute: Screens.loginScreen,
+        initialRoute: Screens.splashScreen,
         theme: ThemeData(scaffoldBackgroundColor: AppColors.primaryColorYellow),
       ),
     );
@@ -47,14 +50,11 @@ class BuyItApp extends StatelessWidget {
 
   _providers() => [
         /// shared < --------------------------------------------------------- >
+        BlocProvider<InitCubit>(
+          create: (context) => sl<InitCubit>()..init(),
+        ),
         BlocProvider<GetFavoriteCubit>(
           create: (context) => sl<GetFavoriteCubit>()..getFavorites(),
-        ),
-        BlocProvider<SharedUserDataCubit>(
-          create: (context) => sl<SharedUserDataCubit>(),
-        ),
-        BlocProvider<SharedPasswordCubit>(
-          create: (context) => sl<SharedPasswordCubit>(),
         ),
 
         /// User < ----------------------------------------------------------- >
@@ -74,6 +74,7 @@ class BuyItApp extends StatelessWidget {
 
   _routes() => {
         Screens.testScreen: (context) => const TestScreen(),
+        Screens.splashScreen: (context) => const SplashScreen(),
         Screens.cartScreen: (context) => const CartScreen(),
         Screens.loginScreen: (context) => const LoginScreen(),
         Screens.signUpScreen: (context) => const SignUpScreen(),
