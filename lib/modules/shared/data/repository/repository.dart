@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
@@ -11,16 +10,6 @@ class SharedDataRepo implements SharedDomainRepo {
   final SharedLocalDataSource _localDataSource;
 
   SharedDataRepo(this._localDataSource);
-
-  @override
-  Future<Either<Failure, AdminUser>> getUserOrAdminLocally() async {
-    try {
-      final result = await _localDataSource.getUserOrAdmin();
-      return Right(result);
-    } on LocalDataBaseException catch (e) {
-      return Left(LocalDataBaseFailure(message: e.message));
-    }
-  }
 
   @override
   Future<Either<Failure, UserEntity>> getUserDataLocally() async {
@@ -85,14 +74,4 @@ class SharedDataRepo implements SharedDomainRepo {
     }
   }
 
-  @override
-  Future<Either<Failure, bool>> saveUserOrAdminLocally(
-      AdminUser adminUser) async {
-    try {
-      final result = await _localDataSource.saveUserOrAdmin(adminUser);
-      return Right(result);
-    } on LocalDataBaseException catch (e) {
-      return Left(LocalDataBaseFailure(message: e.message));
-    }
-  }
 }

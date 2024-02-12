@@ -12,10 +12,8 @@ abstract class SharedLocalDataSource {
   Future<UserEntity> getUserData();
   Future<String> getUserPassword();
   Future<bool> deleteUserPassword();
-  Future<AdminUser> getUserOrAdmin();
   Future<bool> saveUserData(UserModel user);
   Future<bool> saveUserPassword(String password);
-  Future<bool> saveUserOrAdmin(AdminUser adminUser);
 }
 
 class SharedLocalDataSourceImpl implements SharedLocalDataSource {
@@ -66,28 +64,8 @@ class SharedLocalDataSourceImpl implements SharedLocalDataSource {
   }
 
   @override
-  Future<AdminUser> getUserOrAdmin() async {
-    try {
-      final response =
-          await _localDataBaseService.read<String>(FirebaseStrings.userOrAdmin);
-      if (response == null) {
-        throw const LocalDataBaseException(message: kThereIsNoData);
-      }
-      final json = jsonDecode(response);
-      return json[FirebaseStrings.userOrAdmin];
-    } catch (e) {
-      print("oOoOoOops! ------- dataSource ------- ${e.toString()}");
-      if (e is LocalDataBaseException) {
-        rethrow;
-      } else {
-        throw LocalDataBaseException(message: e.toString());
-      }
-    }
-  }
-
-  @override
   Future<bool> saveUserData(UserModel user) async {
-    final jsonString = user.toJson();
+    final jsonString = user.toLocalJson();
     final userJson = jsonEncode(jsonString);
     final result = await _localDataBaseService
         .save<String>(FirebaseStrings.user, userJson)
@@ -121,18 +99,6 @@ class SharedLocalDataSourceImpl implements SharedLocalDataSource {
   Future<bool> deleteUserPassword() async {
     final result = await _localDataBaseService
         .delete(FirebaseStrings.userPassword)
-        .catchError((error) {
-      throw LocalDataBaseException(message: error.toString());
-    });
-    return result;
-  }
-
-  @override
-  Future<bool> saveUserOrAdmin(AdminUser adminUser) async {
-    final jsonString = {"adminUser": adminUser};
-    final userAdminJson = jsonEncode(jsonString);
-    final result = await _localDataBaseService
-        .save<String>(FirebaseStrings.userOrAdmin, userAdminJson)
         .catchError((error) {
       throw LocalDataBaseException(message: error.toString());
     });

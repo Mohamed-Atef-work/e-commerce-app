@@ -1,10 +1,7 @@
 import 'package:e_commerce_app/modules/shared/presentation/controller/init_controller/init_cubit.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/init_controller/init_cubit.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/shared_password_controller/shared_password_cubit.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/shared_user_data_controller/shared_user_data_cubit.dart';
-import 'package:e_commerce_app/modules/shared/presentation/screens/address_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/change_password_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/edit_profile_screen.dart';
+import 'package:e_commerce_app/modules/shared/presentation/screens/address_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/splash_screen.dart';
 
 import 'core/utils/app_strings.dart';
@@ -15,10 +12,10 @@ import 'package:e_commerce_app/test_screen.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'modules/auth/presentation/screens/login_screen.dart';
 import 'modules/auth/presentation/screens/sign_up_screen.dart';
-import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'modules/home/presentation/screens/user_layout_screen.dart';
 import 'modules/admin/presentation/screens/admin_panel_screen.dart';
 import 'modules/admin/presentation/screens/admin_details_screen.dart';
+import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'modules/admin/presentation/screens/admin_add_product_screen.dart';
 import 'modules/admin/presentation/screens/admin_explore_products_screen.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/cart_screen.dart';
@@ -51,7 +48,7 @@ class BuyItApp extends StatelessWidget {
   _providers() => [
         /// shared < --------------------------------------------------------- >
         BlocProvider<InitCubit>(
-          create: (context) => sl<InitCubit>()..init(),
+          create: (context) => sl<InitCubit>(),
         ),
         BlocProvider<GetFavoriteCubit>(
           create: (context) => sl<GetFavoriteCubit>()..getFavorites(),
@@ -74,9 +71,9 @@ class BuyItApp extends StatelessWidget {
 
   _routes() => {
         Screens.testScreen: (context) => const TestScreen(),
-        Screens.splashScreen: (context) => const SplashScreen(),
         Screens.cartScreen: (context) => const CartScreen(),
         Screens.loginScreen: (context) => const LoginScreen(),
+        Screens.splashScreen: (context) => const SplashScreen(),
         Screens.signUpScreen: (context) => const SignUpScreen(),
         Screens.adminPanelScreen: (context) => AdminPanelScreen(),
         Screens.detailsScreen: (context) => const DetailsScreen(),

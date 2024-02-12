@@ -6,30 +6,38 @@ class UserModel extends UserEntity {
     required super.id,
     required super.name,
     required super.email,
-    required super.phone,
-    required super.address,
+    super.phone,
+    super.address,
+    super.userOrAdmin,
   });
   factory UserModel.fromJson(Map<String, dynamic> json, {required String id}) =>
       UserModel(
         id: id,
         name: json[FirebaseStrings.name],
         email: json[FirebaseStrings.email],
-        phone: json[FirebaseStrings.phone] ?? "",
-        address: json[FirebaseStrings.address] ?? "",
+        phone: json[FirebaseStrings.phone],
+        address: json[FirebaseStrings.address],
       );
+  Map<String, dynamic> toJson() => {
+        FirebaseStrings.name: name,
+        FirebaseStrings.email: email,
+        FirebaseStrings.phone: phone,
+        FirebaseStrings.address: address,
+      };
   factory UserModel.fromLocalJson(Map<String, dynamic> json) => UserModel(
         id: json[FirebaseStrings.id],
         name: json[FirebaseStrings.name],
         email: json[FirebaseStrings.email],
         phone: json[FirebaseStrings.phone],
         address: json[FirebaseStrings.address],
+        userOrAdmin: json[FirebaseStrings.userOrAdmin],
       );
 
-  Map<String, String> toJson() => {
+  Map<String, dynamic> toLocalJson() => {
         FirebaseStrings.name: name,
         FirebaseStrings.email: email,
-        FirebaseStrings.phone: phone!,
-        FirebaseStrings.address: address!,
-        FirebaseStrings.image: "image",
+        FirebaseStrings.phone: phone,
+        FirebaseStrings.address: address,
+        FirebaseStrings.userOrAdmin: userOrAdmin,
       };
 }

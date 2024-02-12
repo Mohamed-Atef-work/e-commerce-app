@@ -7,9 +7,14 @@ import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/animation/custom_fading_widget.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/init_controller/init_cubit.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +24,7 @@ class SplashScreen extends StatelessWidget {
           listener: (context, state) {
             print("${state.message}  ${state.dataState}");
             if (state.dataState == RequestState.success) {
-              if (state.initEntity!.adminUser == AdminUser.user) {
+              if (state.initEntity!.userEntity.userOrAdmin == AdminUser.user) {
                 Navigator.of(context)
                     .pushReplacementNamed(Screens.adminLayoutScreen);
               } else {
@@ -37,6 +42,17 @@ class SplashScreen extends StatelessWidget {
           child: const CustomFadingWidget(child: LogoWidget()),
         ),
       ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(
+      const Duration(seconds: 2),
+      () {
+        BlocProvider.of<InitCubit>(context).init();
+      },
     );
   }
 }

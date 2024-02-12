@@ -17,22 +17,18 @@ class InitUseCase extends BaseUseCase<InitEntity, NoParameters> {
   @override
   Future<Either<Failure, InitEntity>> call(NoParameters parameters) async {
     final userEither = await _sharedRepo.getUserDataLocally();
-    final userAdminEither = await _sharedRepo.getUserOrAdminLocally();
     final passwordEither = await _sharedRepo.getUserPasswordLocally();
 
     return userEither.fold(
       (userFailure) => Left(userFailure),
       (user) => passwordEither.fold(
         (passwordFailure) => Left(passwordFailure),
-        (password) => userAdminEither.fold(
-          (userAdminEitherFailure) => Left(userAdminEitherFailure),
-          (adminUser) async => await _login(user, password, adminUser),
-        ),
+        (password) async => await _login(user, password),
       ),
     );
   }
 
-  _login(UserEntity user, String password, AdminUser adminUser) async {
+  _login(UserEntity user, String password) async {
     final loginParams = LoginParameters(email: user.email, password: password);
     final loginEither = await _authRepo.signIn(loginParams);
     return loginEither.fold(
@@ -40,7 +36,6 @@ class InitUseCase extends BaseUseCase<InitEntity, NoParameters> {
       (userCredential) => Right(
         InitEntity(
           userCredential: userCredential,
-          adminUser: adminUser,
           userEntity: user,
         ),
       ),

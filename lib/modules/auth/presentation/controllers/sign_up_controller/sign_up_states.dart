@@ -12,7 +12,7 @@ class SignUpState extends Equatable {
   const SignUpState({
     this.storeUserDataState = RequestState.initial,
     this.signUpState = RequestState.initial,
-    this.obSecure = false,
+    this.obSecure = true,
     this.userCredential,
     this.errorMessage,
   });
