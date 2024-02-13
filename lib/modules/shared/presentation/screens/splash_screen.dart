@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/modules/shared/presentation/controller/shared_user_data_controller/shared_user_data_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -6,6 +5,7 @@ import 'package:e_commerce_app/core/components/logo.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/animation/custom_fading_widget.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/shared_user_data_controller/shared_user_data_state.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/shared_user_data_controller/shared_user_data_cubit.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,9 +23,13 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: BlocListener<SharedUserDataCubit, SharedUserDataState>(
           listener: (context, state) {
-            print("${state.message}  ${state.getState}");
+            print(
+                "${state.message} < ------ listener ----- > ${state.getState}");
+            print(state.initEntity?.user.userEntity.name);
+            print(state.initEntity?.user.adminOrUser);
+            print(state.initEntity?.user.password);
             if (state.getState == RequestState.success) {
-              if (state.initEntity!.user.adminOrUser == AdminUser.user) {
+              if (state.initEntity!.user.adminOrUser == AdminUser.admin) {
                 Navigator.of(context)
                     .pushReplacementNamed(Screens.adminLayoutScreen);
               } else {

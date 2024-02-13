@@ -11,8 +11,8 @@ class SharedUserDataState {
   final RequestState deleteState;
 
   const SharedUserDataState({
-    this.initEntity,
     this.message,
+    this.initEntity,
     this.getState = RequestState.initial,
     this.saveState = RequestState.initial,
     this.deleteState = RequestState.initial,

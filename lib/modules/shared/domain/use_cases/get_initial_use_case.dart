@@ -19,7 +19,17 @@ class GetInitialDataUseCase extends BaseUseCase<InitEntity, NoParameters> {
 
     return userEither.fold(
       (userFailure) => Left(userFailure),
-      (user) async => await _login(user),
+      (user) async {
+        final loginParams = LoginParameters(
+            email: user.userEntity.email, password: user.password);
+        final loginEither = await _authRepo.signIn(loginParams);
+        return loginEither.fold(
+          (loginFailure) => Left(loginFailure),
+          (userCredential) => Right(
+            InitEntity(user: user, userCredential: userCredential),
+          ),
+        );
+      },
     );
   }
 

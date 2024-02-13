@@ -7,10 +7,14 @@ import 'package:e_commerce_app/modules/shared/domain/use_cases/get_initial_use_c
 import 'package:e_commerce_app/modules/shared/presentation/controller/shared_user_data_controller/shared_user_data_state.dart';
 
 class SharedUserDataCubit extends Cubit<SharedUserDataState> {
-  final GetInitialDataUseCase _getInitialDataUseCase;
   final SharedDomainRepo _sharedDomainRepo;
-  SharedUserDataCubit(this._sharedDomainRepo, this._getInitialDataUseCase)
-      : super(const SharedUserDataState());
+  final GetInitialDataUseCase _getInitialDataUseCase;
+
+  SharedUserDataCubit(
+    this._sharedDomainRepo,
+    this._getInitialDataUseCase,
+  ) : super(const SharedUserDataState());
+
   void saveData(CachedUserDataModel user) async {
     emit(state.copyWith(saveState: RequestState.loading));
 
@@ -31,8 +35,8 @@ class SharedUserDataCubit extends Cubit<SharedUserDataState> {
     emit(
       result.fold(
         (l) =>
-            state.copyWith(message: l.message, saveState: RequestState.error),
-        (r) => state.copyWith(saveState: RequestState.success, initEntity: r),
+            state.copyWith(message: l.message, getState: RequestState.error),
+        (r) => state.copyWith(getState: RequestState.success, initEntity: r),
       ),
     );
   }

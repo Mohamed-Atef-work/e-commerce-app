@@ -22,16 +22,17 @@ class SharedLocalDataSourceImpl implements SharedLocalDataSource {
     try {
       final jsonString =
           await _localDataBaseService.read<String>(FirebaseStrings.user);
-      print("------------- Trying -------- dataSource -------- ");
+      print(" < --------------------- dataSource ------------------------- > ");
 
       if (jsonString == null) {
-        print("------------- Trying -------- dataSource ---- Null ---- ");
+        print(
+            "--------------------- dataSource ---------------------------- > Null");
         throw const LocalDataBaseException(message: kThereIsNoData);
       }
       final userJson = jsonDecode(jsonString);
       return CachedUserDataModel.fromJson(userJson);
     } catch (e) {
-      print("oOoOoOops! ------- dataSource ------- ${e.toString()}");
+      print("oOoOoOops! ----------------- dataSource ------- ${e.toString()}");
       if (e is LocalDataBaseException) {
         rethrow;
       } else {

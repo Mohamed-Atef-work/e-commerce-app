@@ -17,6 +17,7 @@ class FirebaseStrings {
   static const String email = "email";
   static const String image = "image";
   static const String user = "user";
+  static const String admin = "admin";
   static const String cart = "cart";
   static const String name = "name";
   static const String id = "id";

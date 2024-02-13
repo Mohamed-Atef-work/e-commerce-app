@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/core/fire_base/strings.dart';
+import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/shared/domain/entities/cached_user_data_entity.dart';
 
@@ -18,16 +19,20 @@ class CachedUserDataModel extends CachedUserDataEntity {
           address: json[FirebaseStrings.address],
         ),
         password: json[FirebaseStrings.userPassword],
-        adminOrUser: json[FirebaseStrings.userOrAdmin],
+        adminOrUser: json[FirebaseStrings.userOrAdmin] == FirebaseStrings.user
+            ? AdminUser.user
+            : AdminUser.admin,
       );
 
-  Map<String, dynamic> toLocalJson() => {
+  Map<String, String?> toLocalJson() => {
         FirebaseStrings.id: userEntity.id,
         FirebaseStrings.name: userEntity.name,
         FirebaseStrings.userPassword: password,
         FirebaseStrings.email: userEntity.email,
         FirebaseStrings.phone: userEntity.phone,
-        FirebaseStrings.userOrAdmin: adminOrUser,
         FirebaseStrings.address: userEntity.address,
+        FirebaseStrings.userOrAdmin: adminOrUser == AdminUser.user
+            ? FirebaseStrings.user
+            : FirebaseStrings.admin,
       };
 }

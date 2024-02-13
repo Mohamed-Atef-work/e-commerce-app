@@ -1,26 +1,29 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
+import 'package:e_commerce_app/buy_it_app.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/login_use_case.dart';
+import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_events.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_states.dart';
-
-import '../../../../../buy_it_app.dart';
-import '../../../domain/use_cases/login_use_case.dart';
 
 class LoginBloc extends Bloc<LoginEvents, LoginState> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String? email, password;
 
   final LoginInUseCase loginInUseCase;
+  final SharedDomainRepo _sharedDomainRepo;
+
   LoginBloc(
     this.loginInUseCase,
+    this._sharedDomainRepo,
   ) : super(const LoginState()) {
     on<ToggleAdminAndUserEvent>(_toggleAdminUserEvent);
 
     on<ObSecureEvent>(_obSecureEvent);
     on<SignInEvent>(_signInEvent);
+    on<SaveUserDataEvent>(_saveUserDataEvent);
     /*on<TakePasswordEvent>(_takePasswordEvent);
     on<TakeEmailEvent>(_takeEmailEvent);*/
   }
@@ -58,6 +61,22 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
     emit(state.copyWith(obSecure: !state.obSecure));
   }
 
+  FutureOr<void> _saveUserDataEvent(
+      SaveUserDataEvent event, Emitter<LoginState> emit) async {
+    emit(
+      state.copyWith(
+          saveState: RequestState.loading, loginState: RequestState.initial),
+    );
+
+    final result = await _sharedDomainRepo.saveUserDataLocally(event.user);
+    emit(
+      result.fold(
+        (l) => state.copyWith(
+            errorMessage: l.message, saveState: RequestState.error),
+        (r) => state.copyWith(saveState: RequestState.success),
+      ),
+    );
+  }
   /*FutureOr<void> _takeEmailEvent(
       TakeEmailEvent event, Emitter<LoginState> emit) {
     emit(state.copyWith(email: event.email));

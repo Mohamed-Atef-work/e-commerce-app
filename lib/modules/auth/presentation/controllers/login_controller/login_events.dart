@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/modules/shared/data/models/cached_user_data_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class LoginEvents extends Equatable {
@@ -10,14 +11,21 @@ class SignInEvent extends LoginEvents {
   List<Object?> get props => [];
 }
 
+class ObSecureEvent extends LoginEvents {
+  const ObSecureEvent();
+  @override
+  List<Object?> get props => [];
+}
+
 class ToggleAdminAndUserEvent extends LoginEvents {
   const ToggleAdminAndUserEvent();
   @override
   List<Object?> get props => [];
 }
 
-class ObSecureEvent extends LoginEvents {
-  const ObSecureEvent();
+class SaveUserDataEvent extends LoginEvents {
+  final CachedUserDataModel user;
+  const SaveUserDataEvent(this.user);
   @override
   List<Object?> get props => [];
 }

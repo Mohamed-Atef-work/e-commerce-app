@@ -36,13 +36,13 @@ class PrefsImpl implements LocalDataBaseService {
     } else if (R == double) {
       return _prefs.getDouble(key) as R?;
     } else if (R == String) {
-      print("------------- Trying -------- interFace ---- String ---- ");
+      print("------------------------ interFace ------------------------- String");
 
       return _prefs.getString(key) as R?;
     } else if (R == List<String>) {
       return _prefs.getStringList(key) as R?;
     } else {
-      print("oOoOoOops! ------- interFace ------- ");
+      print("oOoOoOops! ------------------------------------------ interFace ----------- ");
       throw Exception('Invalid data type You want to read');
     }
   }

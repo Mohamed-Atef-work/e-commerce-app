@@ -10,10 +10,11 @@ import 'package:e_commerce_app/modules/shared/domain/use_cases/update_profile_us
 import 'package:e_commerce_app/modules/shared/presentation/controller/up_date_profile_controller/update_profile_cubit.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_bloc.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/sign_up_controller/sign_up_bloc.dart';
+
 void auth() {
   // < --------------------------------- Auth --------------------------------- >
   /// blocs
-  sl.registerFactory(() => LoginBloc(sl()));
+  sl.registerFactory(() => LoginBloc(sl(), sl()));
   sl.registerFactory(() => SignUpBloc(sl(), sl(), sl()));
   sl.registerFactory(() => UpdateProfileCubit(sl()));
 
@@ -26,9 +27,9 @@ void auth() {
 
   /// Repositories
   sl.registerLazySingleton<AuthRepositoryDomain>(
-          () => AuthRepositoryData(sl()));
+      () => AuthRepositoryData(sl()));
 
   /// Data Sources
   sl.registerLazySingleton<AuthBaseRemoteDatSource>(
-          () => AuthRemoteDatSourceImpl(sl(), sl()));
+      () => AuthRemoteDatSourceImpl(sl(), sl()));
 }

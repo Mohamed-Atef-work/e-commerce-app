@@ -15,11 +15,11 @@ class SharedDataRepo implements SharedDomainRepo {
   Future<Either<Failure, CachedUserDataEntity>> getUserDataLocally() async {
     try {
       final result = await _localDataSource.getUserData();
-      print("------------- Trying -------- Repo -------- ");
+      print(" --------------------- DataRepo --------------------- ");
 
       return Right(result);
     } on LocalDataBaseException catch (e) {
-      print("oOoOoOops! ------- Repo ------- ${e.message}");
+      print("oOoOoOops! ------- DataRepo ------- ${e.message}");
       return Left(LocalDataBaseFailure(message: e.message));
     }
   }
