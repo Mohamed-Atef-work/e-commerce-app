@@ -12,11 +12,11 @@ import 'package:e_commerce_app/modules/shared/presentation/controller/shared_use
 
 void shared() {
   //sl.registerFactory(() => InitCubit(sl()));
+  //sl.registerFactory(() => SharedPasswordCubit(sl()));
   sl.registerFactory(() => ChangeEmailCubit(sl()));
   sl.registerFactory(() => EditAddressCubit(sl()));
-  //sl.registerFactory(() => SharedPasswordCubit(sl()));
-  sl.registerFactory(() => SharedUserDataCubit(sl()));
   sl.registerFactory(() => ChangePasswordCubit(sl()));
+  sl.registerFactory(() => SharedUserDataCubit(sl(), sl()));
 
   sl.registerLazySingleton<SharedDomainRepo>(() => SharedDataRepo(sl()));
   sl.registerLazySingleton<SharedLocalDataSource>(

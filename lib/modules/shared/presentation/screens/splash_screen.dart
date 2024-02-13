@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/modules/shared/presentation/controller/shared_user_data_controller/shared_user_data_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -24,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
           listener: (context, state) {
             print("${state.message}  ${state.getState}");
             if (state.getState == RequestState.success) {
-              if (state.user!.adminOrUser == AdminUser.user) {
+              if (state.initEntity!.user.adminOrUser == AdminUser.user) {
                 Navigator.of(context)
                     .pushReplacementNamed(Screens.adminLayoutScreen);
               } else {
