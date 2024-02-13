@@ -3,7 +3,7 @@ part of 'shared_user_data_cubit.dart';
 @immutable
 class SharedUserDataState {
   final String? message;
-  final UserEntity? user;
+  final CachedUserDataEntity? user;
   final RequestState getState;
   final RequestState saveState;
   final RequestState deleteState;
@@ -17,7 +17,7 @@ class SharedUserDataState {
   });
   SharedUserDataState copyWith({
     String? message,
-    UserEntity? user,
+    CachedUserDataEntity? user,
     RequestState? getState,
     RequestState? saveState,
     RequestState? deleteState,

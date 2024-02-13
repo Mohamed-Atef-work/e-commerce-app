@@ -7,13 +7,13 @@ import 'package:meta/meta.dart';
 
 part 'init_state.dart';
 
-class InitCubit extends Cubit<InitState> {
-  final GetInitialDataUseCase _GetInitialDataUseCase;
-  InitCubit(this._GetInitialDataUseCase) : super(const InitState());
+/*class InitCubit extends Cubit<InitState> {
+  final GetInitialDataUseCase _getInitialDataUseCase;
+  InitCubit(this._getInitialDataUseCase) : super(const InitState());
 
   void init() async {
     emit(state.copyWith(dataState: RequestState.loading));
-    final result = await _GetInitialDataUseCase(const NoParameters());
+    final result = await _getInitialDataUseCase(const NoParameters());
     emit(
       result.fold(
         (l) =>
@@ -22,4 +22,4 @@ class InitCubit extends Cubit<InitState> {
       ),
     );
   }
-}
+}*/

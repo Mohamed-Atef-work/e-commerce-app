@@ -1,11 +1,11 @@
-import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/components/logo.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/animation/custom_fading_widget.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/init_controller/init_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/shared_user_data_controller/shared_user_data_cubit.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,18 +20,18 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       appBar: AppBar(toolbarHeight: 0),
       body: Center(
-        child: BlocListener<InitCubit, InitState>(
+        child: BlocListener<SharedUserDataCubit, SharedUserDataState>(
           listener: (context, state) {
-            print("${state.message}  ${state.dataState}");
-            if (state.dataState == RequestState.success) {
-              if (state.initEntity!.userEntity.userOrAdmin == AdminUser.user) {
+            print("${state.message}  ${state.getState}");
+            if (state.getState == RequestState.success) {
+              if (state.user!.adminOrUser == AdminUser.user) {
                 Navigator.of(context)
                     .pushReplacementNamed(Screens.adminLayoutScreen);
               } else {
                 Navigator.of(context)
                     .pushReplacementNamed(Screens.userLayoutScreen);
               }
-            } else if (state.dataState == RequestState.error) {
+            } else if (state.getState == RequestState.error) {
               if (state.message == kThereIsNoData) {
                 Navigator.of(context).pushReplacementNamed(Screens.loginScreen);
               } else {
@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(
       const Duration(seconds: 2),
       () {
-        BlocProvider.of<InitCubit>(context).init();
+        BlocProvider.of<SharedUserDataCubit>(context).getData();
       },
     );
   }

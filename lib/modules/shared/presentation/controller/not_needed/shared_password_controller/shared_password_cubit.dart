@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 
 part 'shared_password_state.dart';
 
-class SharedPasswordCubit extends Cubit<SharedPasswordState> {
+/*class SharedPasswordCubit extends Cubit<SharedPasswordState> {
   final SharedDomainRepo _sharedDomainRepo;
   SharedPasswordCubit(this._sharedDomainRepo)
       : super(const SharedPasswordState());
@@ -47,4 +47,4 @@ class SharedPasswordCubit extends Cubit<SharedPasswordState> {
       ),
     );
   }
-}
+}*/
