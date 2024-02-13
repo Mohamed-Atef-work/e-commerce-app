@@ -1,14 +1,12 @@
 import 'package:dartz/dartz.dart';
 
 import 'package:e_commerce_app/core/error/failure.dart';
-import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
-import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
+import 'package:e_commerce_app/modules/shared/data/models/cached_user_data_model.dart';
+import 'package:e_commerce_app/modules/shared/domain/entities/cached_user_data_entity.dart';
 
 abstract class SharedDomainRepo {
   Future<Either<Failure, bool>> deleteUserDataLocally();
-  Future<Either<Failure, UserEntity>> getUserDataLocally();
-  Future<Either<Failure, String>> getUserPasswordLocally();
-  Future<Either<Failure, bool>> deleteUserPasswordLocally();
-  Future<Either<Failure, bool>> saveUserDataLocally(UserModel user);
-  Future<Either<Failure, bool>> saveUserPasswordLocally(String password);
+  Future<Either<Failure, CachedUserDataEntity>> getUserDataLocally();
+  Future<Either<Failure, bool>> saveUserDataLocally(
+      CachedUserDataModel cachedUserData);
 }
