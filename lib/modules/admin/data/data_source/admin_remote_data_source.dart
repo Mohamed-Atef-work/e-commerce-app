@@ -19,18 +19,18 @@ import '../../domain/use_cases/up_date_product_category_use_case.dart';
 abstract class AdminBaseRemoteDataSource {
   Future<Stream<List<ProductCategoryEntity>>> getAllProductCategories();
   Future<String> downLoadProductImageUrl(Reference imageReference);
-  Future<void> deleteProduct(DeleteProductParameters parameters);
-  Future<void> updateProduct(UpdateProductParameters parameters);
-  Future<void> addProduct(AddProductParameters parameters);
+  Future<void> deleteProduct(DeleteProductparams params);
+  Future<void> updateProduct(UpdateProductparams params);
+  Future<void> addProduct(AddProductparams params);
   Future<Stream<List<ProductEntity>>> loadProducts(
-      LoadProductsParameters parameters);
+      LoadProductsparams params);
   Future<Reference> uploadProductImage(File image);
   Future<void> addNewProductCategory(
-      AddNewProductsCategoryParameters parameters);
+      AddNewProductsCategoryparams params);
   Future<void> deleteProductCategory(
-      DeleteProductsCategoryParameters parameters);
+      DeleteProductsCategoryparams params);
   Future<void> upDateProductCategory(
-      UpDateProductsCategoryParameters parameters);
+      UpDateProductsCategoryparams params);
 }
 
 class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
@@ -49,8 +49,8 @@ class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
   }
 
   @override
-  Future<void> addProduct(AddProductParameters parameters) async {
-    await store.addProduct(parameters).then((value) {}).catchError((error) {
+  Future<void> addProduct(AddProductparams params) async {
+    await store.addProduct(params).then((value) {}).catchError((error) {
       return throw ServerException(
         message: error.code,
       );
@@ -70,8 +70,8 @@ class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
 
   @override
   Future<Stream<List<ProductEntity>>> loadProducts(
-      LoadProductsParameters parameters) async {
-    return await store.loadProducts(parameters).then((stream) {
+      LoadProductsparams params) async {
+    return await store.loadProducts(params).then((stream) {
       return stream.map((snapshot) {
         return snapshot.docs
             .map((doc) => ProductModel.formJson(
@@ -86,24 +86,24 @@ class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
   }
 
   @override
-  Future<void> deleteProduct(DeleteProductParameters parameters) async {
-    await store.deleteProduct(parameters).then((value) {}).catchError((error) {
+  Future<void> deleteProduct(DeleteProductparams params) async {
+    await store.deleteProduct(params).then((value) {}).catchError((error) {
       throw ServerException(message: error.code);
     });
   }
 
   @override
-  Future<void> updateProduct(UpdateProductParameters parameters) async {
-    await store.updateProduct(parameters).then((value) {}).catchError((error) {
+  Future<void> updateProduct(UpdateProductparams params) async {
+    await store.updateProduct(params).then((value) {}).catchError((error) {
       throw ServerException(message: error.code);
     });
   }
 
   @override
   Future<void> addNewProductCategory(
-      AddNewProductsCategoryParameters parameters) async {
+      AddNewProductsCategoryparams params) async {
     await store
-        .addNewProductCategory(parameters)
+        .addNewProductCategory(params)
         .then((value) {})
         .catchError((error) {
       throw ServerException(message: error.code);
@@ -128,9 +128,9 @@ class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
 
   @override
   Future<void> deleteProductCategory(
-      DeleteProductsCategoryParameters parameters) async {
+      DeleteProductsCategoryparams params) async {
     await store
-        .deleteProductCategory(parameters)
+        .deleteProductCategory(params)
         .then((value) {})
         .catchError((error) {
       throw ServerException(message: error.code);
@@ -139,9 +139,9 @@ class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
 
   @override
   Future<void> upDateProductCategory(
-      UpDateProductsCategoryParameters parameters) async {
+      UpDateProductsCategoryparams params) async {
     await store
-        .upDateProductCategory(parameters)
+        .upDateProductCategory(params)
         .then((value) {})
         .catchError((error) {
       throw ServerException(message: error.code);

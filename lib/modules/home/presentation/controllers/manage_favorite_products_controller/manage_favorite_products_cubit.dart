@@ -17,11 +17,11 @@ class ManageFavoriteCubit extends Cubit<ManageFavoriteState> {
     emit(state.copyWith(heartColor: heartColor));
   }
 
-  Future<void> addOrDelete(AddDeleteFavoriteParams parameters) async {
+  Future<void> addOrDelete(AddDeleteFavoriteParams params) async {
     if (state.heartColor == Colors.red) {
-      await deleteFavorite(parameters);
+      await deleteFavorite(params);
     } else {
-      await addFavorite(parameters);
+      await addFavorite(params);
     }
   }
 

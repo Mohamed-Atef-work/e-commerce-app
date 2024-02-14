@@ -35,7 +35,7 @@ class SignUpBloc extends Cubit<SignUpState> {
   Future<void> _signUp() async {
     emit(state.copyWith(signUpState: RequestState.loading));
     final result = await _signUpUseCase(
-      SignUpParameters(
+      SignUpparams(
         name: name!,
         email: email!,
         password: password!,
@@ -73,7 +73,7 @@ class SignUpBloc extends Cubit<SignUpState> {
     emit(state.copyWith(signInState: RequestState.loading));
 
     final result = await _loginInUseCase.call(
-      LoginParameters(email: email!, password: password!),
+      Loginparams(email: email!, password: password!),
     );
     emit(result.fold(
       (l) => state.copyWith(

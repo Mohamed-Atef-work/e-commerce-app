@@ -11,8 +11,8 @@ class GetUserOrdersUseCase
   GetUserOrdersUseCase(this.repo);
   @override
   Future<Either<Failure, Stream<List<OrderDataEntity>>>> call(
-      String parameters) async {
-    final result = await repo.streamOfUserOrders(parameters);
+      String params) async {
+    final result = await repo.streamOfUserOrders(params);
     return result;
   }
 }

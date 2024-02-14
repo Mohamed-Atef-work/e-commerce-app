@@ -12,8 +12,8 @@ class GetOrderDataUseCase extends BaseUseCase<OrderDataEntity, GetOrderDataParam
 
   GetOrderDataUseCase(this.repo);
   @override
-  Future<Either<Failure, OrderDataEntity>> call(GetOrderDataParams parameters) async {
-    final result = await repo.getOrderData(parameters);
+  Future<Either<Failure, OrderDataEntity>> call(GetOrderDataParams params) async {
+    final result = await repo.getOrderData(params);
     return result;
   }
 }

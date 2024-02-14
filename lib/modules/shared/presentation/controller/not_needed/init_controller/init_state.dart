@@ -5,22 +5,22 @@ part of 'init_cubit.dart';
 class InitState {
   final String message;
   final RequestState dataState;
-  final SharedEntity? sharedEntity;
+  final SharedUserDataEntity? SharedUserDataEntity;
 
   const InitState({
-    this.sharedEntity,
+    this.SharedUserDataEntity,
     this.message = "",
     this.dataState = RequestState.loading,
   });
   InitState copyWith({
     String? message,
     RequestState? dataState,
-    SharedEntity? sharedEntity,
+    SharedUserDataEntity? SharedUserDataEntity,
   }) =>
       InitState(
         message: message ?? this.message,
         dataState: dataState ?? this.dataState,
-        sharedEntity: sharedEntity ?? this.sharedEntity,
+        SharedUserDataEntity: sharedEntity ?? this.sharedEntity,
       );
 }
 */

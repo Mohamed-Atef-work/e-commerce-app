@@ -11,7 +11,7 @@ class UploadProductImageUseCase extends BaseUseCase<Reference, File> {
 
   UploadProductImageUseCase(this.domain);
   @override
-  Future<Either<Failure, Reference>> call(File parameters) async {
-    return await domain.uploadProductImage(parameters);
+  Future<Either<Failure, Reference>> call(File params) async {
+    return await domain.uploadProductImage(params);
   }
 }

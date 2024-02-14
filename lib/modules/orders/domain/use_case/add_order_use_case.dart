@@ -10,8 +10,8 @@ class AddOrderUseCase extends BaseUseCase<void, AddOrderParams> {
 
   AddOrderUseCase(this.repo);
   @override
-  Future<Either<Failure, void>> call(AddOrderParams parameters) async {
-    final result = await repo.addOrder(parameters);
+  Future<Either<Failure, void>> call(AddOrderParams params) async {
+    final result = await repo.addOrder(params);
     return result;
   }
 }

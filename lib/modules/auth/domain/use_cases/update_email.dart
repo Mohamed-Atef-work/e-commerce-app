@@ -9,8 +9,8 @@ class UpdateEmailUseCase extends BaseUseCase<void, UpdateEmailParams> {
   UpdateEmailUseCase(this.repo);
 
   @override
-  Future<Either<Failure, void>> call(UpdateEmailParams parameters) async {
-    return await repo.updateEmail(parameters);
+  Future<Either<Failure, void>> call(UpdateEmailParams params) async {
+    return await repo.updateEmail(params);
   }
 }
 

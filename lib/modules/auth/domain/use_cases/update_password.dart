@@ -9,8 +9,8 @@ class UpdatePasswordUseCase extends BaseUseCase<void, UpdatePasswordParams> {
   UpdatePasswordUseCase(this.repo);
 
   @override
-  Future<Either<Failure, void>> call(UpdatePasswordParams parameters) async {
-    return await repo.updatePassword(parameters);
+  Future<Either<Failure, void>> call(UpdatePasswordParams params) async {
+    return await repo.updatePassword(params);
   }
 }
 

@@ -44,7 +44,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
 
   Future<void> getCategories() async {
     emit(state.copyWith(getCategoriesState: RequestState.loading));
-    final result = await getAllProductCategoriesUseCase(const NoParameters());
+    final result = await getAllProductCategoriesUseCase(const Noparams());
     result.fold(
         (l) => emit(
               state.copyWith(
@@ -111,7 +111,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
     print(
         "< -------------------------------------------_upDateProduct----------------------------------------------- >");
     final result = await updateProductUseCase(
-      UpdateProductParameters(
+      UpdateProductparams(
           product: ProductModel(
         image: productImage,
         name: nameController.text,
@@ -150,7 +150,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
     print(
         "< -------------------------------------------_addProduct----------------------------------------------- >");
     final addProductResult = await addProductUseCase(
-      AddProductParameters(
+      AddProductparams(
         product: ProductModel(
           description: descriptionController.text,
           category: state.categories![state.categoryIndex].name,
@@ -282,7 +282,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
 /*Future<void> testing() async {
     if(formKey.currentState!.validate()){    /// < -------------------------------------------------------------------- >
       final addProductResult = await addProductUseCase(
-        AddProductParameters(
+        AddProductparams(
           productDescription: descriptionController.text,
           productCategory: categoryController.text,
           productLocation: locationController.text,

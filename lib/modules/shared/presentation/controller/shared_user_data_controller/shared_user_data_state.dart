@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
-import 'package:e_commerce_app/modules/shared/domain/entities/init_entity.dart';
+import 'package:e_commerce_app/modules/shared/domain/entities/shared_user_data_entity.dart';
 
 @immutable
 class SharedUserDataState {
   final String? message;
   final RequestState getState;
   final RequestState saveState;
-  final SharedEntity? sharedEntity;
+  final SharedUserDataEntity? sharedEntity;
   final RequestState deleteState;
 
   const SharedUserDataState({
@@ -19,7 +19,7 @@ class SharedUserDataState {
   });
   SharedUserDataState copyWith({
     String? message,
-    SharedEntity? sharedEntity,
+    SharedUserDataEntity? sharedEntity,
     RequestState? getState,
     RequestState? saveState,
     RequestState? deleteState,

@@ -10,8 +10,8 @@ class ClearCartUseCase extends BaseUseCase<void, ClearCartParams> {
 
   ClearCartUseCase(this.repo);
   @override
-  Future<Either<Failure, void>> call(ClearCartParams parameters) async {
-    return await repo.clearCart(parameters);
+  Future<Either<Failure, void>> call(ClearCartParams params) async {
+    return await repo.clearCart(params);
   }
 }
 

@@ -9,8 +9,8 @@ class AddFavoriteUseCase extends BaseUseCase<void, AddDeleteFavoriteParams> {
 
   AddFavoriteUseCase(this.repo);
   @override
-  Future<Either<Failure, void>> call(AddDeleteFavoriteParams parameters) async {
-    return await repo.addFavorite(parameters);
+  Future<Either<Failure, void>> call(AddDeleteFavoriteParams params) async {
+    return await repo.addFavorite(params);
   }
 }
 

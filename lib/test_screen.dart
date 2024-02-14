@@ -29,7 +29,7 @@ onPressed: () async {
 final FirebaseFirestore firestore = FirebaseFirestore.instance;
 final ProductStore store = ProductStoreImpl(firestore);
 await store.addProduct(
-const AddProductParameters(
+const AddProductparams(
 product: ProductModel(
 description: "productDescription",
 location: "productLocation",

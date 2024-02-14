@@ -19,11 +19,11 @@ class AuthRepositoryData implements AuthRepositoryDomain {
 
   @override
   Future<Either<Failure, UserCredential>> signIn(
-      LoginParameters parameters) async {
+      Loginparams params) async {
     print(
         "<------------------- In The SignIN Data Repository ------------------->");
     try {
-      final result = await _authDataSource.signIn(parameters);
+      final result = await _authDataSource.signIn(params);
       return Right(result);
     } on ServerException catch (serverException) {
       print(
@@ -34,11 +34,11 @@ class AuthRepositoryData implements AuthRepositoryDomain {
 
   @override
   Future<Either<Failure, UserCredential>> signUp(
-      SignUpParameters parameters) async {
+      SignUpparams params) async {
     print(
         "<------------------- In The Sign_UP Data Repository ------------------->");
     try {
-      final result = await _authDataSource.signUp(parameters);
+      final result = await _authDataSource.signUp(params);
       return Right(result);
     } on ServerException catch (serverException) {
       print(
@@ -53,9 +53,9 @@ class AuthRepositoryData implements AuthRepositoryDomain {
 
   @override
   Future<Either<Failure, void>> storeUserData(
-      StoreUserDataParams parameters) async {
+      StoreUserDataParams params) async {
     try {
-      final result = await _authDataSource.storeUserDate(parameters);
+      final result = await _authDataSource.storeUserDate(params);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));
@@ -64,9 +64,9 @@ class AuthRepositoryData implements AuthRepositoryDomain {
 
   @override
   Future<Either<Failure, UserEntity>> getUserData(
-      GetUserDataParameters parameters) async {
+      GetUserDataparams params) async {
     try {
-      final result = await _authDataSource.getUserData(parameters);
+      final result = await _authDataSource.getUserData(params);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));
@@ -75,9 +75,9 @@ class AuthRepositoryData implements AuthRepositoryDomain {
 
   @override
   Future<Either<Failure, void>> updateEmail(
-      UpdateEmailParams parameters) async {
+      UpdateEmailParams params) async {
     try {
-      final result = await _authDataSource.upDateEmail(parameters);
+      final result = await _authDataSource.upDateEmail(params);
       return Right(result);
     } on ServerException catch (serverException) {
       print(
@@ -88,9 +88,9 @@ class AuthRepositoryData implements AuthRepositoryDomain {
 
   @override
   Future<Either<Failure, void>> updatePassword(
-      UpdatePasswordParams parameters) async {
+      UpdatePasswordParams params) async {
     try {
-      final result = await _authDataSource.upDatePassword(parameters);
+      final result = await _authDataSource.upDatePassword(params);
       return Right(result);
     } on ServerException catch (serverException) {
       print(

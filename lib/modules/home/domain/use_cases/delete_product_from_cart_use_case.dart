@@ -9,8 +9,8 @@ class DeleteFromCartUseCase extends BaseUseCase<void, DeleteFromCartParams> {
 
   DeleteFromCartUseCase(this.repo);
   @override
-  Future<Either<Failure, void>> call(DeleteFromCartParams parameters) async {
-    return await repo.deleteFromCart(parameters);
+  Future<Either<Failure, void>> call(DeleteFromCartParams params) async {
+    return await repo.deleteFromCart(params);
   }
 }
 

@@ -20,7 +20,7 @@ abstract class OrderDomainRepo {
   Future<Either<Failure, void>> updateOrderData(UpDateOrderDataParams params);
   Future<Either<Failure, void>> addOrder(AddOrderParams params);
   Future<Either<Failure, OrderDataEntity>> getOrderData(
-      GetOrderDataParams parameters);
+      GetOrderDataParams params);
   Future<Either<Failure, List<OrderItemEntity>>> getOrderItems(
       GetOrderItemsParams params);
   Future<Either<Failure, Stream<List<UserEntity>>>> streamUsersWhoOrdered();

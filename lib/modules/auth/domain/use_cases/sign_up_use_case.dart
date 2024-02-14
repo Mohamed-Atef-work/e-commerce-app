@@ -5,17 +5,17 @@ import 'package:e_commerce_app/modules/auth/domain/repository/auth_domain_reposi
 
 import '../../../../core/use_case/base_use_case.dart';
 
-class SignUpUseCase extends BaseUseCase<UserCredential, SignUpParameters> {
+class SignUpUseCase extends BaseUseCase<UserCredential, SignUpparams> {
   final AuthRepositoryDomain domainRepository;
 
   SignUpUseCase(this.domainRepository);
 
   @override
   Future<Either<Failure, UserCredential>> call(
-      SignUpParameters parameters) async {
+      SignUpparams params) async {
     print(
         "<--------------------- In The SIGN_UP Use Case ------------------------>");
-    final result = await domainRepository.signUp(parameters);
+    final result = await domainRepository.signUp(params);
     result.fold((l) {
       print(
           "<----------------- fold -- Error ----------------------> ${l.message}");
@@ -27,10 +27,10 @@ class SignUpUseCase extends BaseUseCase<UserCredential, SignUpParameters> {
   }
 }
 
-class SignUpParameters {
+class SignUpparams {
   final String name, email, password;
 
-  SignUpParameters({
+  SignUpparams({
     required this.name,
     required this.email,
     required this.password,

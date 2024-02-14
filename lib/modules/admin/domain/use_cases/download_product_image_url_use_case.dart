@@ -9,8 +9,8 @@ class DownloadProductImageUrlUseCase extends BaseUseCase<String,Reference>{
 
   DownloadProductImageUrlUseCase(this.domain);
   @override
-  Future<Either<Failure, String>> call(Reference parameters) async{
-    return await domain.downloadProductImageUrl(parameters);
+  Future<Either<Failure, String>> call(Reference params) async{
+    return await domain.downloadProductImageUrl(params);
 
 
   }

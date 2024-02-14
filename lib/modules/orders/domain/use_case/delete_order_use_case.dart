@@ -10,8 +10,8 @@ class DeleteOrderUseCase extends BaseUseCase<void, DeleteOrderParams> {
 
   DeleteOrderUseCase(this.repo);
   @override
-  Future<Either<Failure, void>> call(DeleteOrderParams parameters) async {
-    final result = await repo.deleteOrder(parameters);
+  Future<Either<Failure, void>> call(DeleteOrderParams params) async {
+    final result = await repo.deleteOrder(params);
     return result;
   }
 }

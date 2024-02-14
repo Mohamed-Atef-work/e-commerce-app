@@ -14,9 +14,9 @@ class FavoriteDataRepository implements FavoriteDomainRepository {
 
   @override
   Future<Either<Failure, List<FavoriteEntity>>> getFavorites(
-      GetFavoritesParams parameters) async {
+      GetFavoritesParams params) async {
     try {
-      final result = await dataSource.getFavorites(parameters.uId);
+      final result = await dataSource.getFavorites(params.uId);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));
@@ -36,9 +36,9 @@ class FavoriteDataRepository implements FavoriteDomainRepository {
 
   @override
   Future<Either<Failure, void>> deleteFavorite(
-      AddDeleteFavoriteParams parameters) async {
+      AddDeleteFavoriteParams params) async {
     try {
-      final result = await dataSource.deleteFav(parameters);
+      final result = await dataSource.deleteFav(params);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));
@@ -47,9 +47,9 @@ class FavoriteDataRepository implements FavoriteDomainRepository {
 
 /*  @override
   Future<Either<Failure, FavoriteEntity>> getFavOfOneCategory(
-      GetFavOfOneCategoryParams parameters) async {
+      GetFavOfOneCategoryParams params) async {
     try {
-      final result = await dataSource.getFavOfOneCategory(parameters.category);
+      final result = await dataSource.getFavOfOneCategory(params.category);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));

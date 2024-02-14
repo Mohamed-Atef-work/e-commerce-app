@@ -8,16 +8,16 @@ import 'package:e_commerce_app/core/error/failure.dart';
 import '../../../../core/use_case/base_use_case.dart';
 import '../repository/auth_domain_repository.dart';
 
-class LoginInUseCase extends BaseUseCase<UserCredential, LoginParameters> {
+class LoginInUseCase extends BaseUseCase<UserCredential, Loginparams> {
   final AuthRepositoryDomain domain;
 
   LoginInUseCase(this.domain);
   @override
   Future<Either<Failure, UserCredential>> call(
-      LoginParameters parameters) async {
+      Loginparams params) async {
     print(
         "<--------------------- In The SignIN Use Case ------------------------>");
-    final result = await domain.signIn(parameters);
+    final result = await domain.signIn(params);
     result.fold((l) {
       print(
           "<----------------- fold -- Error ----------------------> ${l.message}");
@@ -29,9 +29,9 @@ class LoginInUseCase extends BaseUseCase<UserCredential, LoginParameters> {
   }
 }
 
-class LoginParameters extends Equatable {
+class Loginparams extends Equatable {
   final String email, password;
-  const LoginParameters({
+  const Loginparams({
     required this.email,
     required this.password,
   });

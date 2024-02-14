@@ -12,8 +12,8 @@ class GetFavoritesUseCase
   GetFavoritesUseCase(this.domainRepository);
   @override
   Future<Either<Failure, List<FavoriteEntity>>> call(
-      GetFavoritesParams parameters) async {
-    return await domainRepository.getFavorites(parameters);
+      GetFavoritesParams params) async {
+    return await domainRepository.getFavorites(params);
   }
 }
 

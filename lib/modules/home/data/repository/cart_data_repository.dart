@@ -16,9 +16,9 @@ class CartDataRepo implements CartDomainRepo {
   CartDataRepo(this.dataSource);
 
   @override
-  Future<Either<Failure, void>> addToCart(AddToCartParams parameters) async {
+  Future<Either<Failure, void>> addToCart(AddToCartParams params) async {
     try {
-      final result = await dataSource.addToCart(parameters);
+      final result = await dataSource.addToCart(params);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));
@@ -27,9 +27,9 @@ class CartDataRepo implements CartDomainRepo {
 
   @override
   Future<Either<Failure, void>> deleteFromCart(
-      DeleteFromCartParams parameters) async {
+      DeleteFromCartParams params) async {
     try {
-      final result = await dataSource.deleteFromCart(parameters);
+      final result = await dataSource.deleteFromCart(params);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));

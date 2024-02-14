@@ -6,13 +6,13 @@ import 'package:e_commerce_app/modules/orders/domain/repository/order_domain_rep
 
 
 class GetUsersWhoOrderedUseCase
-    extends BaseUseCase<Stream<List<UserEntity>>, NoParameters> {
+    extends BaseUseCase<Stream<List<UserEntity>>, Noparams> {
   final OrderDomainRepo orderRepo;
 
   GetUsersWhoOrderedUseCase(this.orderRepo);
   @override
   Future<Either<Failure, Stream<List<UserEntity>>>> call(
-      NoParameters parameters) async {
+      Noparams params) async {
     return await orderRepo.streamUsersWhoOrdered();
   }
 }

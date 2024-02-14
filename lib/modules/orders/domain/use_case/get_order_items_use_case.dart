@@ -13,8 +13,8 @@ class GetOrderItemsUseCase
   GetOrderItemsUseCase(this.repo);
   @override
   Future<Either<Failure, List<OrderItemEntity>>> call(
-      GetOrderItemsParams parameters) async {
-    final result = repo.getOrderItems(parameters);
+      GetOrderItemsParams params) async {
+    final result = repo.getOrderItems(params);
     return result;
   }
 }

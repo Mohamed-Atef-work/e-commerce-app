@@ -7,21 +7,21 @@ import 'package:equatable/equatable.dart';
 import '../entities/product_entity.dart';
 
 class LoadProductsUseCase
-    extends BaseUseCase<Stream<List<ProductEntity>>, LoadProductsParameters> {
+    extends BaseUseCase<Stream<List<ProductEntity>>, LoadProductsparams> {
   final AdminRepositoryDomain domain;
 
   LoadProductsUseCase(this.domain);
   @override
   Future<Either<Failure, Stream<List<ProductEntity>>>> call(
-      LoadProductsParameters parameters) async {
-    return await domain.loadProducts(parameters);
+      LoadProductsparams params) async {
+    return await domain.loadProducts(params);
   }
 }
 
-class LoadProductsParameters extends Equatable {
+class LoadProductsparams extends Equatable {
   final String category;
 
-  const LoadProductsParameters({
+  const LoadProductsparams({
     required this.category,
   });
 

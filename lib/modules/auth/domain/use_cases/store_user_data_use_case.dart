@@ -10,8 +10,8 @@ class StoreUserDataUseCase extends BaseUseCase<void, StoreUserDataParams> {
 
   StoreUserDataUseCase(this.domain);
   @override
-  Future<Either<Failure, void>> call(StoreUserDataParams parameters) async {
-    return await domain.storeUserData(parameters);
+  Future<Either<Failure, void>> call(StoreUserDataParams params) async {
+    return await domain.storeUserData(params);
   }
 }
 
@@ -21,15 +21,14 @@ class StoreUserDataParams {
   StoreUserDataParams({required this.userModel});
 }
 
-
-/*class StoreUserDataParameters extends Equatable {
+/*class StoreUserDataParams extends Equatable {
   final String name;
   final String email;
   final String address;
   final String phone;
   final String id;
 
-  const StoreUserDataParameters({
+  const StoreUserDataParams({
     required this.name,
     required this.email,
     required this.address,

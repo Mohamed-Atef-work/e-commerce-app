@@ -11,8 +11,8 @@ class DeleteItemFromOrderUseCase
   DeleteItemFromOrderUseCase(this.repo);
   @override
   Future<Either<Failure, void>> call(
-      DeleteItemFromOrderParams parameters) async {
-    final result = await repo.deleteItemFromOrder(parameters);
+      DeleteItemFromOrderParams params) async {
+    final result = await repo.deleteItemFromOrder(params);
     return result;
   }
 }

@@ -30,7 +30,7 @@ class CategoriesModelSheetCubit extends Cubit<CategoriesModelSheetState> {
         addCategoryState: RequestState.loading,
       ));
       final result = await addNewProductCategoryUseCase(
-          AddNewProductsCategoryParameters(name: categoryController.text));
+          AddNewProductsCategoryparams(name: categoryController.text));
       result.fold(
           (l) => emit(state.copyWith(
                 addCategoryState: RequestState.error,
@@ -45,9 +45,9 @@ class CategoriesModelSheetCubit extends Cubit<CategoriesModelSheetState> {
   }
 
   Future<void> deleteCategory(
-      DeleteProductsCategoryParameters parameters) async {
+      DeleteProductsCategoryparams params) async {
     emit(state.copyWith(deleteCategoryState: RequestState.loading));
-    final result = await deleteProductsCategoryUseCase(parameters);
+    final result = await deleteProductsCategoryUseCase(params);
     result.fold((l) {
       emit(state.copyWith(
           deleteCategoryState: RequestState.error, message: l.message));
@@ -58,10 +58,10 @@ class CategoriesModelSheetCubit extends Cubit<CategoriesModelSheetState> {
   }
 
   Future<void> updateCategory(
-      UpDateProductsCategoryParameters parameters) async {
+      UpDateProductsCategoryparams params) async {
     if (formKey.currentState!.validate()) {
       emit(state.copyWith(updateCategoryState: RequestState.loading));
-      final result = await updateProductCategoryUseCase(parameters);
+      final result = await updateProductCategoryUseCase(params);
       emit(result.fold(
           (l) => state.copyWith(
               updateCategoryState: RequestState.error,

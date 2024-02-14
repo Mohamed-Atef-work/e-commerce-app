@@ -12,7 +12,7 @@ abstract class FavoriteStore {
       required String uId});
 
   Future<QuerySnapshot<Map<String, dynamic>>> getCategories(String uId);
-  Future<void> deleteFav(AddDeleteFavoriteParams parameters);
+  Future<void> deleteFav(AddDeleteFavoriteParams params);
   Future<void> addFav(AddDeleteFavoriteParams params);
 }
 
@@ -21,14 +21,14 @@ class FavoriteStoreImpl implements FavoriteStore {
   FavoriteStoreImpl(this.store);
 
   @override
-  Future<void> deleteFav(AddDeleteFavoriteParams parameters) async {
+  Future<void> deleteFav(AddDeleteFavoriteParams params) async {
     await store
         .collection(kUsers)
-        .doc(parameters.uId)
+        .doc(params.uId)
         .collection(kFavorites)
-        .doc(parameters.category)
+        .doc(params.category)
         .collection(kProducts)
-        .doc(parameters.productId)
+        .doc(params.productId)
         .delete();
   }
 
@@ -43,7 +43,7 @@ class FavoriteStoreImpl implements FavoriteStore {
 
     if (response.exists) {
       await _setFavCategoryToBeAvailableToFetch(
-        FavoriteParameters(
+        Favoriteparams(
           uId: params.uId,
           category: params.category,
           productId: params.productId,
@@ -120,12 +120,12 @@ class FavoriteStoreImpl implements FavoriteStore {
   }
 
   Future<void> _setFavCategoryToBeAvailableToFetch(
-      FavoriteParameters parameters) async {
+      Favoriteparams params) async {
     await store
         .collection(kUsers)
-        .doc(parameters.uId)
+        .doc(params.uId)
         .collection(kFavorites)
-        .doc(parameters.category)
+        .doc(params.category)
         .set({"able_to_fetch": true});
   }
 
@@ -144,12 +144,12 @@ class FavoriteStoreImpl implements FavoriteStore {
 }
 
 /// ///////////////////////////////////////////////////////////
-class FavoriteParameters extends Equatable {
+class Favoriteparams extends Equatable {
   final String uId;
   final String productId;
   final String category;
 
-  const FavoriteParameters({
+  const Favoriteparams({
     required this.uId,
     required this.productId,
     required this.category,

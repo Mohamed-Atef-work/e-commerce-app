@@ -12,8 +12,8 @@ class GetCartProductsUseCase
   GetCartProductsUseCase(this.repo);
   @override
   Future<Either<Failure, List<CartEntity>>> call(
-      GetCartProductsParams parameters) async {
-    return await repo.getCartProducts(parameters);
+      GetCartProductsParams params) async {
+    return await repo.getCartProducts(params);
   }
 }
 

@@ -7,6 +7,6 @@ abstract class BaseUseCase<T, Params> {
 }
 
 /// extends the Equatable..........
-class NoParameters {
-  const NoParameters();
+class Noparams {
+  const Noparams();
 }

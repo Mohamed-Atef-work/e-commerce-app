@@ -9,7 +9,7 @@ class UpdateProfileUseCase extends BaseUseCase<void, StoreUserDataParams> {
 
   UpdateProfileUseCase(this.repo);
   @override
-  Future<Either<Failure, void>> call(StoreUserDataParams parameters) async {
-    return await repo.storeUserData(parameters);
+  Future<Either<Failure, void>> call(StoreUserDataParams params) async {
+    return await repo.storeUserData(params);
   }
 }

@@ -5,7 +5,7 @@ import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/admin/domain/repository/admin_domain_repository.dart';
 
-class AddProductUseCase extends BaseUseCase<void, AddProductParameters> {
+class AddProductUseCase extends BaseUseCase<void, AddProductparams> {
   final AdminRepositoryDomain domainRepository;
 
   AddProductUseCase(
@@ -13,15 +13,15 @@ class AddProductUseCase extends BaseUseCase<void, AddProductParameters> {
   );
 
   @override
-  Future<Either<Failure, void>> call(AddProductParameters parameters) async {
-    return await domainRepository.addProduct(parameters);
+  Future<Either<Failure, void>> call(AddProductparams params) async {
+    return await domainRepository.addProduct(params);
   }
 }
 
-class AddProductParameters {
+class AddProductparams {
   final ProductModel product;
 
-  const AddProductParameters({
+  const AddProductparams({
     required this.product,
   });
 }

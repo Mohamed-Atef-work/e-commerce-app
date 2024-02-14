@@ -24,9 +24,9 @@ class AdminRepositoryData implements AdminRepositoryDomain {
   );
   @override
   Future<Either<Failure, void>> addProduct(
-      AddProductParameters parameters) async {
+      AddProductparams params) async {
     try {
-      final result = await dataSource.addProduct(parameters);
+      final result = await dataSource.addProduct(params);
       return Right(result);
     } on ServerException catch (serverException) {
       return Left(ServerFailure(
@@ -36,9 +36,9 @@ class AdminRepositoryData implements AdminRepositoryDomain {
   }
 
   @override
-  Future<Either<Failure, Reference>> uploadProductImage(File parameters) async {
+  Future<Either<Failure, Reference>> uploadProductImage(File params) async {
     try {
-      final result = await dataSource.uploadProductImage(parameters);
+      final result = await dataSource.uploadProductImage(params);
       return Right(result);
     } on ServerException catch (serverException) {
       return Left(ServerFailure(message: serverException.message));
@@ -58,9 +58,9 @@ class AdminRepositoryData implements AdminRepositoryDomain {
 
   @override
   Future<Either<Failure, Stream<List<ProductEntity>>>> loadProducts(
-      LoadProductsParameters parameters) async {
+      LoadProductsparams params) async {
     try {
-      final result = await dataSource.loadProducts(parameters);
+      final result = await dataSource.loadProducts(params);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));
@@ -69,9 +69,9 @@ class AdminRepositoryData implements AdminRepositoryDomain {
 
   @override
   Future<Either<Failure, void>> deleteProduct(
-      DeleteProductParameters parameters) async {
+      DeleteProductparams params) async {
     try {
-      final result = await dataSource.deleteProduct(parameters);
+      final result = await dataSource.deleteProduct(params);
       return Right(result);
     } on ServerException catch (serverException) {
       return Left(ServerFailure(message: serverException.message));
@@ -80,9 +80,9 @@ class AdminRepositoryData implements AdminRepositoryDomain {
 
   @override
   Future<Either<Failure, void>> editProduct(
-      UpdateProductParameters parameters) async {
+      UpdateProductparams params) async {
     try {
-      final result = await dataSource.updateProduct(parameters);
+      final result = await dataSource.updateProduct(params);
       return Right(result);
     } on ServerException catch (serverException) {
       return Left(ServerFailure(message: serverException.message));
@@ -91,9 +91,9 @@ class AdminRepositoryData implements AdminRepositoryDomain {
 
   @override
   Future<Either<Failure, void>> addNewProductCategory(
-      AddNewProductsCategoryParameters parameters) async {
+      AddNewProductsCategoryparams params) async {
     try {
-      final result = await dataSource.addNewProductCategory(parameters);
+      final result = await dataSource.addNewProductCategory(params);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));
@@ -113,9 +113,9 @@ class AdminRepositoryData implements AdminRepositoryDomain {
 
   @override
   Future<Either<Failure, void>> deleteProductCategory(
-      DeleteProductsCategoryParameters parameters) async {
+      DeleteProductsCategoryparams params) async {
     try {
-      final result = await dataSource.deleteProductCategory(parameters);
+      final result = await dataSource.deleteProductCategory(params);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));
@@ -124,9 +124,9 @@ class AdminRepositoryData implements AdminRepositoryDomain {
 
   @override
   Future<Either<Failure, void>> upDateProductCategory(
-      UpDateProductsCategoryParameters parameters) async {
+      UpDateProductsCategoryparams params) async {
     try {
-      final result = await dataSource.upDateProductCategory(parameters);
+      final result = await dataSource.upDateProductCategory(params);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));

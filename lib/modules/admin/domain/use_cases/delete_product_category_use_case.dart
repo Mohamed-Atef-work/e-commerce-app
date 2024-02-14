@@ -5,22 +5,22 @@ import 'package:e_commerce_app/modules/admin/domain/repository/admin_domain_repo
 import 'package:equatable/equatable.dart';
 
 class DeleteProductsCategoryUseCase
-    extends BaseUseCase<void, DeleteProductsCategoryParameters> {
+    extends BaseUseCase<void, DeleteProductsCategoryparams> {
   final AdminRepositoryDomain domainRepo;
 
   DeleteProductsCategoryUseCase(this.domainRepo);
   @override
   Future<Either<Failure, void>> call(
-      DeleteProductsCategoryParameters parameters) async {
-    return domainRepo.deleteProductCategory(parameters);
+      DeleteProductsCategoryparams params) async {
+    return domainRepo.deleteProductCategory(params);
   }
 }
 
-class DeleteProductsCategoryParameters extends Equatable {
+class DeleteProductsCategoryparams extends Equatable {
   final String id;
   final String name;
 
-  const DeleteProductsCategoryParameters(
+  const DeleteProductsCategoryparams(
       {required this.name, required this.id});
 
   @override

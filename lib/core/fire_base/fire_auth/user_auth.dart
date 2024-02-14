@@ -5,8 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 abstract class UserAuth {
   Future<void> upDataEmail(String newEmail);
   Future<void> upDataPassword(String newPassword);
-  Future<UserCredential> signIn(LoginParameters params);
-  Future<UserCredential> signUp(SignUpParameters params);
+  Future<UserCredential> signIn(Loginparams params);
+  Future<UserCredential> signUp(SignUpparams params);
   Future<void> reAuthenticateWithCredential(String currentPassword);
 }
 
@@ -37,7 +37,7 @@ class UserAuthImpl implements UserAuth {
   }
 
   @override
-  Future<UserCredential> signIn(LoginParameters params) async {
+  Future<UserCredential> signIn(Loginparams params) async {
     return await _auth.signInWithEmailAndPassword(
       password: params.password,
       email: params.email,
@@ -45,7 +45,7 @@ class UserAuthImpl implements UserAuth {
   }
 
   @override
-  Future<UserCredential> signUp(SignUpParameters params) async {
+  Future<UserCredential> signUp(SignUpparams params) async {
     return await _auth.createUserWithEmailAndPassword(
       password: params.password,
       email: params.email,

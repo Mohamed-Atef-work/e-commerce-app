@@ -9,8 +9,8 @@ class AddToCartUseCase extends BaseUseCase<void, AddToCartParams> {
 
   AddToCartUseCase(this.repo);
   @override
-  Future<Either<Failure, void>> call(AddToCartParams parameters) async {
-    return await repo.addToCart(parameters);
+  Future<Either<Failure, void>> call(AddToCartParams params) async {
+    return await repo.addToCart(params);
   }
 }
 

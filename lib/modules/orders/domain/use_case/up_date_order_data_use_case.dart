@@ -11,8 +11,8 @@ class UpDateOrderDataUseCase extends BaseUseCase<void, UpDateOrderDataParams> {
 
   UpDateOrderDataUseCase(this.repo);
   @override
-  Future<Either<Failure, void>> call(UpDateOrderDataParams parameters) async {
-    final result = await repo.updateOrderData(parameters);
+  Future<Either<Failure, void>> call(UpDateOrderDataParams params) async {
+    final result = await repo.updateOrderData(params);
     return result;
   }
 }

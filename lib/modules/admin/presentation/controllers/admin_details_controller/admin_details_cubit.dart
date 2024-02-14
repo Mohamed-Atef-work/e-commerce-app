@@ -16,7 +16,7 @@ class AdminDetailsCubit extends Cubit<AdminDetailsState> {
   Future<void> deleteProduct() async {
     emit(state.copyWith(deleteState: RequestState.loading));
     final result = await deleteProductUseCase(
-        DeleteProductParameters(state.product!.id!, state.product!.category));
+        DeleteProductparams(state.product!.id!, state.product!.category));
     emit(
       result.fold(
         (l) =>
