@@ -19,7 +19,7 @@ class SignUpScreen extends StatelessWidget {
     return BlocProvider<SignUpBloc>(
       create: (context) => sl<SignUpBloc>(),
       child: Scaffold(
-        backgroundColor: AppColors.primaryColorYellow,
+        backgroundColor: kPrimaryColorYellow,
         body: ListView(
           padding: EdgeInsets.only(
             top: context.height * 0.1,
@@ -35,7 +35,7 @@ class SignUpScreen extends StatelessWidget {
               children: [
                 const CustomText(
                   fontSize: 15,
-                  textColor: AppColors.white,
+                  textColor: kWhite,
                   text: AppStrings.haveAnAccount,
                 ),
                 TextButton(
@@ -46,7 +46,7 @@ class SignUpScreen extends StatelessWidget {
                   child: const CustomText(
                     fontSize: 15,
                     text: AppStrings.login,
-                    textColor: AppColors.black,
+                    textColor: Colors.black,
                   ),
                 ),
               ],

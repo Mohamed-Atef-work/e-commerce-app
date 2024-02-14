@@ -19,7 +19,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = CartStoreImpl(FirebaseFirestore.instance);
     return Scaffold(
-      backgroundColor: AppColors.primaryColorYellow,
+      backgroundColor: kPrimaryColorYellow,
       appBar: appBar(title: AppStrings.cart),
       body: Column(
         children: [

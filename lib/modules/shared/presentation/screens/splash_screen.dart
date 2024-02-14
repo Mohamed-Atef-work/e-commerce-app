@@ -25,11 +25,11 @@ class _SplashScreenState extends State<SplashScreen> {
           listener: (context, state) {
             print(
                 "${state.message} < ------ listener ----- > ${state.getState}");
-            print(state.initEntity?.user.userEntity.name);
-            print(state.initEntity?.user.adminOrUser);
-            print(state.initEntity?.user.password);
+            print(state.sharedEntity?.user.userEntity.name);
+            print(state.sharedEntity?.user.adminOrUser);
+            print(state.sharedEntity?.user.password);
             if (state.getState == RequestState.success) {
-              if (state.initEntity!.user.adminOrUser == AdminUser.admin) {
+              if (state.sharedEntity!.user.adminOrUser == AdminUser.admin) {
                 Navigator.of(context)
                     .pushReplacementNamed(Screens.adminLayoutScreen);
               } else {

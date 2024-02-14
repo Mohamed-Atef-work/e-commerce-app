@@ -4,7 +4,7 @@ import 'package:e_commerce_app/modules/admin/data/model/product_category_model.d
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/core/fire_base/fire_storage.dart';
-import 'package:e_commerce_app/core/fire_base/strings.dart';
+import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/add_product_use_case.dart';
 import '../../domain/entities/product_category_entity.dart';
@@ -60,7 +60,7 @@ class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
   @override
   Future<Reference> uploadProductImage(File image) async {
     return await storage
-        .uploadFile(file: image, collectionName: FirebaseStrings.productImages)
+        .uploadFile(file: image, collectionName: kProductImages)
         .then((reference) {
       return reference;
     }).catchError((error) {

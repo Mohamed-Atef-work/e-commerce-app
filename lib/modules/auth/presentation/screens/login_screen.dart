@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
       create: (context) => sl<LoginBloc>(),
       lazy: true,
       child: Scaffold(
-        backgroundColor: AppColors.primaryColorYellow,
+        backgroundColor: kPrimaryColorYellow,
         body: ListView(
           padding: EdgeInsets.only(
             top: context.height * 0.1,
@@ -39,7 +39,7 @@ class LoginScreen extends StatelessWidget {
               children: [
                 const CustomText(
                   fontSize: 15,
-                  textColor: AppColors.white,
+                  textColor: kWhite,
                   text: AppStrings.doNotHaveAnAccount,
                 ),
                 TextButton(
@@ -50,7 +50,7 @@ class LoginScreen extends StatelessWidget {
                   child: const CustomText(
                     fontSize: 15,
                     text: AppStrings.signUp,
-                    textColor: AppColors.black,
+                    textColor: Colors.black,
                   ),
                 ),
               ],
@@ -70,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                   },
                   child: CustomText(
                     fontSize: 15,
-                    textColor: AppColors.black,
+                    textColor: Colors.black,
                     textAlign: TextAlign.center,
                     text: state.adminUser == AdminUser.admin
                         ? AppStrings.iAmAnAdmin

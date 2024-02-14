@@ -62,8 +62,8 @@ child: const CustomText(text: "Add"),
 Future<DocumentSnapshot<Map<String, dynamic>>> _getFavoriteProduct(
     {required String category, required String productId}) async {
   return await FirebaseFirestore.instance
-      .collection(FirebaseStrings.products)
-      .doc(FirebaseStrings.categories)
+      .collection(kProducts)
+      .doc(kCategories)
       .collection(category)
       .doc(productId)
       .get();

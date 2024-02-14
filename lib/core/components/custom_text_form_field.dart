@@ -30,7 +30,7 @@ class CustomTextFormField extends StatelessWidget {
     this.obSecure = false,
     required this.hintText,
     this.textEditingController,
-    this.fillColor = AppColors.whiteGray,
+    this.fillColor = kWhiteGray,
   });
 
   @override
@@ -39,7 +39,7 @@ class CustomTextFormField extends StatelessWidget {
       onChanged: onChanged,
       validator: validator,
       obscureText: obSecure!,
-      cursorColor: AppColors.white,
+      cursorColor: kWhite,
       controller: textEditingController,
       decoration: InputDecoration(
         filled: true,
@@ -50,7 +50,7 @@ class CustomTextFormField extends StatelessWidget {
         enabledBorder: _border(),
         focusedBorder: _border(),
         hintStyle: TextStyle(color: hintTextColor, fontSize: fontSize),
-        prefixIcon: Icon(prefixIcon, color: AppColors.primaryColorYellow),
+        prefixIcon: Icon(prefixIcon, color: kPrimaryColorYellow),
         suffixIcon: Padding(
           padding: const EdgeInsets.only(right: 5),
           child: IconButton(onPressed: suffixPressed, icon: Icon(suffixIcon)),
@@ -61,7 +61,7 @@ class CustomTextFormField extends StatelessWidget {
 
   _border() => OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
-        borderSide: const BorderSide(color: AppColors.white),
+        borderSide: const BorderSide(color: kWhite),
       );
 }
 
@@ -88,7 +88,7 @@ class PasswordTextFormField extends StatelessWidget {
     return TextFormField(
       onChanged: onChanged,
       obscureText: obSecure,
-      cursorColor: AppColors.white,
+      cursorColor: kWhite,
       controller: textEditingController,
       validator: (value) => Validators.passwordValidator(value),
       decoration: InputDecoration(
@@ -96,11 +96,11 @@ class PasswordTextFormField extends StatelessWidget {
         border: _border(),
         hintText: hintText,
         labelText: labelText,
-        fillColor: AppColors.whiteGray,
+        fillColor: kWhiteGray,
         enabledBorder: _border(),
         focusedBorder: _border(),
         hintStyle: const TextStyle(fontSize: 15),
-        prefixIcon: const Icon(Icons.lock, color: AppColors.primaryColorYellow),
+        prefixIcon: const Icon(Icons.lock, color: kPrimaryColorYellow),
         suffixIcon: Padding(
           padding: const EdgeInsets.only(right: 5),
           child: IconButton(
@@ -112,7 +112,7 @@ class PasswordTextFormField extends StatelessWidget {
 
   _border() => OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
-        borderSide: const BorderSide(color: AppColors.white),
+        borderSide: const BorderSide(color: kWhite),
       );
   _suffixIcon(bool obSecure) =>
       obSecure ? Icons.remove_red_eye : Icons.panorama_fish_eye_outlined;

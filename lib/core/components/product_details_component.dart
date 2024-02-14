@@ -85,7 +85,7 @@ class ProductComponent extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           //color: Colors.orange.shade300,
-          color: AppColors.whiteGray,
+          color: kWhiteGray,
           borderRadius: BorderRadius.circular(30),
         ),
         child: Column(

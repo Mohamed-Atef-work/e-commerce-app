@@ -56,7 +56,7 @@ class CartProductWidget extends StatelessWidget {
                   CustomText(
                     fontSize: 18,
                     textAlign: TextAlign.left,
-                    textColor: AppColors.black,
+                    textColor: Colors.black,
                     fontWeight: FontWeight.bold,
                     text: controller.state.products[index].name,
                   ),
@@ -82,7 +82,7 @@ class CartProductWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 text:
                     "\$${controller.state.products[index].price * controller.state.quantities[index]}",
-                textColor: AppColors.darkBrown,
+                textColor: kDarkBrown,
               ),
             ],
           ),

@@ -3,7 +3,7 @@ import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
 import 'package:meta/meta.dart';
 
-part 'shared_password_state.dart';
+//part 'shared_password_state.dart';
 
 /*class SharedPasswordCubit extends Cubit<SharedPasswordState> {
   final SharedDomainRepo _sharedDomainRepo;

@@ -24,7 +24,7 @@ class AddNewCategoryModelSheetWidget extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl<CategoriesModelSheetCubit>(),
       child: Container(
-        color: AppColors.primaryColorYellow,
+        color: kPrimaryColorYellow,
         height: context.height * 0.4,
         child: Builder(builder: (context) {
           final controller =
@@ -90,7 +90,7 @@ class DeleteUpdateCategoryModelSheetWidget extends StatelessWidget {
       create: (context) =>
           sl<CategoriesModelSheetCubit>()..takeCategoryName(category.name),
       child: Container(
-          color: AppColors.primaryColorYellow,
+          color: kPrimaryColorYellow,
           height: context.height * 0.4,
           child: Builder(builder: (context) {
             final controller =

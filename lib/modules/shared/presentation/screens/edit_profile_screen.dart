@@ -46,7 +46,7 @@ class EditProfileScreen extends StatelessWidget {
                 //hoverColor: Colors.red,
                 splashColor: Colors.red,
                 focusColor: Colors.white,
-                highlightColor: AppColors.whiteGray,
+                highlightColor: kWhiteGray,
                 onPressed: () {
                   showModalBottomSheet(
                     context: context,

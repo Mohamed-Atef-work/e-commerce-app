@@ -7,19 +7,19 @@ class SharedUserDataState {
   final String? message;
   final RequestState getState;
   final RequestState saveState;
-  final InitEntity? initEntity;
+  final SharedEntity? sharedEntity;
   final RequestState deleteState;
 
   const SharedUserDataState({
     this.message,
-    this.initEntity,
+    this.sharedEntity,
     this.getState = RequestState.initial,
     this.saveState = RequestState.initial,
     this.deleteState = RequestState.initial,
   });
   SharedUserDataState copyWith({
     String? message,
-    InitEntity? initEntity,
+    SharedEntity? sharedEntity,
     RequestState? getState,
     RequestState? saveState,
     RequestState? deleteState,
@@ -28,7 +28,7 @@ class SharedUserDataState {
         message: message ?? this.message,
         getState: getState ?? this.getState,
         saveState: saveState ?? this.saveState,
-        initEntity: initEntity ?? this.initEntity,
+        sharedEntity: sharedEntity ?? this.sharedEntity,
         deleteState: deleteState ?? this.deleteState,
       );
 }

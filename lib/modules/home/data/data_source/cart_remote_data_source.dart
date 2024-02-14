@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/cart.dart';
-import 'package:e_commerce_app/core/fire_base/strings.dart';
+import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/home/data/models/cart_category_model.dart';
@@ -63,7 +63,7 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
       throw ServerException(message: error);
     });
     final quantities = List<int>.of(
-        quantitiesDocs.map((e) => e.data()![FirebaseStrings.quantity]));
+        quantitiesDocs.map((e) => e.data()![kQuantity]));
     return quantities;
   }
 

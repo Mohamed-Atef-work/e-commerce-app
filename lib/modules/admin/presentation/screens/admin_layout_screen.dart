@@ -54,7 +54,7 @@ class AdminLayoutScreen extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
-              backgroundColor: AppColors.whiteGray,
+              backgroundColor: kWhiteGray,
               child: const Icon(Icons.add, size: 30),
             ),
           ),
@@ -81,10 +81,10 @@ class AdminLayoutScreen extends StatelessWidget {
   PreferredSizeWidget _appBar(BuildContext context) => AppBar(
         elevation: 0.0,
         centerTitle: true,
-        backgroundColor: AppColors.primaryColorYellow,
+        backgroundColor: kPrimaryColorYellow,
         title: CustomText(
           fontSize: 30,
-          textColor: AppColors.black,
+          textColor: Colors.black,
           fontWeight: FontWeight.bold,
           fontFamily: kPacifico,
           text: BlocProvider.of<AdminLayoutCubit>(context).state.appBarTitle,
@@ -95,8 +95,8 @@ class AdminLayoutScreen extends StatelessWidget {
       BottomNavigationBar(
         //unselectedItemColor: Colors.orange,
         type: BottomNavigationBarType.fixed,
-        fixedColor: AppColors.primaryColorYellow,
-        backgroundColor: AppColors.primaryColorYellow,
+        fixedColor: kPrimaryColorYellow,
+        backgroundColor: kPrimaryColorYellow,
         onTap: (index) {
           BlocProvider.of<AdminLayoutCubit>(context).newView(index);
         },
@@ -141,7 +141,7 @@ class AdminLayoutScreen extends StatelessWidget {
   /*BottomAppBar _bottom(BuildContext context) => BottomAppBar(
         height: 65,
         elevation: 1,
-        color: AppColors.primaryColorYellow,
+        color: kPrimaryColorYellow,
         shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

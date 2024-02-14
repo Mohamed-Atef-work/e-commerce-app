@@ -24,10 +24,10 @@ class UpDateOrderDataWidget extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         border: Border.all(
-          color: AppColors.white,
+          color: kWhite,
           style: BorderStyle.solid,
         ),
-        color: AppColors.primaryColorYellow,
+        color: kPrimaryColorYellow,
         borderRadius: const BorderRadius.only(
           topRight: Radius.circular(25),
           topLeft: Radius.circular(25),

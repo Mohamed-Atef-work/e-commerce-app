@@ -27,7 +27,7 @@ class ManageProductImageWidget extends StatelessWidget {
               height: context.height * 0.3,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: AppColors.whiteGray),
+                  color: kWhiteGray),
               child: const Center(
                 child: CustomText(
                   fontSize: 20,

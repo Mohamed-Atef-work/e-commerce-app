@@ -20,7 +20,7 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryColorYellow,
+      backgroundColor: kPrimaryColorYellow,
       appBar: appBar(
         title: AppStrings.details,
         leading: IconButton(
@@ -62,21 +62,21 @@ class DetailsScreen extends StatelessWidget {
                     fontSize: 25,
                     text: state.product!.name,
                     fontWeight: FontWeight.bold,
-                    textColor: AppColors.darkBrown,
+                    textColor: kDarkBrown,
                     fontFamily: kPacifico,
                   ),
                   CustomText(
                     fontSize: 20,
                     text: "\$${state.product!.price * state.quantity}",
                     fontWeight: FontWeight.bold,
-                    textColor: AppColors.darkBrown,
+                    textColor: kDarkBrown,
                     fontFamily: kPacifico,
                   ),
                   SizedBox(height: context.height * 0.03),
                   CustomText(
                     fontSize: 18,
                     text: state.product!.description,
-                    textColor: AppColors.darkBrown,
+                    textColor: kDarkBrown,
                   ),
                   const Spacer(),
                   Row(
@@ -139,7 +139,7 @@ class DetailsScreen extends StatelessWidget {
     final ProductEntity product =
     ModalRoute.of(context)!.settings.arguments as ProductEntity;
     return Scaffold(
-      backgroundColor: AppColors.primaryColorYellow,
+      backgroundColor: kPrimaryColorYellow,
       appBar: appBar(title: AppStrings.details),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

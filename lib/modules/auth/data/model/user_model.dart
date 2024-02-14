@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/core/fire_base/strings.dart';
+import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity {
@@ -12,16 +12,15 @@ class UserModel extends UserEntity {
   factory UserModel.fromJson(Map<String, dynamic> json, {required String id}) =>
       UserModel(
         id: id,
-        name: json[FirebaseStrings.name],
-        email: json[FirebaseStrings.email],
-        phone: json[FirebaseStrings.phone],
-        address: json[FirebaseStrings.address],
+        name: json[kName],
+        email: json[kEmail],
+        phone: json[kPhone],
+        address: json[kAddress],
       );
   Map<String, dynamic> toJson() => {
-        FirebaseStrings.name: name,
-        FirebaseStrings.email: email,
-        FirebaseStrings.phone: phone,
-        FirebaseStrings.address: address,
+        kName: name,
+        kEmail: email,
+        kPhone: phone,
+        kAddress: address,
       };
-
 }

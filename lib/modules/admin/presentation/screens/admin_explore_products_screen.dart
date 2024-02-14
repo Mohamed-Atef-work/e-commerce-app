@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
-import 'package:e_commerce_app/core/fire_base/strings.dart';
+import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
@@ -27,17 +27,17 @@ class ExploreProductsScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           elevation: 0.0,
-          backgroundColor: AppColors.primaryColorYellow,
+          backgroundColor: kPrimaryColorYellow,
           centerTitle: true,
           title: const CustomText(
             text: AppStrings.products,
             fontSize: 30,
             fontFamily: kPacifico,
             fontWeight: FontWeight.bold,
-            textColor: AppColors.black,
+            textColor: Colors.black,
           ),
         ),
-        backgroundColor: AppColors.primaryColorYellow,
+        backgroundColor: kPrimaryColorYellow,
         body: DefaultTabController(
           length: 2,
           child: Column(
@@ -57,13 +57,13 @@ class ExploreProductsScreen extends StatelessWidget {
                 indicatorWeight: 4,
                 tabs: const [
                   CustomText(
-                    text: FirebaseStrings.shirts,
                     fontSize: 17,
+                    text: kShirts,
                     fontWeight: FontWeight.bold,
                   ),
                   CustomText(
-                    text: FirebaseStrings.jackets,
                     fontSize: 17,
+                    text: kJackets,
                     fontWeight: FontWeight.bold,
                   )
                 ],

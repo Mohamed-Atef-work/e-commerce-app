@@ -63,10 +63,10 @@ class UserLayoutScreen extends StatelessWidget {
   PreferredSizeWidget _appBar(BuildContext context) => AppBar(
         elevation: 0.0,
         centerTitle: true,
-        backgroundColor: AppColors.primaryColorYellow,
+        backgroundColor: kPrimaryColorYellow,
         title: CustomText(
           fontSize: 30,
-          textColor: AppColors.black,
+          textColor: Colors.black,
           fontWeight: FontWeight.bold,
           fontFamily: kPacifico,
           text: BlocProvider.of<UserLayoutCubit>(context).state.appBarTitle,
@@ -77,7 +77,7 @@ class UserLayoutScreen extends StatelessWidget {
       BottomNavigationBar(
         unselectedItemColor: Colors.orange,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: AppColors.primaryColorYellow,
+        backgroundColor: kPrimaryColorYellow,
         onTap: (index) {
           BlocProvider.of<UserLayoutCubit>(context).newScreen(index);
         },

@@ -18,7 +18,7 @@ class AccountItemsWidget extends StatelessWidget {
     return InkWell(
       //hoverColor: Colors.transparent,
       // when putting the mouse on it .
-      splashColor: AppColors.whiteGray,
+      splashColor: kWhiteGray,
       // the color is spread gradually, when pressing on.
       highlightColor: Colors.transparent,
       // changes all it's color ,after pressing on it .
@@ -31,14 +31,14 @@ class AccountItemsWidget extends StatelessWidget {
             Icon(
               icon,
               size: 35,
-              color: AppColors.darkBrown,
+              color: kDarkBrown,
             ),
             const SizedBox(width: 10),
             CustomText(
               text: name,
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              textColor: AppColors.darkBrown,
+              textColor: kDarkBrown,
             ),
           ],
         ),

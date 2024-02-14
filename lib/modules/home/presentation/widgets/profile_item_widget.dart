@@ -20,7 +20,7 @@ class ProfileItemsWidget extends StatelessWidget {
       // when putting the mouse on it .
       highlightColor: Colors.transparent,
       // changes all it's color ,when putting the mouse on it .
-      splashColor: AppColors.whiteGray,
+      splashColor: kWhiteGray,
       // the color is spread gradually.
       borderRadius: BorderRadius.circular(20),
       onTap: onTap,
@@ -30,7 +30,7 @@ class ProfileItemsWidget extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: AppColors.darkBrown,
+              color: kDarkBrown,
               size: 35,
             ),
             const SizedBox(width: 10),
@@ -38,7 +38,7 @@ class ProfileItemsWidget extends StatelessWidget {
               text: name,
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              textColor: AppColors.darkBrown,
+              textColor: kDarkBrown,
             ),
             const Spacer(),
             const Icon(Icons.arrow_forward_ios),

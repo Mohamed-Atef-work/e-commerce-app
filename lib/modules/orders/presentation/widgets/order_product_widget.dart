@@ -40,7 +40,7 @@ class OrderItemWidget extends StatelessWidget {
         onTap: onPressed,
         //hoverColor: Colors.transparent,
         // when putting the mouse on it .
-        splashColor: AppColors.whiteGray,
+        splashColor: kWhiteGray,
         // the color is spread gradually, when pressing on.
         highlightColor: Colors.transparent,
         // changes all it's color ,after pressing on it .
@@ -65,7 +65,7 @@ class OrderItemWidget extends StatelessWidget {
                   CustomText(
                     fontSize: 20,
                     textAlign: TextAlign.left,
-                    textColor: AppColors.black,
+                    textColor: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontFamily: kPacifico,
                     text: state.orderItems[index].product.name,
@@ -75,7 +75,7 @@ class OrderItemWidget extends StatelessWidget {
                     fontSize: 18,
                     //textAlign: TextAlign.,
                     fontWeight: FontWeight.bold,
-                    textColor: AppColors.darkBrown,
+                    textColor: kDarkBrown,
                     text:
                         "\$${state.orderItems[index].product.price * state.orderItems[index].quantity}",
                   ),
@@ -86,7 +86,7 @@ class OrderItemWidget extends StatelessWidget {
                 fontSize: 18,
                 //textAlign: TextAlign.,
                 fontWeight: FontWeight.bold,
-                textColor: AppColors.darkBrown,
+                textColor: kDarkBrown,
                 fontFamily: kPacifico,
                 text:
                     "${state.orderItems[index].quantity} ${AppStrings.pieces}",

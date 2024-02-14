@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/core/fire_base/strings.dart';
+import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/add_product_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/edit_product_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/load_product_use_case.dart';
@@ -30,8 +30,8 @@ class ProductStoreImpl implements ProductStore {
   @override
   Future<void> addProduct(AddProductParameters parameters) async {
     await store
-        .collection(FirebaseStrings.products)
-        .doc(FirebaseStrings.categories)
+        .collection(kProducts)
+        .doc(kCategories)
         .collection(parameters.product.category)
         .add(parameters.product.toJson());
   }
@@ -39,8 +39,8 @@ class ProductStoreImpl implements ProductStore {
   @override
   Future<void> updateProduct(UpdateProductParameters parameters) async {
     await store
-        .collection(FirebaseStrings.products)
-        .doc(FirebaseStrings.categories)
+        .collection(kProducts)
+        .doc(kCategories)
         .collection(parameters.product.category)
         .doc(parameters.product.id)
         .update(parameters.product.toJson());
@@ -49,8 +49,8 @@ class ProductStoreImpl implements ProductStore {
   @override
   Future<void> deleteProduct(DeleteProductParameters parameters) async {
     await store
-        .collection(FirebaseStrings.products)
-        .doc(FirebaseStrings.categories)
+        .collection(kProducts)
+        .doc(kCategories)
         .collection(parameters.category)
         .doc(parameters.productId)
         .delete();
@@ -60,8 +60,8 @@ class ProductStoreImpl implements ProductStore {
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>> loadProducts(
       LoadProductsParameters parameters) async {
     return store
-        .collection(FirebaseStrings.products)
-        .doc(FirebaseStrings.categories)
+        .collection(kProducts)
+        .doc(kCategories)
         .collection(parameters.category)
         .snapshots();
   }
@@ -69,14 +69,14 @@ class ProductStoreImpl implements ProductStore {
   @override
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>>
       getAllProductCategories() async {
-    return store.collection(FirebaseStrings.productCategories).snapshots();
+    return store.collection(kProductCategories).snapshots();
   }
 
   @override
   Future<void> addNewProductCategory(
       AddNewProductsCategoryParameters parameters) async {
     await store
-        .collection(FirebaseStrings.productCategories)
+        .collection(kProductCategories)
         .add(parameters.toJson());
   }
 
@@ -84,7 +84,7 @@ class ProductStoreImpl implements ProductStore {
   Future<void> upDateProductCategory(
       UpDateProductsCategoryParameters parameters) async {
     await store
-        .collection(FirebaseStrings.productCategories)
+        .collection(kProductCategories)
         .doc(parameters.id)
         .update(parameters.toJson());
   }
@@ -93,12 +93,12 @@ class ProductStoreImpl implements ProductStore {
   Future<void> deleteProductCategory(
       DeleteProductsCategoryParameters parameters) async {
     await store
-        .collection(FirebaseStrings.productCategories)
+        .collection(kProductCategories)
         .doc(parameters.id)
         .delete();
     await store
-        .collection(FirebaseStrings.products)
-        .doc(FirebaseStrings.categories)
+        .collection(kProducts)
+        .doc(kCategories)
         .collection(parameters.name)
         .get()
         .then((value) {

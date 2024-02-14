@@ -37,7 +37,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
         final controller = BlocProvider.of<ProductDetailsCubit>(context);
 
         return Scaffold(
-          backgroundColor: AppColors.primaryColorYellow,
+          backgroundColor: kPrimaryColorYellow,
           appBar: appBar(title: AppStrings.products),
           body: ListView(
             physics: const BouncingScrollPhysics(),

@@ -7,14 +7,14 @@ import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_re
 import 'package:e_commerce_app/modules/auth/domain/repository/auth_domain_repository.dart';
 import 'package:e_commerce_app/modules/shared/domain/entities/cached_user_data_entity.dart';
 
-class GetInitialDataUseCase extends BaseUseCase<InitEntity, NoParameters> {
+class GetInitialDataUseCase extends BaseUseCase<SharedEntity, NoParameters> {
   final SharedDomainRepo _sharedRepo;
   final AuthRepositoryDomain _authRepo;
 
   GetInitialDataUseCase(this._sharedRepo, this._authRepo);
 
   @override
-  Future<Either<Failure, InitEntity>> call(NoParameters params) async {
+  Future<Either<Failure, SharedEntity>> call(NoParameters params) async {
     final userEither = await _sharedRepo.getUserDataLocally();
 
     return userEither.fold(
@@ -26,7 +26,7 @@ class GetInitialDataUseCase extends BaseUseCase<InitEntity, NoParameters> {
         return loginEither.fold(
           (loginFailure) => Left(loginFailure),
           (userCredential) => Right(
-            InitEntity(user: user, userCredential: userCredential),
+            SharedEntity(user: user, userCredential: userCredential),
           ),
         );
       },
@@ -40,7 +40,7 @@ class GetInitialDataUseCase extends BaseUseCase<InitEntity, NoParameters> {
     return loginEither.fold(
       (loginFailure) => Left(loginFailure),
       (userCredential) => Right(
-        InitEntity(user: user, userCredential: userCredential),
+        SharedEntity(user: user, userCredential: userCredential),
       ),
     );
   }

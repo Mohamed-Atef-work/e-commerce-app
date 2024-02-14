@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/core/fire_base/strings.dart';
+import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:e_commerce_app/modules/auth/data/data_source/auth_remote_data_source.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/store_user_data_use_case.dart';
 
@@ -17,7 +17,7 @@ class UserStoreImpl implements UserStore {
 
   @override
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserData(String uId) async {
-    return await store.collection(FirebaseStrings.users).doc(uId).get();
+    return await store.collection(kUsers).doc(uId).get();
   }
 
   @override
@@ -35,7 +35,7 @@ class UserStoreImpl implements UserStore {
   @override
   Future<void> storeUserData(StoreUserDataParams params) async {
     await store
-        .collection(FirebaseStrings.users)
+        .collection(kUsers)
         .doc(params.userModel.id)
         .set(params.userModel.toJson());
   }

@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/core/fire_base/strings.dart';
+import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/load_product_use_case.dart';
 
@@ -17,7 +17,7 @@ class ExploreProductsCubit extends Cubit<ExploreProductsState> {
   Future<void> shirtsStream() async {
     final result = await loadProductsUseCase(
       const LoadProductsParameters(
-        category: FirebaseStrings.shirts,
+        category: kShirts,
       ),
     );
     result.fold(
@@ -35,7 +35,7 @@ class ExploreProductsCubit extends Cubit<ExploreProductsState> {
   Future<void> jacketsStream() async {
     final result = await loadProductsUseCase(
       const LoadProductsParameters(
-        category: FirebaseStrings.jackets,
+        category: kJackets,
       ),
     );
     result.fold(

@@ -23,7 +23,7 @@ class Validators {
   static String? emailValidator(value) {
     if (value.isEmpty) {
       return AppStrings.enterYourEmail;
-    } else if (!_isValidEmail(email: value)) {
+    } else if (!_isValidEmail(value)) {
       return AppStrings.invalidEmail;
     }
     return null;
@@ -32,16 +32,14 @@ class Validators {
   static String? passwordValidator(value) {
     if (value.isEmpty) {
       return AppStrings.enterYourPassword;
-    } else if (!_isValidPassword(password: value)) {
+    } else if (!_isValidPassword(value)) {
       return AppStrings.invalidPassword;
     }
 
     return null;
   }
 
-  static bool _isValidPassword({
-    required String password,
-  }) {
+  static bool _isValidPassword(String password) {
     // Check the length of the input.
     if (password.length < 8) {
       return false;
@@ -63,9 +61,7 @@ class Validators {
     return true;
   }
 
-  static bool _isValidEmail({
-    required String email,
-  }) {
+  static bool _isValidEmail(String email) {
     final regex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
     return regex.hasMatch(email);
   }

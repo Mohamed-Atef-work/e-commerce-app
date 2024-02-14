@@ -82,7 +82,7 @@ class CartView extends StatelessWidget {
         return const Center(
           child: CustomText(
             fontSize: 25,
-            textColor: AppColors.black,
+            textColor: Colors.black,
             fontWeight: FontWeight.bold,
             text: AppStrings.cartIsEmpty,
             fontFamily: kPacifico,

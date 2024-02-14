@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
-import 'package:e_commerce_app/core/fire_base/strings.dart';
+import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:e_commerce_app/modules/shared/data/models/cached_user_data_model.dart';
 import 'package:e_commerce_app/modules/shared/domain/entities/cached_user_data_entity.dart';
 import 'package:e_commerce_app/core/services/local_data_base_service/local_data_base_interface.dart';
@@ -21,7 +21,7 @@ class SharedLocalDataSourceImpl implements SharedLocalDataSource {
   Future<CachedUserDataEntity> getUserData() async {
     try {
       final jsonString =
-          await _localDataBaseService.read<String>(FirebaseStrings.user);
+          await _localDataBaseService.read<String>(kUser);
       print(" < --------------------- dataSource ------------------------- > ");
 
       if (jsonString == null) {
@@ -46,7 +46,7 @@ class SharedLocalDataSourceImpl implements SharedLocalDataSource {
     final jsonString = user.toLocalJson();
     final userJson = jsonEncode(jsonString);
     final result = await _localDataBaseService
-        .save<String>(FirebaseStrings.user, userJson)
+        .save<String>(kUser, userJson)
         .catchError((error) {
       throw LocalDataBaseException(message: error.toString());
     });
@@ -56,7 +56,7 @@ class SharedLocalDataSourceImpl implements SharedLocalDataSource {
   @override
   Future<bool> deleteUserData() async {
     final result = await _localDataBaseService
-        .delete(FirebaseStrings.user)
+        .delete(kUser)
         .catchError((error) {
       throw LocalDataBaseException(message: error.toString());
     });

@@ -20,7 +20,7 @@ class AdminPanelScreen extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: AppColors.primaryColorYellow,
+      backgroundColor: kPrimaryColorYellow,
       body: Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

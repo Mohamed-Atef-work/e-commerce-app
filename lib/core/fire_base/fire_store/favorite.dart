@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/core/fire_base/strings.dart';
+import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
 
 abstract class FavoriteStore {
@@ -23,11 +23,11 @@ class FavoriteStoreImpl implements FavoriteStore {
   @override
   Future<void> deleteFav(AddDeleteFavoriteParams parameters) async {
     await store
-        .collection(FirebaseStrings.users)
+        .collection(kUsers)
         .doc(parameters.uId)
-        .collection(FirebaseStrings.favorites)
+        .collection(kFavorites)
         .doc(parameters.category)
-        .collection(FirebaseStrings.products)
+        .collection(kProducts)
         .doc(parameters.productId)
         .delete();
   }
@@ -35,8 +35,8 @@ class FavoriteStoreImpl implements FavoriteStore {
   @override
   Future<void> addFav(AddDeleteFavoriteParams params) async {
     final response = await store
-        .collection(FirebaseStrings.products)
-        .doc(FirebaseStrings.categories)
+        .collection(kProducts)
+        .doc(kCategories)
         .collection(params.category)
         .doc(params.productId)
         .get();
@@ -50,11 +50,11 @@ class FavoriteStoreImpl implements FavoriteStore {
         ),
       );
       await store
-          .collection(FirebaseStrings.users)
+          .collection(kUsers)
           .doc(params.uId)
-          .collection(FirebaseStrings.favorites)
+          .collection(kFavorites)
           .doc(params.category)
-          .collection(FirebaseStrings.products)
+          .collection(kProducts)
           .doc(params.productId)
           .set(const {});
     }
@@ -63,16 +63,16 @@ class FavoriteStoreImpl implements FavoriteStore {
   @override
   Future<QuerySnapshot<Map<String, dynamic>>> getCategories(String uId) async {
     return await store
-        .collection(FirebaseStrings.users)
+        .collection(kUsers)
         .doc(uId)
-        .collection(FirebaseStrings.favorites)
+        .collection(kFavorites)
         .get();
   }
 
   @override
   Future<QuerySnapshot<Map<String, dynamic>>> getProductsIdsOfCategory(
       DocumentReference reference) async {
-    final response = await reference.collection(FirebaseStrings.products).get();
+    final response = await reference.collection(kProducts).get();
     if (response.docs.isEmpty) {
       /// Solving the second part of database problem :) .....
       /// Deleting categories that doesn't contain [Fvs] :) .....
@@ -107,8 +107,8 @@ class FavoriteStoreImpl implements FavoriteStore {
   Future<DocumentSnapshot<Map<String, dynamic>>> _getProduct(
       {required String category, required String productId}) async {
     final response = await store
-        .collection(FirebaseStrings.products)
-        .doc(FirebaseStrings.categories)
+        .collection(kProducts)
+        .doc(kCategories)
         .collection(category)
         .doc(productId)
         .get();
@@ -122,9 +122,9 @@ class FavoriteStoreImpl implements FavoriteStore {
   Future<void> _setFavCategoryToBeAvailableToFetch(
       FavoriteParameters parameters) async {
     await store
-        .collection(FirebaseStrings.users)
+        .collection(kUsers)
         .doc(parameters.uId)
-        .collection(FirebaseStrings.favorites)
+        .collection(kFavorites)
         .doc(parameters.category)
         .set({"able_to_fetch": true});
   }

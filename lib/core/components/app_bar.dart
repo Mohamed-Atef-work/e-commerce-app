@@ -14,7 +14,7 @@ PreferredSizeWidget appBar({
       leading: leading,
       elevation: 0.0,
       toolbarHeight: height ?? 50,
-      backgroundColor: AppColors.primaryColorYellow,
+      backgroundColor: kPrimaryColorYellow,
       actions: actions,
       centerTitle: true,
       title: CustomText(
@@ -22,6 +22,6 @@ PreferredSizeWidget appBar({
         fontSize: titleSize ?? 30,
         fontFamily: kPacifico,
         fontWeight: FontWeight.bold,
-        textColor: AppColors.black,
+        textColor: Colors.black,
       ),
     );

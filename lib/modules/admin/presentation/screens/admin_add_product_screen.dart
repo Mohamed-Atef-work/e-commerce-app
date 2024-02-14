@@ -28,7 +28,7 @@ class AddProductScreen extends StatelessWidget {
         ..getCategories()
         ..decideAddOrUpdate(arguments?["product"]),
       child: Scaffold(
-        backgroundColor: AppColors.primaryColorYellow,
+        backgroundColor: kPrimaryColorYellow,
         appBar: appBar(title: AppStrings.admin),
         body: ListView(
           physics: const BouncingScrollPhysics(),

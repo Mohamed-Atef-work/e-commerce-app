@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/core/fire_base/strings.dart';
+import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:e_commerce_app/modules/orders/data/model/item_model.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/add_item_to_order_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/add_order_use_case.dart';
@@ -36,7 +36,7 @@ class OrderStoreImpl implements OrderStore {
   @override
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>>
       streamUsersWhoOrdered() async {
-    final response = store.collection(FirebaseStrings.orders).snapshots();
+    final response = store.collection(kOrders).snapshots();
     return response;
   }
 
@@ -45,9 +45,9 @@ class OrderStoreImpl implements OrderStore {
   Future<QuerySnapshot<Map<String, dynamic>>> getUserOrders(
       String userId) async {
     return await store
-        .collection(FirebaseStrings.orders)
+        .collection(kOrders)
         .doc(userId)
-        .collection(FirebaseStrings.orders)
+        .collection(kOrders)
         .get();
   }
 
@@ -56,9 +56,9 @@ class OrderStoreImpl implements OrderStore {
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>> streamOfUserOrders(
       String userId) async {
     return store
-        .collection(FirebaseStrings.orders)
+        .collection(kOrders)
         .doc(userId)
-        .collection(FirebaseStrings.orders)
+        .collection(kOrders)
         .snapshots();
   }
 
@@ -75,7 +75,7 @@ class OrderStoreImpl implements OrderStore {
   ) async {
     /// admin and user
     /// base methods (according to the design of the firebase);
-    final response = await orderRef.collection(FirebaseStrings.items).get();
+    final response = await orderRef.collection(kItems).get();
     /*if (response.docs.isEmpty) {
       await orderRef.delete();
     }*/
@@ -141,20 +141,20 @@ class OrderStoreImpl implements OrderStore {
     /// admin and user
     /// base methods (according to the design of the firebase);
     await params.orderRef
-        .collection(FirebaseStrings.items)
+        .collection(kItems)
         .add(params.item.toJson());
   }
 
   @override
   Future<void> addOrder(AddOrderParams params) async {
     await store
-        .collection(FirebaseStrings.orders)
+        .collection(kOrders)
         .doc(params.uId)
-        .collection(FirebaseStrings.orders)
+        .collection(kOrders)
         .add(params.orderData.toJson())
         .then((orderRef) async {
       await store
-          .collection(FirebaseStrings.orders)
+          .collection(kOrders)
           .doc(params.uId)
           .set(const {"able_to_access_user_order": true});
       for (OrderItemModel item in params.items) {

@@ -72,13 +72,13 @@ class AdminDetailsScreen extends StatelessWidget {
                     fontSize: 25,
                     text: state.product!.name,
                     fontWeight: FontWeight.bold,
-                    textColor: AppColors.darkBrown,
+                    textColor: kDarkBrown,
                     fontFamily: kPacifico,
                   ),
                   CustomText(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    textColor: AppColors.darkBrown,
+                    textColor: kDarkBrown,
                     fontFamily: kPacifico,
                     text: "\$${state.product!.price}",
                   ),
@@ -86,7 +86,7 @@ class AdminDetailsScreen extends StatelessWidget {
                   CustomText(
                     fontSize: 18,
                     text: state.product!.description,
-                    textColor: AppColors.darkBrown,
+                    textColor: kDarkBrown,
                   ),
                   const Spacer(),
                   Row(

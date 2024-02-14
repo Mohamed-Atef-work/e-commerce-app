@@ -75,7 +75,7 @@ class OrderWidget extends StatelessWidget {
                 child: Image.asset(
                   Images.orderImage,
                   fit: BoxFit.contain,
-                  color: AppColors.darkBrown.withOpacity(0.001),
+                  color: kDarkBrown.withOpacity(0.001),
                 ),
               ),
               Column(
@@ -85,20 +85,20 @@ class OrderWidget extends StatelessWidget {
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     text: state.orders[index].name,
-                    textColor: AppColors.darkBrown,
+                    textColor: kDarkBrown,
                   ),
                   SizedBox(height: context.height * 0.01),
                   CustomText(
                     fontSize: 15,
                     text: state.orders[index].date,
-                    textColor: AppColors.darkBrown,
+                    textColor: kDarkBrown,
                   ),
                 ],
               ),
               const Spacer(),
               CustomText(
                 fontSize: 22,
-                textColor: AppColors.black,
+                textColor: Colors.black,
                 fontWeight: FontWeight.bold,
                 fontFamily: kPacifico,
                 text: "\$${state.orders[index].totalPrice}",

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/core/fire_base/strings.dart';
+import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/get_product_quantities_of_cart_use_case.dart';
@@ -32,21 +32,21 @@ class CartStoreImpl implements CartStore {
   @override
   Future<void> addToCart(AddToCartParams params) async {
     final response = await store
-        .collection(FirebaseStrings.products)
-        .doc(FirebaseStrings.categories)
+        .collection(kProducts)
+        .doc(kCategories)
         .collection(params.category)
         .doc(params.productId)
         .get();
     if (response.exists) {
       await store
-          .collection(FirebaseStrings.users)
+          .collection(kUsers)
           .doc(params.uId)
-          .collection(FirebaseStrings.cart)
+          .collection(kCart)
           .doc(params.category)
-          .collection(FirebaseStrings.products)
+          .collection(kProducts)
           .doc(params.productId)
           .set({
-        FirebaseStrings.quantity: params.quantity,
+        kQuantity: params.quantity,
       });
       await _setCartCategoryToBeAvailableToFetch(params);
     }
@@ -55,11 +55,11 @@ class CartStoreImpl implements CartStore {
   @override
   Future<void> deleteFromCart(DeleteFromCartParams params) async {
     await store
-        .collection(FirebaseStrings.users)
+        .collection(kUsers)
         .doc(params.uId)
-        .collection(FirebaseStrings.cart)
+        .collection(kCart)
         .doc(params.category)
-        .collection(FirebaseStrings.products)
+        .collection(kProducts)
         .doc(params.productId)
         .delete();
   }
@@ -85,9 +85,9 @@ class CartStoreImpl implements CartStore {
   Future<List<DocumentReference>> getCartCategories(String uId) async {
     List<DocumentReference> docsRefs = [];
     final response = await store
-        .collection(FirebaseStrings.users)
+        .collection(kUsers)
         .doc(uId)
-        .collection(FirebaseStrings.cart)
+        .collection(kCart)
         .get();
     response.docs.map((doc) {
       docsRefs.add(doc.reference);
@@ -100,7 +100,7 @@ class CartStoreImpl implements CartStore {
       DocumentReference categoryRef) async {
     List<String> ids = [];
     final response =
-        await categoryRef.collection(FirebaseStrings.products).get();
+        await categoryRef.collection(kProducts).get();
     final category = categoryRef.id;
     response.docs.map((doc) => {ids.add(doc.id)}).toList();
     return ReturnedIdsAndTheirCategory(category: category, ids: ids);
@@ -110,8 +110,8 @@ class CartStoreImpl implements CartStore {
   Future<DocumentSnapshot<Map<String, dynamic>>> getProduct(
       GetProductParams params) async {
     final response = await store
-        .collection(FirebaseStrings.products)
-        .doc(FirebaseStrings.categories)
+        .collection(kProducts)
+        .doc(kCategories)
         .collection(params.category)
         .doc(params.productId)
         .get();
@@ -163,9 +163,9 @@ class CartStoreImpl implements CartStore {
   Future<void> _setCartCategoryToBeAvailableToFetch(
       AddToCartParams params) async {
     await store
-        .collection(FirebaseStrings.users)
+        .collection(kUsers)
         .doc(params.uId)
-        .collection(FirebaseStrings.cart)
+        .collection(kCart)
         .doc(params.category)
         .set({"able_to_fetch": true});
   }
@@ -173,7 +173,7 @@ class CartStoreImpl implements CartStore {
   @override
   Future<QuerySnapshot<Map<String, dynamic>>> getCartProductsIdsOfCategory(
       DocumentReference reference) async {
-    final response = await reference.collection(FirebaseStrings.products).get();
+    final response = await reference.collection(kProducts).get();
     if (response.docs.isEmpty) {
       /// Solving the second part of database problem :) .....
       /// Deleting categories that doesn't contain [products] :) .....
@@ -188,11 +188,11 @@ class CartStoreImpl implements CartStore {
     List<DocumentSnapshot<Map<String, dynamic>>> docs = [];
     for (GetQuantities product in params.productsParams) {
       final response = await store
-          .collection(FirebaseStrings.users)
+          .collection(kUsers)
           .doc(params.uId)
-          .collection(FirebaseStrings.cart)
+          .collection(kCart)
           .doc(product.category)
-          .collection(FirebaseStrings.products)
+          .collection(kProducts)
           .doc(product.id)
           .get();
       docs.add(response);

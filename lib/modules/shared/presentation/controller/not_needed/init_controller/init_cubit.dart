@@ -5,7 +5,6 @@ import 'package:e_commerce_app/modules/shared/domain/entities/init_entity.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/get_initial_use_case.dart';
 import 'package:meta/meta.dart';
 
-part 'init_state.dart';
 
 /*class InitCubit extends Cubit<InitState> {
   final GetInitialDataUseCase _getInitialDataUseCase;
@@ -18,7 +17,7 @@ part 'init_state.dart';
       result.fold(
         (l) =>
             state.copyWith(dataState: RequestState.error, message: l.message),
-        (r) => state.copyWith(dataState: RequestState.success, initEntity: r),
+        (r) => state.copyWith(dataState: RequestState.success, SharedEntity: r),
       ),
     );
   }

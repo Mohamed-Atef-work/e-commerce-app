@@ -36,7 +36,7 @@ class SharedUserDataCubit extends Cubit<SharedUserDataState> {
       result.fold(
         (l) =>
             state.copyWith(message: l.message, getState: RequestState.error),
-        (r) => state.copyWith(getState: RequestState.success, initEntity: r),
+        (r) => state.copyWith(getState: RequestState.success, sharedEntity: r),
       ),
     );
   }

@@ -1,7 +1,7 @@
-part of 'shared_password_cubit.dart';
+//part of 'shared_password_cubit.dart';
 
-@immutable
-class SharedPasswordState {
+//@immutable
+/*class SharedPasswordState {
   final String? message;
   final String? password;
   final RequestState getState;
@@ -30,4 +30,4 @@ class SharedPasswordState {
         saveState: saveState ?? this.saveState,
         deleteState: deleteState ?? this.deleteState,
       );
-}
+}*/
