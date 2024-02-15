@@ -17,7 +17,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   ProductDetailsCubit(this._addToCartUseCase)
       : super(const ProductDetailsState());
 
-  Future<void> addToCart({required String uId}) async {
+  Future<void> addToCart(String uId) async {
     emit(state.copyWith(addToCart: RequestState.loading));
     final result = await _addToCartUseCase.call(
       AddToCartParams(

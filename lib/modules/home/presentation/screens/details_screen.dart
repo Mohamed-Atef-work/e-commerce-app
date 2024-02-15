@@ -1,7 +1,7 @@
-import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
@@ -10,6 +10,7 @@ import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/modules/orders/presentation/widgets/counting_widget.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/heart_with_manage_favorite_cubit_provided_widget.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
@@ -19,6 +20,9 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final detailsController = BlocProvider.of<ProductDetailsCubit>(context);
+    final userData = BlocProvider.of<SharedUserDataCubit>(context).state;
+    final uId = userData.sharedEntity!.user.userEntity.id;
     return Scaffold(
       backgroundColor: kPrimaryColorYellow,
       appBar: appBar(
@@ -26,7 +30,7 @@ class DetailsScreen extends StatelessWidget {
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
-            BlocProvider.of<ProductDetailsCubit>(context).reset();
+            detailsController.reset();
           },
           icon: const Icon(Icons.arrow_back),
         ),
@@ -39,8 +43,8 @@ class DetailsScreen extends StatelessWidget {
               return const LoadingWidget();
             } else {
               return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Align(
                     alignment: Alignment.center,
@@ -51,8 +55,8 @@ class DetailsScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20)),
                       child: Image.network(
-                        state.product!.image,
                         fit: BoxFit.fill,
+                        state.product!.image,
                         width: double.infinity,
                         height: double.infinity,
                       ),
@@ -60,40 +64,38 @@ class DetailsScreen extends StatelessWidget {
                   ),
                   CustomText(
                     fontSize: 25,
-                    text: state.product!.name,
-                    fontWeight: FontWeight.bold,
                     textColor: kDarkBrown,
                     fontFamily: kPacifico,
+                    text: state.product!.name,
+                    fontWeight: FontWeight.bold,
                   ),
                   CustomText(
                     fontSize: 20,
-                    text: "\$${state.product!.price * state.quantity}",
-                    fontWeight: FontWeight.bold,
                     textColor: kDarkBrown,
                     fontFamily: kPacifico,
+                    fontWeight: FontWeight.bold,
+                    text: "\$${state.product!.price * state.quantity}",
                   ),
                   SizedBox(height: context.height * 0.03),
                   CustomText(
                     fontSize: 18,
-                    text: state.product!.description,
                     textColor: kDarkBrown,
+                    text: state.product!.description,
                   ),
                   const Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CountingWidget(
-                        num: state.quantity,
                         height: 40,
+                        num: state.quantity,
+                        width: context.width * 0.8,
                         plus: () {
-                          BlocProvider.of<ProductDetailsCubit>(context)
-                              .quantityPlus();
+                          detailsController.quantityPlus();
                         },
                         minus: () {
-                          BlocProvider.of<ProductDetailsCubit>(context)
-                              .quantityMinus();
+                          detailsController.quantityMinus();
                         },
-                        width: context.width * 0.8,
                       ),
                       HeartWihMangeFavoriteCubitProviderWidget(
                         heartColor: Colors.white,
@@ -107,18 +109,17 @@ class DetailsScreen extends StatelessWidget {
                     alignment: Alignment.center,
                     child: CustomButton(
                       fontSize: 18,
-                      text: AppStrings.addToCart,
-                      fontWeight: FontWeight.bold,
                       fontFamily: kPacifico,
+                      text: AppStrings.addToCart,
+                      width: context.width * 0.9,
+                      fontWeight: FontWeight.bold,
+                      height: context.height * 0.07,
                       onPressed: () {
                         /// To Do o o o o o o o
-                        BlocProvider.of<ProductDetailsCubit>(context)
-                            .addToCart(uId: 'uId');
+                        detailsController.addToCart(uId);
                         BlocProvider.of<ManageCartProductsCubit>(context)
                             .needToReGet();
                       },
-                      width: context.width * 0.9,
-                      height: context.height * 0.07,
                     ),
                   )
                 ],
