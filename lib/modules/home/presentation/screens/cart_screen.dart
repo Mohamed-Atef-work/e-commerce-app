@@ -12,7 +12,7 @@ import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart
 import 'package:e_commerce_app/modules/home/presentation/widgets/cart_product_widget.dart';
 import 'package:flutter/material.dart';
 
-class CartScreen extends StatelessWidget {
+/*class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
 
   @override
@@ -25,7 +25,7 @@ class CartScreen extends StatelessWidget {
         children: [
           Expanded(
             child: FutureBuilder(
-                future: store.getCartProducts("uId"),
+                future: store.getCartProducts(LoginParams),
                 builder: (context, snapShot) {
                   if (snapShot.hasData) {
                     final data = snapShot.data
@@ -78,4 +78,4 @@ class CartScreen extends StatelessWidget {
       ),
     );
   }
-}
+}*/

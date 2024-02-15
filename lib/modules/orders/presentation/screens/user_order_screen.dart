@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/components/app_bar.dart';
@@ -15,14 +16,16 @@ class UserOrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userData = BlocProvider.of<SharedUserDataCubit>(context).state;
+    final uId = userData.sharedEntity!.user.userEntity.id;
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => sl<ManageUserOrderViewCubit>()),
         BlocProvider(
-          create: (context) => sl<ManageUserOrdersCubit>()..getOrders("uId"),
+          create: (context) => sl<ManageUserOrdersCubit>()..getOrders(uId),
         ),
         BlocProvider(
-          create: (context) => sl<GetUserOrdersCubit>()..getOrders("uId"),
+          create: (context) => sl<GetUserOrdersCubit>()..getOrders(uId),
         ),
         BlocProvider(create: (context) => sl<OrderItemsCubit>()),
       ],

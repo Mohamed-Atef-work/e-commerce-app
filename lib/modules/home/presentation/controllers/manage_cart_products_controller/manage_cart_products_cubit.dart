@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
+import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
+import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/cart_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/clear_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
@@ -99,7 +101,7 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
     ));
   }
 
-  Future<void> clearCart() async {
+  Future<void> clearCart(String uId) async {
     emit(state.copyWith(clearCart: RequestState.loading));
 
     final clearCartParams = ClearCartParams(
@@ -108,7 +110,7 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
         (index) => DeleteFromCartParams(
           productId: state.products[index].id!,
           category: state.products[index].category,
-          uId: "uId",
+          uId: uId,
         ),
       ),
     );
@@ -127,7 +129,7 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
     );
   }
 
-  Future<void> addOrder() async {
+  Future<void> addOrder(UserEntity user) async {
     emit(state.copyWith(addOrder: RequestState.loading));
 
     final totalPrice = _totalPrice();
@@ -137,14 +139,14 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
     final result = await _addOrderUseCase.call(
       AddOrderParams(
         items: items,
+        uId: user.id,
         orderData: OrderDataModel(
-          date: DateTime.now().toString(),
-          name: "name",
-          phone: "phone",
+          name: user.name,
+          phone: user.phone!,
+          address: user.address!,
           totalPrice: totalPrice,
-          address: "address",
+          date: DateTime.now().toString(),
         ),
-        uId: "uId",
       ),
     );
 
@@ -152,7 +154,7 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
       emit(state.copyWith(addOrder: RequestState.error, message: l.message));
     }, (r) async {
       emit(state.copyWith(addOrder: RequestState.success, needToReGet: true));
-      await clearCart();
+      await clearCart(user.id);
     });
   }
 

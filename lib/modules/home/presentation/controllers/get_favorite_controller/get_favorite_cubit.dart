@@ -11,24 +11,18 @@ class GetFavoriteCubit extends Cubit<GetFavoriteState> {
     emit(state.copyWith(needToReGet: true));
   }
 
-  Future<void> getFavorites() async {
+  Future<void> getFavorites(String uId) async {
     if (state.needToReGet) {
       emit(state.copyWith(getFavState: RequestState.loading));
-
-      /// Handling UID  :) ..........
-      final result =
-          await getFavoritesUseCase(const GetFavoritesParams(uId: "uId"));
+      final result = await getFavoritesUseCase(GetFavoritesParams(uId: uId));
       emit(
         result.fold(
           (l) => state.copyWith(
-            message: l.message,
-            getFavState: RequestState.error,
-          ),
+              message: l.message, getFavState: RequestState.error),
           (r) => state.copyWith(
-            favorites: r,
-            needToReGet: false,
-            getFavState: RequestState.success,
-          ),
+              favorites: r,
+              needToReGet: false,
+              getFavState: RequestState.success),
         ),
       );
     }

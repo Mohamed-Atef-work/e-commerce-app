@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/address_controller/edit_address_cubit.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
@@ -8,6 +9,7 @@ import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/validators.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
@@ -20,21 +22,23 @@ class EditAddressScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl<EditAddressCubit>(),
       child: Builder(builder: (context) {
-        final controller = BlocProvider.of<EditAddressCubit>(context);
+        final addressController = BlocProvider.of<EditAddressCubit>(context);
+        final userDataState =
+            BlocProvider.of<SharedUserDataCubit>(context).state;
         return Scaffold(
           appBar: appBar(title: AppStrings.address),
           body: Padding(
             padding:
                 EdgeInsets.only(top: context.height * 0.1, left: 10, right: 10),
             child: Form(
-              key: controller.formKey,
+              key: addressController.formKey,
               child: Column(
                 //mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   CustomTextFormField(
                     hintText: AppStrings.city,
                     prefixIcon: Icons.location_on_outlined,
-                    textEditingController: controller.city,
+                    textEditingController: addressController.city,
                     validator: (value) =>
                         Validators.stringValidator(value, AppStrings.city),
                   ),
@@ -42,7 +46,7 @@ class EditAddressScreen extends StatelessWidget {
                   CustomTextFormField(
                     prefixIcon: Icons.add_road,
                     hintText: AppStrings.street,
-                    textEditingController: controller.street,
+                    textEditingController: addressController.street,
                     validator: (value) =>
                         Validators.stringValidator(value, AppStrings.street),
                   ),
@@ -50,7 +54,7 @@ class EditAddressScreen extends StatelessWidget {
                   CustomTextFormField(
                     prefixIcon: Icons.apartment,
                     hintText: AppStrings.buildingBloc,
-                    textEditingController: controller.bloc,
+                    textEditingController: addressController.bloc,
                     validator: (value) => Validators.stringValidator(
                         value, AppStrings.buildingBloc),
                   ),
@@ -58,7 +62,7 @@ class EditAddressScreen extends StatelessWidget {
                   CustomTextFormField(
                     prefixIcon: Icons.home,
                     hintText: AppStrings.apartment,
-                    textEditingController: controller.apartment,
+                    textEditingController: addressController.apartment,
                     validator: (value) => Validators.numericValidator(
                         value, AppStrings.apartment),
                   ),
@@ -72,7 +76,17 @@ class EditAddressScreen extends StatelessWidget {
                           height: 50,
                           fontSize: 18,
                           onPressed: () {
-                            controller.updateAddress();
+                            final user = UserModel(
+                              id: userDataState
+                                  .sharedEntity!.user.userEntity.id,
+                              name: userDataState
+                                  .sharedEntity!.user.userEntity.name,
+                              email: userDataState
+                                  .sharedEntity!.user.userEntity.email,
+                              phone: userDataState
+                                  .sharedEntity!.user.userEntity.phone,
+                            );
+                            addressController.updateAddress(user);
                           },
                           text: AppStrings.update,
                           width: context.width * 0.7,

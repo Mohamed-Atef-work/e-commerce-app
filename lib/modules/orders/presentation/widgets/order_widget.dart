@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/images.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
-import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/core/components/dismissible_background.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_case.dart';
 import 'package:e_commerce_app/modules/orders/presentation/widgets/update_order_date_widget.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_state.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/get_user_orders_controller/get_user_orders_cubit.dart';
-import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/update_order_data_controller/update_order_data_cubit.dart';
-import 'package:e_commerce_app/core/utils/constants.dart';
 
 class OrderWidget extends StatelessWidget {
   final int index;
@@ -23,6 +23,8 @@ class OrderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     GetUserOrdersState state =
         BlocProvider.of<GetUserOrdersCubit>(context).state;
+    SharedUserDataState userDataState =
+        BlocProvider.of<SharedUserDataCubit>(context).state;
 
     return Dismissible(
       onDismissed: (DismissDirection direction) {
@@ -34,7 +36,8 @@ class OrderWidget extends StatelessWidget {
         if (direction == DismissDirection.startToEnd) {
           BlocProvider.of<GetUserOrdersCubit>(context).deleteOrder(
             DeleteOrderParams(
-                orderRef: state.orders[index].reference!, uId: "uId"),
+                orderRef: state.orders[index].reference!,
+                uId: userDataState.sharedEntity!.user.userEntity.id),
           );
           return true;
         } else {

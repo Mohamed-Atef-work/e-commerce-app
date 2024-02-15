@@ -1,20 +1,22 @@
-import 'package:e_commerce_app/core/utils/constants.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
-import 'package:e_commerce_app/modules/home/presentation/views/products_view.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/cart_view.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/account_view.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
+import 'package:e_commerce_app/modules/home/presentation/views/products_view.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/favorites_view.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_state.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/user_layout_controller/user_layout_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/user_layout_controller/user_layout_states.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 
 class UserLayoutScreen extends StatelessWidget {
@@ -47,13 +49,17 @@ class UserLayoutScreen extends StatelessWidget {
 
   Widget _body(BuildContext context) {
     UserLayoutState state = BlocProvider.of<UserLayoutCubit>(context).state;
+    SharedUserDataState userDataState =
+        BlocProvider.of<SharedUserDataCubit>(context).state;
+    final uId = userDataState.sharedEntity!.user.userEntity.id;
+
     if (state.currentIndex == 0) {
       return const UserProductsView();
     } else if (state.currentIndex == 1) {
-      BlocProvider.of<ManageCartProductsCubit>(context).getCartProducts("uId");
+      BlocProvider.of<ManageCartProductsCubit>(context).getCartProducts(uId);
       return const CartView();
     } else if (state.currentIndex == 2) {
-      BlocProvider.of<GetFavoriteCubit>(context).getFavorites();
+      BlocProvider.of<GetFavoriteCubit>(context).getFavorites(uId);
       return const FavoritesView<ProductDetailsCubit>();
     } else {
       return const AccountView();

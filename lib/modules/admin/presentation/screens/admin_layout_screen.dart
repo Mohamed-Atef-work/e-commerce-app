@@ -1,10 +1,10 @@
-import 'package:e_commerce_app/core/utils/constants.dart';
-import 'package:e_commerce_app/core/utils/screens_strings.dart';
-import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
+import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
@@ -16,6 +16,7 @@ import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_layout_controller/admin_layout_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_layout_controller/admin_layout_states.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 
 class AdminLayoutScreen extends StatelessWidget {
   const AdminLayoutScreen({Key? key}) : super(key: key);
@@ -66,12 +67,14 @@ class AdminLayoutScreen extends StatelessWidget {
 
   Widget _body(BuildContext context) {
     AdminLayoutState state = BlocProvider.of<AdminLayoutCubit>(context).state;
+    final userData = BlocProvider.of<SharedUserDataCubit>(context).state;
+    final uId = userData.sharedEntity!.user.userEntity.id;
     if (state.currentIndex == 0) {
       return const AdminProductsView();
     } else if (state.currentIndex == 1) {
       return const AdminOrderView();
     } else if (state.currentIndex == 2) {
-      BlocProvider.of<GetFavoriteCubit>(context).getFavorites();
+      BlocProvider.of<GetFavoriteCubit>(context).getFavorites(uId);
       return const FavoritesView<AdminDetailsCubit>();
     } else {
       return const AdminProfileView();

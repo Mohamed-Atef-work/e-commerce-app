@@ -1,10 +1,9 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/store_user_data_use_case.dart';
-import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 part 'update_profile_state.dart';
 
@@ -30,20 +29,18 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
     email.text = state.userEntity!.address!;
   }
 
-  Future<void> updateOrderData() async {
+  Future<void> updateUserData(String uId) async {
     if (formKey.currentState!.validate()) {
       emit(state.copyWith(updateState: RequestState.loading));
 
       final result = await _storeUserDataUseCase.call(
-
-          UserModel(
-            name: name.text,
-            email: email.text,
-            phone: phone.text,
-            address: "address",
-            id: "uId",
-          ),
-
+        UserModel(
+          name: name.text,
+          email: email.text,
+          phone: phone.text,
+          address: "address",
+          id: uId,
+        ),
       );
       emit(
         result.fold(

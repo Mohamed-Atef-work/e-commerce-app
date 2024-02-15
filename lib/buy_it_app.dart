@@ -12,7 +12,6 @@ import 'modules/admin/presentation/screens/admin_details_screen.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'modules/admin/presentation/screens/admin_add_product_screen.dart';
 import 'modules/admin/presentation/screens/admin_explore_products_screen.dart';
-import 'package:e_commerce_app/modules/home/presentation/screens/cart_screen.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/details_screen.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/profile_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/splash_screen.dart';
@@ -21,10 +20,10 @@ import 'package:e_commerce_app/modules/orders/presentation/screens/user_order_sc
 import 'package:e_commerce_app/modules/admin/presentation/screens/admin_layout_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/edit_profile_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/change_password_screen.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 
 class BuyItApp extends StatelessWidget {
@@ -50,13 +49,12 @@ class BuyItApp extends StatelessWidget {
           create: (context) => sl<SharedUserDataCubit>(),
         ),
         BlocProvider<GetFavoriteCubit>(
-          create: (context) => sl<GetFavoriteCubit>()..getFavorites(),
+          create: (context) => sl<GetFavoriteCubit>(),
         ),
 
         /// User < ----------------------------------------------------------- >
         BlocProvider<ManageCartProductsCubit>(
-          create: (context) =>
-              sl<ManageCartProductsCubit>()..getCartProducts("uId"),
+          create: (context) => sl<ManageCartProductsCubit>(),
         ),
         BlocProvider<ProductDetailsCubit>(
           create: (context) => sl<ProductDetailsCubit>(),
@@ -70,7 +68,7 @@ class BuyItApp extends StatelessWidget {
 
   _routes() => {
         Screens.testScreen: (context) => const TestScreen(),
-        Screens.cartScreen: (context) => const CartScreen(),
+        //Screens.cartScreen: (context) => const CartScreen(),
         Screens.loginScreen: (context) => const LoginScreen(),
         Screens.splashScreen: (context) => const SplashScreen(),
         Screens.signUpScreen: (context) => const SignUpScreen(),
@@ -88,5 +86,3 @@ class BuyItApp extends StatelessWidget {
         Screens.changePasswordScreen: (context) => const ChangePasswordScreen(),
       };
 }
-
-String? uId;
