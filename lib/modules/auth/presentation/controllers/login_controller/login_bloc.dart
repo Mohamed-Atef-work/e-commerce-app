@@ -88,6 +88,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
 
   void _reBuildEvent(RebuildEvent event, Emitter<LoginState> emit) {
     emit(state.copyWith(loginState: RequestState.initial));
-    print("state.loginState -----------> ${state.loginState}");
+    print(
+        "loginState ------ event ----------------------------> ${state.loginState}");
   }
 }

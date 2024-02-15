@@ -60,70 +60,79 @@ class LoginFormWidget extends StatelessWidget {
                   listenWhen: (previous, current) =>
                       previous.loginState != current.loginState,
                   listener: (context, state) {
-                    print(
-                        "state.loginState is --------listener-------------> ${state.loginState}");
-                    if (state.loginState == RequestState.success) {
-                      final afterLogin = AfterLoginParams(
-                        adminUser: state.adminUser,
-                        password: loginController.password!,
-                        uId: state.userCredential!.user!.uid,
-                        userCredential: state.userCredential!,
-                      );
-                      userDataController.userDataAfterLogin(afterLogin);
-                    }
+                    _loginListener(state, loginController, userDataController);
                   },
                 ),
                 BlocListener<SharedUserDataCubit, SharedUserDataState>(
                   listenWhen: (previous, current) =>
                       previous.afterLoginState != current.afterLoginState,
                   listener: (context, state) {
-                    if (state.afterLoginState == RequestState.error ||
-                        state.afterLoginState == RequestState.success) {
-                      loginController.add(const RebuildEvent());
-                    }
-
-                    /*print(
-                        "state.afterLoginState -------------listener------> ${state.afterLoginState}");*/
-
-                    if (state.afterLoginState == RequestState.success) {
-                      if (state.sharedEntity!.user.adminOrUser ==
-                          AdminUser.user) {
-                        print(
-                            "_________________________ Navigate _________________________");
-
-                        /*Navigator.of(context)
-                            .pushReplacementNamed(Screens.userLayoutScreen);*/
-                      } else {
-                        Navigator.of(context)
-                            .pushReplacementNamed(Screens.adminLayoutScreen);
-                      }
-                    }
+                    _userDataListener(context, state, loginController);
                   },
                 ),
               ],
-              child:
-                  BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
-                print(
-                    "------------------------ Rebuild -------------------------");
-                if (state.loginState == RequestState.loading ||
-                    userDataController.state.afterLoginState ==
-                        RequestState.loading) {
-                  return const LoadingWidget();
-                } else {
-                  return CustomButton(
-                    text: AppStrings.login,
-                    width: context.width * 0.4,
-                    height: context.height * 0.05,
-                    onPressed: () {
-                      loginController.add(SignInEvent(state.adminUser));
-                    },
-                  );
-                }
-              }),
+              child: BlocBuilder<LoginBloc, LoginState>(
+                builder: (context, state) {
+                  print(
+                      " ------------------------------------------------- > Rebuild.....");
+                  if (state.loginState == RequestState.loading ||
+                      userDataController.state.afterLoginState ==
+                          RequestState.loading) {
+                    return const LoadingWidget();
+                  } else {
+                    return CustomButton(
+                      text: AppStrings.login,
+                      width: context.width * 0.4,
+                      height: context.height * 0.05,
+                      onPressed: () {
+                        loginController.add(SignInEvent(state.adminUser));
+                      },
+                    );
+                  }
+                },
+              ),
             ),
           ),
         ],
       ),
     );
+  }
+}
+
+void _loginListener(
+  LoginState state,
+  LoginBloc loginController,
+  SharedUserDataCubit userDataController,
+) {
+  print(
+      "LoginState ------ listener ---------------------------- > ${state.loginState}");
+  if (state.loginState == RequestState.success) {
+    final afterLogin = AfterLoginParams(
+      adminUser: state.adminUser,
+      password: loginController.password!,
+      uId: state.userCredential!.user!.uid,
+      userCredential: state.userCredential!,
+    );
+    userDataController.userDataAfterLogin(afterLogin);
+  }
+}
+
+void _userDataListener(
+  BuildContext context,
+  SharedUserDataState state,
+  LoginBloc loginController,
+) {
+  print(
+      "afterLoginState ------ listener ---------------------------- > ${state.afterLoginState}");
+  if (state.afterLoginState == RequestState.error ||
+      state.afterLoginState == RequestState.success) {
+    loginController.add(const RebuildEvent());
+  }
+  if (state.afterLoginState == RequestState.success) {
+    if (state.sharedEntity!.user.adminOrUser == AdminUser.user) {
+      Navigator.of(context).pushReplacementNamed(Screens.userLayoutScreen);
+    } else {
+      Navigator.of(context).pushReplacementNamed(Screens.adminLayoutScreen);
+    }
   }
 }
