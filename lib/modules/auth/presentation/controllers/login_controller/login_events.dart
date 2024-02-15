@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/shared/data/models/cached_user_data_model.dart';
 import 'package:equatable/equatable.dart';
 
@@ -6,9 +7,10 @@ abstract class LoginEvents extends Equatable {
 }
 
 class SignInEvent extends LoginEvents {
-  const SignInEvent();
+  final AdminUser adminOrUser;
+  const SignInEvent(this.adminOrUser);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [adminOrUser];
 }
 
 class ObSecureEvent extends LoginEvents {

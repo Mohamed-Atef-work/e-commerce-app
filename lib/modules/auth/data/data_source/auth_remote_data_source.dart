@@ -12,12 +12,12 @@ import 'package:e_commerce_app/modules/auth/domain/use_cases/get_user_data_use_c
 import 'package:e_commerce_app/modules/auth/domain/use_cases/store_user_data_use_case.dart';
 
 abstract class AuthBaseRemoteDatSource {
-  Future<UserCredential> signIn(Loginparams params);
+  Future<UserEntity> getUserData(String uId);
+  Future<UserCredential> signIn(LoginParams params);
   Future<UserCredential> signUp(SignUpparams params);
-  Future<void> storeUserDate(StoreUserDataParams params);
-  Future<UserEntity> getUserData(GetUserDataparams params);
-  Future<void> upDatePassword(UpdatePasswordParams params);
   Future<void> upDateEmail(UpdateEmailParams params);
+  Future<void> storeUserDate(UserModel user);
+  Future<void> upDatePassword(UpdatePasswordParams params);
 }
 
 /// <-------------------------------------------------------------------------->
@@ -48,7 +48,7 @@ class AuthRemoteDatSourceImpl implements AuthBaseRemoteDatSource {
   }
 
   @override
-  Future<UserCredential> signIn(Loginparams params) async {
+  Future<UserCredential> signIn(LoginParams params) async {
     print(
         "<----------------- In The SIGN_IN Remote Data Source ------------------>");
     final userCredential = _userAuth.signIn(params).catchError((error) {
@@ -68,19 +68,15 @@ class AuthRemoteDatSourceImpl implements AuthBaseRemoteDatSource {
   }
 
   @override
-  Future<void> storeUserDate(StoreUserDataParams params) async {
-    await _userStore
-        .storeUserData(params)
-        .then((value) {})
-        .catchError((error) {
+  Future<void> storeUserDate(UserModel user) async {
+    await _userStore.storeUserData(user).then((value) {}).catchError((error) {
       throw ServerException(message: error.code);
     });
   }
 
   @override
-  Future<UserEntity> getUserData(params) async {
-    final userDoc =
-        await _userStore.getUserData(params.uId).catchError((error) {
+  Future<UserEntity> getUserData(String uId) async {
+    final userDoc = await _userStore.getUserData(uId).catchError((error) {
       throw ServerException(message: error.code);
     });
     final user = UserModel.fromJson(userDoc.data()!, id: userDoc.id);

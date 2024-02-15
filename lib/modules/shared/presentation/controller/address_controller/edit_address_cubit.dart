@@ -23,15 +23,13 @@ class EditAddressCubit extends Cubit<EditAddressState> {
     if (formKey.currentState!.validate()) {
       emit(state.copyWith(changeState: RequestState.loading));
       final result = await _storeUserDataUseCase.call(
-        StoreUserDataParams(
-          userModel: UserModel(
-            id: "uId",
-            name: "name",
-            email: "email",
-            phone: "phone",
-            address:
-                "${city.text}, ${street.text}, ${bloc.text}, ${apartment.text}",
-          ),
+        UserModel(
+          id: "uId",
+          name: "name",
+          email: "email",
+          phone: "phone",
+          address:
+              "${city.text}, ${street.text}, ${bloc.text}, ${apartment.text}",
         ),
       );
 

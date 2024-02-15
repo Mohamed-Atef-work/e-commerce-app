@@ -34,7 +34,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
       emit(state.copyWith(loginState: RequestState.loading));
 
       final result = await loginInUseCase.call(
-        Loginparams(email: email!, password: password!),
+        LoginParams(email: email!, password: password!,adminOrUser: event.adminOrUser),
       );
       emit(result.fold(
         (l) => state.copyWith(

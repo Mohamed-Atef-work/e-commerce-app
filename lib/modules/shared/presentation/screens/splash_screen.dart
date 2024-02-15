@@ -5,8 +5,8 @@ import 'package:e_commerce_app/core/components/logo.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/animation/custom_fading_widget.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/shared_user_data_controller/shared_user_data_state.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/shared_user_data_controller/shared_user_data_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_state.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -28,6 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
             print(state.sharedEntity?.user.userEntity.name);
             print(state.sharedEntity?.user.adminOrUser);
             print(state.sharedEntity?.user.password);
+
+            /// < ------------------------------------------------------------ >
             if (state.getState == RequestState.success) {
               if (state.sharedEntity!.user.adminOrUser == AdminUser.admin) {
                 Navigator.of(context)
@@ -56,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(
       const Duration(seconds: 2),
       () {
-        BlocProvider.of<SharedUserDataCubit>(context).getData();
+        BlocProvider.of<SharedUserDataCubit>(context).getInitialDataLocally();
       },
     );
   }

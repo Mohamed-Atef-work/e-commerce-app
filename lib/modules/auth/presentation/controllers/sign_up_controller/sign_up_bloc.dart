@@ -52,28 +52,26 @@ class SignUpBloc extends Cubit<SignUpState> {
   Future<void> _storeUserDate() async {
     emit(state.copyWith(storeUserDataState: RequestState.loading));
     final result = await _storeUserDataUseCase.call(
-      StoreUserDataParams(
-        userModel: UserModel(
-          name: name!,
-          email: email!,
-          address: "address",
-          phone: "phone",
-          id: state.userCredential!.user!.uid,
-        ),
+      UserModel(
+        name: name!,
+        email: email!,
+        id: state.userCredential!.user!.uid,
       ),
     );
-    emit(result.fold(
-      (l) => state.copyWith(
-          storeUserDataState: RequestState.error, errorMessage: l.message),
-      (r) => state.copyWith(storeUserDataState: RequestState.success),
-    ));
+    emit(
+      result.fold(
+        (l) => state.copyWith(
+            storeUserDataState: RequestState.error, errorMessage: l.message),
+        (r) => state.copyWith(storeUserDataState: RequestState.success),
+      ),
+    );
   }
 
   /*Future<void> _signIN() async {
     emit(state.copyWith(signInState: RequestState.loading));
 
     final result = await _loginInUseCase.call(
-      Loginparams(email: email!, password: password!),
+      LoginParams(email: email!, password: password!),
     );
     emit(result.fold(
       (l) => state.copyWith(

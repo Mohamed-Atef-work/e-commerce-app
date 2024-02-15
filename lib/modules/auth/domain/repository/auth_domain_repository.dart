@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
@@ -12,9 +13,8 @@ import 'package:e_commerce_app/modules/auth/domain/use_cases/store_user_data_use
 abstract class AuthRepositoryDomain {
   Future<Either<Failure, void>> updateEmail(UpdateEmailParams params);
   Future<Either<Failure, void>> updatePassword(UpdatePasswordParams params);
-  Future<Either<Failure, UserCredential>> signIn(Loginparams params);
+  Future<Either<Failure, UserCredential>> signIn(LoginParams params);
   Future<Either<Failure, UserCredential>> signUp(SignUpparams params);
-  Future<Either<Failure, void>> storeUserData(StoreUserDataParams params);
-  Future<Either<Failure, UserEntity>> getUserData(
-      GetUserDataparams params);
+  Future<Either<Failure, void>> storeUserData(UserModel userModel);
+  Future<Either<Failure, UserEntity>> getUserData(String uId);
 }

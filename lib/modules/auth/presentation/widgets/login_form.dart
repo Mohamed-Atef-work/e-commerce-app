@@ -96,7 +96,7 @@ class LoginFormWidget extends StatelessWidget {
                         width: context.width * 0.4,
                         height: context.height * 0.05,
                         onPressed: () {
-                          loginController.add(const SignInEvent());
+                          loginController.add(SignInEvent(state.adminUser));
                         },
                       );
                     }

@@ -24,7 +24,7 @@ import 'package:e_commerce_app/modules/shared/presentation/screens/change_passwo
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/shared_user_data_controller/shared_user_data_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 
 class BuyItApp extends StatelessWidget {

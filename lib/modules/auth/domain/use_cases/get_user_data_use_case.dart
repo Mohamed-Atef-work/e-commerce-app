@@ -4,20 +4,17 @@ import 'package:e_commerce_app/core/use_case/base_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/auth/domain/repository/auth_domain_repository.dart';
 
-class GetUserDataUseCase
-    extends BaseUseCase<UserEntity, GetUserDataparams> {
+class GetUserDataUseCase extends BaseUseCase<UserEntity, String> {
   final AuthRepositoryDomain authRepo;
 
   GetUserDataUseCase(this.authRepo);
   @override
-  Future<Either<Failure, UserEntity>> call(
-      GetUserDataparams params) async {
-    return await authRepo.getUserData(params);
-  }
+  Future<Either<Failure, UserEntity>> call(String params) async =>
+      await authRepo.getUserData(params);
 }
 
-class GetUserDataparams {
+class GetUserDataParams {
   final String uId;
 
-  GetUserDataparams({required this.uId});
+  GetUserDataParams({required this.uId});
 }

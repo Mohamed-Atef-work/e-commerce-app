@@ -35,15 +35,15 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
       emit(state.copyWith(updateState: RequestState.loading));
 
       final result = await _storeUserDataUseCase.call(
-        StoreUserDataParams(
-          userModel: UserModel(
+
+          UserModel(
             name: name.text,
             email: email.text,
             phone: phone.text,
             address: "address",
             id: "uId",
           ),
-        ),
+
       );
       emit(
         result.fold(
