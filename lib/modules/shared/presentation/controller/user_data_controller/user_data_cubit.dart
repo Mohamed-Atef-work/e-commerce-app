@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/use_case/base_use_case.dart';
@@ -22,6 +20,7 @@ class SharedUserDataCubit extends Cubit<SharedUserDataState> {
 
   void userDataAfterLogin(AfterLoginParams params) async {
     emit(state.copyWith(afterLoginState: RequestState.loading));
+
     final result = await _userDataAfterLoginUseCase(params);
     emit(
       result.fold(

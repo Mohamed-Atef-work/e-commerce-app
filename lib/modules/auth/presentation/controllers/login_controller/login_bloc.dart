@@ -23,7 +23,8 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
 
     on<ObSecureEvent>(_obSecureEvent);
     on<SignInEvent>(_signInEvent);
-    on<SaveUserDataEvent>(_saveUserDataEvent);
+    on<RebuildEvent>(_reBuildEvent);
+    //on<SaveUserDataEvent>(_saveUserDataEvent);
     /*on<TakePasswordEvent>(_takePasswordEvent);
     on<TakeEmailEvent>(_takeEmailEvent);*/
   }
@@ -34,17 +35,14 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
       emit(state.copyWith(loginState: RequestState.loading));
 
       final result = await loginInUseCase.call(
-        LoginParams(email: email!, password: password!,adminOrUser: event.adminOrUser),
+        LoginParams(
+            email: email!, password: password!, adminOrUser: event.adminOrUser),
       );
       emit(result.fold(
         (l) => state.copyWith(
             loginState: RequestState.error, errorMessage: l.message),
-        (r) {
-          uId = r.user!.uid;
-          print(uId);
-          return state.copyWith(
-              loginState: RequestState.success, userCredential: r);
-        },
+        (r) =>
+            state.copyWith(loginState: RequestState.success, userCredential: r),
       ));
     }
   }
@@ -61,7 +59,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
     emit(state.copyWith(obSecure: !state.obSecure));
   }
 
-  FutureOr<void> _saveUserDataEvent(
+/*  FutureOr<void> _saveUserDataEvent(
       SaveUserDataEvent event, Emitter<LoginState> emit) async {
     emit(
       state.copyWith(
@@ -76,7 +74,8 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
         (r) => state.copyWith(saveState: RequestState.success),
       ),
     );
-  }
+  }*/
+
   /*FutureOr<void> _takeEmailEvent(
       TakeEmailEvent event, Emitter<LoginState> emit) {
     emit(state.copyWith(email: event.email));
@@ -86,4 +85,9 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
       TakePasswordEvent event, Emitter<LoginState> emit) {
     emit(state.copyWith(password: event.password));
   }*/
+
+  void _reBuildEvent(RebuildEvent event, Emitter<LoginState> emit) {
+    emit(state.copyWith(loginState: RequestState.initial));
+    print("state.loginState -----------> ${state.loginState}");
+  }
 }

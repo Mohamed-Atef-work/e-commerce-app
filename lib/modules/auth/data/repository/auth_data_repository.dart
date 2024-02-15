@@ -18,10 +18,8 @@ class AuthRepositoryData implements AuthRepositoryDomain {
   AuthRepositoryData(this._authDataSource);
 
   @override
-  Future<Either<Failure, UserCredential>> signIn(
-      LoginParams params) async {
-    print(
-        "<------------------- In The SignIN Data Repository ------------------->");
+  Future<Either<Failure, UserCredential>> signIn(LoginParams params) async {
+
     try {
       final result = await _authDataSource.signIn(params);
       return Right(result);
@@ -33,8 +31,7 @@ class AuthRepositoryData implements AuthRepositoryDomain {
   }
 
   @override
-  Future<Either<Failure, UserCredential>> signUp(
-      SignUpparams params) async {
+  Future<Either<Failure, UserCredential>> signUp(SignUpparams params) async {
     print(
         "<------------------- In The Sign_UP Data Repository ------------------->");
     try {
@@ -52,8 +49,7 @@ class AuthRepositoryData implements AuthRepositoryDomain {
   }
 
   @override
-  Future<Either<Failure, void>> storeUserData(
-      UserModel params) async {
+  Future<Either<Failure, void>> storeUserData(UserModel params) async {
     try {
       final result = await _authDataSource.storeUserDate(params);
       return Right(result);
@@ -63,8 +59,7 @@ class AuthRepositoryData implements AuthRepositoryDomain {
   }
 
   @override
-  Future<Either<Failure, UserEntity>> getUserData(
-      String params) async {
+  Future<Either<Failure, UserEntity>> getUserData(String params) async {
     try {
       final result = await _authDataSource.getUserData(params);
       return Right(result);
@@ -74,8 +69,7 @@ class AuthRepositoryData implements AuthRepositoryDomain {
   }
 
   @override
-  Future<Either<Failure, void>> updateEmail(
-      UpdateEmailParams params) async {
+  Future<Either<Failure, void>> updateEmail(UpdateEmailParams params) async {
     try {
       final result = await _authDataSource.upDateEmail(params);
       return Right(result);

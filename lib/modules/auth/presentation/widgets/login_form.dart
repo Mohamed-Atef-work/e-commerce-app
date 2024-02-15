@@ -8,11 +8,12 @@ import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
-import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
-import 'package:e_commerce_app/modules/shared/data/models/cached_user_data_model.dart';
+import 'package:e_commerce_app/modules/shared/domain/use_cases/user_data_after_login_use_case.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_bloc.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_states.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_events.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_state.dart';
 
 class LoginFormWidget extends StatelessWidget {
   const LoginFormWidget({super.key});
@@ -20,13 +21,13 @@ class LoginFormWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginController = BlocProvider.of<LoginBloc>(context);
+    final userDataController = BlocProvider.of<SharedUserDataCubit>(context);
 
     return Form(
       key: loginController.formKey,
       child: Column(
         children: [
           CustomTextFormField(
-            fontSize: 15,
             onChanged: (email) {
               loginController.email = email;
             },
@@ -53,54 +54,72 @@ class LoginFormWidget extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: context.height * 0.05),
-            child: BlocListener<LoginBloc, LoginState>(
-              listener: (context, state) {
-                print("state.loginState is ------->  ${state.loginState}");
-                print("state.saveState is ------->  ${state.saveState}");
-                if (state.loginState == RequestState.success) {
-                  final userData = CachedUserDataModel(
-                    password: loginController.password!,
-                    adminOrUser: state.adminUser,
-                    userEntity: UserEntity(
-                      id: state.userCredential!.user!.uid,
-                      email: state.userCredential!.user!.email!,
-                      name: state.userCredential!.user!.displayName ?? "name",
-                    ),
-                  );
-                  loginController.add(SaveUserDataEvent(userData));
-                }
-                if (state.saveState == RequestState.success) {
-                  if (state.adminUser == AdminUser.user) {
-                    Navigator.of(context)
-                        .pushReplacementNamed(Screens.userLayoutScreen);
-                  } else {
-                    Navigator.of(context)
-                        .pushReplacementNamed(Screens.adminLayoutScreen);
-                  }
-                }
-              },
-              child: BlocBuilder<LoginBloc, LoginState>(
-                  buildWhen: (previousState, currentState) =>
-                      previousState.loginState != currentState.loginState ||
-                      previousState.saveState != currentState.saveState,
-                  builder: (context, state) {
+            child: MultiBlocListener(
+              listeners: [
+                BlocListener<LoginBloc, LoginState>(
+                  listenWhen: (previous, current) =>
+                      previous.loginState != current.loginState,
+                  listener: (context, state) {
                     print(
-                        "<------------------------ Hi Iam being built ------------------------>");
-
-                    if (state.loginState == RequestState.loading ||
-                        state.saveState == RequestState.loading) {
-                      return const LoadingWidget();
-                    } else {
-                      return CustomButton(
-                        text: AppStrings.login,
-                        width: context.width * 0.4,
-                        height: context.height * 0.05,
-                        onPressed: () {
-                          loginController.add(SignInEvent(state.adminUser));
-                        },
+                        "state.loginState is --------listener-------------> ${state.loginState}");
+                    if (state.loginState == RequestState.success) {
+                      final afterLogin = AfterLoginParams(
+                        adminUser: state.adminUser,
+                        password: loginController.password!,
+                        uId: state.userCredential!.user!.uid,
+                        userCredential: state.userCredential!,
                       );
+                      userDataController.userDataAfterLogin(afterLogin);
                     }
-                  }),
+                  },
+                ),
+                BlocListener<SharedUserDataCubit, SharedUserDataState>(
+                  listenWhen: (previous, current) =>
+                      previous.afterLoginState != current.afterLoginState,
+                  listener: (context, state) {
+                    if (state.afterLoginState == RequestState.error ||
+                        state.afterLoginState == RequestState.success) {
+                      loginController.add(const RebuildEvent());
+                    }
+
+                    /*print(
+                        "state.afterLoginState -------------listener------> ${state.afterLoginState}");*/
+
+                    if (state.afterLoginState == RequestState.success) {
+                      if (state.sharedEntity!.user.adminOrUser ==
+                          AdminUser.user) {
+                        print(
+                            "_________________________ Navigate _________________________");
+
+                        /*Navigator.of(context)
+                            .pushReplacementNamed(Screens.userLayoutScreen);*/
+                      } else {
+                        Navigator.of(context)
+                            .pushReplacementNamed(Screens.adminLayoutScreen);
+                      }
+                    }
+                  },
+                ),
+              ],
+              child:
+                  BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
+                print(
+                    "------------------------ Rebuild -------------------------");
+                if (state.loginState == RequestState.loading ||
+                    userDataController.state.afterLoginState ==
+                        RequestState.loading) {
+                  return const LoadingWidget();
+                } else {
+                  return CustomButton(
+                    text: AppStrings.login,
+                    width: context.width * 0.4,
+                    height: context.height * 0.05,
+                    onPressed: () {
+                      loginController.add(SignInEvent(state.adminUser));
+                    },
+                  );
+                }
+              }),
             ),
           ),
         ],

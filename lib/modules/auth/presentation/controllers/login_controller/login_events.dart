@@ -25,12 +25,18 @@ class ToggleAdminAndUserEvent extends LoginEvents {
   List<Object?> get props => [];
 }
 
-class SaveUserDataEvent extends LoginEvents {
+class RebuildEvent extends LoginEvents {
+  const RebuildEvent();
+  @override
+  List<Object?> get props => [];
+}
+
+/*class SaveUserDataEvent extends LoginEvents {
   final CachedUserDataModel user;
   const SaveUserDataEvent(this.user);
   @override
   List<Object?> get props => [];
-}
+}*/
 
 /*class TakePasswordEvent extends LoginEvents {
   final String password;

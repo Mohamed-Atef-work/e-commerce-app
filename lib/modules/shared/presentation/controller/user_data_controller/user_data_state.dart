@@ -33,6 +33,6 @@ class SharedUserDataState {
         saveState: saveState ?? this.saveState,
         deleteState: deleteState ?? this.deleteState,
         sharedEntity: sharedEntity ?? this.sharedEntity,
-        afterLoginState: deleteState ?? this.afterLoginState,
+        afterLoginState: afterLoginState ?? this.afterLoginState,
       );
 }
