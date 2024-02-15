@@ -22,16 +22,14 @@ class EditAddressCubit extends Cubit<EditAddressState> {
   Future<void> updateAddress(UserModel user) async {
     if (formKey.currentState!.validate()) {
       emit(state.copyWith(changeState: RequestState.loading));
-      final result = await _storeUserDataUseCase.call(
-        UserModel(
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          phone: user.phone,
-          address:
-              "${city.text}, ${street.text}, ${bloc.text}, ${apartment.text}",
-        )
-      );
+      final result = await _storeUserDataUseCase.call(UserModel(
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        address:
+            "${city.text}, ${street.text}, ${bloc.text}, ${apartment.text}",
+      ));
 
       if (result.isRight()) {
         apartment.text = "";
