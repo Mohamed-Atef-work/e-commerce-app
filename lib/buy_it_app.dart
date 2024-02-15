@@ -13,7 +13,7 @@ import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'modules/admin/presentation/screens/admin_add_product_screen.dart';
 import 'modules/admin/presentation/screens/admin_explore_products_screen.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/details_screen.dart';
-import 'package:e_commerce_app/modules/home/presentation/screens/profile_screen.dart';
+import 'package:e_commerce_app/modules/shared/presentation/screens/profile_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/splash_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/address_screen.dart';
 import 'package:e_commerce_app/modules/orders/presentation/screens/user_order_screen.dart';
