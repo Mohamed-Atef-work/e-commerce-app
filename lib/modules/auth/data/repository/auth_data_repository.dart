@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
+import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/login_use_case.dart';
@@ -10,7 +10,6 @@ import 'package:e_commerce_app/modules/auth/domain/use_cases/update_password.dar
 import 'package:e_commerce_app/modules/auth/domain/use_cases/sign_up_use_case.dart';
 import 'package:e_commerce_app/modules/auth/data/data_source/auth_remote_data_source.dart';
 import 'package:e_commerce_app/modules/auth/domain/repository/auth_domain_repository.dart';
-import 'package:e_commerce_app/modules/auth/domain/use_cases/store_user_data_use_case.dart';
 
 class AuthRepositoryData implements AuthRepositoryDomain {
   final AuthBaseRemoteDatSource _authDataSource;
@@ -19,7 +18,6 @@ class AuthRepositoryData implements AuthRepositoryDomain {
 
   @override
   Future<Either<Failure, UserCredential>> signIn(LoginParams params) async {
-
     try {
       final result = await _authDataSource.signIn(params);
       return Right(result);
@@ -85,6 +83,19 @@ class AuthRepositoryData implements AuthRepositoryDomain {
       UpdatePasswordParams params) async {
     try {
       final result = await _authDataSource.upDatePassword(params);
+      return Right(result);
+    } on ServerException catch (serverException) {
+      print(
+          "<--------------------------- In The Left --------------------------->");
+      print(serverException.message);
+      return Left(ServerFailure(message: serverException.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> logOut() async {
+    try {
+      final result = await _authDataSource.logOut();
       return Right(result);
     } on ServerException catch (serverException) {
       print(

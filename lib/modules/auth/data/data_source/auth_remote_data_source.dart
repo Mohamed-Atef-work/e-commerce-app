@@ -12,11 +12,12 @@ import 'package:e_commerce_app/modules/auth/domain/use_cases/get_user_data_use_c
 import 'package:e_commerce_app/modules/auth/domain/use_cases/store_user_data_use_case.dart';
 
 abstract class AuthBaseRemoteDatSource {
+  Future<void> logOut();
+  Future<void> storeUserDate(UserModel user);
   Future<UserEntity> getUserData(String uId);
   Future<UserCredential> signIn(LoginParams params);
   Future<UserCredential> signUp(SignUpparams params);
   Future<void> upDateEmail(UpdateEmailParams params);
-  Future<void> storeUserDate(UserModel user);
   Future<void> upDatePassword(UpdatePasswordParams params);
 }
 
@@ -68,11 +69,10 @@ class AuthRemoteDatSourceImpl implements AuthBaseRemoteDatSource {
   }
 
   @override
-  Future<void> storeUserDate(UserModel user) async {
-    await _userStore.storeUserData(user).then((value) {}).catchError((error) {
-      throw ServerException(message: error.code);
-    });
-  }
+  Future<void> storeUserDate(UserModel user) async =>
+      await _userStore.storeUserData(user).then((_) {}).catchError((error) {
+        throw ServerException(message: error.code);
+      });
 
   @override
   Future<UserEntity> getUserData(String uId) async {
@@ -80,7 +80,11 @@ class AuthRemoteDatSourceImpl implements AuthBaseRemoteDatSource {
       throw ServerException(message: error.code);
     });
     final user = UserModel.fromJson(userDoc.data()!, id: userDoc.id);
-
     return user;
   }
+
+  @override
+  Future<void> logOut() async => await _userAuth.logOut().catchError((error) {
+        throw ServerException(message: error.code);
+      });
 }

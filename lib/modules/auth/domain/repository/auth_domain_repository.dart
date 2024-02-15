@@ -11,10 +11,11 @@ import 'package:e_commerce_app/modules/auth/domain/use_cases/get_user_data_use_c
 import 'package:e_commerce_app/modules/auth/domain/use_cases/store_user_data_use_case.dart';
 
 abstract class AuthRepositoryDomain {
-  Future<Either<Failure, void>> updateEmail(UpdateEmailParams params);
-  Future<Either<Failure, void>> updatePassword(UpdatePasswordParams params);
+  Future<Either<Failure, void>> logOut();
+  Future<Either<Failure, UserEntity>> getUserData(String uId);
+  Future<Either<Failure, void>> storeUserData(UserModel userModel);
   Future<Either<Failure, UserCredential>> signIn(LoginParams params);
   Future<Either<Failure, UserCredential>> signUp(SignUpparams params);
-  Future<Either<Failure, void>> storeUserData(UserModel userModel);
-  Future<Either<Failure, UserEntity>> getUserData(String uId);
+  Future<Either<Failure, void>> updateEmail(UpdateEmailParams params);
+  Future<Either<Failure, void>> updatePassword(UpdatePasswordParams params);
 }

@@ -3,6 +3,7 @@ import 'package:e_commerce_app/modules/auth/domain/use_cases/sign_up_use_case.da
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class UserAuth {
+  Future<void> logOut();
   Future<void> upDataEmail(String newEmail);
   Future<void> upDataPassword(String newPassword);
   Future<UserCredential> signIn(LoginParams params);
@@ -37,18 +38,19 @@ class UserAuthImpl implements UserAuth {
   }
 
   @override
-  Future<UserCredential> signIn(LoginParams params) async {
-    return await _auth.signInWithEmailAndPassword(
-      password: params.password,
-      email: params.email,
-    );
-  }
+  Future<UserCredential> signIn(LoginParams params) async =>
+      await _auth.signInWithEmailAndPassword(
+        password: params.password,
+        email: params.email,
+      );
 
   @override
-  Future<UserCredential> signUp(SignUpparams params) async {
-    return await _auth.createUserWithEmailAndPassword(
-      password: params.password,
-      email: params.email,
-    );
-  }
+  Future<UserCredential> signUp(SignUpparams params) async =>
+      await _auth.createUserWithEmailAndPassword(
+        password: params.password,
+        email: params.email,
+      );
+
+  @override
+  Future<void> logOut() async => await _auth.signOut();
 }
