@@ -11,14 +11,16 @@ class LogoutUseCase extends BaseUseCase<bool, Noparams> {
   LogoutUseCase(this._sharedRepo, this._authRepo);
   @override
   Future<Either<Failure, bool>> call(Noparams params) async {
-    final logOutEither = await _authRepo.logOut();
     final deleteEither = await _sharedRepo.deleteUserDataLocally();
     return deleteEither.fold(
       (deleteFailure) => Left(deleteFailure),
-      (deleteResult) => logOutEither.fold(
-        (logOutFailure) => Left(logOutFailure),
-        (r) => Right(deleteResult),
-      ),
+      (deleteResult) async {
+        final logOutEither = await _authRepo.logOut();
+        return logOutEither.fold(
+          (logOutFailure) => Left(logOutFailure),
+          (r) => Right(deleteResult),
+        );
+      },
     );
   }
 }

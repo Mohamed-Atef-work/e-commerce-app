@@ -1,17 +1,17 @@
-import 'package:e_commerce_app/core/components/loading_widget.dart';
-import 'package:e_commerce_app/core/services/service_locator/sl.dart';
-import 'package:e_commerce_app/core/utils/enums.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/logout_controller/logout_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/app_bar.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
+import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/account_item_widget.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/profile_item_widget.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/logout_controller/logout_cubit.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -26,9 +26,10 @@ class ProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 5),
           child: Builder(builder: (context) {
             return BlocConsumer<LogoutCubit, LogoutState>(
-              listener: (context, state){
-                if(state.logoutState == RequestState.success){
-                  Navigator.of(context).pushNamedAndRemoveUntil(Screens.loginScreen, (route) => false);
+              listener: (context, state) {
+                if (state.logoutState == RequestState.success) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      Screens.loginScreen, (route) => false);
                 }
               },
               builder: (context, state) {
