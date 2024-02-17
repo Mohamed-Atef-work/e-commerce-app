@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
-import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/validators.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
@@ -11,6 +10,7 @@ import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
+import 'package:e_commerce_app/core/components/base_model_sheet_component.dart';
 import 'package:e_commerce_app/modules/shared/domain/entities/cached_user_data_entity.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/change_email_controller/change_email_cubit.dart';
@@ -28,17 +28,8 @@ class UpDatePhoneWidget extends StatelessWidget {
       child: Builder(builder: (context) {
         final updateProfileController =
             BlocProvider.of<UpdateProfileCubit>(context);
-        return Container(
+        return BaseModelSheetComponent(
           height: context.height * 0.3,
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: kPrimaryColorYellow,
-            borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(25),
-              topLeft: Radius.circular(25),
-            ),
-            border: Border.all(color: kWhite, style: BorderStyle.solid),
-          ),
           child: BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
             builder: (context, state) {
               if (state.updateState == RequestState.loading) {
@@ -99,17 +90,8 @@ class UpDateNameWidget extends StatelessWidget {
     final user = userData.sharedEntity!.user.userEntity;
     return BlocProvider(
       create: (context) => sl<UpdateProfileCubit>(),
-      child: Container(
+      child: BaseModelSheetComponent(
         height: context.height * 0.4,
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: kPrimaryColorYellow,
-          borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(25),
-            topLeft: Radius.circular(25),
-          ),
-          border: Border.all(color: kWhite, style: BorderStyle.solid),
-        ),
         child: BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
           builder: (context, state) {
             if (state.updateState == RequestState.loading) {
@@ -168,17 +150,8 @@ class UpDateEmailWidget extends StatelessWidget {
       child: Builder(builder: (context) {
         final updateEmailController =
             BlocProvider.of<ChangeEmailCubit>(context);
-        return Container(
+        return BaseModelSheetComponent(
           height: context.height * 0.5,
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: kPrimaryColorYellow,
-            borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(25),
-              topLeft: Radius.circular(25),
-            ),
-            border: Border.all(color: kWhite, style: BorderStyle.solid),
-          ),
           child: BlocBuilder<ChangeEmailCubit, ChangeEmailState>(
             builder: (context, state) {
               if (state.changeState == RequestState.loading) {
