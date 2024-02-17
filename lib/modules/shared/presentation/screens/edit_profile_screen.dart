@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/images.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
-import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/app_bar.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
@@ -50,23 +49,29 @@ class EditProfileScreen extends StatelessWidget {
             onPressed: () {
               showModalBottomSheet(
                   context: context,
-                  builder: (context) => const UpDateProfileWidget());
+                  builder: (context) => const UpDateNameWidget());
             },
           ),
           EditProfileItemWidget(
             title: AppStrings.email,
             value: userData.email,
-            onPressed: () {},
+            onPressed: () {
+              showModalBottomSheet(
+                  context: context,
+                  builder: (context) => const UpDateEmailWidget());
+            },
           ),
           EditProfileItemWidget(
             title: AppStrings.phone,
             value: userData.phone ?? AppStrings.pleaseAddPhone,
-            onPressed: () {},
+            onPressed: () {
+              showModalBottomSheet(
+                  context: context,
+                  builder: (context) => const UpDatePhoneWidget());
+            },
           ),
-          EditProfileItemWidget(
-            title: AppStrings.address,
-            value: userData.address ?? AppStrings.pleaseAddAddress,
-            onPressed: () {},
+          AddressWidget(
+            address: userData.address ?? AppStrings.pleaseAddAddress,
           ),
         ],
       ),

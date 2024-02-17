@@ -13,33 +13,45 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
   UpdateProfileCubit(this._storeUserDataUseCase)
       : super(const UpdateProfileState());
 
-  //String? name;
-  TextEditingController name = TextEditingController();
-  //String? phone;
-  TextEditingController phone = TextEditingController();
-  //String? address;
-  TextEditingController email = TextEditingController();
+  TextEditingController changedOne = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
 
-  void userData(UserEntity userEntity) {
-    emit(state.copyWith(userEntity: userEntity));
-    name.text = state.userEntity!.name;
-    phone.text = state.userEntity!.phone!;
-    email.text = state.userEntity!.address!;
-  }
-
-  Future<void> updateUserData(String uId) async {
+  Future<void> updatePhone(UserEntity user) async {
     if (formKey.currentState!.validate()) {
       emit(state.copyWith(updateState: RequestState.loading));
 
       final result = await _storeUserDataUseCase.call(
         UserModel(
-          name: name.text,
-          email: email.text,
-          phone: phone.text,
-          address: "address",
-          id: uId,
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          address: user.address,
+          phone: changedOne.text,
+        ),
+      );
+      emit(
+        result.fold(
+          (l) => state.copyWith(
+              updateState: RequestState.error, message: l.message),
+          (r) => state.copyWith(updateState: RequestState.success),
+        ),
+      );
+    }
+    print(state.updateState);
+  }
+
+  Future<void> updateName(UserEntity user) async {
+    if (formKey.currentState!.validate()) {
+      emit(state.copyWith(updateState: RequestState.loading));
+
+      final result = await _storeUserDataUseCase.call(
+        UserModel(
+          id: user.id,
+          phone: user.phone,
+          email: user.email,
+          address: user.address,
+          name: changedOne.text,
         ),
       );
       emit(
@@ -53,3 +65,9 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
     print(state.updateState);
   }
 }
+/*  void userData(UserEntity userEntity) {
+    emit(state.copyWith(userEntity: userEntity));
+    name.text = state.userEntity!.name;
+    phone.text = state.userEntity!.phone!;
+    email.text = state.userEntity!.address!;
+  }*/

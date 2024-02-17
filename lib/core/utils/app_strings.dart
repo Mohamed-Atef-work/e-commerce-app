@@ -45,6 +45,8 @@ class AppStrings {
 
   static const String name = "Name";
   static const String email = "email";
+  static const String oldEmail = "Old Email";
+  static const String newEmail = "New Email";
   static const String phone = "Phone";
   static const String address = "Address";
   static const String category = "Category";
