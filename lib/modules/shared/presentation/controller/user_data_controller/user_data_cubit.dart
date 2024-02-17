@@ -3,6 +3,7 @@ import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/use_case/base_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/shared/data/models/cached_user_data_model.dart';
+import 'package:e_commerce_app/modules/shared/domain/entities/shared_user_data_entity.dart';
 import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/get_initial_use_case.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/user_data_after_login_use_case.dart';
@@ -18,6 +19,31 @@ class SharedUserDataCubit extends Cubit<SharedUserDataState> {
     this._getInitialDataUseCase,
     this._userDataAfterLoginUseCase,
   ) : super(const SharedUserDataState());
+  void getInitialDataLocally() async {
+    emit(state.copyWith(getState: RequestState.loading));
+
+    final result = await _getInitialDataUseCase.call(const Noparams());
+    emit(
+      result.fold(
+        (l) => state.copyWith(message: l.message, getState: RequestState.error),
+        (r) => state.copyWith(getState: RequestState.success, sharedEntity: r),
+      ),
+    );
+  }
+
+  void getSavedUser() async {
+    emit(state.copyWith(getState: RequestState.loading));
+    final result = await _sharedDomainRepo.getUserDataLocally();
+    emit(
+      result.fold(
+        (l) => state.copyWith(getState: RequestState.error, message: l.message),
+        (r) => state.copyWith(
+            getState: RequestState.success,
+            sharedEntity: SharedUserDataEntity(
+                userCredential: state.sharedEntity!.userCredential, user: r)),
+      ),
+    );
+  }
 
   void userDataAfterLogin(AfterLoginParams params) async {
     emit(state.copyWith(afterLoginState: RequestState.loading));
@@ -29,18 +55,6 @@ class SharedUserDataCubit extends Cubit<SharedUserDataState> {
             afterLoginState: RequestState.error, message: l.message),
         (r) => state.copyWith(
             afterLoginState: RequestState.success, sharedEntity: r),
-      ),
-    );
-  }
-
-  void getInitialDataLocally() async {
-    emit(state.copyWith(getState: RequestState.loading));
-
-    final result = await _getInitialDataUseCase.call(const Noparams());
-    emit(
-      result.fold(
-        (l) => state.copyWith(message: l.message, getState: RequestState.error),
-        (r) => state.copyWith(getState: RequestState.success, sharedEntity: r),
       ),
     );
   }

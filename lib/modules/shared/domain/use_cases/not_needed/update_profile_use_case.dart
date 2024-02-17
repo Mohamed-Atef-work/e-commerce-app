@@ -4,6 +4,7 @@ import 'package:e_commerce_app/core/use_case/base_use_case.dart';
 import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
 import 'package:e_commerce_app/modules/auth/domain/repository/auth_domain_repository.dart';
 
+/*
 class UpdateProfileUseCase extends BaseUseCase<void, UserModel> {
   final AuthRepositoryDomain repo;
 
@@ -13,3 +14,4 @@ class UpdateProfileUseCase extends BaseUseCase<void, UserModel> {
     return await repo.storeUserData(params);
   }
 }
+*/

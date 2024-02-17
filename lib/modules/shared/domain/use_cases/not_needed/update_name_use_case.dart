@@ -7,7 +7,7 @@ import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_re
 import 'package:e_commerce_app/modules/auth/domain/repository/auth_domain_repository.dart';
 import 'package:e_commerce_app/modules/shared/domain/entities/cached_user_data_entity.dart';
 
-class UpdateNameUseCase extends BaseUseCase<bool, UpdateNameParams> {
+/*class UpdateNameUseCase extends BaseUseCase<bool, UpdateNameParams> {
   final SharedDomainRepo _sharedRepo;
   final AuthRepositoryDomain _authRepo;
 
@@ -16,9 +16,9 @@ class UpdateNameUseCase extends BaseUseCase<bool, UpdateNameParams> {
   @override
   Future<Either<Failure, bool>> call(UpdateNameParams params) async {
     final user = UserEntity(
-      phone: params.phone,
+      name: params.name,
       id: params.cachedUser.userEntity.id,
-      name: params.cachedUser.userEntity.name,
+      phone: params.cachedUser.userEntity.phone,
       email: params.cachedUser.userEntity.email,
       address: params.cachedUser.userEntity.address,
     );
@@ -38,11 +38,11 @@ class UpdateNameUseCase extends BaseUseCase<bool, UpdateNameParams> {
 }
 
 class UpdateNameParams {
-  final String phone;
+  final String name;
   final CachedUserDataEntity cachedUser;
 
   UpdateNameParams({
-    required this.phone,
+    required this.name,
     required this.cachedUser,
   });
-}
+}*/

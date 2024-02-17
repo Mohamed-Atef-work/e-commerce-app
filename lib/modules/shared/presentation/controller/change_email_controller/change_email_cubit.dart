@@ -22,16 +22,10 @@ class ChangeEmailCubit extends Cubit<ChangeEmailState> {
   }
 
   void changeEmail(CachedUserDataEntity cachedUserData) async {
-    if (formKey.currentState!.validate() &&
-        newEmail.text != oldEmail.text &&
-        cachedUserData.userEntity.email == oldEmail.text) {
+    if (formKey.currentState!.validate()) {
       emit(state.copyWith(changeState: RequestState.loading));
 
-      state.copyWith(changeState: RequestState.loading);
-      final result = await _updateEmailUseCase.call(
-        UpdateEmailParams(
-            cachedUserData: cachedUserData, newEmail: newEmail.text),
-      );
+      final result = await _updateEmailUseCase.call(cachedUserData);
       emit(
         result.fold(
           (l) => state.copyWith(

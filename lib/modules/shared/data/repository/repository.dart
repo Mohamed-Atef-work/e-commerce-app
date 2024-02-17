@@ -36,9 +36,14 @@ class SharedDataRepo implements SharedDomainRepo {
 
   @override
   Future<Either<Failure, bool>> saveUserDataLocally(
-      CachedUserDataModel user) async {
+      CachedUserDataEntity user) async {
     try {
-      final result = await _localDataSource.saveUserData(user);
+      final cachedUser = CachedUserDataModel(
+        adminOrUser: user.adminOrUser,
+        userEntity: user.userEntity,
+        password: user.password,
+      );
+      final result = await _localDataSource.saveUserData(cachedUser);
       return Right(result);
     } on LocalDataBaseException catch (e) {
       return Left(LocalDataBaseFailure(message: e.message));

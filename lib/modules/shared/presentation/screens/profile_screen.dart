@@ -42,8 +42,8 @@ class ProfileScreen extends StatelessWidget {
                         SizedBox(height: context.height * 0.03),
                         ProfileItemsWidget(
                           onTap: () {
-                            Navigator.pushNamed(
-                                context, Screens.editProfileScreen);
+                            Navigator.of(context)
+                                .pushNamed(Screens.editProfileScreen);
                           },
                           icon: Icons.person_outline,
                           name: AppStrings.editProfile,
@@ -51,8 +51,8 @@ class ProfileScreen extends StatelessWidget {
                         SizedBox(height: context.height * 0.03),
                         ProfileItemsWidget(
                           onTap: () {
-                            Navigator.pushNamed(
-                                context, Screens.changePasswordScreen);
+                            Navigator.of(context)
+                                .pushNamed(Screens.changePasswordScreen);
                           },
                           icon: Icons.key_outlined,
                           name: AppStrings.changePassword,

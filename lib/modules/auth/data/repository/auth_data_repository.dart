@@ -1,4 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:e_commerce_app/modules/shared/data/models/cached_user_data_model.dart';
+import 'package:e_commerce_app/modules/shared/domain/entities/cached_user_data_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';

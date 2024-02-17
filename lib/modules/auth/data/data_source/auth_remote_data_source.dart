@@ -39,8 +39,7 @@ class AuthRemoteDatSourceImpl implements AuthBaseRemoteDatSource {
   @override
   Future<void> upDateEmail(UpdateEmailParams params) async {
     try {
-      await _userAuth
-          .reAuthenticateWithCredential(params.cachedUserData.password);
+      await _userAuth.reAuthenticateWithCredential(params.password);
       await _userAuth.upDataEmail(params.newEmail);
     } catch (error) {
       throw (ServerException(message: error.toString()));

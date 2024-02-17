@@ -8,5 +8,5 @@ abstract class SharedDomainRepo {
   Future<Either<Failure, bool>> deleteUserDataLocally();
   Future<Either<Failure, CachedUserDataEntity>> getUserDataLocally();
   Future<Either<Failure, bool>> saveUserDataLocally(
-      CachedUserDataModel cachedUserData);
+      CachedUserDataEntity cachedUser);
 }
