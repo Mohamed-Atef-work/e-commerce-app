@@ -35,7 +35,7 @@ class UpDatePhoneWidget extends StatelessWidget {
 
         /// bloc
         return BaseModelSheetComponent(
-          height: context.height * 0.2,
+          height: context.height * 0.3,
           child: BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
             listener: (context, state) {
               if (state.updateState == RequestState.success) {

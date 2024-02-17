@@ -1,18 +1,18 @@
+import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_state.dart';
+import 'package:e_commerce_app/modules/shared/presentation/widgets/update_email_sheet.dart';
+import 'package:e_commerce_app/modules/shared/presentation/widgets/update_name_widget.dart';
+import 'package:e_commerce_app/modules/shared/presentation/widgets/update_phone_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/images.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/app_bar.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
-import 'package:e_commerce_app/core/components/loading_widget.dart';
-import 'package:e_commerce_app/modules/shared/presentation/widgets/update_email_sheet.dart';
-import 'package:e_commerce_app/modules/shared/presentation/widgets/update_name_widget.dart';
-import 'package:e_commerce_app/modules/shared/presentation/widgets/update_phone_widget.dart';
 import 'package:e_commerce_app/modules/shared/presentation/widgets/edit_profile_item_widget.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_state.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
 
 class EditProfileScreen extends StatelessWidget {
@@ -20,15 +20,14 @@ class EditProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// to do....................
-
     return Scaffold(
       appBar: appBar(title: AppStrings.profile),
       body: BlocBuilder<SharedUserDataCubit, SharedUserDataState>(
         builder: (context, state) {
           final userDataController =
               BlocProvider.of<SharedUserDataCubit>(context);
-          final user = userDataController.state.sharedEntity!.user.userEntity;
+          final userData =
+              userDataController.state.sharedEntity!.user.userEntity;
           if (state.getState == RequestState.loading) {
             return const LoadingWidget();
           } else {
@@ -53,12 +52,12 @@ class EditProfileScreen extends StatelessWidget {
                   fontFamily: kPacifico,
                   textColor: Colors.black,
                   textAlign: TextAlign.center,
-                  text: "${AppStrings.hiThere} ${user.name} !",
+                  text: "${AppStrings.hiThere} ${userData.name} !",
                 ),
                 SizedBox(height: context.height * 0.03),
                 EditProfileItemWidget(
                   title: AppStrings.name,
-                  value: user.name,
+                  value: userData.name,
                   onPressed: () {
                     showModalBottomSheet(
                         context: context,
@@ -67,7 +66,7 @@ class EditProfileScreen extends StatelessWidget {
                 ),
                 EditProfileItemWidget(
                   title: AppStrings.email,
-                  value: user.email,
+                  value: userData.email,
                   onPressed: () {
                     showModalBottomSheet(
                         context: context,
@@ -76,7 +75,7 @@ class EditProfileScreen extends StatelessWidget {
                 ),
                 EditProfileItemWidget(
                   title: AppStrings.phone,
-                  value: user.phone ?? AppStrings.pleaseAddPhone,
+                  value: userData.phone ?? AppStrings.pleaseAddPhone,
                   onPressed: () {
                     showModalBottomSheet(
                         context: context,
@@ -84,7 +83,7 @@ class EditProfileScreen extends StatelessWidget {
                   },
                 ),
                 AddressWidget(
-                  address: user.address ?? AppStrings.pleaseAddAddress,
+                  address: userData.address ?? AppStrings.pleaseAddAddress,
                 ),
               ],
             );

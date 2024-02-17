@@ -14,7 +14,7 @@ class BaseModelSheetComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: context.height * 0.4,
+      height: height,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: kPrimaryColorYellow,
