@@ -84,56 +84,59 @@ class UpDateNameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final updateProfileController =
-        BlocProvider.of<UpdateProfileCubit>(context);
     final userData = BlocProvider.of<SharedUserDataCubit>(context).state;
     final user = userData.sharedEntity!.user.userEntity;
     return BlocProvider(
       create: (context) => sl<UpdateProfileCubit>(),
       child: BaseModelSheetComponent(
         height: context.height * 0.4,
-        child: BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
-          builder: (context, state) {
-            if (state.updateState == RequestState.loading) {
-              return const LoadingWidget();
-            } else if (state.updateState == RequestState.success) {
-              return const Center(
-                child: CustomText(
-                  fontSize: 25,
-                  fontFamily: kPacifico,
-                  text: AppStrings.updated,
-                  fontWeight: FontWeight.bold,
-                ),
-              );
-            } else {
-              return Form(
-                key: updateProfileController.formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    CustomTextFormField(
-                      prefixIcon: Icons.person,
-                      hintText: AppStrings.name,
-                      textEditingController: updateProfileController.changedOne,
-                      validator: (value) =>
-                          Validators.stringValidator(value, AppStrings.name),
-                    ),
-                    CustomButton(
-                      height: 50,
-                      fontSize: 18,
-                      fontFamily: kPacifico,
-                      text: AppStrings.update,
-                      width: context.width * 0.7,
-                      onPressed: () {
-                        updateProfileController.updateName(user);
-                      },
-                    ),
-                  ],
-                ),
-              );
-            }
-          },
-        ),
+        child: Builder(builder: (context) {
+          final updateProfileController =
+              BlocProvider.of<UpdateProfileCubit>(context);
+          return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
+            builder: (context, state) {
+              if (state.updateState == RequestState.loading) {
+                return const LoadingWidget();
+              } else if (state.updateState == RequestState.success) {
+                return const Center(
+                  child: CustomText(
+                    fontSize: 25,
+                    fontFamily: kPacifico,
+                    text: AppStrings.updated,
+                    fontWeight: FontWeight.bold,
+                  ),
+                );
+              } else {
+                return Form(
+                  key: updateProfileController.formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CustomTextFormField(
+                        prefixIcon: Icons.person,
+                        hintText: AppStrings.name,
+                        textEditingController:
+                            updateProfileController.changedOne,
+                        validator: (value) =>
+                            Validators.stringValidator(value, AppStrings.name),
+                      ),
+                      CustomButton(
+                        height: 50,
+                        fontSize: 18,
+                        fontFamily: kPacifico,
+                        text: AppStrings.update,
+                        width: context.width * 0.7,
+                        onPressed: () {
+                          updateProfileController.updateName(user);
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
+          );
+        }),
       ),
     );
   }

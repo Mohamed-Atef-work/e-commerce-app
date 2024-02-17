@@ -47,9 +47,16 @@ class AuthRepositoryData implements AuthRepositoryDomain {
   }
 
   @override
-  Future<Either<Failure, void>> storeUserData(UserModel params) async {
+  Future<Either<Failure, void>> storeUserData(UserEntity params) async {
     try {
-      final result = await _authDataSource.storeUserDate(params);
+      final useModel = UserModel(
+        id: params.id,
+        name: params.name,
+        email: params.email,
+        phone: params.phone,
+        address: params.address,
+      );
+      final result = await _authDataSource.storeUserDate(useModel);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));
