@@ -1,15 +1,13 @@
-import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email.dart';
-import 'package:e_commerce_app/modules/auth/domain/use_cases/update_password.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/user.dart';
 import 'package:e_commerce_app/core/fire_base/fire_auth/user_auth.dart';
 import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/login_use_case.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/update_password.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/sign_up_use_case.dart';
-import 'package:e_commerce_app/modules/auth/domain/use_cases/get_user_data_use_case.dart';
-import 'package:e_commerce_app/modules/auth/domain/use_cases/store_user_data_use_case.dart';
 
 abstract class AuthBaseRemoteDatSource {
   Future<void> logOut();
@@ -41,8 +39,9 @@ class AuthRemoteDatSourceImpl implements AuthBaseRemoteDatSource {
   @override
   Future<void> upDateEmail(UpdateEmailParams params) async {
     try {
-      await _userAuth.reAuthenticateWithCredential(params.password);
-      await _userAuth.upDataEmail(params.email);
+      await _userAuth
+          .reAuthenticateWithCredential(params.cachedUserData.password);
+      await _userAuth.upDataEmail(params.newEmail);
     } catch (error) {
       throw (ServerException(message: error.toString()));
     }

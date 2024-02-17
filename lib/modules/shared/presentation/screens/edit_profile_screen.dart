@@ -16,7 +16,8 @@ class EditProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userDataController = BlocProvider.of<SharedUserDataCubit>(context);
-    final userData = userDataController.state.sharedEntity!.user.userEntity;
+    final cachedUser = userDataController.state.sharedEntity!.user;
+    final user = userDataController.state.sharedEntity!.user.userEntity;
 
     return Scaffold(
       appBar: appBar(title: AppStrings.profile),
@@ -40,12 +41,12 @@ class EditProfileScreen extends StatelessWidget {
             fontFamily: kPacifico,
             textColor: Colors.black,
             textAlign: TextAlign.center,
-            text: "${AppStrings.hiThere} ${userData.name} !",
+            text: "${AppStrings.hiThere} ${user.name} !",
           ),
           SizedBox(height: context.height * 0.03),
           EditProfileItemWidget(
             title: AppStrings.name,
-            value: userData.name,
+            value: user.name,
             onPressed: () {
               showModalBottomSheet(
                   context: context,
@@ -54,16 +55,16 @@ class EditProfileScreen extends StatelessWidget {
           ),
           EditProfileItemWidget(
             title: AppStrings.email,
-            value: userData.email,
+            value: user.email,
             onPressed: () {
               showModalBottomSheet(
                   context: context,
-                  builder: (context) => const UpDateEmailWidget());
+                  builder: (context) => UpDateEmailWidget(cachedUser));
             },
           ),
           EditProfileItemWidget(
             title: AppStrings.phone,
-            value: userData.phone ?? AppStrings.pleaseAddPhone,
+            value: user.phone ?? AppStrings.pleaseAddPhone,
             onPressed: () {
               showModalBottomSheet(
                   context: context,
@@ -71,7 +72,7 @@ class EditProfileScreen extends StatelessWidget {
             },
           ),
           AddressWidget(
-            address: userData.address ?? AppStrings.pleaseAddAddress,
+            address: user.address ?? AppStrings.pleaseAddAddress,
           ),
         ],
       ),

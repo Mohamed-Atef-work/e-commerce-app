@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email.dart';
 import 'package:e_commerce_app/modules/shared/data/repository/repository.dart';
 import 'package:e_commerce_app/modules/shared/data/data_source/local_data_source.dart';
 import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
@@ -28,6 +29,7 @@ void shared() {
 
   sl.registerLazySingleton(() => LogoutUseCase(sl(), sl()));
   sl.registerLazySingleton(() => LoadProductsUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateEmailUseCase(sl(), sl()));
   sl.registerLazySingleton(() => GetInitialDataUseCase(sl(), sl()));
   sl.registerLazySingleton(() => GetAllProductCategoriesUseCase(sl()));
   sl.registerLazySingleton(() => UserDataAfterLoginUseCase(sl(), sl()));

@@ -20,7 +20,6 @@ void favorite() {
   sl.registerLazySingleton(() => GetFavoritesUseCase(sl()));
   sl.registerLazySingleton(() => DeleteFavoriteUseCase(sl()));
   sl.registerLazySingleton(() => UpdatePasswordUseCase(sl()));
-  sl.registerLazySingleton(() => UpdateEmailUseCase(sl()));
 
   /// Repository
   sl.registerLazySingleton<FavoriteDomainRepository>(

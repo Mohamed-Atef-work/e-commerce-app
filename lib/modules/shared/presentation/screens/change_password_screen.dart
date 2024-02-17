@@ -65,9 +65,10 @@ class ChangePasswordScreen extends StatelessWidget {
                           } else {
                             return Padding(
                                 padding: EdgeInsets.only(
-                                    top: context.height * 0.1,
-                                    left: 10,
-                                    right: 10),
+                                  top: context.height * 0.1,
+                                  left: 10,
+                                  right: 10,
+                                ),
                                 child: Form(
                                   key: passwordController.formKey,
                                   child: Column(

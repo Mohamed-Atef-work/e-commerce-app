@@ -11,6 +11,7 @@ import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
+import 'package:e_commerce_app/modules/shared/domain/entities/cached_user_data_entity.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/change_email_controller/change_email_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/up_date_profile_controller/update_profile_cubit.dart';
@@ -20,66 +21,69 @@ class UpDatePhoneWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final updateProfileController =
-        BlocProvider.of<UpdateProfileCubit>(context);
     final userData = BlocProvider.of<SharedUserDataCubit>(context).state;
     final user = userData.sharedEntity!.user.userEntity;
     return BlocProvider(
       create: (context) => sl<UpdateProfileCubit>(),
-      child: Container(
-        height: context.height * 0.4,
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: kPrimaryColorYellow,
-          borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(25),
-            topLeft: Radius.circular(25),
+      child: Builder(builder: (context) {
+        final updateProfileController =
+            BlocProvider.of<UpdateProfileCubit>(context);
+        return Container(
+          height: context.height * 0.3,
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: kPrimaryColorYellow,
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(25),
+              topLeft: Radius.circular(25),
+            ),
+            border: Border.all(color: kWhite, style: BorderStyle.solid),
           ),
-          border: Border.all(color: kWhite, style: BorderStyle.solid),
-        ),
-        child: BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
-          builder: (context, state) {
-            if (state.updateState == RequestState.loading) {
-              return const LoadingWidget();
-            } else if (state.updateState == RequestState.success) {
-              return const Center(
-                child: CustomText(
-                  fontSize: 25,
-                  fontFamily: kPacifico,
-                  text: AppStrings.updated,
-                  fontWeight: FontWeight.bold,
-                ),
-              );
-            } else {
-              return Form(
-                key: updateProfileController.formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    CustomTextFormField(
-                      hintText: AppStrings.phone,
-                      prefixIcon: Icons.phone_android,
-                      textEditingController: updateProfileController.changedOne,
-                      validator: (value) =>
-                          Validators.numericValidator(value, AppStrings.phone),
-                    ),
-                    CustomButton(
-                      height: 50,
-                      fontSize: 18,
-                      fontFamily: kPacifico,
-                      text: AppStrings.update,
-                      width: context.width * 0.7,
-                      onPressed: () {
-                        updateProfileController.updateName(user);
-                      },
-                    ),
-                  ],
-                ),
-              );
-            }
-          },
-        ),
-      ),
+          child: BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
+            builder: (context, state) {
+              if (state.updateState == RequestState.loading) {
+                return const LoadingWidget();
+              } else if (state.updateState == RequestState.success) {
+                return const Center(
+                  child: CustomText(
+                    fontSize: 25,
+                    fontFamily: kPacifico,
+                    text: AppStrings.updated,
+                    fontWeight: FontWeight.bold,
+                  ),
+                );
+              } else {
+                return Form(
+                  key: updateProfileController.formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CustomTextFormField(
+                        hintText: AppStrings.phone,
+                        prefixIcon: Icons.phone_android,
+                        textEditingController:
+                            updateProfileController.changedOne,
+                        validator: (value) => Validators.numericValidator(
+                            value, AppStrings.phone),
+                      ),
+                      CustomButton(
+                        height: 50,
+                        fontSize: 18,
+                        fontFamily: kPacifico,
+                        text: AppStrings.update,
+                        width: context.width * 0.7,
+                        onPressed: () {
+                          updateProfileController.updatePhone(user);
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
+        );
+      }),
     );
   }
 }
@@ -154,74 +158,85 @@ class UpDateNameWidget extends StatelessWidget {
 }
 
 class UpDateEmailWidget extends StatelessWidget {
-  const UpDateEmailWidget({super.key});
+  final CachedUserDataEntity cachedUser;
+  const UpDateEmailWidget(this.cachedUser, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    final updateProfileController = BlocProvider.of<ChangeEmailCubit>(context);
-    final userData = BlocProvider.of<SharedUserDataCubit>(context).state;
-    final user = userData.sharedEntity!.user.userEntity;
     return BlocProvider(
       create: (context) => sl<ChangeEmailCubit>(),
-      child: Container(
-        height: context.height * 0.4,
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: kPrimaryColorYellow,
-          borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(25),
-            topLeft: Radius.circular(25),
+      child: Builder(builder: (context) {
+        final updateEmailController =
+            BlocProvider.of<ChangeEmailCubit>(context);
+        return Container(
+          height: context.height * 0.5,
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: kPrimaryColorYellow,
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(25),
+              topLeft: Radius.circular(25),
+            ),
+            border: Border.all(color: kWhite, style: BorderStyle.solid),
           ),
-          border: Border.all(color: kWhite, style: BorderStyle.solid),
-        ),
-        child: BlocBuilder<ChangeEmailCubit, ChangeEmailState>(
-          builder: (context, state) {
-            if (state.changeState == RequestState.loading) {
-              return const LoadingWidget();
-            } else if (state.changeState == RequestState.success) {
-              return const Center(
-                child: CustomText(
-                  fontSize: 25,
-                  fontFamily: kPacifico,
-                  text: AppStrings.updated,
-                  fontWeight: FontWeight.bold,
-                ),
-              );
-            } else {
-              return Form(
-                key: updateProfileController.formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    CustomTextFormField(
-                      prefixIcon: Icons.email,
-                      hintText: AppStrings.oldEmail,
-                      textEditingController: updateProfileController.email,
-                      validator: (value) => Validators.emailValidator(value),
-                    ),
-                    CustomTextFormField(
-                      prefixIcon: Icons.email,
-                      hintText: AppStrings.newEmail,
-                      textEditingController: updateProfileController.email,
-                      validator: (value) => Validators.emailValidator(value),
-                    ),
-                    CustomButton(
-                      height: 50,
-                      fontSize: 18,
-                      fontFamily: kPacifico,
-                      text: AppStrings.update,
-                      width: context.width * 0.7,
-                      onPressed: () {
-                        /// upDate.........................................
-                      },
-                    ),
-                  ],
-                ),
-              );
-            }
-          },
-        ),
-      ),
+          child: BlocBuilder<ChangeEmailCubit, ChangeEmailState>(
+            builder: (context, state) {
+              if (state.changeState == RequestState.loading) {
+                return const LoadingWidget();
+              } else if (state.changeState == RequestState.success) {
+                return const Center(
+                  child: CustomText(
+                    fontSize: 25,
+                    fontFamily: kPacifico,
+                    text: AppStrings.updated,
+                    fontWeight: FontWeight.bold,
+                  ),
+                );
+              } else {
+                return Form(
+                  key: updateEmailController.formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CustomTextFormField(
+                        prefixIcon: Icons.email,
+                        hintText: AppStrings.oldEmail,
+                        textEditingController: updateEmailController.oldEmail,
+                        validator: (value) => Validators.emailValidator(value),
+                      ),
+                      CustomTextFormField(
+                        prefixIcon: Icons.email,
+                        hintText: AppStrings.newEmail,
+                        textEditingController: updateEmailController.newEmail,
+                        validator: (value) => Validators.emailValidator(value),
+                      ),
+                      PasswordTextFormField(
+                        obSecure: state.obSecure,
+                        hintText: AppStrings.enterYourPassword,
+                        textEditingController: updateEmailController.password,
+                        suffixPressed: () {
+                          updateEmailController.obSecure();
+                        },
+                      ),
+                      CustomButton(
+                        height: 50,
+                        fontSize: 18,
+                        fontFamily: kPacifico,
+                        text: AppStrings.update,
+                        width: context.width * 0.7,
+                        onPressed: () {
+                          /// upDate.........................................
+                          updateEmailController.changeEmail(cachedUser);
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
+        );
+      }),
     );
   }
 }
