@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:e_commerce_app/core/use_case/base_use_case.dart';
 import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
+import 'package:e_commerce_app/modules/admin/domain/use_cases/download_product_image_url_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/get_all_product_categories.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/download_product_image_url_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/upload_product_image_use_case.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -111,7 +111,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
     print(
         "< -------------------------------------------_upDateProduct----------------------------------------------- >");
     final result = await updateProductUseCase(
-      UpdateProductparams(
+      UpdateProductParams(
           product: ProductModel(
         image: productImage,
         name: nameController.text,

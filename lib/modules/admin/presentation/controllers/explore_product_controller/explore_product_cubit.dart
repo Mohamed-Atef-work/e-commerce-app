@@ -16,7 +16,7 @@ class ExploreProductsCubit extends Cubit<ExploreProductsState> {
 
   Future<void> shirtsStream() async {
     final result = await loadProductsUseCase(
-      const LoadProductsparams(
+      const LoadProductsParams(
         category: kShirts,
       ),
     );
@@ -34,7 +34,7 @@ class ExploreProductsCubit extends Cubit<ExploreProductsState> {
 
   Future<void> jacketsStream() async {
     final result = await loadProductsUseCase(
-      const LoadProductsparams(
+      const LoadProductsParams(
         category: kJackets,
       ),
     );
@@ -50,7 +50,7 @@ class ExploreProductsCubit extends Cubit<ExploreProductsState> {
     );
   }
 
-  /*Future<void> deleteProduct(DeleteProductparams params) async {
+  /*Future<void> deleteProduct(DeleteProductParams params) async {
     final result = await deleteProductUseCase(params);
     result.fold(
       (l) => emit(state.copyWith(

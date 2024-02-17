@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 
 class ProductModel extends ProductEntity {
@@ -21,7 +22,7 @@ class ProductModel extends ProductEntity {
         /// to do ----->
         price: json["price"],
         image: json["image"],
-        name: json["name"],
+        name: json[kName],
         id: productId,
       );
   Map<String, dynamic> toJson() => {
@@ -30,6 +31,6 @@ class ProductModel extends ProductEntity {
         "category": category,
         "price": price,
         "image": image,
-        "name": name,
+        kName: name,
       };
 }

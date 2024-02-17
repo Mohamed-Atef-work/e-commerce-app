@@ -58,7 +58,7 @@ class AdminRepositoryData implements AdminRepositoryDomain {
 
   @override
   Future<Either<Failure, Stream<List<ProductEntity>>>> loadProducts(
-      LoadProductsparams params) async {
+      LoadProductsParams params) async {
     try {
       final result = await dataSource.loadProducts(params);
       return Right(result);
@@ -69,7 +69,7 @@ class AdminRepositoryData implements AdminRepositoryDomain {
 
   @override
   Future<Either<Failure, void>> deleteProduct(
-      DeleteProductparams params) async {
+      DeleteProductParams params) async {
     try {
       final result = await dataSource.deleteProduct(params);
       return Right(result);
@@ -80,7 +80,7 @@ class AdminRepositoryData implements AdminRepositoryDomain {
 
   @override
   Future<Either<Failure, void>> editProduct(
-      UpdateProductparams params) async {
+      UpdateProductParams params) async {
     try {
       final result = await dataSource.updateProduct(params);
       return Right(result);
@@ -91,7 +91,7 @@ class AdminRepositoryData implements AdminRepositoryDomain {
 
   @override
   Future<Either<Failure, void>> addNewProductCategory(
-      AddNewProductsCategoryparams params) async {
+      AddNewProductsCategoryParams params) async {
     try {
       final result = await dataSource.addNewProductCategory(params);
       return Right(result);
@@ -113,7 +113,7 @@ class AdminRepositoryData implements AdminRepositoryDomain {
 
   @override
   Future<Either<Failure, void>> deleteProductCategory(
-      DeleteProductsCategoryparams params) async {
+      DeleteProductsCategoryParams params) async {
     try {
       final result = await dataSource.deleteProductCategory(params);
       return Right(result);
@@ -124,7 +124,7 @@ class AdminRepositoryData implements AdminRepositoryDomain {
 
   @override
   Future<Either<Failure, void>> upDateProductCategory(
-      UpDateProductsCategoryparams params) async {
+      UpDateProductsCategoryParams params) async {
     try {
       final result = await dataSource.upDateProductCategory(params);
       return Right(result);

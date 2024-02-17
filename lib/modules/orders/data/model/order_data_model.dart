@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.dart';
 
 class OrderDataModel extends OrderDataEntity {
@@ -15,7 +16,7 @@ class OrderDataModel extends OrderDataEntity {
     required DocumentReference orderRef,
   }) =>
       OrderDataModel(
-        name: json["name"],
+        name: json[kName],
         date: json["date"],
         phone: json["phone"],
         address: json["address"],
@@ -23,7 +24,7 @@ class OrderDataModel extends OrderDataEntity {
         reference: orderRef,
       );
   Map<String, dynamic> toJson() => {
-        "name": name,
+        kName: name,
         "date": date,
         "phone": phone,
         "address": address,

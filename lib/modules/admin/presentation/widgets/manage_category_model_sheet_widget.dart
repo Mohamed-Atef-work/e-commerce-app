@@ -127,7 +127,7 @@ class DeleteUpdateCategoryModelSheetWidget extends StatelessWidget {
                             CustomButton(
                               onPressed: () {
                                 controller.updateCategory(
-                                    UpDateProductsCategoryparams(
+                                    UpDateProductsCategoryParams(
                                         name:
                                             controller.categoryController.text,
                                         id: category.id));
@@ -140,7 +140,7 @@ class DeleteUpdateCategoryModelSheetWidget extends StatelessWidget {
                             CustomButton(
                               onPressed: () {
                                 controller.deleteCategory(
-                                    DeleteProductsCategoryparams(name: category.name,
+                                    DeleteProductsCategoryParams(name: category.name,
                                         id: category.id,));
                               },
                               width: context.width * 0.3,

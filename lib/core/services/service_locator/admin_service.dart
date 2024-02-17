@@ -8,16 +8,17 @@ import 'package:e_commerce_app/modules/admin/domain/use_cases/delete_product_cat
 import 'package:e_commerce_app/modules/admin/domain/use_cases/delete_product_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/download_product_image_url_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/edit_product_use_case.dart';
+import 'package:e_commerce_app/modules/admin/domain/use_cases/up_date_product_category_use_case.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/get_users_who_ordered_controller/get_users_who_ordered_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_admin_order_view/admin_order_view_cubit.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/get_users_who_ordered_use_case.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/up_date_product_category_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/upload_product_image_use_case.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/add_product_controller/add_product_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/categories_model_sheet_controller_in_edit_add_screen/categories_model_sheet_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/explore_product_controller/explore_product_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_layout_controller/admin_layout_cubit.dart';
+
 void admin() {
   // < --------------------------------- Admin -------------------------------- >
   /// blocs
@@ -31,11 +32,11 @@ void admin() {
 
   /// Repositories
   sl.registerLazySingleton<AdminRepositoryDomain>(
-          () => AdminRepositoryData(sl()));
+      () => AdminRepositoryData(sl()));
 
   /// Data Sources
   sl.registerLazySingleton<AdminBaseRemoteDataSource>(
-          () => AdminRemoteDataSourceImpl(sl(), sl()));
+      () => AdminRemoteDataSourceImpl(sl(), sl()));
 
   /// UseCases
   sl.registerLazySingleton(() => AddProductUseCase(sl()));

@@ -49,7 +49,7 @@ class ProductsViewCubit extends Cubit<ProductsViewState> {
     print("products -----------> ${state.productsState}");
 
     final result = await loadProductsUseCase(
-      LoadProductsparams(
+      LoadProductsParams(
           category: state.categories[state.categoryIndex].name),
     );
     result.fold(

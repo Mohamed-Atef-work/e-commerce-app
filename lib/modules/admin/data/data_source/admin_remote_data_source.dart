@@ -19,18 +19,18 @@ import '../../domain/use_cases/up_date_product_category_use_case.dart';
 abstract class AdminBaseRemoteDataSource {
   Future<Stream<List<ProductCategoryEntity>>> getAllProductCategories();
   Future<String> downLoadProductImageUrl(Reference imageReference);
-  Future<void> deleteProduct(DeleteProductparams params);
-  Future<void> updateProduct(UpdateProductparams params);
+  Future<void> deleteProduct(DeleteProductParams params);
+  Future<void> updateProduct(UpdateProductParams params);
   Future<void> addProduct(AddProductparams params);
   Future<Stream<List<ProductEntity>>> loadProducts(
-      LoadProductsparams params);
+      LoadProductsParams params);
   Future<Reference> uploadProductImage(File image);
   Future<void> addNewProductCategory(
-      AddNewProductsCategoryparams params);
+      AddNewProductsCategoryParams params);
   Future<void> deleteProductCategory(
-      DeleteProductsCategoryparams params);
+      DeleteProductsCategoryParams params);
   Future<void> upDateProductCategory(
-      UpDateProductsCategoryparams params);
+      UpDateProductsCategoryParams params);
 }
 
 class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
@@ -70,7 +70,7 @@ class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
 
   @override
   Future<Stream<List<ProductEntity>>> loadProducts(
-      LoadProductsparams params) async {
+      LoadProductsParams params) async {
     return await store.loadProducts(params).then((stream) {
       return stream.map((snapshot) {
         return snapshot.docs
@@ -86,14 +86,14 @@ class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
   }
 
   @override
-  Future<void> deleteProduct(DeleteProductparams params) async {
+  Future<void> deleteProduct(DeleteProductParams params) async {
     await store.deleteProduct(params).then((value) {}).catchError((error) {
       throw ServerException(message: error.code);
     });
   }
 
   @override
-  Future<void> updateProduct(UpdateProductparams params) async {
+  Future<void> updateProduct(UpdateProductParams params) async {
     await store.updateProduct(params).then((value) {}).catchError((error) {
       throw ServerException(message: error.code);
     });
@@ -101,7 +101,7 @@ class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
 
   @override
   Future<void> addNewProductCategory(
-      AddNewProductsCategoryparams params) async {
+      AddNewProductsCategoryParams params) async {
     await store
         .addNewProductCategory(params)
         .then((value) {})
@@ -128,7 +128,7 @@ class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
 
   @override
   Future<void> deleteProductCategory(
-      DeleteProductsCategoryparams params) async {
+      DeleteProductsCategoryParams params) async {
     await store
         .deleteProductCategory(params)
         .then((value) {})
@@ -139,7 +139,7 @@ class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
 
   @override
   Future<void> upDateProductCategory(
-      UpDateProductsCategoryparams params) async {
+      UpDateProductsCategoryParams params) async {
     await store
         .upDateProductCategory(params)
         .then((value) {})

@@ -36,7 +36,7 @@ class StoreUserDataParams {
   });
 
   Map<String, String> toJson() => {
-        "name": name,
+        kName: name,
         "email": email,
         "address": address,
         "phone": phone,

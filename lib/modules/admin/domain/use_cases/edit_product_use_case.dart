@@ -5,23 +5,23 @@ import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/admin/domain/repository/admin_domain_repository.dart';
 
-class UpdateProductUseCase extends BaseUseCase<void, UpdateProductparams> {
+class UpdateProductUseCase extends BaseUseCase<void, UpdateProductParams> {
   final AdminRepositoryDomain domain;
 
   UpdateProductUseCase(this.domain);
   @override
-  Future<Either<Failure, void>> call(UpdateProductparams params) async {
+  Future<Either<Failure, void>> call(UpdateProductParams params) async {
     return await domain.editProduct(params);
   }
 }
 
-class UpdateProductparams {
+class UpdateProductParams {
   final ProductModel product;
 
-  const UpdateProductparams({required this.product});
+  const UpdateProductParams({required this.product});
 }
 
-/*class UpdateProductparamss {
+/*class UpdateProductParamss {
   final String productDescription;
   final String productLocation;
   final String productCategory;
@@ -30,7 +30,7 @@ class UpdateProductparams {
   final String productName;
   final String productId;
 
-  const UpdateProductparamss({
+  const UpdateProductParamss({
     required this.productDescription,
     required this.productLocation,
     required this.productCategory,
