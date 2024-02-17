@@ -1,15 +1,19 @@
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
-import 'package:e_commerce_app/core/utils/app_strings.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class EditProfileItemWidget extends StatelessWidget {
   final String title;
   final String value;
-  const EditProfileItemWidget(
-      {super.key, required this.title, required this.value});
+  final void Function() onPressed;
+
+  const EditProfileItemWidget({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,24 +26,34 @@ class EditProfileItemWidget extends StatelessWidget {
           border: Border.all(style: BorderStyle.solid, color: Colors.white),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CustomText(
-              fontSize: 20,
-              text: "$title :",
-              textColor: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontFamily: kPacifico,
-            ),
-            CustomText(
-              fontSize: 20,
-              text: " $value",
-              textColor: Colors.black,
-            ),
-          ],
-        ),
+        child: Row(children: [
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CustomText(
+                  fontSize: 20,
+                  text: "$title :",
+                  textColor: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: kPacifico,
+                ),
+                CustomText(
+                  fontSize: 20,
+                  text: " $value",
+                  textColor: Colors.black,
+                ),
+              ]),
+          const Spacer(),
+          IconButton(
+            onPressed: onPressed,
+            //hoverColor: Colors.red,
+            splashColor: Colors.red,
+            focusColor: Colors.white,
+            highlightColor: kWhiteGray,
+            icon: const Icon(Icons.edit, color: Colors.teal),
+          ),
+        ]),
       ),
     );
   }

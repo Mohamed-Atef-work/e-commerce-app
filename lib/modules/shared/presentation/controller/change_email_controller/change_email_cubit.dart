@@ -1,7 +1,8 @@
-import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email.dart';
+
 part 'change_email_state.dart';
 
 class ChangeEmailCubit extends Cubit<ChangeEmailState> {
@@ -19,11 +20,13 @@ class ChangeEmailCubit extends Cubit<ChangeEmailState> {
       state.copyWith(changeState: RequestState.loading);
       final result = await _updateEmailUseCase
           .call(UpdateEmailParams(password: password.text, email: email.text));
-      emit(result.fold(
-        (l) =>
-            state.copyWith(changeState: RequestState.error, message: l.message),
-        (r) => state.copyWith(changeState: RequestState.success),
-      ));
+      emit(
+        result.fold(
+          (l) => state.copyWith(
+              changeState: RequestState.error, message: l.message),
+          (r) => state.copyWith(changeState: RequestState.success),
+        ),
+      );
     }
   }
 }

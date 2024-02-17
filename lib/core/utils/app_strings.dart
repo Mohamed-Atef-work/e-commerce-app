@@ -84,4 +84,7 @@ class AppStrings {
   static const String jackets = "Jackets";
   static const String shirts = "Shirts";
   static const String suits = "Suits";
+
+  static const String pleaseAddPhone = "please Add Phone";
+  static const String pleaseAddAddress = "please Add Address";
 }
