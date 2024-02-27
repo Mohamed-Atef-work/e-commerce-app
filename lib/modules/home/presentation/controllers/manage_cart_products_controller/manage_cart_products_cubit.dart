@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/orders/data/model/item_model.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
@@ -27,15 +28,19 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
       final result = await _cartRepo.getCartProducts(uId);
 
       result.fold(
-          (l) => emit(
-              state.copyWith(message: l.message, getCart: RequestState.error)),
-          (r) => emit(
-                state.copyWith(
-                  products: r,
-                  needToReGet: false,
-                  getCart: RequestState.success,
-                ),
-              ));
+        (l) => emit(
+            state.copyWith(message: l.message, getCart: RequestState.error)),
+        (r) => emit(
+          state.copyWith(
+            products: r,
+            needToReGet: false,
+            getCart: RequestState.success,
+          ),
+        ),
+      );
+      Future.delayed(const Duration(milliseconds: 30), () {
+        emit(state.copyWith(getCart: RequestState.initial));
+      });
     }
   }
 
@@ -46,8 +51,14 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
       (l) => state.copyWith(
           deleteFromCart: RequestState.error, message: l.message),
       (r) => state.copyWith(
-          deleteFromCart: RequestState.success, needToReGet: true),
+          deleteFromCart: RequestState.success,
+          message: AppStrings.deleted,
+          needToReGet: true),
     ));
+
+    Future.delayed(const Duration(milliseconds: 30), () {
+      emit(state.copyWith(deleteFromCart: RequestState.initial));
+    });
   }
 
   void addOrder(UserEntity user) async {
@@ -77,11 +88,15 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
       (r) => emit(
         state.copyWith(
           addOrder: RequestState.success,
+          message: AppStrings.added,
           products: const [],
           needToReGet: true,
         ),
       ),
     );
+    Future.delayed(const Duration(milliseconds: 30), () {
+      emit(state.copyWith(addOrder: RequestState.initial));
+    });
   }
 
   double _totalPrice() {

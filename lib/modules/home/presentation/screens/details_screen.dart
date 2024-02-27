@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -10,6 +9,7 @@ import 'package:e_commerce_app/core/components/app_bar.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:e_commerce_app/modules/orders/presentation/widgets/counting_widget.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/heart_with_manage_favorite_cubit_provided_widget.dart';
@@ -26,16 +26,7 @@ class DetailsScreen extends StatelessWidget {
     final uId = userData.sharedEntity!.user.userEntity.id;
     return Scaffold(
       backgroundColor: kPrimaryColorYellow,
-      appBar: appBar(
-        title: AppStrings.details,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-            detailsController.reset();
-          },
-          icon: const Icon(Icons.arrow_back),
-        ),
-      ),
+      appBar: _appBar(context),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: BlocConsumer<ProductDetailsCubit, ProductDetailsState>(
@@ -142,6 +133,17 @@ class DetailsScreen extends StatelessWidget {
       showToast(AppStrings.ops, ToastState.error);
     }
   }
+
+  _appBar(BuildContext context) => appBar(
+        title: AppStrings.details,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+            BlocProvider.of<ProductDetailsCubit>(context).reset();
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+      );
 }
 /*
 class DetailsScreen extends StatelessWidget {

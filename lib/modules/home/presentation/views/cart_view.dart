@@ -25,16 +25,14 @@ class CartView extends StatelessWidget {
     final userData = BlocProvider.of<SharedUserDataCubit>(context).state;
     final userEntity = userData.sharedEntity!.user.userEntity;
     return BlocConsumer<ManageCartProductsCubit, ManageCartProductsState>(
-        listener: (context, state) {
-      _listener(context, state);
+        listener: (_, state) {
+      _listener(state);
     }, builder: (_, state) {
       if (state.getCart == RequestState.loading ||
           state.addOrder == RequestState.loading ||
-          state.deleteFromCart == RequestState.loading ||
-          state.getProductsQuantities == RequestState.loading) {
+          state.deleteFromCart == RequestState.loading) {
         return const LoadingWidget();
-      } else if (state.getCart == RequestState.success &&
-          state.products.isNotEmpty) {
+      } else if (state.products.isNotEmpty) {
         return Column(
           children: [
             Expanded(
@@ -108,16 +106,14 @@ class CartView extends StatelessWidget {
   _secondaryBackground() => const DismissibleSecondaryBackgroundComponent(
       color: Colors.red, icon: Icons.delete);
 
-  void _listener(BuildContext context, ManageCartProductsState state) {
+  void _listener(ManageCartProductsState state) {
     if (state.getCart == RequestState.error ||
         state.addOrder == RequestState.error ||
-        state.deleteFromCart == RequestState.error ||
-        state.getProductsQuantities == RequestState.error) {
-      showToast(AppStrings.ops, ToastState.error);
+        state.deleteFromCart == RequestState.error) {
+      showToast(state.message!, ToastState.error);
     } else if (state.addOrder == RequestState.success ||
-        state.deleteFromCart == RequestState.success ||
-        state.getProductsQuantities == RequestState.success) {
-      showToast(AppStrings.success, ToastState.success);
+        state.deleteFromCart == RequestState.success) {
+      showToast(state.message!, ToastState.success);
     }
   }
 }
