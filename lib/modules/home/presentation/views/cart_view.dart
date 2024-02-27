@@ -30,7 +30,6 @@ class CartView extends StatelessWidget {
     }, builder: (_, state) {
       if (state.getCart == RequestState.loading ||
           state.addOrder == RequestState.loading ||
-          state.clearCart == RequestState.loading ||
           state.deleteFromCart == RequestState.loading ||
           state.getProductsQuantities == RequestState.loading) {
         return const LoadingWidget();
@@ -109,11 +108,10 @@ class CartView extends StatelessWidget {
   void _listener(BuildContext context, ManageCartProductsState state) {
     if (state.getCart == RequestState.error ||
         state.addOrder == RequestState.error ||
-        state.clearCart == RequestState.error ||
         state.deleteFromCart == RequestState.error ||
         state.getProductsQuantities == RequestState.error) {
       showToast(AppStrings.error, ToastState.error);
-    } else if (state.clearCart == RequestState.success ||
+    } else if (state.addOrder == RequestState.success ||
         state.deleteFromCart == RequestState.success ||
         state.getProductsQuantities == RequestState.success) {
       showToast(AppStrings.success, ToastState.success);

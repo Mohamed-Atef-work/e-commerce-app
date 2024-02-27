@@ -4,7 +4,7 @@ class ManageCartProductsState {
   final RequestState getProductsQuantities;
   final List<ProductEntity> products;
   final RequestState deleteFromCart;
-  final RequestState clearCart;
+  //final RequestState clearCart;
   final RequestState addOrder;
   final RequestState getCart;
   final List<int> quantities;
@@ -14,7 +14,7 @@ class ManageCartProductsState {
   const ManageCartProductsState({
     this.getProductsQuantities = RequestState.initial,
     this.deleteFromCart = RequestState.initial,
-    this.clearCart = RequestState.initial,
+    //this.clearCart = RequestState.initial,
     this.addOrder = RequestState.initial,
     this.getCart = RequestState.initial,
     this.quantities = const [],
@@ -28,7 +28,7 @@ class ManageCartProductsState {
     List<int>? quantities,
     RequestState? getCart,
     RequestState? addOrder,
-    RequestState? clearCart,
+    //RequestState? clearCart,
     RequestState? deleteFromCart,
     List<ProductEntity>? products,
     RequestState? getProductsQuantities,
@@ -38,7 +38,7 @@ class ManageCartProductsState {
         getCart: getCart ?? this.getCart,
         addOrder: addOrder ?? this.addOrder,
         products: products ?? this.products,
-        clearCart: clearCart ?? this.clearCart,
+        //clearCart: clearCart ?? this.clearCart,
         quantities: quantities ?? this.quantities,
         needToReGet: needToReGet ?? this.needToReGet,
         deleteFromCart: deleteFromCart ?? this.deleteFromCart,

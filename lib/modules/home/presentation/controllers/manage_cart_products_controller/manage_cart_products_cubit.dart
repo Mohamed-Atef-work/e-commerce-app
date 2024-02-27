@@ -17,14 +17,14 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
   final GetCartProductsQuantitiesUseCase _getCartProductsQuantitiesUseCase;
   final GetCartProductsUseCase _getCartProductsUseCase;
   final DeleteFromCartUseCase _deleteFromCartUseCase;
-  final ClearCartUseCase _clearCartUseCase;
+  //final ClearCartUseCase _clearCartUseCase;
   final AddOrderUseCase _addOrderUseCase;
 
   ManageCartProductsCubit(
     this._getCartProductsQuantitiesUseCase,
     this._getCartProductsUseCase,
     this._deleteFromCartUseCase,
-    this._clearCartUseCase,
+    //this._clearCartUseCase,
     this._addOrderUseCase,
   ) : super(const ManageCartProductsState());
 
@@ -101,7 +101,7 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
     ));
   }
 
-  Future<void> clearCart(String uId) async {
+/*  Future<void> clearCart(String uId) async {
     emit(state.copyWith(clearCart: RequestState.loading));
 
     final clearCartParams = ClearCartParams(
@@ -127,7 +127,7 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
         ),
       ),
     );
-  }
+  }*/
 
   void addOrder(UserEntity user) async {
     emit(state.copyWith(addOrder: RequestState.loading));
@@ -150,12 +150,12 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
       ),
     );
 
-    result.fold((l) {
-      emit(state.copyWith(addOrder: RequestState.error, message: l.message));
-    }, (r) async {
-      emit(state.copyWith(addOrder: RequestState.success, needToReGet: true));
-      await clearCart(user.id);
-    });
+    result.fold(
+      (l) => emit(
+          state.copyWith(addOrder: RequestState.error, message: l.message)),
+      (r) => emit(
+          state.copyWith(addOrder: RequestState.success, needToReGet: true)),
+    );
   }
 
   double _totalPrice() {

@@ -22,13 +22,12 @@ void user() {
   sl.registerFactory(() => ProductDetailsCubit(sl()));
   sl.registerFactory(() => ManageUserOrderViewCubit());
   sl.registerFactory(() => ProductsViewCubit(sl(), sl()));
-  sl.registerFactory(
-      () => ManageCartProductsCubit(sl(), sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => ManageCartProductsCubit(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => ManageUserOrdersCubit(sl(), sl(), sl(), sl()));
 
   /// Use Case
   /// <-------------------- Orders ------------------------------->
-  sl.registerLazySingleton(() => AddOrderUseCase(sl()));
+  sl.registerLazySingleton(() => AddOrderUseCase(sl(), sl()));
   sl.registerLazySingleton(() => AddItemToOrderUseCase(sl()));
 
   /// <--------------------- Cart ------------------------------->
