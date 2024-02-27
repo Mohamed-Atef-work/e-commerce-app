@@ -45,15 +45,15 @@ class CartView extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
                 itemBuilder: (context, index) => Dismissible(
                   background: _background(),
-                  key: ValueKey(state.products[index].name),
+                  key: ValueKey(state.products[index].product.name),
                   secondaryBackground: _secondaryBackground(),
                   onDismissed: (direction) {
                     /// To Do ooo ooo ooo ooo ooo ..[uId]..
                     manageCartController.deleteFromCart(
                       DeleteFromCartParams(
                         uId: userEntity.id,
-                        productId: state.products[index].id!,
-                        category: state.products[index].category,
+                        productId: state.products[index].product.id!,
+                        category: state.products[index].product.category,
                       ),
                     );
                     state.products.removeAt(index);
@@ -76,6 +76,9 @@ class CartView extends StatelessWidget {
                   if (userEntity.address != null && userEntity.phone != null) {
                     manageCartController.addOrder(userEntity);
                   } else {
+                    print("userEntity.phone${userEntity.phone}");
+                    print("userEntity.phone${userEntity.address}");
+
                     /// to do error snack bar;
                     showToast(
                         AppStrings.pleaseAddPhoneAddress, ToastState.error);

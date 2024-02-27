@@ -10,7 +10,6 @@ import 'package:e_commerce_app/modules/home/domain/entities/cart_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/clear_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
-import 'package:e_commerce_app/modules/home/domain/use_cases/get_cart_products_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/get_product_quantities_of_cart_use_case.dart';
 
 abstract class CartBaseRemoteDataSource {
@@ -18,7 +17,7 @@ abstract class CartBaseRemoteDataSource {
   Future<void> clearCart(ClearCartParams params);
   Future<void> deleteFromCart(DeleteFromCartParams params);
   Future<List<int>> getQuantities(GetQuantitiesParams params);
-  Future<List<CartEntity>> getCartProducts(GetCartProductsParams params);
+  Future<List<CartEntity>> getCartProducts(String uId);
   //Future<CartEntity> _getProductsOfCategory(CartCategoryEntity params);
   //Future<List<ProductEntity>> getProduct(GetProductParams params);
   //Future<List<CartCategoryEntity>> getCartCategories(String uId);
@@ -62,22 +61,21 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
       print(error.toString());
       throw ServerException(message: error);
     });
-    final quantities = List<int>.of(
-        quantitiesDocs.map((e) => e.data()![kQuantity]));
+    final quantities =
+        List<int>.of(quantitiesDocs.map((e) => e.data()![kQuantity]));
     return quantities;
   }
 
   @override
-  Future<List<CartEntity>> getCartProducts(GetCartProductsParams params) async {
-    final categories = await _getCartCategories(params.uId).catchError((error) {
+  Future<List<CartEntity>> getCartProducts(String uId) async {
+    final categories = await _getCartCategories(uId).catchError((error) {
       print(error.toString());
       throw ServerException(message: error);
     });
 
     print(categories.length);
 
-    final cartEntities =
-        await _getCart(categories, params.uId).catchError((error) {
+    final cartEntities = await _getCart(categories, uId).catchError((error) {
       print(error.toString());
       throw ServerException(message: error);
     });

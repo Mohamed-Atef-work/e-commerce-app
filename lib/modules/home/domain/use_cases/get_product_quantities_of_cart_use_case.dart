@@ -9,8 +9,7 @@ class GetCartProductsQuantitiesUseCase
 
   GetCartProductsQuantitiesUseCase(this.repo);
   @override
-  Future<Either<Failure, List<int>>> call(
-      GetQuantitiesParams params) async {
+  Future<Either<Failure, List<int>>> call(GetQuantitiesParams params) async {
     return repo.getQuantities(params);
   }
 }
@@ -19,7 +18,10 @@ class GetQuantities {
   final String category;
   final String id;
 
-  GetQuantities({required this.id, required this.category});
+  GetQuantities({
+    required this.id,
+    required this.category,
+  });
 }
 
 class GetQuantitiesParams {

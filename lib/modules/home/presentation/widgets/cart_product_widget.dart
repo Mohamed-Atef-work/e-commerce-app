@@ -26,7 +26,7 @@ class CartProductWidget extends StatelessWidget {
       child: InkWell(
         onTap: () {
           BlocProvider.of<ProductDetailsCubit>(context)
-              .product(controller.state.products[index]);
+              .product(controller.state.products[index].product);
           Navigator.pushNamed(context, Screens.detailsScreen);
         },
         splashColor: Colors.amber.withOpacity(0.5),
@@ -47,7 +47,8 @@ class CartProductWidget extends StatelessWidget {
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(20)),
                 child: Image.network(
-                    fit: BoxFit.cover, controller.state.products[index].image),
+                    fit: BoxFit.cover,
+                    controller.state.products[index].product.image),
               ),
               SizedBox(width: context.width * 0.04),
               Column(
@@ -58,7 +59,7 @@ class CartProductWidget extends StatelessWidget {
                     textAlign: TextAlign.left,
                     textColor: Colors.black,
                     fontWeight: FontWeight.bold,
-                    text: controller.state.products[index].name,
+                    text: controller.state.products[index].product.name,
                   ),
                   SizedBox(
                     //width: context.width * 0.6,
@@ -71,7 +72,7 @@ class CartProductWidget extends StatelessWidget {
                     minus: () {
                       controller.quantityMinus(index);
                     },
-                    num: controller.state.quantities[index],
+                    num: controller.state.products[index].quantity,
                   ),
                 ],
               ),
@@ -81,7 +82,7 @@ class CartProductWidget extends StatelessWidget {
                 //textAlign: TextAlign.,
                 fontWeight: FontWeight.bold,
                 text:
-                    "\$${controller.state.products[index].price * controller.state.quantities[index]}",
+                    "\$${controller.state.products[index].product.price * controller.state.products[index].quantity}",
                 textColor: kDarkBrown,
               ),
             ],

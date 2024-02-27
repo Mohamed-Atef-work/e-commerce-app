@@ -38,7 +38,7 @@ class CartDataRepo implements CartDomainRepo {
 
   @override
   Future<Either<Failure, List<CartEntity>>> getCartProducts(
-      GetCartProductsParams params) async {
+      String params) async {
     try {
       final result = await dataSource.getCartProducts(params);
       return Right(result);
