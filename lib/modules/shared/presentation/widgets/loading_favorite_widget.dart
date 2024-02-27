@@ -15,7 +15,7 @@ class LoadingFavoriteWidget extends StatelessWidget {
         shrinkWrap: true,
         padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
         physics: const BouncingScrollPhysics(),
-        itemBuilder: (_, index) => const LoadingFavoriteProductWidget(),
+        itemBuilder: (_, __) => const LoadingFavoriteProductWidget(),
         separatorBuilder: (context, index) => const DividerComponent(),
       ),
     );
@@ -27,19 +27,22 @@ class LoadingFavoriteProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = context.width;
+    final height = context.height;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
             AnimationHelperWidget(
-              height: context.height * 0.03,
-              width: context.width * 0.2,
+              width: width * 0.2,
+              height: height * 0.03,
             ),
-            SizedBox(height: context.height * 0.01),
+            SizedBox(height: height * 0.01),
           ] +
           List.generate(
             2,
             (index) => Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(10.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -48,24 +51,24 @@ class LoadingFavoriteProductWidget extends StatelessWidget {
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(20)),
                     child: AnimationHelperWidget(
-                      height: context.height * 0.2,
-                      width: context.width * 0.3,
+                      width: width * 0.3,
+                      height: height * 0.2,
                     ),
                   ),
-                  SizedBox(width: context.width * 0.02),
+                  SizedBox(width: width * 0.02),
                   SizedBox(
-                    height: 165,
+                    height: height * 0.2,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         AnimationHelperWidget(
-                          height: context.height * 0.03,
-                          width: context.width * 0.2,
+                          width: width * 0.2,
+                          height: height * 0.025,
                         ),
                         AnimationHelperWidget(
-                          height: context.height * 0.03,
-                          width: context.width * 0.2,
+                          width: width * 0.2,
+                          height: height * 0.025,
                         ),
                       ],
                     ),
