@@ -1,4 +1,7 @@
 class AppStrings {
+  static const String success = "Success";
+  static const String error = "Oops";
+  static const String done = "Done";
   static const String admin = "admin";
   static const String profile = "Profile";
   static const String login = "Login";
@@ -29,6 +32,7 @@ class AppStrings {
   static const String edit = "Edit";
   static const String hiThere = "Hi There ";
   static const String add = "Add";
+  static const String added = "Added";
   static const String ok = "Ok";
 
   static const String viewOrders = "View The Orders";

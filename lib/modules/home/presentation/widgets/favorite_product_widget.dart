@@ -69,7 +69,9 @@ class FavoriteProductWidget extends StatelessWidget {
             ),
             const Spacer(),
             HeartWihMangeFavoriteCubitProviderWidget(
-                product: product, heartColor: Colors.red),
+              product: product,
+              heartColor: Colors.red,
+            ),
           ],
         ),
       ),

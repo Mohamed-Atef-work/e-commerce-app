@@ -1,3 +1,5 @@
+import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -26,7 +28,14 @@ class HeartWihMangeFavoriteCubitProviderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<ManageFavoriteCubit>()..setHeartColor(heartColor),
-      child: BlocBuilder<ManageFavoriteCubit, ManageFavoriteState>(
+      child: BlocConsumer<ManageFavoriteCubit, ManageFavoriteState>(
+        listener: (_, state) {
+          if (state.requestState == RequestState.success) {
+            showToast(AppStrings.success, ToastState.success);
+          } else if (state.requestState == RequestState.error) {
+            showToast(AppStrings.error, ToastState.error);
+          }
+        },
         builder: (context, state) {
           if (state.requestState == RequestState.loading) {
             return const LoadingHeartWidget();
@@ -35,7 +44,6 @@ class HeartWihMangeFavoriteCubitProviderWidget extends StatelessWidget {
               splashRadius: 20,
               color: Colors.red,
               iconSize: iconsSize,
-              //splashColor: Colors.red,
               highlightColor: Colors.red,
               //splashColor: Colors.red,
               onPressed: () {
