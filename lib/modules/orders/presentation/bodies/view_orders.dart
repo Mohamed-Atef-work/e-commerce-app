@@ -1,12 +1,11 @@
-import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
-import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
-import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:e_commerce_app/core/components/divider_component.dart';
+import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/modules/orders/presentation/widgets/order_widget.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/order_items_controller/order_items_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_order_view/user_order_view_cubit.dart';
@@ -20,20 +19,13 @@ class ViewUserOrdersBody extends StatelessWidget {
     return BlocConsumer<GetUserOrdersCubit, GetUserOrdersState>(
         listener: (_, state) {
       _listener(state);
-    }, builder: (context, state) {
+    }, builder: (_, state) {
       if (state.deleteOrder == RequestState.loading ||
           state.getOrders == RequestState.loading) {
         return const LoadingWidget();
       } else if (state.getOrders == RequestState.success &&
           state.orders.isEmpty) {
-        return const Center(
-          child: CustomText(
-            fontSize: 25,
-            fontFamily: kPacifico,
-            fontWeight: FontWeight.bold,
-            text: AppStrings.youHaveNoOrders,
-          ),
-        );
+        return const MessengerComponent(mess: AppStrings.youHaveNoOrders);
       } else {
         return ListView.separated(
           itemCount: state.orders.length,

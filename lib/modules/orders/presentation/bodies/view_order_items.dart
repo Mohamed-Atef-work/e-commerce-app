@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,14 +28,8 @@ class ViewUserOrderItemsBody extends StatelessWidget {
           return const LoadingWidget();
         } else if (state.getOrderItems != RequestState.loading &&
             state.orderItems.isEmpty) {
-          return const Center(
-            child: CustomText(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-              fontFamily: kPacifico,
-              text: AppStrings.thisOrderIsNoLongerExisted,
-            ),
-          );
+          return const MessengerComponent(
+              mess: AppStrings.thisOrderIsNoLongerExisted);
         } else {
           return ListView.separated(
             padding: const EdgeInsets.all(10),

@@ -7,42 +7,45 @@ import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_re
 import 'package:e_commerce_app/modules/auth/domain/repository/auth_domain_repository.dart';
 import 'package:e_commerce_app/modules/shared/domain/entities/cached_user_data_entity.dart';
 
-/*class UpdateNameUseCase extends BaseUseCase<bool, UpdateAddressParams> {
+class UpdateAddressUseCase extends BaseUseCase<bool, CachedUserDataEntity> {
   final SharedDomainRepo _sharedRepo;
   final AuthRepositoryDomain _authRepo;
 
-  UpdateNameUseCase(this._sharedRepo, this._authRepo);
+  UpdateAddressUseCase(this._sharedRepo, this._authRepo);
 
   @override
-  Future<Either<Failure, bool>> call(UpdateAddressParams params) async {
-    final user = UserEntity(
-      name: params.name,
-      id: params.cachedUser.userEntity.id,
-      phone: params.cachedUser.userEntity.phone,
-      email: params.cachedUser.userEntity.email,
-      address: params.cachedUser.userEntity.address,
-    );
-    final cachedUser = CachedUserDataModel(
-      adminOrUser: params.cachedUser.adminOrUser,
-      password: params.cachedUser.password,
-      userEntity: user,
-    );
-
+  Future<Either<Failure, bool>> call(CachedUserDataEntity params) async {
+    final user = _user(params);
     final remoteEither = await _authRepo.storeUserData(user);
 
+    final cached = _cached(params, user);
     return remoteEither.fold(
       (remoteFailure) => Left(remoteFailure),
-      (r) async => await _sharedRepo.saveUserDataLocally(cachedUser),
+      (r) async => await _sharedRepo.saveUserDataLocally(cached),
     );
   }
+
+  _cached(CachedUserDataEntity params, UserEntity user) => CachedUserDataModel(
+        adminOrUser: params.adminOrUser,
+        password: params.password,
+        userEntity: user,
+      );
+
+  _user(CachedUserDataEntity params) => UserEntity(
+        id: params.userEntity.id,
+        name: params.userEntity.name,
+        phone: params.userEntity.phone,
+        email: params.userEntity.email,
+        address: params.userEntity.address,
+      );
 }
 
-class UpdateAddressParams {
-  final String name;
+/*class UpdateAddressParams {
+  final String address;
   final CachedUserDataEntity cachedUser;
 
   UpdateAddressParams({
-    required this.name,
+    required this.address,
     required this.cachedUser,
   });
 }*/

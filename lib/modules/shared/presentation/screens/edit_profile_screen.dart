@@ -1,18 +1,18 @@
-import 'package:e_commerce_app/core/components/loading_widget.dart';
-import 'package:e_commerce_app/core/utils/enums.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_state.dart';
-import 'package:e_commerce_app/modules/shared/presentation/widgets/update_email_sheet.dart';
-import 'package:e_commerce_app/modules/shared/presentation/widgets/update_name_widget.dart';
-import 'package:e_commerce_app/modules/shared/presentation/widgets/update_phone_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/images.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/app_bar.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
+import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/modules/shared/presentation/widgets/update_email_sheet.dart';
+import 'package:e_commerce_app/modules/shared/presentation/widgets/update_name_widget.dart';
+import 'package:e_commerce_app/modules/shared/presentation/widgets/update_phone_widget.dart';
 import 'package:e_commerce_app/modules/shared/presentation/widgets/edit_profile_item_widget.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_state.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
 
 class EditProfileScreen extends StatelessWidget {

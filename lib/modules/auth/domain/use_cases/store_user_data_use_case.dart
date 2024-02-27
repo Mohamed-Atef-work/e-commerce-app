@@ -19,36 +19,3 @@ class StoreUserDataParams {
 
   StoreUserDataParams({required this.userModel});
 }
-
-/*class StoreUserDataParams extends Equatable {
-  final String name;
-  final String email;
-  final String address;
-  final String phone;
-  final String id;
-
-  const StoreUserDataParams({
-    required this.name,
-    required this.email,
-    required this.address,
-    required this.phone,
-    required this.id,
-  });
-
-  Map<String, String> toJson() => {
-        kName: name,
-        "email": email,
-        "address": address,
-        "phone": phone,
-        "id": id,
-      };
-
-  @override
-  List<Object?> get props => [
-        name,
-        email,
-        address,
-        phone,
-        id,
-      ];
-}*/

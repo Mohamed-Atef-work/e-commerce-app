@@ -7,6 +7,7 @@ import 'package:e_commerce_app/modules/admin/domain/use_cases/load_product_use_c
 import 'package:e_commerce_app/modules/auth/domain/use_cases/get_user_data_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/store_user_data_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/get_all_product_categories.dart';
+import 'package:e_commerce_app/modules/shared/domain/use_cases/save_address_use_case.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/update_user_data_use_case.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/user_data_after_login_use_case.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
@@ -17,7 +18,7 @@ void shared() {
   //sl.registerFactory(() => InitCubit(sl()));
   //sl.registerFactory(() => SharedPasswordCubit(sl()));
 
-  sl.registerFactory(() => EditAddressCubit(sl()));
+  sl.registerFactory(() => EditAddressCubit(sl(),sl()));
   sl.registerFactory(() => UpdateProfileCubit(sl()));
   sl.registerFactory(() => SharedUserDataCubit(sl(), sl(), sl()));
 
@@ -28,6 +29,7 @@ void shared() {
   sl.registerLazySingleton(() => GetUserDataUseCase(sl()));
   sl.registerLazySingleton(() => LoadProductsUseCase(sl()));
   sl.registerLazySingleton(() => StoreUserDataUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateAddressUseCase(sl(), sl()));
   sl.registerLazySingleton(() => UpdateUserDataUseCase(sl(), sl()));
   sl.registerLazySingleton(() => GetInitialDataUseCase(sl(), sl()));
   sl.registerLazySingleton(() => GetAllProductCategoriesUseCase(sl()));

@@ -3,9 +3,9 @@ import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/use_case/base_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/shared/data/models/cached_user_data_model.dart';
-import 'package:e_commerce_app/modules/shared/domain/entities/shared_user_data_entity.dart';
 import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/get_initial_use_case.dart';
+import 'package:e_commerce_app/modules/shared/domain/entities/shared_user_data_entity.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/user_data_after_login_use_case.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_state.dart';
 
@@ -59,19 +59,6 @@ class SharedUserDataCubit extends Cubit<SharedUserDataState> {
     );
   }
 
-  void saveDataLocally(CachedUserDataModel user) async {
-    emit(state.copyWith(saveState: RequestState.loading));
-
-    final result = await _sharedDomainRepo.saveUserDataLocally(user);
-    emit(
-      result.fold(
-        (l) =>
-            state.copyWith(message: l.message, saveState: RequestState.error),
-        (r) => state.copyWith(saveState: RequestState.success),
-      ),
-    );
-  }
-
   void savePartOfUserDataLocally(
       {String? password, email, phone, name, address}) async {
     emit(state.copyWith(saveState: RequestState.loading));
@@ -88,14 +75,22 @@ class SharedUserDataCubit extends Cubit<SharedUserDataState> {
       password: password ?? state.sharedEntity!.user.password,
     );
 
+    final shared = SharedUserDataEntity(
+        userCredential: state.sharedEntity!.userCredential, user: user);
+
     final result = await _sharedDomainRepo.saveUserDataLocally(user);
     emit(
       result.fold(
         (l) =>
             state.copyWith(message: l.message, saveState: RequestState.error),
-        (r) => state.copyWith(saveState: RequestState.success),
+        (r) => state.copyWith(
+            saveState: RequestState.success, sharedEntity: shared),
       ),
     );
+  }
+
+  void takeShared(SharedUserDataEntity shared) {
+    emit(state.copyWith(sharedEntity: shared));
   }
 
   void removeData() async {
@@ -110,4 +105,17 @@ class SharedUserDataCubit extends Cubit<SharedUserDataState> {
       ),
     );
   }
+
+/*  void saveDataLocally(CachedUserDataModel user) async {
+    emit(state.copyWith(saveState: RequestState.loading));
+
+    final result = await _sharedDomainRepo.saveUserDataLocally(user);
+    emit(
+      result.fold(
+            (l) =>
+            state.copyWith(message: l.message, saveState: RequestState.error),
+            (r) => state.copyWith(saveState: RequestState.success),
+      ),
+    );
+  }*/
 }

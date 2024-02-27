@@ -9,10 +9,12 @@ import 'package:e_commerce_app/core/components/app_bar.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
-import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
+import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
+import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
+import 'package:e_commerce_app/modules/shared/domain/entities/cached_user_data_entity.dart';
+import 'package:e_commerce_app/modules/shared/domain/entities/shared_user_data_entity.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_state.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controller/address_controller/edit_address_cubit.dart';
 
 class EditAddressScreen extends StatelessWidget {
@@ -25,14 +27,7 @@ class EditAddressScreen extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final addressController = BlocProvider.of<EditAddressCubit>(context);
-          final userDataController =
-              BlocProvider.of<SharedUserDataCubit>(context);
-          final user = UserModel(
-            id: userDataController.state.sharedEntity!.user.userEntity.id,
-            name: userDataController.state.sharedEntity!.user.userEntity.name,
-            email: userDataController.state.sharedEntity!.user.userEntity.email,
-            phone: userDataController.state.sharedEntity!.user.userEntity.phone,
-          );
+
           return Scaffold(
             appBar: appBar(title: AppStrings.address),
             body: Padding(
@@ -78,57 +73,28 @@ class EditAddressScreen extends StatelessWidget {
                           value, AppStrings.apartment),
                     ),
                     _sizedBox(context.height * 0.02),
-                    MultiBlocListener(
-                        listeners: [
-                          BlocListener<SharedUserDataCubit,
-                              SharedUserDataState>(listener: (context, state) {
-                            print(
-                                "save State is ---------> ${state.saveState}");
-                          }),
-                          BlocListener<EditAddressCubit, EditAddressState>(
-                              listener: (context, state) {
-                            print(
-                                "address State is ---------> ${state.changeState}");
-
-                            if (state.changeState == RequestState.success) {
-                              userDataController.savePartOfUserDataLocally(
-                                address: "${addressController.city.text},"
-                                    " ${addressController.street.text},"
-                                    " ${addressController.bloc.text},"
-                                    " ${addressController.apartment.text}",
-                              );
-                            }
-                          }),
-                        ],
-                        child: BlocBuilder<SharedUserDataCubit,
-                            SharedUserDataState>(
-                          builder: (context, state) {
-                            if (state.saveState == RequestState.loading) {
-                              return const LoadingWidget();
-                            } else {
-                              return BlocBuilder<EditAddressCubit,
-                                  EditAddressState>(
-                                builder: (context, state) {
-                                  if (state.changeState ==
-                                      RequestState.loading) {
-                                    return const LoadingWidget();
-                                  } else {
-                                    return CustomButton(
-                                      height: 50,
-                                      fontSize: 18,
-                                      fontFamily: kPacifico,
-                                      text: AppStrings.update,
-                                      width: context.width * 0.7,
-                                      onPressed: () {
-                                        addressController.updateAddress(user);
-                                      },
-                                    );
-                                  }
-                                },
-                              );
-                            }
-                          },
-                        ))
+                    BlocConsumer<EditAddressCubit, EditAddressState>(
+                      listener: (context, state) {
+                        _listener(context, state);
+                      },
+                      builder: (context, state) {
+                        if (state.changeState == RequestState.loading) {
+                          return const LoadingWidget();
+                        } else {
+                          return CustomButton(
+                            height: 50,
+                            fontSize: 18,
+                            fontFamily: kPacifico,
+                            text: AppStrings.update,
+                            width: context.width * 0.7,
+                            onPressed: () {
+                              final shared = _data(context);
+                              addressController.updateAddress(shared.user);
+                            },
+                          );
+                        }
+                      },
+                    )
                   ],
                 ),
               ),
@@ -137,6 +103,44 @@ class EditAddressScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _listener(BuildContext context, EditAddressState state) {
+    if (state.changeState == RequestState.success) {
+      final shared = _data(context);
+      final userDataController = BlocProvider.of<SharedUserDataCubit>(context);
+      userDataController.takeShared(shared);
+      showToast(AppStrings.success, ToastState.success);
+    } else if (state.changeState == RequestState.error) {
+      showToast(state.message, ToastState.error);
+    }
+  }
+
+  SharedUserDataEntity _data(BuildContext context) {
+    final addressController = BlocProvider.of<EditAddressCubit>(context);
+    final userDataController = BlocProvider.of<SharedUserDataCubit>(context);
+    final userData = userDataController.state.sharedEntity;
+
+    final cashed = CachedUserDataEntity(
+      userEntity: UserEntity(
+        address: "${addressController.city.text},"
+            " ${addressController.street.text},"
+            " ${addressController.bloc.text},"
+            " ${addressController.apartment.text}",
+        id: userData!.user.userEntity.id,
+        name: userData.user.userEntity.name,
+        email: userData.user.userEntity.email,
+        phone: userData.user.userEntity.phone,
+      ),
+      password: userData.user.password,
+      adminOrUser: userData.user.adminOrUser,
+    );
+    final shared = SharedUserDataEntity(
+      user: cashed,
+      userCredential: userData.userCredential,
+    );
+
+    return shared;
   }
 
   _sizedBox(double height) => SizedBox(height: height);
