@@ -28,7 +28,7 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
     this._addOrderUseCase,
   ) : super(const ManageCartProductsState());
 
-  Future<void> getCartProducts(String uId) async {
+  void getCartProducts(String uId) async {
     if (state.needToReGet) {
       emit(state.copyWith(getCart: RequestState.loading));
 
@@ -63,7 +63,7 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
     }
   }
 
-  Future<void> getQuantities(String uId) async {
+  void getQuantities(String uId) async {
     emit(state.copyWith(getProductsQuantities: RequestState.loading));
     final productsParams = List.generate(
       state.products.length,
@@ -90,7 +90,7 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
         " _________________________________ ${state.quantities.length} _________________________________");
   }
 
-  Future<void> deleteFromCart(DeleteFromCartParams params) async {
+  void deleteFromCart(DeleteFromCartParams params) async {
     emit(state.copyWith(deleteFromCart: RequestState.loading));
     final result = await _deleteFromCartUseCase.call(params);
     emit(result.fold(
@@ -129,7 +129,7 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
     );
   }
 
-  Future<void> addOrder(UserEntity user) async {
+  void addOrder(UserEntity user) async {
     emit(state.copyWith(addOrder: RequestState.loading));
 
     final totalPrice = _totalPrice();

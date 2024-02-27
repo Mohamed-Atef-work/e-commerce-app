@@ -8,6 +8,7 @@ import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/components/divider_component.dart';
+import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:e_commerce_app/core/components/dismissible_background.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/cart_product_widget.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
@@ -23,8 +24,10 @@ class CartView extends StatelessWidget {
         BlocProvider.of<ManageCartProductsCubit>(context);
     final userData = BlocProvider.of<SharedUserDataCubit>(context).state;
     final userEntity = userData.sharedEntity!.user.userEntity;
-    return BlocBuilder<ManageCartProductsCubit, ManageCartProductsState>(
-        builder: (context, state) {
+    return BlocConsumer<ManageCartProductsCubit, ManageCartProductsState>(
+        listener: (context, state) {
+      _listener(context, state);
+    }, builder: (_, state) {
       if (state.getCart == RequestState.loading ||
           state.addOrder == RequestState.loading ||
           state.clearCart == RequestState.loading ||
@@ -75,6 +78,8 @@ class CartView extends StatelessWidget {
                     manageCartController.addOrder(userEntity);
                   } else {
                     /// to do error snack bar;
+                    showToast(
+                        AppStrings.pleaseAddPhoneAddress, ToastState.error);
                   }
                 },
               ),
@@ -97,7 +102,21 @@ class CartView extends StatelessWidget {
 
   _background() => const DismissibleBackgroundComponent(
       color: Colors.red, icon: Icons.delete);
-}
 
-_secondaryBackground() => const DismissibleSecondaryBackgroundComponent(
-    color: Colors.red, icon: Icons.delete);
+  _secondaryBackground() => const DismissibleSecondaryBackgroundComponent(
+      color: Colors.red, icon: Icons.delete);
+
+  void _listener(BuildContext context, ManageCartProductsState state) {
+    if (state.getCart == RequestState.error ||
+        state.addOrder == RequestState.error ||
+        state.clearCart == RequestState.error ||
+        state.deleteFromCart == RequestState.error ||
+        state.getProductsQuantities == RequestState.error) {
+      showToast(AppStrings.error, ToastState.error);
+    } else if (state.clearCart == RequestState.success ||
+        state.deleteFromCart == RequestState.success ||
+        state.getProductsQuantities == RequestState.success) {
+      showToast(AppStrings.success, ToastState.success);
+    }
+  }
+}
