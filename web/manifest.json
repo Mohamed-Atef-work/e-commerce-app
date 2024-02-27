@@ -1,5 +1,5 @@
 {
-    kName: "e_commerce_app",
+    "name": "e_commerce_app",
     "short_name": "e_commerce_app",
     "start_url": ".",
     "display": "standalone",
