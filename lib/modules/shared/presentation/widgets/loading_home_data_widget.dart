@@ -14,7 +14,7 @@ class LoadingHomeProductsWidget extends StatelessWidget {
 
     return CustomFadingWidget(
       child: GridView.builder(
-        itemCount: 4,
+        itemCount: 6,
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: width * 0.02),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -32,19 +32,19 @@ class LoadingHomeProductsWidget extends StatelessWidget {
             children: [
               Container(
                 width: double.infinity,
-                height: height * 0.34,
+                height: height * 0.36,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
+              SizedBox(height: height * 0.02),
+              AnimationHelperWidget(
+                  width: width * 0.15, height: height * 0.025),
               SizedBox(height: height * 0.01),
-              AnimationHelperWidget(width: width * 0.15, height: height * 0.03),
+              AnimationHelperWidget(width: width * 0.2, height: height * 0.025),
               SizedBox(height: height * 0.01),
-              AnimationHelperWidget(width: width * 0.2, height: height * 0.03),
-              SizedBox(height: height * 0.01),
-              AnimationHelperWidget(width: width * 0.1, height: height * 0.03),
-              SizedBox(height: height * 0.01),
+              AnimationHelperWidget(width: width * 0.1, height: height * 0.025),
             ],
           ),
         ),
@@ -71,12 +71,12 @@ class LoadingCategoriesWidget extends StatelessWidget {
           height: height * 0.065,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: 5,
+            itemCount: 6,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) => Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              height: height * 0.4,
-              width: width * 0.2,
+              height: height * 0.3,
+              width: width * 0.25,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),

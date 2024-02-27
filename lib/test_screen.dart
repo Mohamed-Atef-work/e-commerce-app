@@ -19,7 +19,7 @@ class TestScreen extends StatelessWidget {
       //backgroundColor: Colors.grey,
       body: Column(children: [
         LoadingCategoriesWidget(),
-        LoadingHomeProductsWidget()
+        Expanded(child: LoadingHomeProductsWidget())
       ],)
     );
   }
