@@ -22,7 +22,7 @@ class OrderItemsCubit extends Cubit<OrderItemsState> {
     this._deleteItemFromOrder,
   ) : super(const OrderItemsState());
 
-  Future<void> getOrderItems(DocumentReference orderRef) async {
+  void getOrderItems(DocumentReference orderRef) async {
     emit(state.copyWith(getOrderItems: RequestState.loading));
     final result =
         await _getOrderItems.call(GetOrderItemsParams(orderRef: orderRef));
@@ -38,7 +38,7 @@ class OrderItemsCubit extends Cubit<OrderItemsState> {
     print("in The Potatooooooooooooooooooooooooooooooooooooo${state.message}");
   }
 
-  Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params) async {
+  void deleteItemFromOrder(DeleteItemFromOrderParams params) async {
     emit(state.copyWith(deleteOrderItem: RequestState.loading));
     final result = await _deleteItemFromOrder.call(params);
     emit(

@@ -1,6 +1,8 @@
+import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
@@ -9,15 +11,16 @@ import 'package:e_commerce_app/modules/orders/presentation/widgets/order_widget.
 import 'package:e_commerce_app/modules/orders/presentation/controller/order_items_controller/order_items_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_order_view/user_order_view_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/get_user_orders_controller/get_user_orders_cubit.dart';
-import 'package:e_commerce_app/core/utils/constants.dart';
 
 class ViewUserOrdersBody extends StatelessWidget {
   const ViewUserOrdersBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GetUserOrdersCubit, GetUserOrdersState>(
-        builder: (context, state) {
+    return BlocConsumer<GetUserOrdersCubit, GetUserOrdersState>(
+        listener: (_, state) {
+      _listener(state);
+    }, builder: (context, state) {
       if (state.deleteOrder == RequestState.loading ||
           state.getOrders == RequestState.loading) {
         return const LoadingWidget();
@@ -26,8 +29,8 @@ class ViewUserOrdersBody extends StatelessWidget {
         return const Center(
           child: CustomText(
             fontSize: 25,
-            fontWeight: FontWeight.bold,
             fontFamily: kPacifico,
+            fontWeight: FontWeight.bold,
             text: AppStrings.youHaveNoOrders,
           ),
         );
@@ -49,6 +52,16 @@ class ViewUserOrdersBody extends StatelessWidget {
         );
       }
     });
+  }
+
+  void _listener(GetUserOrdersState state) {
+    if (state.getOrders == RequestState.error) {
+      showToast(state.message, ToastState.error);
+    } else if (state.deleteOrder == RequestState.success) {
+      showToast(AppStrings.deleted, ToastState.success);
+    } else if (state.deleteOrder == RequestState.error) {
+      showToast(state.message, ToastState.error);
+    }
   }
 }
 

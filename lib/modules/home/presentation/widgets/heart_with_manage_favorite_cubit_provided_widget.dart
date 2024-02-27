@@ -31,7 +31,11 @@ class HeartWihMangeFavoriteCubitProviderWidget extends StatelessWidget {
       child: BlocConsumer<ManageFavoriteCubit, ManageFavoriteState>(
         listener: (_, state) {
           if (state.requestState == RequestState.success) {
-            showToast(AppStrings.success, ToastState.success);
+            showToast(
+                state.heartColor == Colors.red
+                    ? AppStrings.added
+                    : AppStrings.deleted,
+                ToastState.success);
           } else if (state.requestState == RequestState.error) {
             showToast(AppStrings.ops, ToastState.error);
           }
