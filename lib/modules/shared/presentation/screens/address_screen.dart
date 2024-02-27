@@ -82,8 +82,6 @@ class EditAddressScreen extends StatelessWidget {
                           return const LoadingWidget();
                         } else {
                           return CustomButton(
-                            height: 50,
-                            fontSize: 18,
                             fontFamily: kPacifico,
                             text: AppStrings.update,
                             width: context.width * 0.7,
@@ -110,6 +108,7 @@ class EditAddressScreen extends StatelessWidget {
       final shared = _data(context);
       final userDataController = BlocProvider.of<SharedUserDataCubit>(context);
       userDataController.takeShared(shared);
+      BlocProvider.of<EditAddressCubit>(context).clear();
       showToast(AppStrings.success, ToastState.success);
     } else if (state.changeState == RequestState.error) {
       showToast(state.message, ToastState.error);

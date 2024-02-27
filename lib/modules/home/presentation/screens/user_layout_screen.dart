@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
-import 'package:e_commerce_app/core/components/custom_text.dart';
+import 'package:e_commerce_app/core/components/app_bar.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/cart_view.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/account_view.dart';
@@ -66,17 +65,8 @@ class UserLayoutScreen extends StatelessWidget {
     }
   }
 
-  PreferredSizeWidget _appBar(BuildContext context) => AppBar(
-        elevation: 0.0,
-        centerTitle: true,
-        backgroundColor: kPrimaryColorYellow,
-        title: CustomText(
-          fontSize: 30,
-          textColor: Colors.black,
-          fontWeight: FontWeight.bold,
-          fontFamily: kPacifico,
-          text: BlocProvider.of<UserLayoutCubit>(context).state.appBarTitle,
-        ),
+  PreferredSizeWidget _appBar(BuildContext context) => appBar(
+        title: BlocProvider.of<UserLayoutCubit>(context).state.appBarTitle,
       );
 
   BottomNavigationBar _bottomNavBar(BuildContext context) =>

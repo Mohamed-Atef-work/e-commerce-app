@@ -5,6 +5,7 @@ import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart
 import 'package:e_commerce_app/modules/home/presentation/screens/details_screen.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+
 part 'product_details_state.dart';
 
 class ProductDetailsCubit extends Cubit<ProductDetailsState> {
@@ -17,7 +18,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   ProductDetailsCubit(this._addToCartUseCase)
       : super(const ProductDetailsState());
 
-  Future<void> addToCart(String uId) async {
+  void addToCart(String uId) async {
     emit(state.copyWith(addToCart: RequestState.loading));
     final result = await _addToCartUseCase.call(
       AddToCartParams(
@@ -34,6 +35,13 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
         (r) => state.copyWith(addToCart: RequestState.success),
       ),
     );
+
+    Future.delayed(
+        const Duration(
+          milliseconds: 30,
+        ), () {
+      emit(state.copyWith(addToCart: RequestState.initial));
+    });
   }
 
   void product(ProductEntity product) {

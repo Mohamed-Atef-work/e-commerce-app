@@ -4,24 +4,24 @@ import 'package:flutter/material.dart';
 import 'custom_text.dart';
 
 PreferredSizeWidget appBar({
-  required String title,
+  double? height,
+  Widget? leading,
   double? titleSize,
   List<Widget>? actions,
-  Widget? leading,
-  double? height,
+  required String title,
 }) =>
     AppBar(
-      leading: leading,
       elevation: 0.0,
+      actions: actions,
+      leading: leading,
+      centerTitle: true,
       toolbarHeight: height ?? 50,
       backgroundColor: kPrimaryColorYellow,
-      actions: actions,
-      centerTitle: true,
       title: CustomText(
         text: title,
-        fontSize: titleSize ?? 30,
         fontFamily: kPacifico,
-        fontWeight: FontWeight.bold,
         textColor: Colors.black,
+        fontSize: titleSize ?? 30,
+        fontWeight: FontWeight.bold,
       ),
     );

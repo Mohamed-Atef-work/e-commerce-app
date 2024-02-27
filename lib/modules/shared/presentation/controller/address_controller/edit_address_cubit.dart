@@ -33,14 +33,16 @@ class EditAddressCubit extends Cubit<EditAddressState> {
           (r) => state.copyWith(changeState: RequestState.success),
         ),
       );
-      if (result.isRight()) {
-        apartment.text = "";
-        street.text = "";
-        city.text = "";
-        bloc.text = "";
-      }
     }
   }
+
+  void clear() {
+    apartment.text = "";
+    street.text = "";
+    city.text = "";
+    bloc.text = "";
+  }
+
 /* void updateAddress(UserModel user) async {
     if (formKey.currentState!.validate()) {
       emit(state.copyWith(changeState: RequestState.loading));

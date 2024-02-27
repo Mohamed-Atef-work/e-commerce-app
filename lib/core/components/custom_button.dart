@@ -4,7 +4,7 @@ import 'custom_text.dart';
 
 class CustomButton extends StatelessWidget {
   final double width;
-  final double height;
+  final double? height;
   final Color? backgroundColor;
   final Color? textColor;
   final String? fontFamily;
@@ -17,15 +17,16 @@ class CustomButton extends StatelessWidget {
 
   const CustomButton({
     super.key,
-    required this.width,
-    required this.height,
-    required this.text,
-    this.textColor = kWhite,
-    this.backgroundColor = Colors.black,
-    this.fontSize = 14,
     this.onPressed,
     this.fontFamily,
     this.fontWeight,
+    this.height = 50,
+    this.fontSize = 18,
+    required this.text,
+    required this.width,
+    this.textColor = kWhite,
+    this.backgroundColor = Colors.black,
+
     /*this.verticalPadding = 0.0,
     this.horizontalPadding = 0.0*/
   });
@@ -46,7 +47,7 @@ class CustomButton extends StatelessWidget {
         //foregroundColor: green,
         fixedSize: Size(
           width,
-          height,
+          height!,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
