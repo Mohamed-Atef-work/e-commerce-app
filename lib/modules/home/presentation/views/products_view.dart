@@ -1,3 +1,5 @@
+import 'package:e_commerce_app/core/components/messenger_component.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
 import 'package:flutter/material.dart';
@@ -25,9 +27,8 @@ class UserProductsView extends StatelessWidget {
                   state.productsState != RequestState.success) {
                 return const LoadingWidget();
               } else if (state.products.isEmpty) {
-                return const Center(
-                  child: CustomText(text: "No Data"),
-                );
+                return const MessengerComponent(
+                    mess: AppStrings.thereIsNoProducts);
               } else {
                 return GridView.builder(
                   itemCount: state.products.length,

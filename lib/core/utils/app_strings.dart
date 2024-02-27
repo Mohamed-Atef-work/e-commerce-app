@@ -1,6 +1,7 @@
 class AppStrings {
   static const String success = "Success";
   static const String ops = "Oops";
+  static const String tryAgain = "Some error, Try Again";
   static const String done = "Done";
   static const String admin = "admin";
   static const String profile = "Profile";
@@ -82,6 +83,7 @@ class AppStrings {
   static const String cartIsEmpty = "Your Cart Is Empty";
   static const String youHaveNoOrders = "You Have No Orders";
   static const String thereIsNoOrders = "There Is No Orders";
+  static const String thereIsNoProducts = "There Is No Products";
 
   static const String favoriteIsEmpty = "Your Favorite Is Empty";
   static const String thisOrderIsNoLongerExisted =

@@ -1,6 +1,8 @@
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/core/components/product_details_component.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
@@ -25,7 +27,8 @@ class AdminProductsView extends StatelessWidget {
                   state.productsState != RequestState.success) {
                 return const LoadingWidget();
               } else if (state.products.isEmpty) {
-                return const Center(child: CustomText(text: "No Data"));
+                return const MessengerComponent(
+                    mess: AppStrings.thereIsNoProducts);
               } else {
                 return GridView.builder(
                   itemCount: state.products.length,

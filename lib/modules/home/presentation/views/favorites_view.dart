@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_state.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/favorite_widget.dart';
@@ -29,15 +30,7 @@ class FavoritesView<CubitName> extends StatelessWidget {
               separatorBuilder: (context, index) => const DividerComponent(),
             );
           } else {
-            return const Center(
-              child: CustomText(
-                fontSize: 25,
-                fontFamily: kPacifico,
-                textColor: Colors.black,
-                fontWeight: FontWeight.bold,
-                text: AppStrings.favoriteIsEmpty,
-              ),
-            );
+            return const MessengerComponent(mess: AppStrings.favoriteIsEmpty);
           }
         } else {
           return const LoadingWidget();
