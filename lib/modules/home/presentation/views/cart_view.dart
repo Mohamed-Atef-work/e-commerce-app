@@ -1,15 +1,15 @@
-import 'package:e_commerce_app/core/components/messenger_component.dart';
+import 'package:e_commerce_app/modules/shared/presentation/widgets/loading_cart_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
-import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/components/divider_component.dart';
 import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
+import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/core/components/dismissible_background.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/cart_product_widget.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
@@ -29,11 +29,12 @@ class CartView extends StatelessWidget {
         listener: (_, state) {
       _listener(state);
     }, builder: (_, state) {
-      if (state.getCart == RequestState.loading ||
-          state.addOrder == RequestState.loading ||
-          state.deleteFromCart == RequestState.loading) {
-        return const LoadingWidget();
-      } else if (state.products.isNotEmpty) {
+      if (state.getCart == RequestState.loading
+          ) {
+        return const LoadingCartWidget();
+      }else if(state.addOrder == RequestState.loading ||
+          state.deleteFromCart == RequestState.loading){return const LoadingWidget();}
+      else if (state.products.isNotEmpty) {
         return Column(
           children: [
             Expanded(

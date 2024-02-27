@@ -1,17 +1,16 @@
-import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
+import 'package:e_commerce_app/core/components/app_bar.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
-import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/home/presentation/views/favorites_view.dart';
 import 'package:e_commerce_app/modules/admin/presentation/views/admin_orders_view.dart';
 import 'package:e_commerce_app/modules/admin/presentation/views/admin_profile_view.dart';
 import 'package:e_commerce_app/modules/admin/presentation/views/admin_products_view.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_layout_controller/admin_layout_cubit.dart';
@@ -81,17 +80,8 @@ class AdminLayoutScreen extends StatelessWidget {
     }
   }
 
-  PreferredSizeWidget _appBar(BuildContext context) => AppBar(
-        elevation: 0.0,
-        centerTitle: true,
-        backgroundColor: kPrimaryColorYellow,
-        title: CustomText(
-          fontSize: 30,
-          textColor: Colors.black,
-          fontWeight: FontWeight.bold,
-          fontFamily: kPacifico,
-          text: BlocProvider.of<AdminLayoutCubit>(context).state.appBarTitle,
-        ),
+  PreferredSizeWidget _appBar(BuildContext context) => appBar(
+        title: BlocProvider.of<AdminLayoutCubit>(context).state.appBarTitle,
       );
 
   BottomNavigationBar _bottomNavBar(BuildContext context) =>
