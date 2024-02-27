@@ -33,27 +33,33 @@ class CartProductLoadingWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Container(
-            //width: context.width * 0.3,
-            //height: context.height * 0.2,
             clipBehavior: Clip.antiAliasWithSaveLayer,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
             child: AnimationHelperWidget(
-                height: context.height * 0.2, width: context.width * 0.3),
+              height: context.height * 0.2,
+              width: context.width * 0.3,
+            ),
           ),
           SizedBox(width: context.width * 0.04),
           Column(
             //mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               AnimationHelperWidget(
-                  height: context.height * 0.03, width: context.width * 0.2),
+                height: context.height * 0.03,
+                width: context.width * 0.2,
+              ),
               SizedBox(height: context.height * 0.03),
               AnimationHelperWidget(
-                  height: context.height * 0.04, width: context.width * 0.3),
+                height: context.height * 0.04,
+                width: context.width * 0.3,
+              ),
             ],
           ),
           const Spacer(),
           AnimationHelperWidget(
-              height: context.height * 0.03, width: context.width * 0.08),
+            height: context.height * 0.03,
+            width: context.width * 0.08,
+          ),
         ],
       ),
     );
