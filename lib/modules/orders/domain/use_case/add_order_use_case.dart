@@ -15,23 +15,24 @@ class AddOrderUseCase extends BaseUseCase<void, AddOrderParams> {
   AddOrderUseCase(this._orderRepo, this._cartRepo);
   @override
   Future<Either<Failure, void>> call(AddOrderParams params) async {
-    final clearParams = ClearCartParams(
-      params: List.generate(
-        params.items.length,
-        (index) => DeleteFromCartParams(
-          uId: params.uId,
-          productId: params.items[index].product.id!,
-          category: params.items[index].product.category,
-        ),
-      ),
-    );
+    final clearParams = _params(params);
     final orderEither = await _orderRepo.addOrder(params);
-
     return orderEither.fold(
       (addOrderFailure) => Left(addOrderFailure),
       (r) async => await _cartRepo.clearCart(clearParams),
     );
   }
+
+  _params(AddOrderParams params) => ClearCartParams(
+        params: List.generate(
+          params.items.length,
+          (index) => DeleteFromCartParams(
+            uId: params.uId,
+            productId: params.items[index].product.id!,
+            category: params.items[index].product.category,
+          ),
+        ),
+      );
 }
 
 class AddOrderParams {
@@ -40,8 +41,8 @@ class AddOrderParams {
   final String uId;
 
   AddOrderParams({
-    required this.items,
     required this.orderData,
+    required this.items,
     required this.uId,
   });
 }

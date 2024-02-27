@@ -33,7 +33,7 @@ class HeartWihMangeFavoriteCubitProviderWidget extends StatelessWidget {
           if (state.requestState == RequestState.success) {
             showToast(AppStrings.success, ToastState.success);
           } else if (state.requestState == RequestState.error) {
-            showToast(AppStrings.error, ToastState.error);
+            showToast(AppStrings.ops, ToastState.error);
           }
         },
         builder: (context, state) {

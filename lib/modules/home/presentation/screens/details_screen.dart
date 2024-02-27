@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -37,7 +38,10 @@ class DetailsScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-        child: BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
+        child: BlocConsumer<ProductDetailsCubit, ProductDetailsState>(
+          listener: (_, state) {
+            _listener(state);
+          },
           builder: (context, state) {
             if (state.addToCart == RequestState.loading) {
               return const LoadingWidget();
@@ -129,6 +133,14 @@ class DetailsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _listener(ProductDetailsState state) {
+    if (state.addToCart == RequestState.success) {
+      showToast(AppStrings.added, ToastState.success);
+    } else if (state.addToCart == RequestState.error) {
+      showToast(AppStrings.ops, ToastState.error);
+    }
   }
 }
 /*

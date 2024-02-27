@@ -97,7 +97,7 @@ class SignUpFormWidget extends StatelessWidget {
       Navigator.of(context).pushReplacementNamed(Screens.loginScreen);
     } else if (state.signUpState == RequestState.error ||
         state.storeUserDataState == RequestState.error) {
-      showToast(AppStrings.error, ToastState.error);
+      showToast(AppStrings.ops, ToastState.error);
     }
   }
 }

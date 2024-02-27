@@ -11,7 +11,6 @@ import 'package:e_commerce_app/modules/home/domain/entities/cart_item_entity.dar
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/clear_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
-import 'package:e_commerce_app/modules/home/domain/use_cases/get_product_quantities_of_cart_use_case.dart';
 
 abstract class CartBaseRemoteDataSource {
   Future<void> addToCart(AddToCartParams params);
@@ -170,4 +169,24 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
         CartEntity(category: params.category, products: products);
     return cartEntity;
   }
+}
+
+class GetQuantitiesParams {
+  final List<GetQuantities> productsParams;
+  final String uId;
+
+  GetQuantitiesParams({
+    required this.productsParams,
+    required this.uId,
+  });
+}
+
+class GetQuantities {
+  final String category;
+  final String id;
+
+  GetQuantities({
+    required this.id,
+    required this.category,
+  });
 }

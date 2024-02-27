@@ -6,7 +6,7 @@ import 'package:e_commerce_app/modules/home/domain/entities/cart_entity.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/cart_item_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/repository/cart_domain_repository.dart';
-import 'package:e_commerce_app/modules/home/domain/use_cases/get_product_quantities_of_cart_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/not_needed/get_product_quantities_of_cart_use_case.dart';
 
 /*class GetCartProductsUseCase extends BaseUseCase<List<CartItemEntity>, String> {
   final CartDomainRepo repo;

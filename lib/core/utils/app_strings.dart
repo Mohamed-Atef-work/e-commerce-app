@@ -1,6 +1,6 @@
 class AppStrings {
   static const String success = "Success";
-  static const String error = "Oops";
+  static const String ops = "Oops";
   static const String done = "Done";
   static const String admin = "admin";
   static const String profile = "Profile";

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/constants/strings.dart';
+import 'package:e_commerce_app/modules/home/data/data_source/cart_remote_data_source.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
-import 'package:e_commerce_app/modules/home/domain/use_cases/get_product_quantities_of_cart_use_case.dart';
 
 abstract class CartStore {
   Future<void> addToCart(AddToCartParams params);
@@ -84,11 +84,8 @@ class CartStoreImpl implements CartStore {
   @override
   Future<List<DocumentReference>> getCartCategories(String uId) async {
     List<DocumentReference> docsRefs = [];
-    final response = await store
-        .collection(kUsers)
-        .doc(uId)
-        .collection(kCart)
-        .get();
+    final response =
+        await store.collection(kUsers).doc(uId).collection(kCart).get();
     response.docs.map((doc) {
       docsRefs.add(doc.reference);
     }).toList();
@@ -99,8 +96,7 @@ class CartStoreImpl implements CartStore {
   Future<ReturnedIdsAndTheirCategory> getCategoryIds(
       DocumentReference categoryRef) async {
     List<String> ids = [];
-    final response =
-        await categoryRef.collection(kProducts).get();
+    final response = await categoryRef.collection(kProducts).get();
     final category = categoryRef.id;
     response.docs.map((doc) => {ids.add(doc.id)}).toList();
     return ReturnedIdsAndTheirCategory(category: category, ids: ids);

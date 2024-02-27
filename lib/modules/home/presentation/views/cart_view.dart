@@ -113,7 +113,7 @@ class CartView extends StatelessWidget {
         state.addOrder == RequestState.error ||
         state.deleteFromCart == RequestState.error ||
         state.getProductsQuantities == RequestState.error) {
-      showToast(AppStrings.error, ToastState.error);
+      showToast(AppStrings.ops, ToastState.error);
     } else if (state.addOrder == RequestState.success ||
         state.deleteFromCart == RequestState.success ||
         state.getProductsQuantities == RequestState.success) {
