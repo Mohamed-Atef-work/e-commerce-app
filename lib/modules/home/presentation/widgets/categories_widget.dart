@@ -1,5 +1,7 @@
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/widgets/loading_cart_widget.dart';
+import 'package:e_commerce_app/modules/shared/presentation/widgets/loading_home_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +25,7 @@ class CategoriesWidget extends StatelessWidget {
         child: BlocBuilder<ProductsViewCubit, ProductsViewState>(
           builder: (context, state) {
             if (state.categoriesState == RequestState.loading) {
-              return const LoadingWidget();
+              return const LoadingCategoriesWidget();
             } else {
               return ListView.separated(
                 scrollDirection: Axis.horizontal,

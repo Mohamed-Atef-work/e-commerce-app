@@ -72,7 +72,7 @@ class LoadingFavoriteProductWidget extends StatelessWidget {
                   ),
                   const Spacer(),
                   const Icon(
-                    size: 20,
+                    size: 30,
                     color: Colors.white,
                     Icons.favorite_border,
                   ),

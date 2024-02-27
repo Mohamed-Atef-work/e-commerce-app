@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/modules/shared/presentation/widgets/edit_profile_item_widget.dart';
+import 'package:e_commerce_app/modules/shared/presentation/widgets/loading_home_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
@@ -16,8 +17,10 @@ class TestScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       //backgroundColor: Colors.grey,
-      body: Center(
-      ),
+      body: Column(children: [
+        LoadingCategoriesWidget(),
+        LoadingHomeProductsWidget()
+      ],)
     );
   }
 }
