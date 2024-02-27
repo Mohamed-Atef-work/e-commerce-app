@@ -3,8 +3,6 @@ import 'package:e_commerce_app/modules/home/data/data_source/cart_remote_data_so
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/clear_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
-import 'package:e_commerce_app/modules/home/domain/use_cases/get_cart_products_use_case.dart';
-import 'package:e_commerce_app/modules/home/domain/use_cases/get_product_quantities_of_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/user_layout_controller/user_layout_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
@@ -22,7 +20,7 @@ void user() {
   sl.registerFactory(() => ProductDetailsCubit(sl()));
   sl.registerFactory(() => ManageUserOrderViewCubit());
   sl.registerFactory(() => ProductsViewCubit(sl(), sl()));
-  sl.registerFactory(() => ManageCartProductsCubit(sl(), sl(), sl()));
+  sl.registerFactory(() => ManageCartProductsCubit(sl(), sl()));
   sl.registerFactory(() => ManageUserOrdersCubit(sl(), sl(), sl(), sl()));
 
   /// Use Case
@@ -34,8 +32,6 @@ void user() {
   sl.registerLazySingleton(() => AddToCartUseCase(sl()));
   sl.registerLazySingleton(() => ClearCartUseCase(sl()));
   sl.registerLazySingleton(() => DeleteFromCartUseCase(sl()));
-  sl.registerLazySingleton(() => GetCartProductsUseCase(sl()));
-  sl.registerLazySingleton(() => GetCartProductsQuantitiesUseCase(sl()));
 
   /// Repositories
   sl.registerLazySingleton<CartDomainRepo>(() => CartDataRepo(sl()));

@@ -7,6 +7,7 @@ import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart
 import 'package:e_commerce_app/modules/home/data/models/cart_category_model.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/cart_category_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/cart_entity.dart';
+import 'package:e_commerce_app/modules/home/domain/entities/cart_item_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/clear_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
@@ -17,7 +18,7 @@ abstract class CartBaseRemoteDataSource {
   Future<void> clearCart(ClearCartParams params);
   Future<void> deleteFromCart(DeleteFromCartParams params);
   Future<List<int>> getQuantities(GetQuantitiesParams params);
-  Future<List<CartEntity>> getCartProducts(String uId);
+  Future<List<CartItemEntity>> getCartProducts(String uId);
   //Future<CartEntity> _getProductsOfCategory(CartCategoryEntity params);
   //Future<List<ProductEntity>> getProduct(GetProductParams params);
   //Future<List<CartCategoryEntity>> getCartCategories(String uId);
@@ -56,33 +57,57 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
 
   @override
   Future<List<int>> getQuantities(GetQuantitiesParams params) async {
-    final quantitiesDocs =
-        await cartStore.getQuantities(params).catchError((error) {
-      print(error.toString());
-      throw ServerException(message: error);
-    });
+    final quantitiesDocs = await cartStore.getQuantities(params);
     final quantities =
         List<int>.of(quantitiesDocs.map((e) => e.data()![kQuantity]));
     return quantities;
   }
 
+  Future<List<CartItemEntity>> _getQuantities(
+      List<CartEntity> cartEntities, String uId) async {
+    List<ProductEntity> products = [];
+    for (CartEntity cart in cartEntities) {
+      products.addAll(cart.products);
+    }
+    final getQuantitiesParams = List.generate(
+      products.length,
+      (index) => GetQuantities(
+        id: products[index].id!,
+        category: products[index].category,
+      ),
+    );
+    final quantitiesParams =
+        GetQuantitiesParams(productsParams: getQuantitiesParams, uId: uId);
+
+    final quantities = await getQuantities(quantitiesParams);
+    final cartItems = List.generate(
+      quantities.length,
+      (index) => CartItemEntity(
+        quantity: quantities[index],
+        product: products[index],
+      ),
+    );
+    return cartItems;
+  }
+
   @override
-  Future<List<CartEntity>> getCartProducts(String uId) async {
+  Future<List<CartItemEntity>> getCartProducts(String uId) async {
     final categories = await _getCartCategories(uId).catchError((error) {
       print(error.toString());
       throw ServerException(message: error);
     });
-
-    print(categories.length);
 
     final cartEntities = await _getCart(categories, uId).catchError((error) {
       print(error.toString());
       throw ServerException(message: error);
     });
 
-    print(cartEntities.length);
+    final cart = await _getQuantities(cartEntities, uId).catchError((error) {
+      print(error.toString());
+      throw ServerException(message: error);
+    });
 
-    return cartEntities;
+    return cart;
   }
 
   Future<List<CartCategoryEntity>> _getCartCategories(String uId) async {

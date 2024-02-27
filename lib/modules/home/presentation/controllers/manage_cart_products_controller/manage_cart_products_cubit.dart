@@ -5,19 +5,17 @@ import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/orders/data/model/order_data_model.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/cart_item_entity.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/add_order_use_case.dart';
-import 'package:e_commerce_app/modules/home/domain/use_cases/get_cart_products_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/repository/cart_domain_repository.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
 
 part 'manage_cart_products_state.dart';
 
 class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
-  final GetCartProductsUseCase _getCartProductsUseCase;
-  final DeleteFromCartUseCase _deleteFromCartUseCase;
+  final CartDomainRepo _cartRepo;
   final AddOrderUseCase _addOrderUseCase;
 
   ManageCartProductsCubit(
-    this._getCartProductsUseCase,
-    this._deleteFromCartUseCase,
+    this._cartRepo,
     this._addOrderUseCase,
   ) : super(const ManageCartProductsState());
 
@@ -26,7 +24,7 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
       emit(state.copyWith(getCart: RequestState.loading));
 
       /// Handling UID  :) ..........
-      final result = await _getCartProductsUseCase(uId);
+      final result = await _cartRepo.getCartProducts(uId);
 
       result.fold(
           (l) => emit(
@@ -43,7 +41,7 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
 
   void deleteFromCart(DeleteFromCartParams params) async {
     emit(state.copyWith(deleteFromCart: RequestState.loading));
-    final result = await _deleteFromCartUseCase.call(params);
+    final result = await _cartRepo.deleteFromCart(params);
     emit(result.fold(
       (l) => state.copyWith(
           deleteFromCart: RequestState.error, message: l.message),
