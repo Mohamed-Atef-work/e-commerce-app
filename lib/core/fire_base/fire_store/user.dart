@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/constants/strings.dart';
-import 'package:e_commerce_app/modules/auth/data/data_source/auth_remote_data_source.dart';
 import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
-import 'package:e_commerce_app/modules/auth/domain/use_cases/store_user_data_use_case.dart';
 
 abstract class UserStore {
   Future<void> storeUserData(UserModel user);

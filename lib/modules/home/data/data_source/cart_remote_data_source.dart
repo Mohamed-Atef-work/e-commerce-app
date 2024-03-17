@@ -1,15 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
-import 'package:e_commerce_app/core/fire_base/fire_store/cart.dart';
 import 'package:e_commerce_app/core/constants/strings.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/cart.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/store_helper.dart';
 import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
+import 'package:e_commerce_app/modules/home/domain/entities/cart_entity.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/home/data/models/cart_category_model.dart';
-import 'package:e_commerce_app/modules/home/domain/entities/cart_category_entity.dart';
-import 'package:e_commerce_app/modules/home/domain/entities/cart_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/cart_item_entity.dart';
-import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/entities/cart_category_entity.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/clear_cart_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
 
 abstract class CartBaseRemoteDataSource {
@@ -24,13 +25,14 @@ abstract class CartBaseRemoteDataSource {
 }
 
 class CartRemoteDataSource implements CartBaseRemoteDataSource {
-  final CartStore cartStore;
+  final CartStore _cartStore;
+  final StoreHelper _storeHelper;
 
-  CartRemoteDataSource(this.cartStore);
+  CartRemoteDataSource(this._cartStore, this._storeHelper);
 
   @override
   Future<void> addToCart(AddToCartParams params) async {
-    await cartStore.addToCart(params).then((value) {
+    await _cartStore.addToCart(params).then((value) {
       print("<---------- Added ---------->");
     }).catchError((error) {
       throw ServerException(message: error.code);
@@ -39,7 +41,7 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
 
   @override
   Future<void> deleteFromCart(DeleteFromCartParams params) {
-    return cartStore.deleteFromCart(params).then((value) {
+    return _cartStore.deleteFromCart(params).then((value) {
       print("<---------- Deleted ---------->");
     }).catchError((error) {
       throw ServerException(message: error);
@@ -48,7 +50,7 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
 
   @override
   Future<void> clearCart(ClearCartParams params) async {
-    await cartStore.clearCart(params.params).catchError((error) {
+    await _cartStore.clearCart(params.params).catchError((error) {
       print(error.toString());
       throw ServerException(message: error);
     });
@@ -56,7 +58,7 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
 
   @override
   Future<List<int>> getQuantities(GetQuantitiesParams params) async {
-    final quantitiesDocs = await cartStore.getQuantities(params);
+    final quantitiesDocs = await _cartStore.getQuantities(params);
     final quantities =
         List<int>.of(quantitiesDocs.map((e) => e.data()![kQuantity]));
     return quantities;
@@ -110,7 +112,7 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
   }
 
   Future<List<CartCategoryEntity>> _getCartCategories(String uId) async {
-    final categoriesDocs = await cartStore.getCartCategories(uId);
+    final categoriesDocs = await _cartStore.getCartCategories(uId);
     final categories = List<CartCategoryEntity>.of(
       categoriesDocs
           .map((cateDoc) =>
@@ -147,20 +149,19 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
       CartCategoryEntity category, String uId) async {
     final ids = await _getIdsOfOneCategory(category.reference);
     final cartEntity = await _getEntityByIds(
-        GetProductsOfOneCategoryParams(category: category.id, ids: ids), uId);
+        GetProductOfCategoryParams(category: category.id, ids: ids, uId: uId));
     return cartEntity;
   }
 
   Future<List<String>> _getIdsOfOneCategory(
       DocumentReference categoryRef) async {
-    final idsDocs = await cartStore.getCartProductsIdsOfCategory(categoryRef);
+    final idsDocs = await _storeHelper.getProductsIdsOfCategory(categoryRef);
     final ids = List<String>.of(idsDocs.docs.map((favDoc) => favDoc.id));
     return ids;
   }
 
-  Future<CartEntity> _getEntityByIds(
-      GetProductsOfOneCategoryParams params, uId) async {
-    final productsDocs = await cartStore.getProductsOfCategory(params, uId);
+  Future<CartEntity> _getEntityByIds(GetProductOfCategoryParams params) async {
+    final productsDocs = await _cartStore.getProductsOfCategory(params);
     final products = List<ProductEntity>.of(
       productsDocs.map(
           (doc) => ProductModel.formJson(json: doc.data()!, productId: doc.id)),

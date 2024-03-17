@@ -24,6 +24,7 @@ class ProductStoreImpl implements ProductStore {
   final FirebaseFirestore store;
 
   ProductStoreImpl(this.store);
+
   @override
   Future<void> addProduct(AddProductparams params) async {
     await store
@@ -98,20 +99,4 @@ class ProductStoreImpl implements ProductStore {
       }
     });
   }
-
-/*Future<void> addJackets(AddProductparams product) async {
-    await store
-        .collection("products")
-        .doc("categories")
-        .collection("jackets")
-        .add(product.toJson());
-  }
-
-  Future<void> addShirts(AddProductparams product) async {
-    await store
-        .collection("products")
-        .doc("categories")
-        .collection("shirts")
-        .add(product.toJson());
-  }*/
 }

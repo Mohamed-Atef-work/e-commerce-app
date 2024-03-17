@@ -27,5 +27,5 @@ void favorite() {
 
   /// Data Source
   sl.registerLazySingleton<FavoriteBaseRemoteDataSource>(
-      () => FavoriteRemoteDataSource(sl()));
+      () => FavoriteRemoteDataSource(sl(),sl()));
 }

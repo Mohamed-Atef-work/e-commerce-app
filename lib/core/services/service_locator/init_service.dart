@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/fire_base/fire_store/store_helper.dart';
 import 'package:e_commerce_app/core/services/local_data_base_service/local_data_base_interface.dart';
 import 'package:e_commerce_app/core/services/local_data_base_service/shared_prefs_impl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,12 +19,13 @@ void init() {
   sl.registerLazySingleton(() => FirebaseStorage.instance);
   sl.registerLazySingleton(() => FirebaseFirestore.instance);
   sl.registerLazySingleton<UserAuth>(() => UserAuthImpl(sl()));
-  sl.registerLazySingleton<CartStore>(() => CartStoreImpl(sl()));
   sl.registerLazySingleton<UserStore>(() => UserStoreImpl(sl()));
   sl.registerLazySingleton<OrderStore>(() => OrderStoreImpl(sl()));
+  sl.registerLazySingleton<StoreHelper>(() => StoreHelperImpl(sl()));
   sl.registerLazySingleton<ProductStore>(() => ProductStoreImpl(sl()));
-  sl.registerLazySingleton<FavoriteStore>(() => FavoriteStoreImpl(sl()));
+  sl.registerLazySingleton<CartStore>(() => CartStoreImpl(sl(), sl()));
   sl.registerLazySingleton<StorageService>(() => StorageServiceImpl(sl()));
+  sl.registerLazySingleton<FavoriteStore>(() => FavoriteStoreImpl(sl(), sl()));
   sl.registerSingletonAsync<LocalDataBaseService>(() async {
     final prefs = await SharedPreferences.getInstance();
     return PrefsImpl(prefs);

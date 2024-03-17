@@ -1,28 +1,25 @@
 import 'package:equatable/equatable.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/constants/strings.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/store_helper.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
 
 abstract class FavoriteStore {
-  Future<QuerySnapshot<Map<String, dynamic>>> getProductsIdsOfCategory(
-      DocumentReference reference);
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getProductsOfCategory(
-      {required List<String> ids,
-      required String category,
-      required String uId});
-
+      GetProductOfCategoryParams params);
   Future<QuerySnapshot<Map<String, dynamic>>> getCategories(String uId);
   Future<void> deleteFav(AddDeleteFavoriteParams params);
   Future<void> addFav(AddDeleteFavoriteParams params);
 }
 
 class FavoriteStoreImpl implements FavoriteStore {
-  final FirebaseFirestore store;
-  FavoriteStoreImpl(this.store);
+  final FirebaseFirestore _store;
+  final StoreHelper _storeHelper;
+  FavoriteStoreImpl(this._store, this._storeHelper);
 
   @override
   Future<void> deleteFav(AddDeleteFavoriteParams params) async {
-    await store
+    await _store
         .collection(kUsers)
         .doc(params.uId)
         .collection(kFavorites)
@@ -34,7 +31,7 @@ class FavoriteStoreImpl implements FavoriteStore {
 
   @override
   Future<void> addFav(AddDeleteFavoriteParams params) async {
-    final response = await store
+    final response = await _store
         .collection(kProducts)
         .doc(kCategories)
         .collection(params.category)
@@ -43,13 +40,13 @@ class FavoriteStoreImpl implements FavoriteStore {
 
     if (response.exists) {
       await _setFavCategoryToBeAvailableToFetch(
-        Favoriteparams(
+        FavoriteParams(
           uId: params.uId,
           category: params.category,
           productId: params.productId,
         ),
       );
-      await store
+      await _store
           .collection(kUsers)
           .doc(params.uId)
           .collection(kFavorites)
@@ -62,7 +59,7 @@ class FavoriteStoreImpl implements FavoriteStore {
 
   @override
   Future<QuerySnapshot<Map<String, dynamic>>> getCategories(String uId) async {
-    return await store
+    return await _store
         .collection(kUsers)
         .doc(uId)
         .collection(kFavorites)
@@ -70,58 +67,31 @@ class FavoriteStoreImpl implements FavoriteStore {
   }
 
   @override
-  Future<QuerySnapshot<Map<String, dynamic>>> getProductsIdsOfCategory(
-      DocumentReference reference) async {
-    final response = await reference.collection(kProducts).get();
-    if (response.docs.isEmpty) {
-      /// Solving the second part of database problem :) .....
-      /// Deleting categories that doesn't contain [Fvs] :) .....
-      await reference.delete();
-    }
-    return response;
-  }
-
-  @override
-  Future<List<DocumentSnapshot<Map<String, dynamic>>>> getProductsOfCategory({
-    required List<String> ids,
-    required String category,
-    required String uId,
-  }) async {
+  Future<List<DocumentSnapshot<Map<String, dynamic>>>> getProductsOfCategory(
+      GetProductOfCategoryParams params) async {
     List<DocumentSnapshot<Map<String, dynamic>>> products = [];
 
-    for (String id in ids) {
-      final productDoc = await _getProduct(category: category, productId: id);
+    for (String id in params.ids) {
+      final productDoc = await _storeHelper.getProduct(
+          GetProductParams(category: params.category, productId: id));
 
       if (productDoc.exists) {
         products.add(productDoc);
       } else {
         await deleteFav(
           AddDeleteFavoriteParams(
-              uId: uId, productId: productDoc.id, category: category),
+              uId: params.uId,
+              productId: productDoc.id,
+              category: params.category),
         );
       }
     }
     return products;
   }
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> _getProduct(
-      {required String category, required String productId}) async {
-    final response = await store
-        .collection(kProducts)
-        .doc(kCategories)
-        .collection(category)
-        .doc(productId)
-        .get();
-
-    print(response.id);
-    print(response.exists);
-
-    return response;
-  }
-
   Future<void> _setFavCategoryToBeAvailableToFetch(
-      Favoriteparams params) async {
-    await store
+      FavoriteParams params) async {
+    await _store
         .collection(kUsers)
         .doc(params.uId)
         .collection(kFavorites)
@@ -144,21 +114,21 @@ class FavoriteStoreImpl implements FavoriteStore {
 }
 
 /// ///////////////////////////////////////////////////////////
-class Favoriteparams extends Equatable {
+class FavoriteParams extends Equatable {
   final String uId;
-  final String productId;
   final String category;
+  final String productId;
 
-  const Favoriteparams({
+  const FavoriteParams({
     required this.uId,
-    required this.productId,
     required this.category,
+    required this.productId,
   });
 
   @override
   List<Object?> get props => [
         uId,
-        productId,
         category,
+        productId,
       ];
 }

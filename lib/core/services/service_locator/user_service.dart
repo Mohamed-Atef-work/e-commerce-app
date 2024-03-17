@@ -1,18 +1,18 @@
-import 'package:e_commerce_app/core/services/service_locator/sl.dart';
-import 'package:e_commerce_app/modules/home/data/data_source/cart_remote_data_source.dart';
-import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
-import 'package:e_commerce_app/modules/home/domain/use_cases/clear_cart_use_case.dart';
-import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/user_layout_controller/user_layout_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
-import 'package:e_commerce_app/modules/home/data/repository/cart_data_repository.dart';
-import 'package:e_commerce_app/modules/home/domain/repository/cart_domain_repository.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_order_view/user_order_view_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_orders/manage_user_orders_cubit.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
+import 'package:e_commerce_app/modules/home/presentation/controllers/user_layout_controller/user_layout_cubit.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/add_item_to_order_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/repository/cart_domain_repository.dart';
+import 'package:e_commerce_app/modules/home/data/data_source/cart_remote_data_source.dart';
+import 'package:e_commerce_app/modules/home/data/repository/cart_data_repository.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/add_order_use_case.dart';
+import 'package:e_commerce_app/modules/home/domain/use_cases/clear_cart_use_case.dart';
+import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 
 void user() {
   /// blocs
@@ -38,5 +38,5 @@ void user() {
 
   /// Data Sources
   sl.registerLazySingleton<CartBaseRemoteDataSource>(
-      () => CartRemoteDataSource(sl()));
+      () => CartRemoteDataSource(sl(), sl()));
 }

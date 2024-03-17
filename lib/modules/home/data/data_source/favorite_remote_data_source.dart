@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/favorite.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/store_helper.dart';
 import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 import 'package:e_commerce_app/modules/home/domain/entities/favorite_entity.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
@@ -15,13 +16,14 @@ abstract class FavoriteBaseRemoteDataSource {
 }
 
 class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
-  final FavoriteStore favoriteStore;
+  final FavoriteStore _favoriteStore;
+  final StoreHelper _storeHelper;
 
-  FavoriteRemoteDataSource(this.favoriteStore);
+  FavoriteRemoteDataSource(this._favoriteStore, this._storeHelper);
 
   @override
   Future<void> addFav(AddDeleteFavoriteParams params) async {
-    await favoriteStore.addFav(params).then((value) {
+    await _favoriteStore.addFav(params).then((value) {
       print("<---------- Added ---------->");
     }).catchError((error) {
       throw ServerException(message: error.code);
@@ -30,7 +32,7 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
 
   @override
   Future<void> deleteFav(AddDeleteFavoriteParams params) {
-    return favoriteStore.deleteFav(params).then((value) {
+    return _favoriteStore.deleteFav(params).then((value) {
       print("<---------- Deleted ---------->");
     }).catchError((error) {
       throw ServerException(message: error);
@@ -52,7 +54,7 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
   }
 
   Future<List<FavoriteCategoryEntity>> _getCategories(String uId) async {
-    final categoriesDocs = await favoriteStore.getCategories(uId);
+    final categoriesDocs = await _favoriteStore.getCategories(uId);
     final categories = List<FavoriteCategoryEntity>.of(
       categoriesDocs.docs.map(
         (cateDoc) => FavoriteCategoryModel.fromJson(
@@ -93,7 +95,7 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
   Future<List<String>> _getIdsOfOneCategory(
       DocumentReference categoryRef) async {
     final productsIdsDocs =
-        await favoriteStore.getProductsIdsOfCategory(categoryRef);
+        await _storeHelper.getProductsIdsOfCategory(categoryRef);
     final productsIds =
         List<String>.of(productsIdsDocs.docs.map((favDoc) => favDoc.id));
 
@@ -105,8 +107,13 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
     required String category,
     required String uId,
   }) async {
-    final productsDocs = await favoriteStore.getProductsOfCategory(
-        ids: ids, category: category, uId: uId);
+    final productsDocs = await _favoriteStore.getProductsOfCategory(
+      GetProductOfCategoryParams(
+        category: category,
+        ids: ids,
+        uId: uId,
+      ),
+    );
     final products = List<ProductEntity>.of(
       productsDocs.map(
           (doc) => ProductModel.formJson(json: doc.data()!, productId: doc.id)),
