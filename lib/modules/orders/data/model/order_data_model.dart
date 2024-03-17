@@ -17,17 +17,17 @@ class OrderDataModel extends OrderDataEntity {
   }) =>
       OrderDataModel(
         name: json[kName],
-        date: json["date"],
-        phone: json["phone"],
-        address: json["address"],
-        totalPrice: json["totalPrice"],
+        date: json[kDate],
+        phone: json[kPhone],
+        address: json[kAddress],
+        totalPrice: json[kTotalPrice],
         reference: orderRef,
       );
   Map<String, dynamic> toJson() => {
         kName: name,
-        "date": date,
-        "phone": phone,
-        "address": address,
-        "totalPrice": totalPrice,
+        kDate: date,
+        kPhone: phone,
+        kAddress: address,
+        kTotalPrice: totalPrice,
       };
 }

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/core/use_case/base_use_case.dart';
+import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/shared/data/models/cached_user_data_model.dart';
 import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
 import 'package:e_commerce_app/modules/auth/domain/repository/auth_domain_repository.dart';
@@ -23,28 +24,38 @@ class UserDataAfterLoginUseCase
     return getEither.fold(
       (getFailure) => Left(getFailure),
       (userEntity) async {
-        final cachedUser = CachedUserDataModel(
-          userEntity: userEntity,
-          password: params.password,
-          adminOrUser: params.adminUser,
-        );
+        final cachedUser = _cachedUser(userEntity, params);
         final saveEither = await _sharedRepo.saveUserDataLocally(cachedUser);
         return saveEither.fold(
           (saveFailure) => Left(saveFailure),
-          (r) => Right(
-            SharedUserDataEntity(
-              user: CachedUserDataModel(
-                userEntity: userEntity,
-                password: params.password,
-                adminOrUser: params.adminUser,
-              ),
-              userCredential: params.userCredential,
-            ),
-          ),
+          (hasSaved) => Right(_shared(userEntity, params)),
         );
       },
     );
   }
+
+  CachedUserDataModel _cachedUser(
+    UserEntity userEntity,
+    AfterLoginParams params,
+  ) =>
+      CachedUserDataModel(
+        userEntity: userEntity,
+        password: params.password,
+        adminOrUser: params.adminUser,
+      );
+
+  SharedUserDataEntity _shared(
+    UserEntity userEntity,
+    AfterLoginParams params,
+  ) =>
+      SharedUserDataEntity(
+        user: CachedUserDataModel(
+          userEntity: userEntity,
+          password: params.password,
+          adminOrUser: params.adminUser,
+        ),
+        userCredential: params.userCredential,
+      );
 }
 
 class AfterLoginParams {

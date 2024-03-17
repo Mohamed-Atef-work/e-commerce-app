@@ -11,6 +11,7 @@ class LoadProductsUseCase
   final AdminRepositoryDomain domain;
 
   LoadProductsUseCase(this.domain);
+
   @override
   Either<Failure, Stream<List<ProductEntity>>> call(LoadProductsParams params) {
     return domain.loadProducts(params);

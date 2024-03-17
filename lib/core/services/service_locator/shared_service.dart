@@ -3,7 +3,7 @@ import 'package:e_commerce_app/modules/shared/data/repository/repository.dart';
 import 'package:e_commerce_app/modules/shared/data/data_source/local_data_source.dart';
 import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/get_initial_use_case.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/load_product_use_case.dart';
+import 'package:e_commerce_app/modules/shared/domain/use_cases/load_product_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/get_user_data_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/store_user_data_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/get_all_product_categories.dart';

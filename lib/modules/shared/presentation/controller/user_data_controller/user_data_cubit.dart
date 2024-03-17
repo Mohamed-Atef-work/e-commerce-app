@@ -46,6 +46,7 @@ class SharedUserDataCubit extends Cubit<SharedUserDataState> {
   }
 
   void userDataAfterLogin(AfterLoginParams params) async {
+    print("savingggggggggggggggggggggggggggggggggggggggg");
     emit(state.copyWith(afterLoginState: RequestState.loading));
 
     final result = await _userDataAfterLoginUseCase(params);
@@ -57,6 +58,10 @@ class SharedUserDataCubit extends Cubit<SharedUserDataState> {
             afterLoginState: RequestState.success, sharedEntity: r),
       ),
     );
+
+    if (result.isRight()) {
+      print("savedddddddddddddddddddddddddddddddddddddd");
+    }
   }
 
   void savePartOfUserDataLocally(

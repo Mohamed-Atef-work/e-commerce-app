@@ -6,7 +6,7 @@ import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_category_entity.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/get_all_product_categories.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/load_product_use_case.dart';
+import 'package:e_commerce_app/modules/shared/domain/use_cases/load_product_use_case.dart';
 import 'package:meta/meta.dart';
 
 part 'home_screen_state.dart';

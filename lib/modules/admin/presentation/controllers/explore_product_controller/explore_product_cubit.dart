@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/load_product_use_case.dart';
+import 'package:e_commerce_app/modules/shared/domain/use_cases/load_product_use_case.dart';
 
 import '../../../../../core/utils/enums.dart';
 import 'explore_product_state.dart';
