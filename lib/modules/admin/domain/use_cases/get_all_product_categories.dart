@@ -5,13 +5,13 @@ import 'package:e_commerce_app/modules/admin/domain/entities/product_category_en
 import 'package:e_commerce_app/modules/admin/domain/repository/admin_domain_repository.dart';
 
 class GetAllProductCategoriesUseCase
-    extends BaseUseCase<Stream<List<ProductCategoryEntity>>, Noparams> {
+    extends BaseStreamUseCase<Stream<List<ProductCategoryEntity>>, NoParams> {
   final AdminRepositoryDomain domainRepo;
 
   GetAllProductCategoriesUseCase(this.domainRepo);
   @override
-  Future<Either<Failure, Stream<List<ProductCategoryEntity>>>> call(
-      Noparams params) async {
+  Either<Failure, Stream<List<ProductCategoryEntity>>> call(
+      NoParams params)  {
     return domainRepo.getAllProductCategories();
   }
 }

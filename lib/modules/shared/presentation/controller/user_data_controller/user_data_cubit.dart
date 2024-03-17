@@ -22,7 +22,7 @@ class SharedUserDataCubit extends Cubit<SharedUserDataState> {
   void getInitialDataLocally() async {
     emit(state.copyWith(getState: RequestState.loading));
 
-    final result = await _getInitialDataUseCase.call(const Noparams());
+    final result = await _getInitialDataUseCase.call(const NoParams());
     emit(
       result.fold(
         (l) => state.copyWith(message: l.message, getState: RequestState.error),

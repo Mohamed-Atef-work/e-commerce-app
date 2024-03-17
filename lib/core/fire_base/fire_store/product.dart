@@ -9,18 +9,15 @@ import 'package:e_commerce_app/modules/admin/domain/use_cases/up_date_product_ca
 import 'package:e_commerce_app/modules/admin/domain/use_cases/add_new_product_category_use_case.dart';
 
 abstract class ProductStore {
-  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> getAllProductCategories();
+  Stream<QuerySnapshot<Map<String, dynamic>>> loadProducts(
+      LoadProductsParams params);
+  Future<void> addProduct(AddProductparams product);
   Future<void> deleteProduct(DeleteProductParams params);
   Future<void> updateProduct(UpdateProductParams params);
-  Future<void> addProduct(AddProductparams product);
-  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> loadProducts(
-      LoadProductsParams params);
-  Future<void> deleteProductCategory(
-      DeleteProductsCategoryParams params);
-  Future<void> upDateProductCategory(
-      UpDateProductsCategoryParams params);
-  Future<void> addNewProductCategory(
-      AddNewProductsCategoryParams params);
+  Stream<QuerySnapshot<Map<String, dynamic>>> getAllProductCategories();
+  Future<void> deleteProductCategory(DeleteProductsCategoryParams params);
+  Future<void> upDateProductCategory(UpDateProductsCategoryParams params);
+  Future<void> addNewProductCategory(AddNewProductsCategoryParams params);
 }
 
 class ProductStoreImpl implements ProductStore {
@@ -57,8 +54,8 @@ class ProductStoreImpl implements ProductStore {
   }
 
   @override
-  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> loadProducts(
-      LoadProductsParams params) async {
+  Stream<QuerySnapshot<Map<String, dynamic>>> loadProducts(
+      LoadProductsParams params) {
     return store
         .collection(kProducts)
         .doc(kCategories)
@@ -67,17 +64,14 @@ class ProductStoreImpl implements ProductStore {
   }
 
   @override
-  Future<Stream<QuerySnapshot<Map<String, dynamic>>>>
-      getAllProductCategories() async {
+  Stream<QuerySnapshot<Map<String, dynamic>>> getAllProductCategories() {
     return store.collection(kProductCategories).snapshots();
   }
 
   @override
   Future<void> addNewProductCategory(
       AddNewProductsCategoryParams params) async {
-    await store
-        .collection(kProductCategories)
-        .add(params.toJson());
+    await store.collection(kProductCategories).add(params.toJson());
   }
 
   @override
@@ -92,10 +86,7 @@ class ProductStoreImpl implements ProductStore {
   @override
   Future<void> deleteProductCategory(
       DeleteProductsCategoryParams params) async {
-    await store
-        .collection(kProductCategories)
-        .doc(params.id)
-        .delete();
+    await store.collection(kProductCategories).doc(params.id).delete();
     await store
         .collection(kProducts)
         .doc(kCategories)

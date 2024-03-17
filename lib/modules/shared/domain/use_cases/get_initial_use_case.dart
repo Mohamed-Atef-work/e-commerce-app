@@ -8,14 +8,14 @@ import 'package:e_commerce_app/modules/shared/domain/entities/cached_user_data_e
 import 'package:e_commerce_app/modules/shared/domain/entities/shared_user_data_entity.dart';
 
 class GetInitialDataUseCase
-    extends BaseUseCase<SharedUserDataEntity, Noparams> {
+    extends BaseUseCase<SharedUserDataEntity, NoParams> {
   final SharedDomainRepo _sharedRepo;
   final AuthRepositoryDomain _authRepo;
 
   GetInitialDataUseCase(this._sharedRepo, this._authRepo);
 
   @override
-  Future<Either<Failure, SharedUserDataEntity>> call(Noparams params) async {
+  Future<Either<Failure, SharedUserDataEntity>> call(NoParams params) async {
     final userEither = await _sharedRepo.getUserDataLocally();
 
     return userEither.fold(

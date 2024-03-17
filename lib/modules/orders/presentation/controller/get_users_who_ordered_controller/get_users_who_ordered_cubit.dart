@@ -20,7 +20,7 @@ class GetUsersWhoOrderedCubit extends Cubit<GetUsersWhoOrderedState> {
   Future<void> getUsersTwo() async {
     await idsSubTwo?.cancel();
     emit(state.copyWith(usersDataState: RequestState.loading));
-    final result = await _getUsersWhoOrderedUseCase(const Noparams());
+    final result = await _getUsersWhoOrderedUseCase(const NoParams());
 
     result.fold(
         (l) => emit(

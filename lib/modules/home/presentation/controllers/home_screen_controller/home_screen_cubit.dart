@@ -27,7 +27,7 @@ class ProductsViewCubit extends Cubit<ProductsViewState> {
     await categorySub?.cancel();
     emit(state.copyWith(categoriesState: RequestState.loading));
     print("Categories -----------> ${state.categoriesState}");
-    final result = await getAllProductCategoriesUseCase(const Noparams());
+    final result = await getAllProductCategoriesUseCase(const NoParams());
     result.fold(
         (l) => emit(
               state.copyWith(
@@ -49,8 +49,7 @@ class ProductsViewCubit extends Cubit<ProductsViewState> {
     print("products -----------> ${state.productsState}");
 
     final result = await loadProductsUseCase(
-      LoadProductsParams(
-          category: state.categories[state.categoryIndex].name),
+      LoadProductsParams(category: state.categories[state.categoryIndex].name),
     );
     result.fold(
         (l) => emit(
@@ -77,7 +76,7 @@ class ProductsViewCubit extends Cubit<ProductsViewState> {
 
   Future<List<ProductCategoryEntity>> _loadFirstCat() async {
     await categorySub?.cancel();
-    final result = await getAllProductCategoriesUseCase(const Noparams());
+    final result = await getAllProductCategoriesUseCase(const NoParams());
     late Future<List<ProductCategoryEntity>> firstList;
     result.fold((l) => null, (stream) {
       firstList = stream.first;

@@ -4,15 +4,13 @@ import 'package:e_commerce_app/core/use_case/base_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/orders/domain/repository/order_domain_repository.dart';
 
-
 class GetUsersWhoOrderedUseCase
-    extends BaseUseCase<Stream<List<UserEntity>>, Noparams> {
+    implements BaseStreamUseCase<Stream<List<UserEntity>>, NoParams> {
   final OrderDomainRepo orderRepo;
 
   GetUsersWhoOrderedUseCase(this.orderRepo);
   @override
-  Future<Either<Failure, Stream<List<UserEntity>>>> call(
-      Noparams params) async {
-    return await orderRepo.streamUsersWhoOrdered();
+  Either<Failure, Stream<List<UserEntity>>> call(NoParams params) {
+    return orderRepo.streamUsersWhoOrdered();
   }
 }

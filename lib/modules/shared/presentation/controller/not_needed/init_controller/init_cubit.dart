@@ -12,7 +12,7 @@ import 'package:meta/meta.dart';
 
   void init() async {
     emit(state.copyWith(dataState: RequestState.loading));
-    final result = await _getInitialDataUseCase(const Noparams());
+    final result = await _getInitialDataUseCase(const NoParams());
     emit(
       result.fold(
         (l) =>

@@ -44,7 +44,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
 
   Future<void> getCategories() async {
     emit(state.copyWith(getCategoriesState: RequestState.loading));
-    final result = await getAllProductCategoriesUseCase(const Noparams());
+    final result = await getAllProductCategoriesUseCase(const NoParams());
     result.fold(
         (l) => emit(
               state.copyWith(

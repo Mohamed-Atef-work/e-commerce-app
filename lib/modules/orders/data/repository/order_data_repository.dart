@@ -95,10 +95,10 @@ class OrderDataRepo implements OrderDomainRepo {
   }
 
   @override
-  Future<Either<Failure, Stream<List<OrderDataEntity>>>> streamOfUserOrders(
-      String userId) async {
+  Either<Failure, Stream<List<OrderDataEntity>>> streamOfUserOrders(
+      String userId) {
     try {
-      final result = await dataSource.streamOfUserOrders(userId);
+      final result = dataSource.streamOfUserOrders(userId);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));
@@ -117,10 +117,9 @@ class OrderDataRepo implements OrderDomainRepo {
   }
 
   @override
-  Future<Either<Failure, Stream<List<UserEntity>>>>
-      streamUsersWhoOrdered() async {
+  Either<Failure, Stream<List<UserEntity>>> streamUsersWhoOrdered() {
     try {
-      final result = await dataSource.streamUsersWhoOrdered();
+      final result = dataSource.streamUsersWhoOrdered();
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));

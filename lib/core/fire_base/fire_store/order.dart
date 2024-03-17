@@ -22,9 +22,9 @@ abstract class OrderStore {
   ///
   Future<QuerySnapshot<Map<String, dynamic>>> getOrderItems(
       DocumentReference orderRef);
-  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> streamOfUserOrders(
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamOfUserOrders(
       String userId);
-  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> streamUsersWhoOrdered();
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamUsersWhoOrdered();
 }
 
 class OrderStoreImpl implements OrderStore {
@@ -34,8 +34,8 @@ class OrderStoreImpl implements OrderStore {
   /// take from this method the references of users ids;
   /// may a (new user) Order (while the admin is exploring) the Orders;
   @override
-  Future<Stream<QuerySnapshot<Map<String, dynamic>>>>
-      streamUsersWhoOrdered() async {
+  Stream<QuerySnapshot<Map<String, dynamic>>>
+      streamUsersWhoOrdered()  {
     final response = store.collection(kOrders).snapshots();
     return response;
   }
@@ -53,8 +53,8 @@ class OrderStoreImpl implements OrderStore {
 
   /// may a (user) Order a new Order (while the admin is exploring) the Orders;
   @override
-  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> streamOfUserOrders(
-      String userId) async {
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamOfUserOrders(
+      String userId)  {
     return store
         .collection(kOrders)
         .doc(userId)

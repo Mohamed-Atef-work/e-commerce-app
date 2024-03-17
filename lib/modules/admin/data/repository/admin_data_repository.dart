@@ -23,8 +23,7 @@ class AdminRepositoryData implements AdminRepositoryDomain {
     this.dataSource,
   );
   @override
-  Future<Either<Failure, void>> addProduct(
-      AddProductparams params) async {
+  Future<Either<Failure, void>> addProduct(AddProductparams params) async {
     try {
       final result = await dataSource.addProduct(params);
       return Right(result);
@@ -57,10 +56,10 @@ class AdminRepositoryData implements AdminRepositoryDomain {
   }
 
   @override
-  Future<Either<Failure, Stream<List<ProductEntity>>>> loadProducts(
-      LoadProductsParams params) async {
+  Either<Failure, Stream<List<ProductEntity>>> loadProducts(
+      LoadProductsParams params) {
     try {
-      final result = await dataSource.loadProducts(params);
+      final result = dataSource.loadProducts(params);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));
@@ -79,8 +78,7 @@ class AdminRepositoryData implements AdminRepositoryDomain {
   }
 
   @override
-  Future<Either<Failure, void>> editProduct(
-      UpdateProductParams params) async {
+  Future<Either<Failure, void>> editProduct(UpdateProductParams params) async {
     try {
       final result = await dataSource.updateProduct(params);
       return Right(result);
@@ -101,10 +99,10 @@ class AdminRepositoryData implements AdminRepositoryDomain {
   }
 
   @override
-  Future<Either<Failure, Stream<List<ProductCategoryEntity>>>>
-      getAllProductCategories() async {
+  Either<Failure, Stream<List<ProductCategoryEntity>>>
+      getAllProductCategories() {
     try {
-      final result = await dataSource.getAllProductCategories();
+      final result = dataSource.getAllProductCategories();
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));

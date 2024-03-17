@@ -17,20 +17,16 @@ import '../../domain/use_cases/load_product_use_case.dart';
 import '../../domain/use_cases/up_date_product_category_use_case.dart';
 
 abstract class AdminBaseRemoteDataSource {
-  Future<Stream<List<ProductCategoryEntity>>> getAllProductCategories();
-  Future<String> downLoadProductImageUrl(Reference imageReference);
+  Future<void> addProduct(AddProductparams params);
+  Future<Reference> uploadProductImage(File image);
   Future<void> deleteProduct(DeleteProductParams params);
   Future<void> updateProduct(UpdateProductParams params);
-  Future<void> addProduct(AddProductparams params);
-  Future<Stream<List<ProductEntity>>> loadProducts(
-      LoadProductsParams params);
-  Future<Reference> uploadProductImage(File image);
-  Future<void> addNewProductCategory(
-      AddNewProductsCategoryParams params);
-  Future<void> deleteProductCategory(
-      DeleteProductsCategoryParams params);
-  Future<void> upDateProductCategory(
-      UpDateProductsCategoryParams params);
+  Stream<List<ProductCategoryEntity>> getAllProductCategories();
+  Future<String> downLoadProductImageUrl(Reference imageReference);
+  Stream<List<ProductEntity>> loadProducts(LoadProductsParams params);
+  Future<void> addNewProductCategory(AddNewProductsCategoryParams params);
+  Future<void> deleteProductCategory(DeleteProductsCategoryParams params);
+  Future<void> upDateProductCategory(UpDateProductsCategoryParams params);
 }
 
 class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
@@ -69,20 +65,21 @@ class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
   }
 
   @override
-  Future<Stream<List<ProductEntity>>> loadProducts(
-      LoadProductsParams params) async {
-    return await store.loadProducts(params).then((stream) {
-      return stream.map((snapshot) {
+  Stream<List<ProductEntity>> loadProducts(LoadProductsParams params) {
+    final streamOfSnaps = store.loadProducts(params);
+    final streamOfModels = streamOfSnaps.map(
+      (snapshot) {
         return snapshot.docs
-            .map((doc) => ProductModel.formJson(
-                  json: doc.data(),
-                  productId: doc.id,
-                ))
+            .map(
+              (doc) => ProductModel.formJson(
+                json: doc.data(),
+                productId: doc.id,
+              ),
+            )
             .toList();
-      });
-    }).catchError((error) {
-      throw ServerException(message: error.toString());
-    });
+      },
+    );
+    return streamOfModels;
   }
 
   @override
@@ -111,18 +108,15 @@ class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
   }
 
   @override
-  Future<Stream<List<ProductCategoryEntity>>> getAllProductCategories() async {
-    return await store.getAllProductCategories().then((stream) {
-      return stream.map((snapShot) {
-        return snapShot.docs
-            .map((category) => ProductCategoryModel.fromJson(
-                  category.data(),
-                  id: category.id,
-                ))
-            .toList();
-      });
-    }).catchError((error) {
-      throw ServerException(message: error.code);
+  Stream<List<ProductCategoryEntity>> getAllProductCategories() {
+    final stream = store.getAllProductCategories();
+    return stream.map((snapShot) {
+      return snapShot.docs
+          .map((category) => ProductCategoryModel.fromJson(
+                category.data(),
+                id: category.id,
+              ))
+          .toList();
     });
   }
 

@@ -15,16 +15,16 @@ import 'package:e_commerce_app/modules/orders/domain/use_case/up_date_order_data
 abstract class OrderDomainRepo {
   Future<Either<Failure, void>> deleteItemFromOrder(
       DeleteItemFromOrderParams params);
+  Future<Either<Failure, void>> addOrder(AddOrderParams params);
   Future<Either<Failure, void>> deleteOrder(DeleteOrderParams params);
   Future<Either<Failure, void>> addItemToOrder(AddItemToOrderParams params);
   Future<Either<Failure, void>> updateOrderData(UpDateOrderDataParams params);
-  Future<Either<Failure, void>> addOrder(AddOrderParams params);
+  Future<Either<Failure, List<OrderDataEntity>>> getUserOrders(String userId);
   Future<Either<Failure, OrderDataEntity>> getOrderData(
       GetOrderDataParams params);
   Future<Either<Failure, List<OrderItemEntity>>> getOrderItems(
       GetOrderItemsParams params);
-  Future<Either<Failure, Stream<List<UserEntity>>>> streamUsersWhoOrdered();
-  Future<Either<Failure, Stream<List<OrderDataEntity>>>> streamOfUserOrders(
+  Either<Failure, Stream<List<UserEntity>>> streamUsersWhoOrdered();
+  Either<Failure, Stream<List<OrderDataEntity>>> streamOfUserOrders(
       String userId);
-  Future<Either<Failure, List<OrderDataEntity>>> getUserOrders(String userId);
 }

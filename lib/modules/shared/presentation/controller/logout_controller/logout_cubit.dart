@@ -10,7 +10,7 @@ class LogoutCubit extends Cubit<LogoutState> {
   LogoutCubit(this._logoutUseCase) : super(LogoutState());
   void logout() async {
     emit(state.copyWith(logoutState: RequestState.loading));
-    final result = await _logoutUseCase.call(const Noparams());
+    final result = await _logoutUseCase.call(const NoParams());
     emit(
       result.fold(
         (l) =>

@@ -6,7 +6,11 @@ abstract class BaseUseCase<T, Params> {
   Future<Either<Failure, T>> call(Params params);
 }
 
+abstract class BaseStreamUseCase<T, Params> {
+  Either<Failure, T> call(Params params);
+}
+
 /// extends the Equatable..........
-class Noparams {
-  const Noparams();
+class NoParams {
+  const NoParams();
 }

@@ -5,14 +5,13 @@ import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.da
 import 'package:e_commerce_app/modules/orders/domain/repository/order_domain_repository.dart';
 
 class GetUserOrdersUseCase
-    extends BaseUseCase<Stream<List<OrderDataEntity>>, String> {
+    extends BaseStreamUseCase<Stream<List<OrderDataEntity>>, String> {
   final OrderDomainRepo repo;
 
   GetUserOrdersUseCase(this.repo);
   @override
-  Future<Either<Failure, Stream<List<OrderDataEntity>>>> call(
-      String params) async {
-    final result = await repo.streamOfUserOrders(params);
+  Either<Failure, Stream<List<OrderDataEntity>>> call(String params) {
+    final result = repo.streamOfUserOrders(params);
     return result;
   }
 }

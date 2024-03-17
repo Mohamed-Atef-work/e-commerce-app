@@ -1,4 +1,3 @@
-
 import 'core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'core/utils/screens_strings.dart';

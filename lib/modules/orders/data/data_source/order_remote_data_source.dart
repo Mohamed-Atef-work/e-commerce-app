@@ -17,13 +17,13 @@ import 'package:e_commerce_app/modules/orders/domain/use_case/delete_item_from_o
 
 abstract class OrderBaseRemoteDataSource {
   Future<List<OrderItemEntity>> getOrderItems(GetOrderItemsParams params);
-  Future<Stream<List<OrderDataEntity>>> streamOfUserOrders(String userId);
+  Stream<List<OrderDataEntity>> streamOfUserOrders(String userId);
   Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params);
   Future<OrderDataEntity> getOrderData(GetOrderDataParams params);
   Future<List<OrderDataEntity>> getUserOrders(String userId);
   Future<void> updateOrderData(UpDateOrderDataParams params);
   Future<void> addItemToOrder(AddItemToOrderParams params);
-  Future<Stream<List<UserEntity>>> streamUsersWhoOrdered();
+  Stream<List<UserEntity>> streamUsersWhoOrdered();
   Future<void> deleteOrder(DeleteOrderParams params);
   Future<void> addOrder(AddOrderParams params);
 }
@@ -118,12 +118,11 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
   }
 
   @override
-  Future<Stream<List<OrderDataEntity>>> streamOfUserOrders(
-      String userId) async {
-    final docsStream =
-        await _orderStore.streamOfUserOrders(userId).catchError((error) {
+  Stream<List<OrderDataEntity>> streamOfUserOrders(String userId) {
+    final docsStream = _orderStore.streamOfUserOrders(userId);
+    /*.catchError((error) {
       throw ServerException(message: error.toString());
-    });
+    });*/
 
     final ordersStream = docsStream.map((event) {
       return List<OrderDataEntity>.of(
@@ -135,18 +134,17 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
   }
 
   @override
-  Future<Stream<List<UserEntity>>> streamUsersWhoOrdered() async {
-    final usersIdsStream = await _streamUsersIds();
-    final usersStream = _usersStream(usersIdsStream);
-
+  Stream<List<UserEntity>> streamUsersWhoOrdered() {
+    final idsStream = _streamUsersIds();
+    final usersStream = _usersStream(idsStream);
     return usersStream;
   }
 
-  Future<Stream<List<String>>> _streamUsersIds() async {
-    final idsDocsStream =
-        await _orderStore.streamUsersWhoOrdered().catchError((error) {
+  Stream<List<String>> _streamUsersIds() {
+    final idsDocsStream = _orderStore.streamUsersWhoOrdered();
+    /*.catchError((error) {
       throw ServerException(message: error.toString());
-    });
+    });*/
 
     final idsStream = idsDocsStream.map((event) {
       return List<String>.of(event.docs.map((e) => e.id));
