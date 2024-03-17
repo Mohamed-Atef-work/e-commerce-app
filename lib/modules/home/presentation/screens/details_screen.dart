@@ -128,9 +128,9 @@ class DetailsScreen extends StatelessWidget {
 
   void _listener(ProductDetailsState state) {
     if (state.addToCart == RequestState.success) {
-      showToast(AppStrings.added, ToastState.success);
+      showToast(AppStrings.added, Colors.green);
     } else if (state.addToCart == RequestState.error) {
-      showToast(AppStrings.ops, ToastState.error);
+      showToast(AppStrings.ops, Colors.red);
     }
   }
 

@@ -50,11 +50,11 @@ class ViewUserOrderItemsBody extends StatelessWidget {
 
   void _listener(OrderItemsState state) {
     if (state.deleteOrderItem == RequestState.error) {
-      showToast(state.message, ToastState.error);
+      showToast(state.message, Colors.red);
     } else if (state.getOrderItems == RequestState.error) {
-      showToast(state.message, ToastState.error);
+      showToast(state.message, Colors.red);
     } else if (state.deleteOrderItem == RequestState.success) {
-      showToast(AppStrings.deleted, ToastState.success);
+      showToast(AppStrings.deleted, Colors.green);
     }
   }
 }

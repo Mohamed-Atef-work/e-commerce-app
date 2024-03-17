@@ -20,5 +20,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   serviceLocatorInit();
   //await sl.allReady();
+
   runApp(const BuyItApp());
 }

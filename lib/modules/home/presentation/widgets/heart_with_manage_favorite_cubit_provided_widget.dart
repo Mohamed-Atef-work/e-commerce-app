@@ -35,9 +35,9 @@ class HeartWihMangeFavoriteCubitProviderWidget extends StatelessWidget {
                 state.heartColor == Colors.red
                     ? AppStrings.added
                     : AppStrings.deleted,
-                ToastState.success);
+                Colors.green);
           } else if (state.requestState == RequestState.error) {
-            showToast(AppStrings.ops, ToastState.error);
+            showToast(AppStrings.ops, Colors.red);
           }
         },
         builder: (context, state) {

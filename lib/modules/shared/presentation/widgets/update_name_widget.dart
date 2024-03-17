@@ -49,42 +49,43 @@ class UpDateNameWidget extends StatelessWidget {
                 return const CenteredMessageComponent(AppStrings.updated);
               } else {
                 return Form(
-                    key: updateProfileController.formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        CustomTextFormField(
-                          prefixIcon: Icons.person,
-                          hintText: AppStrings.name,
-                          textEditingController:
-                              updateProfileController.changedOne,
-                          validator: (value) => Validators.stringValidator(
-                              value, AppStrings.name),
-                        ),
-                        CustomButton(
-                          height: 50,
-                          fontSize: 18,
-                          fontFamily: kPacifico,
-                          text: AppStrings.update,
-                          width: context.width * 0.7,
-                          onPressed: () {
-                            final userEntity = UserEntity(
-                              id: userData.userEntity.id,
-                              email: userData.userEntity.email,
-                              phone: userData.userEntity.phone,
-                              address: userData.userEntity.address,
-                              name: updateProfileController.changedOne.text,
-                            );
-                            final cachedUser = CachedUserDataEntity(
-                              userEntity: userEntity,
-                              password: userData.password,
-                              adminOrUser: userData.adminOrUser,
-                            );
-                            updateProfileController.updateName(cachedUser);
-                          },
-                        ),
-                      ],
-                    ));
+                  key: updateProfileController.formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CustomTextFormField(
+                        prefixIcon: Icons.person,
+                        hintText: AppStrings.name,
+                        textEditingController:
+                            updateProfileController.changedOne,
+                        validator: (value) =>
+                            Validators.stringValidator(value, AppStrings.name),
+                      ),
+                      CustomButton(
+                        height: 50,
+                        fontSize: 18,
+                        fontFamily: kPacifico,
+                        text: AppStrings.update,
+                        width: context.width * 0.7,
+                        onPressed: () {
+                          final userEntity = UserEntity(
+                            id: userData.userEntity.id,
+                            email: userData.userEntity.email,
+                            phone: userData.userEntity.phone,
+                            address: userData.userEntity.address,
+                            name: updateProfileController.changedOne.text,
+                          );
+                          final cachedUser = CachedUserDataEntity(
+                            userEntity: userEntity,
+                            password: userData.password,
+                            adminOrUser: userData.adminOrUser,
+                          );
+                          updateProfileController.updateName(cachedUser);
+                        },
+                      ),
+                    ],
+                  ),
+                );
               }
             },
           );

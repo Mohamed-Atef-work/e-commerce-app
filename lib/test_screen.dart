@@ -1,30 +1,13 @@
-import 'package:e_commerce_app/modules/shared/presentation/widgets/edit_profile_item_widget.dart';
-import 'package:e_commerce_app/modules/shared/presentation/widgets/loading_cart_widget.dart';
-import 'package:e_commerce_app/modules/shared/presentation/widgets/loading_favorite_widget.dart';
-import 'package:e_commerce_app/modules/shared/presentation/widgets/loading_home_data_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/core/components/custom_text.dart';
-import 'package:e_commerce_app/core/fire_base/fire_store/order.dart';
-import 'package:e_commerce_app/core/fire_base/fire_store/product.dart';
-import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
-import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/add_product_use_case.dart';
-import 'package:e_commerce_app/modules/orders/presentation/widgets/counting_widget.dart';
 
 class TestScreen extends StatelessWidget {
   const TestScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      //backgroundColor: Colors.grey,
-      body: LoadingFavoriteWidget()
-    );
+    return Scaffold();
   }
 }
-
-
 
 /*TextButton(
 onPressed: () async {

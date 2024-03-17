@@ -1,3 +1,4 @@
+
 import 'core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'core/utils/screens_strings.dart';
@@ -37,7 +38,7 @@ class BuyItApp extends StatelessWidget {
       child: MaterialApp(
         routes: _routes(),
         title: AppStrings.buyIt,
-        initialRoute: Screens.testScreen,
+        initialRoute: Screens.loginScreen,
         theme: ThemeData(scaffoldBackgroundColor: kPrimaryColorYellow),
       ),
     );
@@ -64,11 +65,13 @@ class BuyItApp extends StatelessWidget {
         BlocProvider<AdminDetailsCubit>(
           create: (context) => sl<AdminDetailsCubit>(),
         ),
+        /*BlocProvider<SegaCubit>(
+          create: (context) => SegaCubit(),
+        ),*/
       ];
 
   _routes() => {
         Screens.testScreen: (context) => const TestScreen(),
-        //Screens.cartScreen: (context) => const CartScreen(),
         Screens.loginScreen: (context) => const LoginScreen(),
         Screens.splashScreen: (context) => const SplashScreen(),
         Screens.signUpScreen: (context) => const SignUpScreen(),

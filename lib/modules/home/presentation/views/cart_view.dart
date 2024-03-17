@@ -81,7 +81,7 @@ class CartView extends StatelessWidget {
 
                     /// to do error snack bar;
                     showToast(
-                        AppStrings.pleaseAddPhoneAddress, ToastState.error);
+                        AppStrings.pleaseAddPhoneAddress, Colors.red);
                   }
                 },
               ),
@@ -104,10 +104,10 @@ class CartView extends StatelessWidget {
     if (state.getCart == RequestState.error ||
         state.addOrder == RequestState.error ||
         state.deleteFromCart == RequestState.error) {
-      showToast(state.message!, ToastState.error);
+      showToast(state.message!, Colors.red);
     } else if (state.addOrder == RequestState.success ||
         state.deleteFromCart == RequestState.success) {
-      showToast(state.message!, ToastState.success);
+      showToast(state.message!, Colors.green);
     }
   }
 }

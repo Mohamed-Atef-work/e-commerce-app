@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
               Navigator.of(context).pushReplacementNamed(Screens.loginScreen);
             } else {
               /// show snake bar .....
-              showToast(AppStrings.tryAgain, ToastState.error);
+              showToast(AppStrings.tryAgain, Colors.red);
             }
           }
         },

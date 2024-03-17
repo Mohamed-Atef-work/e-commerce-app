@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/components/base_model_sheet_component.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
@@ -13,50 +14,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 
 class UpDateOrderDataWidget extends StatelessWidget {
-  const UpDateOrderDataWidget({
-    super.key,
-  });
+  const UpDateOrderDataWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: context.height * 0.6,
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: kWhite,
-          style: BorderStyle.solid,
-        ),
-        color: kPrimaryColorYellow,
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(25),
-          topLeft: Radius.circular(25),
-        ),
-      ),
+    return BaseModelSheetComponent(
+      height: context.height * 0.5,
       child: BlocBuilder<UpdateOrderDataCubit, UpdateOrderDataState>(
         builder: (context, state) {
           if (state.updateState == RequestState.loading) {
             return const LoadingWidget();
           } else if (state.updateState == RequestState.success) {
-            return Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const CustomText(
-                    fontSize: 25,
-                    text: AppStrings.updated,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: kPacifico,
-                  ),
-                  SizedBox(height: context.height * 0.03),
-                  CustomButton(
-                    onPressed: () {},
-                    text: AppStrings.ok,
-                    fontFamily: kPacifico,
-                    width: context.height * 0.1,
-                    height: context.height * 0.05,
-                  ),
-                ],
+            return const Center(
+              child: CustomText(
+                fontSize: 25,
+                fontFamily: kPacifico,
+                text: AppStrings.updated,
+                fontWeight: FontWeight.bold,
               ),
             );
           } else {
