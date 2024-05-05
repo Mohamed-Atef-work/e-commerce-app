@@ -30,9 +30,7 @@ class DetailsScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: BlocConsumer<ProductDetailsCubit, ProductDetailsState>(
-          listener: (_, state) {
-            _listener(state);
-          },
+          listener: _listener,
           builder: (context, state) {
             if (state.addToCart == RequestState.loading) {
               return const LoadingWidget();
@@ -129,81 +127,22 @@ class DetailsScreen extends StatelessWidget {
     );
   }
 
-  void _listener(ProductDetailsState state) {
+  void _listener(BuildContext context, ProductDetailsState state) {
     if (state.addToCart == RequestState.success) {
       showToast(AppStrings.added, Colors.green);
     } else if (state.addToCart == RequestState.error) {
-      showToast(AppStrings.ops, Colors.red);
+      showToast(state.message!, Colors.red);
     }
   }
-
-  _appBar(BuildContext context) => appBar(
-        title: AppStrings.details,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-            BlocProvider.of<ProductDetailsCubit>(context).reset();
-          },
-          icon: const Icon(Icons.arrow_back),
-        ),
-      );
 }
-/*
-class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    final ProductEntity product =
-    ModalRoute.of(context)!.settings.arguments as ProductEntity;
-    return Scaffold(
-      backgroundColor: kPrimaryColorYellow,
-      appBar: appBar(title: AppStrings.details),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(child: ProductDetailsWidget(product: product)),
-          OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              backgroundColor: Colors.black,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
-              ),
-              fixedSize: Size(context.width, context.height * 0.08),
-            ),
-            onPressed: () {
-              /// To Do o o o o o o o
-              BlocProvider.of<ManageCartProductsCubit>(context).addToCart(
-                AddToCartParams(
-                  category: state.product!.category,
-                  productId: state.product!.id!,
-                  uId: 'uId',
-                ),
-              );
-              */
-/*final cartStore = CartStoreImpl(FirebaseFirestore.instance);
-            cartStore.addToCart(
-              AddToCartParams(
-                category: state.product!.category,
-                productId: state.product!.id!,
-                uId: 'uId',
-              ),
-            );*/ /*
-
-            },
-            child: const CustomText(
-              fontSize: 20,
-              textColor: Colors.white,
-              text: AppStrings.addToCart,
-              fontWeight: FontWeight.bold,
-              fontFamily: kPacifico,
-            ),
-          ),
-        ],
+_appBar(BuildContext context) => appBar(
+      title: AppStrings.details,
+      leading: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+          BlocProvider.of<ProductDetailsCubit>(context).reset();
+        },
+        icon: const Icon(Icons.arrow_back),
       ),
     );
-  }
-}*/

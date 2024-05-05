@@ -31,8 +31,8 @@ class ManageFavoriteCubit extends Cubit<ManageFavoriteState> {
     emit(
       result.fold(
         (l) => state.copyWith(
-          requestState: RequestState.error,
           message: l.message,
+          requestState: RequestState.error,
         ),
         (r) => state.copyWith(
           heartColor: Colors.red,
@@ -48,9 +48,9 @@ class ManageFavoriteCubit extends Cubit<ManageFavoriteState> {
     emit(
       result.fold(
         (l) => state.copyWith(
-          requestState: RequestState.error,
-          heartColor: Colors.red,
           message: l.message,
+          heartColor: Colors.red,
+          requestState: RequestState.error,
         ),
         (r) => state.copyWith(
           heartColor: Colors.white,

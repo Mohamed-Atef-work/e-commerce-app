@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 
 class ProductDetailsImageWidget extends StatelessWidget {
   final ProductEntity product;
-  const ProductDetailsImageWidget({Key? key, required this.product})
-      : super(key: key);
+  const ProductDetailsImageWidget(this.product, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +37,7 @@ class ProductDetailsImageWidget extends StatelessWidget {
 
 class ProductOfCategoryImageWidget extends StatelessWidget {
   final ProductEntity product;
-  const ProductOfCategoryImageWidget({Key? key, required this.product})
-      : super(key: key);
+  const ProductOfCategoryImageWidget(this.product, {super.key});
 
   @override
   Widget build(BuildContext context) {

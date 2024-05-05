@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/constants/strings.dart';
 
 abstract class StoreHelper {
-  Future<bool> isProductExists(GetProductParams params);
+  Future<bool> doesProductExists(GetProductParams params);
   Future<DocumentSnapshot<Map<String, dynamic>>> getProduct(
       GetProductParams params);
   Future<QuerySnapshot<Map<String, dynamic>>> getProductsIdsOfCategory(
@@ -14,13 +14,17 @@ class StoreHelperImpl implements StoreHelper {
 
   StoreHelperImpl(this.store);
   @override
-  Future<bool> isProductExists(GetProductParams params) async {
+  Future<bool> doesProductExists(GetProductParams params) async {
+    print(params.productId);
+    print(params.category);
     final response = await store
         .collection(kProducts)
         .doc(kCategories)
         .collection(params.category)
         .doc(params.productId)
         .get();
+    print(response.data().toString());
+
     if (response.exists) {
       return true;
     }

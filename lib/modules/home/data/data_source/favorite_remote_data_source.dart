@@ -23,11 +23,14 @@ class FavoriteRemoteDataSource implements FavoriteBaseRemoteDataSource {
 
   @override
   Future<void> addFav(AddDeleteFavoriteParams params) async {
-    _favoriteStore.addFav(params).then((value) {
+    try {
+      await _favoriteStore.addFav(params);
       print("<---------- Added ---------->");
-    }).catchError((error) {
-      throw ServerException(message: error.code);
-    });
+    } on ServerException catch (_) {
+      rethrow;
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
   }
 
   @override

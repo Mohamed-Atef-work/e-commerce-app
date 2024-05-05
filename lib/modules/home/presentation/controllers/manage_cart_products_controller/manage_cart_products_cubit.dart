@@ -26,18 +26,18 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
 
       /// Handling UID  :) ..........
       final result = await _cartRepo.getCartProducts(uId);
-
-      result.fold(
-        (l) => emit(
-            state.copyWith(message: l.message, getCart: RequestState.error)),
-        (r) => emit(
-          state.copyWith(
+      emit(
+        result.fold(
+          (l) =>
+              state.copyWith(message: l.message, getCart: RequestState.error),
+          (r) => state.copyWith(
             products: r,
             needToReGet: false,
             getCart: RequestState.success,
           ),
         ),
       );
+
       Future.delayed(const Duration(milliseconds: 30), () {
         emit(state.copyWith(getCart: RequestState.initial));
       });
@@ -47,14 +47,16 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
   void deleteFromCart(DeleteFromCartParams params) async {
     emit(state.copyWith(deleteFromCart: RequestState.loading));
     final result = await _cartRepo.deleteFromCart(params);
-    emit(result.fold(
-      (l) => state.copyWith(
-          deleteFromCart: RequestState.error, message: l.message),
-      (r) => state.copyWith(
-          deleteFromCart: RequestState.success,
-          message: AppStrings.deleted,
-          needToReGet: true),
-    ));
+    emit(
+      result.fold(
+        (l) => state.copyWith(
+            deleteFromCart: RequestState.error, message: l.message),
+        (r) => state.copyWith(
+            deleteFromCart: RequestState.success,
+            message: AppStrings.deleted,
+            needToReGet: true),
+      ),
+    );
 
     Future.delayed(const Duration(milliseconds: 30), () {
       emit(state.copyWith(deleteFromCart: RequestState.initial));
@@ -82,11 +84,10 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
       ),
     );
 
-    result.fold(
-      (l) => emit(
-          state.copyWith(addOrder: RequestState.error, message: l.message)),
-      (r) => emit(
-        state.copyWith(
+    emit(
+      result.fold(
+        (l) => state.copyWith(addOrder: RequestState.error, message: l.message),
+        (r) => state.copyWith(
           addOrder: RequestState.success,
           message: AppStrings.added,
           products: const [],
@@ -94,6 +95,7 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
         ),
       ),
     );
+
     Future.delayed(const Duration(milliseconds: 30), () {
       emit(state.copyWith(addOrder: RequestState.initial));
     });

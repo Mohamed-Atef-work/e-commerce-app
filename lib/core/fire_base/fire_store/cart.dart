@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/constants/strings.dart';
+import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/store_helper.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/modules/home/data/data_source/cart_remote_data_source.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
 import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
@@ -31,13 +33,14 @@ class CartStoreImpl implements CartStore {
   CartStoreImpl(this._store, this._storeHelper);
   @override
   Future<void> addToCart(AddToCartParams params) async {
-    final response = await _store
-        .collection(kProducts)
-        .doc(kCategories)
-        .collection(params.category)
-        .doc(params.productId)
-        .get();
-    if (response.exists) {
+    final exists = await _storeHelper.doesProductExists(
+      GetProductParams(
+        category: params.category,
+        productId: params.productId,
+      ),
+    );
+
+    if (exists) {
       await _store
           .collection(kUsers)
           .doc(params.uId)
@@ -48,7 +51,10 @@ class CartStoreImpl implements CartStore {
           .set({
         kQuantity: params.quantity,
       });
+
       await _setCartCategoryToBeAvailableToFetch(params);
+    } else {
+      throw const ServerException(message: AppStrings.outOfStock);
     }
   }
 

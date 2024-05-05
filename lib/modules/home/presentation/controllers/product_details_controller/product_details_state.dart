@@ -1,6 +1,5 @@
 part of 'product_details_cubit.dart';
 
-@immutable
 class ProductDetailsState extends Equatable {
   final ProductEntity? product;
   final RequestState addToCart;
@@ -14,23 +13,23 @@ class ProductDetailsState extends Equatable {
     this.addToCart = RequestState.initial,
   });
   ProductDetailsState copyWith({
-    RequestState? addToCart,
-    ProductEntity? product,
-    String? message,
     int? quantity,
+    String? message,
+    ProductEntity? product,
+    RequestState? addToCart,
   }) =>
       ProductDetailsState(
         product: product ?? this.product,
-        addToCart: addToCart ?? this.addToCart,
-        quantity: quantity ?? this.quantity,
         message: message ?? this.message,
+        quantity: quantity ?? this.quantity,
+        addToCart: addToCart ?? this.addToCart,
       );
 
   @override
   List<Object?> get props => [
         product,
-        addToCart,
-        quantity,
         message,
+        quantity,
+        addToCart,
       ];
 }

@@ -32,11 +32,14 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
 
   @override
   Future<void> addToCart(AddToCartParams params) async {
-    await _cartStore.addToCart(params).then((value) {
+    try {
+      await _cartStore.addToCart(params);
       print("<---------- Added ---------->");
-    }).catchError((error) {
-      throw ServerException(message: error.code);
-    });
+    } on ServerException catch (_) {
+      rethrow;
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
   }
 
   @override
@@ -50,7 +53,7 @@ class CartRemoteDataSource implements CartBaseRemoteDataSource {
 
   @override
   Future<void> clearCart(ClearCartParams params) async {
-    await _cartStore.clearCart(params.params).catchError((error) {
+    _cartStore.clearCart(params.params).catchError((error) {
       print(error.toString());
       throw ServerException(message: error);
     });

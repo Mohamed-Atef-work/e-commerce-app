@@ -29,17 +29,7 @@ class HeartWihMangeFavoriteCubitProviderWidget extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl<ManageFavoriteCubit>()..setHeartColor(heartColor),
       child: BlocConsumer<ManageFavoriteCubit, ManageFavoriteState>(
-        listener: (_, state) {
-          if (state.requestState == RequestState.success) {
-            showToast(
-                state.heartColor == Colors.red
-                    ? AppStrings.added
-                    : AppStrings.deleted,
-                Colors.green);
-          } else if (state.requestState == RequestState.error) {
-            showToast(AppStrings.ops, Colors.red);
-          }
-        },
+        listener: _listener,
         builder: (context, state) {
           if (state.requestState == RequestState.loading) {
             return const LoadingHeartWidget();
@@ -72,5 +62,17 @@ class HeartWihMangeFavoriteCubitProviderWidget extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _listener(BuildContext context, ManageFavoriteState state) {
+    if (state.requestState == RequestState.success) {
+      showToast(
+          state.heartColor == Colors.red
+              ? AppStrings.added
+              : AppStrings.deleted,
+          Colors.green);
+    } else if (state.requestState == RequestState.error) {
+      showToast(state.message!, Colors.red);
+    }
   }
 }

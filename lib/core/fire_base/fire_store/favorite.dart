@@ -1,3 +1,5 @@
+import 'package:e_commerce_app/core/error/exceptions.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:equatable/equatable.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/constants/strings.dart';
@@ -31,14 +33,13 @@ class FavoriteStoreImpl implements FavoriteStore {
 
   @override
   Future<void> addFav(AddDeleteFavoriteParams params) async {
-    final response = await _store
-        .collection(kProducts)
-        .doc(kCategories)
-        .collection(params.category)
-        .doc(params.productId)
-        .get();
-
-    if (response.exists) {
+    final exists = await _storeHelper.doesProductExists(
+      GetProductParams(
+        category: params.category,
+        productId: params.productId,
+      ),
+    );
+    if (exists) {
       await _setFavCategoryToBeAvailableToFetch(
         FavoriteParams(
           uId: params.uId,
@@ -54,6 +55,8 @@ class FavoriteStoreImpl implements FavoriteStore {
           .collection(kProducts)
           .doc(params.productId)
           .set(const {});
+    } else {
+      throw const ServerException(message: AppStrings.outOfStock);
     }
   }
 
