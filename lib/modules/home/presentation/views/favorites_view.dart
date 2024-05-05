@@ -26,8 +26,8 @@ class FavoritesView<CubitName> extends StatelessWidget {
               itemCount: state.favorites.length,
               padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
               physics: const BouncingScrollPhysics(),
-              itemBuilder: (_, index) => FavoriteWidget<CubitName>(
-                  favoriteEntity: state.favorites[index]),
+              itemBuilder: (_, index) =>
+                  FavoriteWidget<CubitName>(state.favorites[index]),
               separatorBuilder: (context, index) => const DividerComponent(),
             );
           } else {

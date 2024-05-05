@@ -37,7 +37,9 @@ class FavoriteProductWidget extends StatelessWidget {
               clipBehavior: Clip.antiAliasWithSaveLayer,
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(20)),
-              child: Image.network(product.image, fit: BoxFit.cover),
+              child: Hero(
+                  tag: product.id!,
+                  child: Image.network(product.image, fit: BoxFit.cover)),
             ),
             SizedBox(width: context.width * 0.02),
             SizedBox(

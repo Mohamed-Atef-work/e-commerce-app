@@ -11,8 +11,7 @@ import 'favorite_product_widget.dart';
 
 class FavoriteWidget<CubitName> extends StatelessWidget {
   final FavoriteEntity favoriteEntity;
-  const FavoriteWidget({Key? key, required this.favoriteEntity})
-      : super(key: key);
+  const FavoriteWidget(this.favoriteEntity, {super.key});
 
   @override
   Widget build(BuildContext context) {

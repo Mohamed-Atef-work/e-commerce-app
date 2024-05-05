@@ -12,8 +12,11 @@ import 'package:e_commerce_app/core/utils/constants.dart';
 class OrderItemWidget extends StatelessWidget {
   final int index;
   final void Function() onPressed;
-  const OrderItemWidget(
-      {super.key, required this.index, required this.onPressed});
+  const OrderItemWidget({
+    super.key,
+    required this.index,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +60,11 @@ class OrderItemWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                child: Image.network(state.orderItems[index].product.image,
-                    fit: BoxFit.contain),
+                child: Hero(
+                  tag: state.orderItems[index].product.id!,
+                  child: Image.network(state.orderItems[index].product.image,
+                      fit: BoxFit.contain),
+                ),
               ),
               Column(
                 children: [

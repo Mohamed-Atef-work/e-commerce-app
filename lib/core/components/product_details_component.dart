@@ -107,8 +107,8 @@ class ProductComponent extends StatelessWidget {
             SizedBox(height: height * 0.01),
             CustomText(
               fontSize: 20,
-              text: product.category,
               fontFamily: kPacifico,
+              text: product.category,
             ),
             SizedBox(height: height * 0.01),
             CustomText(
