@@ -29,12 +29,12 @@ class CartView extends StatelessWidget {
         listener: (_, state) {
       _listener(state);
     }, builder: (_, state) {
-      if (state.getCart == RequestState.loading
-          ) {
+      if (state.getCart == RequestState.loading) {
         return const LoadingCartWidget();
-      }else if(state.addOrder == RequestState.loading ||
-          state.deleteFromCart == RequestState.loading){return const LoadingWidget();}
-      else if (state.products.isNotEmpty) {
+      } else if (state.addOrder == RequestState.loading ||
+          state.deleteFromCart == RequestState.loading) {
+        return const LoadingWidget();
+      } else if (state.products.isNotEmpty) {
         return Column(
           children: [
             Expanded(
@@ -80,8 +80,7 @@ class CartView extends StatelessWidget {
                     print("userEntity.phone${userEntity.address}");
 
                     /// to do error snack bar;
-                    showToast(
-                        AppStrings.pleaseAddPhoneAddress, Colors.red);
+                    showToast(AppStrings.pleaseAddPhoneAddress, Colors.red);
                   }
                 },
               ),
@@ -89,7 +88,7 @@ class CartView extends StatelessWidget {
           ],
         );
       } else {
-        return const MessengerComponent(mess: AppStrings.cartIsEmpty);
+        return const MessengerComponent(AppStrings.cartIsEmpty);
       }
     });
   }

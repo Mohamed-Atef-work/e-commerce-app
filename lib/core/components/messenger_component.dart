@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class MessengerComponent extends StatelessWidget {
   final String mess;
-  const MessengerComponent({super.key, required this.mess});
+  const MessengerComponent(this.mess, {super.key});
 
   @override
   Widget build(BuildContext context) {

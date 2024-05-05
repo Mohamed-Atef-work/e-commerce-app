@@ -109,7 +109,8 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
       throw ServerException(message: error.toString());
     });
 
-    final ordersData = List<OrderDataEntity>.of(ordersDataDocs.docs
+    final ordersData = List<OrderDataEntity>.of(
+        ordersDataDocs.docs
         .map((e) =>
             OrderDataModel.fromJson(json: e.data(), orderRef: e.reference))
         .toList());

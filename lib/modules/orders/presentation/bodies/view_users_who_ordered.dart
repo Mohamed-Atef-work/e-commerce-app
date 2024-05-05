@@ -20,7 +20,7 @@ class ViewUsersWhoOrderedBody extends StatelessWidget {
         return const LoadingWidget();
       } else if (state.usersDataState == RequestState.success &&
           state.usersData.isEmpty) {
-        return const MessengerComponent(mess: AppStrings.thereIsNoOrders);
+        return const MessengerComponent(AppStrings.thereIsNoOrders);
       } else {
         return ListView.separated(
           itemCount: state.usersData.length,

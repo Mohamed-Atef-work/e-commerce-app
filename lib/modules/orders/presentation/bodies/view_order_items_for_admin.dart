@@ -37,7 +37,7 @@ class ViewOrderItemsForAdmin extends StatelessWidget {
               ),
               const Expanded(
                 child: MessengerComponent(
-                    mess: AppStrings.thisOrderIsNoLongerExisted),
+                    AppStrings.thisOrderIsNoLongerExisted),
               ),
             ],
           );

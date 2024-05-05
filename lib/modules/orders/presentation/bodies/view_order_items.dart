@@ -27,7 +27,7 @@ class ViewUserOrderItemsBody extends StatelessWidget {
         } else if (state.getOrderItems != RequestState.loading &&
             state.orderItems.isEmpty) {
           return const MessengerComponent(
-              mess: AppStrings.thisOrderIsNoLongerExisted);
+              AppStrings.thisOrderIsNoLongerExisted);
         } else {
           return ListView.separated(
             padding: const EdgeInsets.all(10),

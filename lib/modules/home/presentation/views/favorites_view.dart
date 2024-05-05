@@ -31,7 +31,7 @@ class FavoritesView<CubitName> extends StatelessWidget {
               separatorBuilder: (context, index) => const DividerComponent(),
             );
           } else {
-            return const MessengerComponent(mess: AppStrings.favoriteIsEmpty);
+            return const MessengerComponent(AppStrings.favoriteIsEmpty);
           }
         } else {
           return const LoadingFavoriteWidget();

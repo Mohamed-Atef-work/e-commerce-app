@@ -90,15 +90,18 @@ class ProductComponent extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.35,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(product.image),
+            Hero(
+              tag: product.id!,
+              child: Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.35,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(product.image),
+                  ),
+                  borderRadius: BorderRadius.circular(30),
                 ),
-                borderRadius: BorderRadius.circular(30),
               ),
             ),
             SizedBox(height: height * 0.01),

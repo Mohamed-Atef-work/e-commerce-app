@@ -26,8 +26,7 @@ class UserProductsView extends StatelessWidget {
                   state.productsState != RequestState.success) {
                 return const LoadingHomeProductsWidget();
               } else if (state.products.isEmpty) {
-                return const MessengerComponent(
-                    mess: AppStrings.thereIsNoProducts);
+                return const MessengerComponent(AppStrings.thereIsNoProducts);
               } else {
                 return GridView.builder(
                   itemCount: state.products.length,

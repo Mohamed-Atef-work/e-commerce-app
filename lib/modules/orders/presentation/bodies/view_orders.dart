@@ -25,7 +25,7 @@ class ViewUserOrdersBody extends StatelessWidget {
         return const LoadingWidget();
       } else if (state.getOrders == RequestState.success &&
           state.orders.isEmpty) {
-        return const MessengerComponent(mess: AppStrings.youHaveNoOrders);
+        return const MessengerComponent(AppStrings.youHaveNoOrders);
       } else {
         return ListView.separated(
           itemCount: state.orders.length,

@@ -43,17 +43,20 @@ class DetailsScreen extends StatelessWidget {
                 children: [
                   Align(
                     alignment: Alignment.center,
-                    child: Container(
-                      width: context.width * 0.8,
-                      height: context.height * 0.45,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Image.network(
-                        fit: BoxFit.fill,
-                        state.product!.image,
-                        width: double.infinity,
-                        height: double.infinity,
+                    child: Hero(
+                      tag: state.product!.id!,
+                      child: Container(
+                        width: context.width * 0.8,
+                        height: context.height * 0.45,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Image.network(
+                          fit: BoxFit.fill,
+                          state.product!.image,
+                          width: double.infinity,
+                          height: double.infinity,
+                        ),
                       ),
                     ),
                   ),
