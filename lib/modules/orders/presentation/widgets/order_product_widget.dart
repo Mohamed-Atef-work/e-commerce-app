@@ -62,26 +62,27 @@ class OrderItemWidget extends StatelessWidget {
                     BoxDecoration(borderRadius: BorderRadius.circular(15)),
                 child: Hero(
                   tag: state.orderItems[index].product.id!,
-                  child: Image.network(state.orderItems[index].product.image,
-                      fit: BoxFit.contain),
+                  child: Image.network(
+                    fit: BoxFit.contain,
+                    state.orderItems[index].product.image,
+                  ),
                 ),
               ),
               Column(
                 children: [
                   CustomText(
                     fontSize: 20,
-                    textAlign: TextAlign.left,
-                    textColor: Colors.black,
-                    fontWeight: FontWeight.bold,
                     fontFamily: kPacifico,
+                    textColor: Colors.black,
+                    textAlign: TextAlign.left,
+                    fontWeight: FontWeight.bold,
                     text: state.orderItems[index].product.name,
                   ),
                   SizedBox(height: context.height * 0.03),
                   CustomText(
                     fontSize: 18,
-                    //textAlign: TextAlign.,
-                    fontWeight: FontWeight.bold,
                     textColor: kDarkBrown,
+                    fontWeight: FontWeight.bold,
                     text:
                         "\$${state.orderItems[index].product.price * state.orderItems[index].quantity}",
                   ),
@@ -90,10 +91,9 @@ class OrderItemWidget extends StatelessWidget {
               const Spacer(),
               CustomText(
                 fontSize: 18,
-                //textAlign: TextAlign.,
-                fontWeight: FontWeight.bold,
                 textColor: kDarkBrown,
                 fontFamily: kPacifico,
+                fontWeight: FontWeight.bold,
                 text:
                     "${state.orderItems[index].quantity} ${AppStrings.pieces}",
               ),

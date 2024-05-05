@@ -1,9 +1,8 @@
-import 'package:e_commerce_app/core/components/custom_text.dart';
-import 'package:e_commerce_app/core/constants/colors.dart';
+import 'package:flutter/material.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/heart_with_manage_favorite_cubit_provided_widget.dart';
-import 'package:flutter/material.dart';
 
 class FavoriteProductWidget extends StatelessWidget {
   final ProductEntity product;
@@ -38,8 +37,12 @@ class FavoriteProductWidget extends StatelessWidget {
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(20)),
               child: Hero(
-                  tag: product.id!,
-                  child: Image.network(product.image, fit: BoxFit.cover)),
+                tag: product.id!,
+                child: Image.network(
+                  fit: BoxFit.cover,
+                  product.image,
+                ),
+              ),
             ),
             SizedBox(width: context.width * 0.02),
             SizedBox(
@@ -71,8 +74,8 @@ class FavoriteProductWidget extends StatelessWidget {
             ),
             const Spacer(),
             HeartWihMangeFavoriteCubitProviderWidget(
-              product: product,
               heartColor: Colors.red,
+              product: product,
             ),
           ],
         ),

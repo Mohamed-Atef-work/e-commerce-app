@@ -40,14 +40,14 @@ class CartProductWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             //mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Hero(
-                tag: controller.state.products[index].product.id!,
-                child: Container(
-                  width: context.width * 0.3,
-                  height: context.height * 0.2,
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
+              Container(
+                width: context.width * 0.3,
+                height: context.height * 0.2,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                child: Hero(
+                  tag: controller.state.products[index].product.id!,
                   child: Image.network(
                       fit: BoxFit.cover,
                       controller.state.products[index].product.image),
