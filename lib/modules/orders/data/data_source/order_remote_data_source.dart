@@ -1,10 +1,10 @@
 import 'package:e_commerce_app/core/error/exceptions.dart';
-import 'package:e_commerce_app/core/fire_base/fire_store/order.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/user.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/order.dart';
 import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
-import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/orders/data/model/item_model.dart';
 import 'package:e_commerce_app/modules/orders/domain/entity/item_entity.dart';
+import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/orders/data/model/order_data_model.dart';
 import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/add_order_use_case.dart';
@@ -17,14 +17,15 @@ import 'package:e_commerce_app/modules/orders/domain/use_case/delete_item_from_o
 
 abstract class OrderBaseRemoteDataSource {
   Future<List<OrderItemEntity>> getOrderItems(GetOrderItemsParams params);
-  Stream<List<OrderDataEntity>> streamOfUserOrders(String userId);
   Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params);
+  Stream<List<OrderDataEntity>> streamOfUserOrders(String userId);
   Future<OrderDataEntity> getOrderData(GetOrderDataParams params);
   Future<List<OrderDataEntity>> getUserOrders(String userId);
   Future<void> updateOrderData(UpDateOrderDataParams params);
   Future<void> addItemToOrder(AddItemToOrderParams params);
-  Stream<List<UserEntity>> streamUsersWhoOrdered();
   Future<void> deleteOrder(DeleteOrderParams params);
+  Stream<List<UserEntity>> streamUsersWhoOrdered();
+
   Future<void> addOrder(AddOrderParams params);
 }
 
@@ -49,9 +50,13 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
 
   @override
   Future<void> addOrder(AddOrderParams params) async {
-    await _orderStore.addOrder(params).catchError((error) {
-      throw ServerException(message: error.toString());
-    });
+    try {
+      await _orderStore.addOrder(params);
+    } on ServerException catch (_) {
+      rethrow;
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
   }
 
   @override
@@ -109,8 +114,7 @@ class OrderRemoteDataSource implements OrderBaseRemoteDataSource {
       throw ServerException(message: error.toString());
     });
 
-    final ordersData = List<OrderDataEntity>.of(
-        ordersDataDocs.docs
+    final ordersData = List<OrderDataEntity>.of(ordersDataDocs.docs
         .map((e) =>
             OrderDataModel.fromJson(json: e.data(), orderRef: e.reference))
         .toList());

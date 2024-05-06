@@ -50,11 +50,15 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
     emit(
       result.fold(
         (l) => state.copyWith(
-            deleteFromCart: RequestState.error, message: l.message),
+          message: l.message,
+          deleteFromCart: RequestState.error,
+        ),
         (r) => state.copyWith(
-            deleteFromCart: RequestState.success,
-            message: AppStrings.deleted,
-            needToReGet: true),
+          deleteFromCart: RequestState.success,
+          notExistedProducts: const [],
+          message: AppStrings.deleted,
+          needToReGet: true,
+        ),
       ),
     );
 
@@ -70,28 +74,35 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
 
     final items = _makeItems();
 
-    final result = await _addOrderUseCase.call(
-      AddOrderParams(
-        items: items,
-        uId: user.id,
-        orderData: OrderDataModel(
-          name: user.name,
-          phone: user.phone!,
-          address: user.address!,
-          totalPrice: totalPrice,
-          date: DateTime.now().toString(),
-        ),
-      ),
+    final orderData = OrderDataModel(
+      name: user.name,
+      phone: user.phone!,
+      address: user.address!,
+      totalPrice: totalPrice,
+      date: DateTime.now().toString(),
     );
+
+    final params = AddOrderParams(
+      orderData: orderData,
+      items: items,
+      uId: user.id,
+    );
+
+    final result = await _addOrderUseCase.call(params);
 
     emit(
       result.fold(
-        (l) => state.copyWith(addOrder: RequestState.error, message: l.message),
+        (l) => state.copyWith(
+          message: l.message,
+          addOrder: RequestState.error,
+          notExistedProducts: l.object,
+        ),
         (r) => state.copyWith(
-          addOrder: RequestState.success,
-          message: AppStrings.added,
-          products: const [],
           needToReGet: true,
+          products: const [],
+          message: AppStrings.added,
+          notExistedProducts: const [],
+          addOrder: RequestState.success,
         ),
       ),
     );
@@ -121,7 +132,12 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
   }
 
   void needToReGet() {
-    emit(state.copyWith(needToReGet: true));
+    emit(
+      state.copyWith(
+        needToReGet: true,
+        notExistedProducts: const [],
+      ),
+    );
   }
 
   void quantityPlus(int index) {

@@ -97,4 +97,5 @@ class AppStrings {
   static const String pleaseAddAddress = "please Add Address";
   static const String pleaseAddPhoneAddress = "please Add Phone and Address";
   static const String outOfStock = "Out Of Stock";
+  static const String someItemsAreOutOfStock = "Some Items Are Out Of Stock";
 }

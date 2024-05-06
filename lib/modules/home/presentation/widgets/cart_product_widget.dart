@@ -21,7 +21,16 @@ class CartProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = BlocProvider.of<ManageCartProductsCubit>(context);
-    return Padding(
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: 1,
+          color: controller.state.notExistedProducts.contains(index)
+              ? Colors.red
+              : Colors.transparent,
+        ),
+        borderRadius: BorderRadius.circular(20),
+      ),
       padding: EdgeInsets.symmetric(horizontal: context.width * 0.01),
       child: InkWell(
         onTap: () {

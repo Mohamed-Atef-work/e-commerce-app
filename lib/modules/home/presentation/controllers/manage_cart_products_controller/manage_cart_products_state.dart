@@ -2,6 +2,7 @@ part of 'manage_cart_products_cubit.dart';
 
 class ManageCartProductsState {
   final List<CartItemEntity> products;
+  final List<int> notExistedProducts;
   final RequestState deleteFromCart;
   final RequestState addOrder;
   final RequestState getCart;
@@ -12,6 +13,7 @@ class ManageCartProductsState {
     this.deleteFromCart = RequestState.initial,
     this.addOrder = RequestState.initial,
     this.getCart = RequestState.initial,
+    this.notExistedProducts = const [],
     this.products = const [],
     this.needToReGet = true,
     this.message,
@@ -22,6 +24,7 @@ class ManageCartProductsState {
     RequestState? getCart,
     RequestState? addOrder,
     RequestState? deleteFromCart,
+    List<int>? notExistedProducts,
     List<CartItemEntity>? products,
   }) =>
       ManageCartProductsState(
@@ -31,5 +34,6 @@ class ManageCartProductsState {
         products: products ?? this.products,
         needToReGet: needToReGet ?? this.needToReGet,
         deleteFromCart: deleteFromCart ?? this.deleteFromCart,
+        notExistedProducts: notExistedProducts ?? this.notExistedProducts,
       );
 }

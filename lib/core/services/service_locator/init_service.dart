@@ -20,10 +20,10 @@ void init() {
   sl.registerLazySingleton(() => FirebaseFirestore.instance);
   sl.registerLazySingleton<UserAuth>(() => UserAuthImpl(sl()));
   sl.registerLazySingleton<UserStore>(() => UserStoreImpl(sl()));
-  sl.registerLazySingleton<OrderStore>(() => OrderStoreImpl(sl()));
   sl.registerLazySingleton<StoreHelper>(() => StoreHelperImpl(sl()));
   sl.registerLazySingleton<ProductStore>(() => ProductStoreImpl(sl()));
   sl.registerLazySingleton<CartStore>(() => CartStoreImpl(sl(), sl()));
+  sl.registerLazySingleton<OrderStore>(() => OrderStoreImpl(sl(), sl()));
   sl.registerLazySingleton<StorageService>(() => StorageServiceImpl(sl()));
   sl.registerLazySingleton<FavoriteStore>(() => FavoriteStoreImpl(sl(), sl()));
   sl.registerSingletonAsync<LocalDataBaseService>(() async {

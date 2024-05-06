@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/constants/strings.dart';
+import 'package:e_commerce_app/core/error/exceptions.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/store_helper.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/modules/orders/data/model/item_model.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/add_item_to_order_use_case.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/add_order_use_case.dart';
@@ -22,21 +25,20 @@ abstract class OrderStore {
   ///
   Future<QuerySnapshot<Map<String, dynamic>>> getOrderItems(
       DocumentReference orderRef);
-  Stream<QuerySnapshot<Map<String, dynamic>>> streamOfUserOrders(
-      String userId);
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamOfUserOrders(String userId);
   Stream<QuerySnapshot<Map<String, dynamic>>> streamUsersWhoOrdered();
 }
 
 class OrderStoreImpl implements OrderStore {
-  final FirebaseFirestore store;
-  OrderStoreImpl(this.store);
+  final FirebaseFirestore _store;
+  final StoreHelper _storeHelper;
+  OrderStoreImpl(this._store, this._storeHelper);
 
   /// take from this method the references of users ids;
   /// may a (new user) Order (while the admin is exploring) the Orders;
   @override
-  Stream<QuerySnapshot<Map<String, dynamic>>>
-      streamUsersWhoOrdered()  {
-    final response = store.collection(kOrders).snapshots();
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamUsersWhoOrdered() {
+    final response = _store.collection(kOrders).snapshots();
     return response;
   }
 
@@ -44,7 +46,7 @@ class OrderStoreImpl implements OrderStore {
   @override
   Future<QuerySnapshot<Map<String, dynamic>>> getUserOrders(
       String userId) async {
-    return await store
+    return await _store
         .collection(kOrders)
         .doc(userId)
         .collection(kOrders)
@@ -54,8 +56,8 @@ class OrderStoreImpl implements OrderStore {
   /// may a (user) Order a new Order (while the admin is exploring) the Orders;
   @override
   Stream<QuerySnapshot<Map<String, dynamic>>> streamOfUserOrders(
-      String userId)  {
-    return store
+      String userId) {
+    return _store
         .collection(kOrders)
         .doc(userId)
         .collection(kOrders)
@@ -140,28 +142,55 @@ class OrderStoreImpl implements OrderStore {
   Future<void> addItemToOrder(AddItemToOrderParams params) async {
     /// admin and user
     /// base methods (according to the design of the firebase);
-    await params.orderRef
-        .collection(kItems)
-        .add(params.item.toJson());
+    await params.orderRef.collection(kItems).add(params.item.toJson());
   }
 
   @override
   Future<void> addOrder(AddOrderParams params) async {
-    await store
-        .collection(kOrders)
-        .doc(params.uId)
-        .collection(kOrders)
-        .add(params.orderData.toJson())
-        .then((orderRef) async {
-      await store
+    final notExistedItems = await _ensureAllItemsExist(params.items);
+
+    if (notExistedItems.isEmpty) {
+      final orderRef = await _store
           .collection(kOrders)
           .doc(params.uId)
-          .set(const {"able_to_access_user_order": true});
+          .collection(kOrders)
+          .add(params.orderData.toJson());
+
+      await _ableToAccessOrder(params.uId);
+
       for (OrderItemModel item in params.items) {
         await addItemToOrder(
           AddItemToOrderParams(orderRef: orderRef, item: item),
         );
       }
-    });
+    } else {
+      throw ServerException(
+        object: notExistedItems,
+        message: AppStrings.someItemsAreOutOfStock,
+      );
+    }
+  }
+
+  Future<List<int>> _ensureAllItemsExist(List<OrderItemModel> items) async {
+    List<int> notExisted = [];
+    for (int i = 0; i < items.length; i++) {
+      final isExisted = await _storeHelper.doesProductExists(
+        GetProductParams(
+          category: items[i].product.category,
+          productId: items[i].product.id!,
+        ),
+      );
+      if (!isExisted) {
+        notExisted.add(i);
+      }
+    }
+    return notExisted;
+  }
+
+  _ableToAccessOrder(String uId) async {
+    await _store
+        .collection(kOrders)
+        .doc(uId)
+        .set(const {"able_to_access_user_order": true});
   }
 }

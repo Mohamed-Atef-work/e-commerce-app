@@ -36,7 +36,12 @@ class OrderDataRepo implements OrderDomainRepo {
       final result = await dataSource.addOrder(params);
       return Right(result);
     } on ServerException catch (exception) {
-      return Left(ServerFailure(message: exception.message));
+      return Left(
+        ServerFailure(
+          object: exception.object,
+          message: exception.message,
+        ),
+      );
     }
   }
 

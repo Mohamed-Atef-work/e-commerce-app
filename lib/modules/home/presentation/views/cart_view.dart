@@ -26,71 +26,75 @@ class CartView extends StatelessWidget {
     final userData = BlocProvider.of<SharedUserDataCubit>(context).state;
     final userEntity = userData.sharedEntity!.user.userEntity;
     return BlocConsumer<ManageCartProductsCubit, ManageCartProductsState>(
-        listener: (_, state) {
-      _listener(state);
-    }, builder: (_, state) {
-      if (state.getCart == RequestState.loading) {
-        return const LoadingCartWidget();
-      } else if (state.addOrder == RequestState.loading ||
-          state.deleteFromCart == RequestState.loading) {
-        return const LoadingWidget();
-      } else if (state.products.isNotEmpty) {
-        return Column(
-          children: [
-            Expanded(
-              child: ListView.separated(
-                shrinkWrap: true,
-                itemCount: state.products.length,
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
-                itemBuilder: (context, index) => Dismissible(
-                  background: _background(),
-                  key: ValueKey(state.products[index].product.name),
-                  secondaryBackground: _secondaryBackground(),
-                  onDismissed: (direction) {
-                    /// To Do ooo ooo ooo ooo ooo ..[uId]..
-                    manageCartController.deleteFromCart(
-                      DeleteFromCartParams(
-                        uId: userEntity.id,
-                        productId: state.products[index].product.id!,
-                        category: state.products[index].product.category,
-                      ),
-                    );
-                    state.products.removeAt(index);
-                  },
-                  child: CartProductWidget(index: index),
+      listener: (_, state) {
+        _listener(state);
+      },
+      builder: (_, state) {
+        if (state.getCart == RequestState.loading) {
+          return const LoadingCartWidget();
+        } else if (state.addOrder == RequestState.loading ||
+            state.deleteFromCart == RequestState.loading) {
+          return const LoadingWidget();
+        } else if (state.products.isNotEmpty) {
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: state.products.length,
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
+                  itemBuilder: (context, index) => Dismissible(
+                    background: _background(),
+                    key: ValueKey(state.products[index].product.name),
+                    secondaryBackground: _secondaryBackground(),
+                    onDismissed: (direction) {
+                      /// To Do ooo ooo ooo ooo ooo ..[uId]..
+                      manageCartController.deleteFromCart(
+                        DeleteFromCartParams(
+                          uId: userEntity.id,
+                          productId: state.products[index].product.id!,
+                          category: state.products[index].product.category,
+                        ),
+                      );
+                      state.products.removeAt(index);
+                    },
+                    child: CartProductWidget(index: index),
+                  ),
+                  separatorBuilder: (context, index) =>
+                      const DividerComponent(),
                 ),
-                separatorBuilder: (context, index) => const DividerComponent(),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: CustomButton(
-                fontSize: 18,
-                fontFamily: kPacifico,
-                text: AppStrings.checkOut,
-                width: context.width * 0.7,
-                fontWeight: FontWeight.bold,
-                height: context.height * 0.06,
-                onPressed: () {
-                  if (userEntity.address != null && userEntity.phone != null) {
-                    manageCartController.addOrder(userEntity);
-                  } else {
-                    print("userEntity.phone${userEntity.phone}");
-                    print("userEntity.phone${userEntity.address}");
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: CustomButton(
+                  fontSize: 18,
+                  fontFamily: kPacifico,
+                  text: AppStrings.checkOut,
+                  width: context.width * 0.7,
+                  fontWeight: FontWeight.bold,
+                  height: context.height * 0.06,
+                  onPressed: () {
+                    if (userEntity.address != null &&
+                        userEntity.phone != null) {
+                      manageCartController.addOrder(userEntity);
+                    } else {
+                      print("userEntity.phone${userEntity.phone}");
+                      print("userEntity.phone${userEntity.address}");
 
-                    /// to do error snack bar;
-                    showToast(AppStrings.pleaseAddPhoneAddress, Colors.red);
-                  }
-                },
-              ),
-            )
-          ],
-        );
-      } else {
-        return const MessengerComponent(AppStrings.cartIsEmpty);
-      }
-    });
+                      /// to do error snack bar;
+                      showToast(AppStrings.pleaseAddPhoneAddress, Colors.red);
+                    }
+                  },
+                ),
+              )
+            ],
+          );
+        } else {
+          return const MessengerComponent(AppStrings.cartIsEmpty);
+        }
+      },
+    );
   }
 
   _background() => const DismissibleBackgroundComponent(
