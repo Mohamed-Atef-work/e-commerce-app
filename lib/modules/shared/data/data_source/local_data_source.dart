@@ -20,8 +20,7 @@ class SharedLocalDataSourceImpl implements SharedLocalDataSource {
   @override
   Future<CachedUserDataEntity> getUserData() async {
     try {
-      final jsonString =
-          await _localDataBaseService.read<String>(kUser);
+      final jsonString = await _localDataBaseService.read<String>(kUser);
       print(" < --------------------- dataSource ------------------------- > ");
 
       if (jsonString == null) {
@@ -55,9 +54,8 @@ class SharedLocalDataSourceImpl implements SharedLocalDataSource {
 
   @override
   Future<bool> deleteUserData() async {
-    final result = await _localDataBaseService
-        .delete(kUser)
-        .catchError((error) {
+    final result =
+        await _localDataBaseService.delete(kUser).catchError((error) {
       throw LocalDataBaseException(message: error.toString());
     });
     return result;

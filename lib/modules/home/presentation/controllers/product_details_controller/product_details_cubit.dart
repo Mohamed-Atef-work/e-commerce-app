@@ -21,10 +21,10 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
     print(state.product!.category);
     final result = await _addToCartUseCase.call(
       AddToCartParams(
-        category: state.product!.category,
-        productId: state.product!.id!,
-        quantity: state.quantity,
         uId: uId,
+        quantity: state.quantity,
+        productId: state.product!.id!,
+        category: state.product!.category,
       ),
     );
     emit(

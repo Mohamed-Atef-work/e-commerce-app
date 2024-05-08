@@ -43,7 +43,9 @@ class EditProfileScreen extends StatelessWidget {
                       image: AssetImage(Images.orderImage),
                     ),
                     border: Border.all(
-                        style: BorderStyle.solid, color: Colors.white),
+                      color: Colors.white,
+                      style: BorderStyle.solid,
+                    ),
                   ),
                 ),
                 SizedBox(height: context.height * 0.01),
@@ -56,8 +58,8 @@ class EditProfileScreen extends StatelessWidget {
                 ),
                 SizedBox(height: context.height * 0.03),
                 EditProfileItemWidget(
-                  title: AppStrings.name,
                   value: userData.name,
+                  title: AppStrings.name,
                   onPressed: () {
                     showModalBottomSheet(
                         context: context,
@@ -65,8 +67,8 @@ class EditProfileScreen extends StatelessWidget {
                   },
                 ),
                 EditProfileItemWidget(
-                  title: AppStrings.email,
                   value: userData.email,
+                  title: AppStrings.email,
                   onPressed: () {
                     showModalBottomSheet(
                         context: context,

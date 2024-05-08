@@ -48,11 +48,11 @@ class ViewUserOrdersBody extends StatelessWidget {
 
   void _listener(GetUserOrdersState state) {
     if (state.getOrders == RequestState.error) {
-      showToast(state.message, Colors.red);
+      showMyToast(state.message, Colors.red);
     } else if (state.deleteOrder == RequestState.success) {
-      showToast(AppStrings.deleted, Colors.green);
+      showMyToast(AppStrings.deleted, Colors.green);
     } else if (state.deleteOrder == RequestState.error) {
-      showToast(state.message, Colors.red);
+      showMyToast(state.message, Colors.red);
     }
   }
 }

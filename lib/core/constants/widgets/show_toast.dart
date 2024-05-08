@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
-showToast(
+showMyToast(
   String msg,
   Color backgroundColor,
 ) =>
-    Fluttertoast.showToast(
-      msg: msg,
-      textColor: Colors.white,
+    showToast(
+      msg,
+      //textColor: Colors.white,
       backgroundColor: backgroundColor,
     );
 

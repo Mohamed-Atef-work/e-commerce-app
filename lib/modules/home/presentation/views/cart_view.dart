@@ -83,7 +83,7 @@ class CartView extends StatelessWidget {
                       print("userEntity.phone${userEntity.address}");
 
                       /// to do error snack bar;
-                      showToast(AppStrings.pleaseAddPhoneAddress, Colors.red);
+                      showMyToast(AppStrings.pleaseAddPhoneAddress, Colors.red);
                     }
                   },
                 ),
@@ -107,10 +107,10 @@ class CartView extends StatelessWidget {
     if (state.getCart == RequestState.error ||
         state.addOrder == RequestState.error ||
         state.deleteFromCart == RequestState.error) {
-      showToast(state.message!, Colors.red);
+      showMyToast(state.message!, Colors.red);
     } else if (state.addOrder == RequestState.success ||
         state.deleteFromCart == RequestState.success) {
-      showToast(state.message!, Colors.green);
+      showMyToast(state.message!, Colors.green);
     }
   }
 }

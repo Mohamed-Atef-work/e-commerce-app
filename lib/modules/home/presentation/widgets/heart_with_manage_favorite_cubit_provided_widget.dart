@@ -66,13 +66,13 @@ class HeartWihMangeFavoriteCubitProviderWidget extends StatelessWidget {
 
   void _listener(BuildContext context, ManageFavoriteState state) {
     if (state.requestState == RequestState.success) {
-      showToast(
+      showMyToast(
           state.heartColor == Colors.red
               ? AppStrings.added
               : AppStrings.deleted,
           Colors.green);
     } else if (state.requestState == RequestState.error) {
-      showToast(state.message!, Colors.red);
+      showMyToast(state.message!, Colors.red);
     }
   }
 }

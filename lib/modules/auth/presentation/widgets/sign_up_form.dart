@@ -93,11 +93,11 @@ class SignUpFormWidget extends StatelessWidget {
   void _listener(BuildContext context, SignUpState state) {
     if (state.signUpState == RequestState.success &&
         state.storeUserDataState == RequestState.success) {
-      showToast(AppStrings.success, Colors.green);
+      showMyToast(AppStrings.success, Colors.green);
       Navigator.of(context).pushReplacementNamed(Screens.loginScreen);
     } else if (state.signUpState == RequestState.error ||
         state.storeUserDataState == RequestState.error) {
-      showToast(AppStrings.ops, Colors.red);
+      showMyToast(AppStrings.ops, Colors.red);
     }
   }
 }
