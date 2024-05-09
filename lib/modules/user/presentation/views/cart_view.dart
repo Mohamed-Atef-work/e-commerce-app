@@ -44,8 +44,8 @@ class CartView extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
                   itemBuilder: (context, index) => Dismissible(
                     background: _background(),
-                    key: ValueKey(state.products[index].product.name),
                     secondaryBackground: _secondaryBackground(),
+                    key: ValueKey(state.products[index].product.name),
                     onDismissed: (direction) {
                       /// To Do ooo ooo ooo ooo ooo ..[uId]..
                       manageCartController.deleteFromCart(

@@ -37,8 +37,8 @@ class AccountItemsWidget extends StatelessWidget {
             CustomText(
               text: name,
               fontSize: 20,
-              fontWeight: FontWeight.bold,
               textColor: kDarkBrown,
+              fontWeight: FontWeight.bold,
             ),
           ],
         ),

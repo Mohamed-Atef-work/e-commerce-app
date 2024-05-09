@@ -21,75 +21,77 @@ class UpDatePhoneWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// bloc
-    final userDataController = BlocProvider.of<SharedUserDataCubit>(context);
-    final userData = userDataController.state.sharedEntity!.user;
-
-    /// bloc
     return BlocProvider(
       create: (_) => sl<UpdateProfileCubit>(),
-      child: Builder(builder: (context) {
-        /// bloc
-        final updateProfileController =
-            BlocProvider.of<UpdateProfileCubit>(context);
+      child: Builder(
+        builder: (context) {
+          ///  < ---------------------------- bloc --------------------------- >
+          final updateProfileController =
+              BlocProvider.of<UpdateProfileCubit>(context);
 
-        /// bloc
-        return BaseModelSheetComponent(
-          height: context.height * 0.3,
-          child: BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
-            listener: (context, state) {
-              if (state.updateState == RequestState.success) {
-                userDataController.getSavedUser();
-              }
-            },
-            builder: (context, state) {
-              if (state.updateState == RequestState.loading) {
-                return const LoadingWidget();
-              } else if (state.updateState == RequestState.success) {
-                return const CenteredMessageComponent(AppStrings.updated);
-              } else {
-                return Form(
-                  key: updateProfileController.formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CustomTextFormField(
-                        hintText: AppStrings.phone,
-                        validator: _phoneValidator,
-                        prefixIcon: Icons.phone_android,
-                        textEditingController:
-                            updateProfileController.changedOne,
-                      ),
-                      CustomButton(
-                        height: 50,
-                        fontSize: 18,
-                        fontFamily: kPacifico,
-                        text: AppStrings.update,
-                        width: context.width * 0.7,
-                        onPressed: () {
-                          final userEntity = UserEntity(
-                            id: userData.userEntity.id,
-                            name: userData.userEntity.name,
-                            email: userData.userEntity.email,
-                            address: userData.userEntity.address,
-                            phone: updateProfileController.changedOne.text,
-                          );
-                          final cachedUser = CachedUserDataEntity(
-                            userEntity: userEntity,
-                            password: userData.password,
-                            adminOrUser: userData.adminOrUser,
-                          );
-                          updateProfileController.updateName(cachedUser);
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              }
-            },
-          ),
-        );
-      }),
+          ///  < ---------------------------- bloc --------------------------- >
+          final userDataController =
+              BlocProvider.of<SharedUserDataCubit>(context);
+          final userData = userDataController.state.sharedEntity!.user;
+
+          ///  < ---------------------------- bloc --------------------------- >
+          return BaseModelSheetComponent(
+            height: context.height * 0.3,
+            child: BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
+              listener: (context, state) {
+                if (state.updateState == RequestState.success) {
+                  userDataController.getSavedUser();
+                }
+              },
+              builder: (context, state) {
+                if (state.updateState == RequestState.loading) {
+                  return const LoadingWidget();
+                } else if (state.updateState == RequestState.success) {
+                  return const CenteredMessageComponent(AppStrings.updated);
+                } else {
+                  return Form(
+                    key: updateProfileController.formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CustomTextFormField(
+                          hintText: AppStrings.phone,
+                          validator: _phoneValidator,
+                          prefixIcon: Icons.phone_android,
+                          textEditingController:
+                              updateProfileController.changedOne,
+                        ),
+                        CustomButton(
+                          height: 50,
+                          fontSize: 18,
+                          fontFamily: kPacifico,
+                          text: AppStrings.update,
+                          width: context.width * 0.7,
+                          onPressed: () {
+                            final userEntity = UserEntity(
+                              id: userData.userEntity.id,
+                              name: userData.userEntity.name,
+                              email: userData.userEntity.email,
+                              address: userData.userEntity.address,
+                              phone: updateProfileController.changedOne.text,
+                            );
+                            final cachedUser = CachedUserDataEntity(
+                              userEntity: userEntity,
+                              password: userData.password,
+                              adminOrUser: userData.adminOrUser,
+                            );
+                            updateProfileController.updateName(cachedUser);
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 
