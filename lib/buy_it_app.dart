@@ -11,7 +11,7 @@ import 'modules/admin/presentation/screens/admin_panel_screen.dart';
 import 'modules/admin/presentation/screens/admin_details_screen.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'modules/admin/presentation/screens/admin_add_product_screen.dart';
-import 'modules/admin/presentation/screens/admin_explore_products_screen.dart';
+import 'modules/admin/presentation/screens/not_needed/admin_explore_products_screen.dart';
 import 'package:e_commerce_app/modules/home/presentation/screens/details_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/profile_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/splash_screen.dart';

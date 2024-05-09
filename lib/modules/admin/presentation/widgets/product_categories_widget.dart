@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/core/constants/colors.dart';
+import 'package:e_commerce_app/modules/admin/presentation/widgets/add_category_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,10 +7,9 @@ import '../../../../core/components/product_category_component.dart';
 import '../../../../core/utils/enums.dart';
 import '../controllers/add_product_controller/add_product_cubit.dart';
 import '../controllers/add_product_controller/add_product_state.dart';
-import 'manage_category_model_sheet_widget.dart';
 
 class ProductCategoriesWidget extends StatelessWidget {
-  const ProductCategoriesWidget({Key? key}) : super(key: key);
+  const ProductCategoriesWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,24 +27,7 @@ class ProductCategoriesWidget extends StatelessWidget {
               itemCount: state.categories!.length + 1,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) => index == state.categories!.length
-                  ? Container(
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.black,
-                      ),
-                      child: IconButton(
-                        onPressed: () {
-                          showModalBottomSheet(
-                              context: context,
-                              builder: (context) =>
-                                  const AddNewCategoryModelSheetWidget());
-                        },
-                        splashRadius: 25,
-                        //hoverColor: Colors.transparent,
-                        highlightColor: kWhiteGray,
-                        icon: const Icon(Icons.add, color: Colors.white),
-                      ),
-                    )
+                  ? const AddCategoryWidget()
                   : CategoryComponent(
                       onTap: () {
                         BlocProvider.of<EditAddProductCubit>(context)

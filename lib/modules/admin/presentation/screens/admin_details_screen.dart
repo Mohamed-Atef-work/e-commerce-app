@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,16 +21,7 @@ class AdminDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(
-        title: AppStrings.productDetails,
-        leading: IconButton(
-          onPressed: () {
-            BlocProvider.of<AdminDetailsCubit>(context).reset();
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back),
-        ),
-      ),
+      appBar: _appBar(context),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: BlocBuilder<AdminDetailsCubit, AdminDetailsState>(
@@ -39,14 +31,7 @@ class AdminDetailsScreen extends StatelessWidget {
             if (state.deleteState == RequestState.loading) {
               return const LoadingWidget();
             } else if (state.deleteState == RequestState.success) {
-              return const Center(
-                child: CustomText(
-                  fontSize: 25,
-                  text: AppStrings.deleted,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: kPacifico,
-                ),
-              );
+              return const MessengerComponent(AppStrings.deleted);
             } else {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -70,23 +55,23 @@ class AdminDetailsScreen extends StatelessWidget {
                   ),
                   CustomText(
                     fontSize: 25,
-                    text: state.product!.name,
-                    fontWeight: FontWeight.bold,
                     textColor: kDarkBrown,
                     fontFamily: kPacifico,
+                    text: state.product!.name,
+                    fontWeight: FontWeight.bold,
                   ),
                   CustomText(
                     fontSize: 20,
-                    fontWeight: FontWeight.bold,
                     textColor: kDarkBrown,
                     fontFamily: kPacifico,
+                    fontWeight: FontWeight.bold,
                     text: "\$${state.product!.price}",
                   ),
                   SizedBox(height: context.height * 0.03),
                   CustomText(
                     fontSize: 18,
-                    text: state.product!.description,
                     textColor: kDarkBrown,
+                    text: state.product!.description,
                   ),
                   const Spacer(),
                   Row(
@@ -94,11 +79,15 @@ class AdminDetailsScreen extends StatelessWidget {
                     children: [
                       OutlinedButton(
                         style: OutlinedButton.styleFrom(
-                          fixedSize:
-                              Size(context.width * 0.7, context.height * 0.06),
+                          fixedSize: Size(
+                            context.width * 0.7,
+                            context.height * 0.06,
+                          ),
                           backgroundColor: Colors.transparent,
                           side: const BorderSide(
-                              color: Colors.white, style: BorderStyle.solid),
+                            color: Colors.white,
+                            style: BorderStyle.solid,
+                          ),
                         ),
                         onPressed: () {
                           BlocProvider.of<AdminDetailsCubit>(context)
@@ -106,9 +95,9 @@ class AdminDetailsScreen extends StatelessWidget {
                         },
                         child: CustomText(
                           fontSize: 18,
+                          fontFamily: kPacifico,
                           text: AppStrings.delete,
                           fontWeight: FontWeight.bold,
-                          fontFamily: kPacifico,
                           textColor: Colors.red.withOpacity(0.8),
                         ),
                       ),
@@ -125,10 +114,10 @@ class AdminDetailsScreen extends StatelessWidget {
                     child: CustomButton(
                       fontSize: 18,
                       text: AppStrings.edit,
-                      fontWeight: FontWeight.bold,
-                      width: context.width * 0.9,
-                      height: context.height * 0.07,
                       fontFamily: kPacifico,
+                      width: context.width * 0.9,
+                      fontWeight: FontWeight.bold,
+                      height: context.height * 0.07,
                       onPressed: () {
                         /// To Do o o o o o o o
                         Navigator.pushNamed(context, Screens.addProductScreen,
@@ -144,4 +133,15 @@ class AdminDetailsScreen extends StatelessWidget {
       ),
     );
   }
+
+  _appBar(BuildContext context) => appBar(
+        title: AppStrings.productDetails,
+        leading: IconButton(
+          onPressed: () {
+            BlocProvider.of<AdminDetailsCubit>(context).reset();
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+      );
 }

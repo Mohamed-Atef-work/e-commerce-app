@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/modules/admin/presentation/widgets/add_product_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
@@ -18,7 +19,7 @@ import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_layo
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 
 class AdminLayoutScreen extends StatelessWidget {
-  const AdminLayoutScreen({Key? key}) : super(key: key);
+  const AdminLayoutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,21 +44,7 @@ class AdminLayoutScreen extends StatelessWidget {
           body: _body(context),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
-            child: FloatingActionButton(
-              hoverColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              onPressed: () {
-                Navigator.pushNamed(context, Screens.addProductScreen);
-              },
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              backgroundColor: kWhiteGray,
-              child: const Icon(Icons.add, size: 30),
-            ),
-          ),
+          floatingActionButton: const AddProductButtonWidget(),
           bottomNavigationBar: _bottomNavBar(context),
         );
       }),
@@ -130,16 +117,6 @@ class AdminLayoutScreen extends StatelessWidget {
           ),
         ],
       );
-
-  /*BottomAppBar _bottom(BuildContext context) => BottomAppBar(
-        height: 65,
-        elevation: 1,
-        color: kPrimaryColorYellow,
-        shape: const CircularNotchedRectangle(),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: List.generate(, (index) => null),
-        ),);*/
 }
 
 //
@@ -174,13 +151,13 @@ final List<String> _tabs = [
 final List<ProductEntity> _products = List.generate(
   10,
   (index) => const ProductEntity(
-    description: "we are testing",
+    id: "",
+    price: 100,
     location: "home",
     category: "jackets",
-    price: 100,
+    description: "we are testing",
+    name: "Product details Screen task",
     image:
         "https://firebasestorage.googleapis.com/v0/b/ecommerce-39620.appspot.com/o/productImagesIMG-20231030-WA0011.jpg?alt=media&token=ddccf23c-2e3b-420b-a0a4-5cc527aff36b",
-    name: "Product details Screen task",
-    id: "",
   ),
 );

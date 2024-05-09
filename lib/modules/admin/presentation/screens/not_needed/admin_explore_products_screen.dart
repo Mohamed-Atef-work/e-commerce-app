@@ -13,7 +13,7 @@ import 'package:e_commerce_app/modules/admin/presentation/controllers/explore_pr
 import 'package:e_commerce_app/modules/admin/presentation/controllers/explore_product_controller/explore_product_state.dart';
 
 class ExploreProductsScreen extends StatelessWidget {
-  const ExploreProductsScreen({Key? key}) : super(key: key);
+  const ExploreProductsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +30,11 @@ class ExploreProductsScreen extends StatelessWidget {
           backgroundColor: kPrimaryColorYellow,
           centerTitle: true,
           title: const CustomText(
-            text: AppStrings.products,
             fontSize: 30,
             fontFamily: kPacifico,
-            fontWeight: FontWeight.bold,
             textColor: Colors.black,
+            text: AppStrings.products,
+            fontWeight: FontWeight.bold,
           ),
         ),
         backgroundColor: kPrimaryColorYellow,

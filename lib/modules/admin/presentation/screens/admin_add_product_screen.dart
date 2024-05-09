@@ -13,7 +13,7 @@ import 'package:e_commerce_app/modules/admin/presentation/widgets/manage_product
 import 'package:e_commerce_app/modules/admin/presentation/controllers/add_product_controller/add_product_cubit.dart';
 
 class AddProductScreen extends StatelessWidget {
-  const AddProductScreen({Key? key}) : super(key: key);
+  const AddProductScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

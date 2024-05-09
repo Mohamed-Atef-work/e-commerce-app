@@ -25,3 +25,12 @@ PreferredSizeWidget appBar({
         fontWeight: FontWeight.bold,
       ),
     );
+
+class AppBBar extends StatelessWidget {
+  const AppBBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar();
+  }
+}
