@@ -95,28 +95,3 @@ class EditProfileScreen extends StatelessWidget {
     );
   }
 }
-/*Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const CustomText(
-                fontSize: 18,
-                textColor: Colors.black,
-                textAlign: TextAlign.center,
-                text: AppStrings.editProfile,
-              ),
-              const SizedBox(width: 5),
-              IconButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) => const UpDateProfileWidget(),
-                  );
-                },
-                //hoverColor: Colors.red,
-                splashColor: Colors.red,
-                focusColor: Colors.white,
-                highlightColor: kWhiteGray,
-                icon: const Icon(Icons.edit, color: Colors.teal),
-              ),
-            ],
-          ),*/
