@@ -1,9 +1,9 @@
-import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
-import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
+import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/user/domain/use_cases/add_favorite_use_case.dart';
 import 'package:e_commerce_app/modules/user/presentation/widgets/loading_heart_widget.dart';
@@ -70,9 +70,10 @@ class HeartWihMangeFavoriteCubitProviderWidget extends StatelessWidget {
           state.heartColor == Colors.red
               ? AppStrings.added
               : AppStrings.deleted,
+          context,
           Colors.green);
     } else if (state.requestState == RequestState.error) {
-      showMyToast(state.message!, Colors.red);
+      showMyToast(state.message!, context, Colors.red);
     }
   }
 }

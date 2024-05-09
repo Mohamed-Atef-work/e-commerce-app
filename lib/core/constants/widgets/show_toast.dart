@@ -3,11 +3,13 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 showMyToast(
   String msg,
+  BuildContext context,
   Color backgroundColor,
 ) =>
     showToast(
       msg,
-      //textColor: Colors.white,
+      context: context,
+      dismissOtherToast: true,
       backgroundColor: backgroundColor,
     );
 

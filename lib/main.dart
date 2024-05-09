@@ -9,7 +9,7 @@ void main() async {
 
   /// To D0000000
   /// handle Login in order to ----->
-  /// ..........-_-_-_--> Take his [Id] to GET {FAVORITES} and {ORDERS}
+  /// ..........-_-_-_-_-> Take his [Id] to GET {FAVORITES} and {ORDERS}
   /// store user data [firebase] ....................................... [[Done]]
   /// store user data [locally]
   /// Orders Screen For [User]

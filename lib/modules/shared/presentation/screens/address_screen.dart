@@ -43,34 +43,30 @@ class EditAddressScreen extends StatelessWidget {
                   children: [
                     CustomTextFormField(
                       hintText: AppStrings.city,
+                      validator: _cityValidator,
                       prefixIcon: Icons.location_on_outlined,
                       textEditingController: addressController.city,
-                      validator: (value) =>
-                          Validators.stringValidator(value, AppStrings.city),
                     ),
                     _sizedBox(context.height * 0.02),
                     CustomTextFormField(
                       prefixIcon: Icons.add_road,
                       hintText: AppStrings.street,
+                      validator: _streetValidator,
                       textEditingController: addressController.street,
-                      validator: (value) =>
-                          Validators.stringValidator(value, AppStrings.street),
                     ),
                     _sizedBox(context.height * 0.02),
                     CustomTextFormField(
                       prefixIcon: Icons.apartment,
                       hintText: AppStrings.buildingBloc,
+                      validator: _buildingBLocValidator,
                       textEditingController: addressController.bloc,
-                      validator: (value) => Validators.stringValidator(
-                          value, AppStrings.buildingBloc),
                     ),
                     _sizedBox(context.height * 0.02),
                     CustomTextFormField(
                       prefixIcon: Icons.home,
                       hintText: AppStrings.apartment,
+                      validator: _apartmentValidator,
                       textEditingController: addressController.apartment,
-                      validator: (value) => Validators.numericValidator(
-                          value, AppStrings.apartment),
                     ),
                     _sizedBox(context.height * 0.02),
                     BlocConsumer<EditAddressCubit, EditAddressState>(
@@ -103,15 +99,27 @@ class EditAddressScreen extends StatelessWidget {
     );
   }
 
+  String? _cityValidator(String? value) =>
+      Validators.stringValidator(value, AppStrings.city);
+
+  String? _streetValidator(String? value) =>
+      Validators.stringValidator(value, AppStrings.street);
+
+  String? _buildingBLocValidator(String? value) =>
+      Validators.stringValidator(value, AppStrings.buildingBloc);
+
+  String? _apartmentValidator(String? value) =>
+      Validators.numericValidator(value, AppStrings.apartment);
+
   void _listener(BuildContext context, EditAddressState state) {
     if (state.changeState == RequestState.success) {
       final shared = _data(context);
       final userDataController = BlocProvider.of<SharedUserDataCubit>(context);
       userDataController.takeShared(shared);
       BlocProvider.of<EditAddressCubit>(context).clear();
-      showMyToast(AppStrings.success, Colors.green);
+      showMyToast(AppStrings.success, context, Colors.green);
     } else if (state.changeState == RequestState.error) {
-      showMyToast(state.message, Colors.red);
+      showMyToast(state.message, context, Colors.red);
     }
   }
 

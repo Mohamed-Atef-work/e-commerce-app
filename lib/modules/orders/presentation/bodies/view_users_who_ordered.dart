@@ -15,29 +15,31 @@ class ViewUsersWhoOrderedBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GetUsersWhoOrderedCubit, GetUsersWhoOrderedState>(
-        builder: (context, state) {
-      if (state.usersDataState == RequestState.loading) {
-        return const LoadingWidget();
-      } else if (state.usersDataState == RequestState.success &&
-          state.usersData.isEmpty) {
-        return const MessengerComponent(AppStrings.thereIsNoOrders);
-      } else {
-        return ListView.separated(
-          itemCount: state.usersData.length,
-          padding: const EdgeInsets.all(10),
-          physics: const BouncingScrollPhysics(),
-          itemBuilder: (context, index) => TextButton(
-            onPressed: () {
-              /// ..............................................................
-              BlocProvider.of<GetUserOrdersCubit>(context)
-                  .getOrders(state.usersData[index].id);
-              BlocProvider.of<ManageAdminOrderViewCubit>(context).viewOrders();
-            },
-            child: Text(state.usersData[index].email),
-          ),
-          separatorBuilder: (context, index) => const DividerComponent(),
-        );
-      }
-    });
+      builder: (context, state) {
+        if (state.usersDataState == RequestState.loading) {
+          return const LoadingWidget();
+        } else if (state.usersDataState == RequestState.success &&
+            state.usersData.isEmpty) {
+          return const MessengerComponent(AppStrings.thereIsNoOrders);
+        } else {
+          return ListView.separated(
+            itemCount: state.usersData.length,
+            padding: const EdgeInsets.all(10),
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) => TextButton(
+              onPressed: () {
+                /// ..............................................................
+                BlocProvider.of<GetUserOrdersCubit>(context)
+                    .getOrders(state.usersData[index].id);
+                BlocProvider.of<ManageAdminOrderViewCubit>(context)
+                    .viewOrders();
+              },
+              child: Text(state.usersData[index].email),
+            ),
+            separatorBuilder: (context, index) => const DividerComponent(),
+          );
+        }
+      },
+    );
   }
 }

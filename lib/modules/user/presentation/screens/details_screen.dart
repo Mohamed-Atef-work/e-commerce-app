@@ -17,7 +17,7 @@ import 'package:e_commerce_app/modules/user/presentation/controllers/product_det
 import 'package:e_commerce_app/modules/user/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 
 class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({Key? key}) : super(key: key);
+  const DetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -129,9 +129,9 @@ class DetailsScreen extends StatelessWidget {
 
   void _listener(BuildContext context, ProductDetailsState state) {
     if (state.addToCart == RequestState.success) {
-      showMyToast(AppStrings.added, Colors.green);
+      showMyToast(AppStrings.added,context, Colors.green);
     } else if (state.addToCart == RequestState.error) {
-      showMyToast(state.message!, Colors.red);
+      showMyToast(state.message!,context, Colors.red);
     }
   }
 }

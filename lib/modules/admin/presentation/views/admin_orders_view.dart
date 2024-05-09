@@ -16,21 +16,14 @@ class AdminOrderView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        /// Provide the controller .............................................
-        BlocProvider(
-          create: (context) => sl<ManageAdminOrderViewCubit>(),
-        ),
-        BlocProvider(
-            create: (context) => sl<GetUsersWhoOrderedCubit>()..getUsersTwo()),
-        BlocProvider(
-          create: (context) => sl<GetUserOrdersCubit>(),
-        ),
-        BlocProvider(
-          create: (context) => sl<OrderItemsCubit>(),
-        ),
+        /// Provide the controllers ............................................
+        BlocProvider(create: (_) => sl<ManageAdminOrderViewCubit>()),
+        BlocProvider(create: (_) => sl<GetUsersWhoOrderedCubit>()..getUsers()),
+        BlocProvider(create: (_) => sl<GetUserOrdersCubit>()),
+        BlocProvider(create: (_) => sl<OrderItemsCubit>()),
       ],
       child: BlocBuilder<ManageAdminOrderViewCubit, ManageAdminOrderViewState>(
-        builder: (BuildContext context, state) {
+        builder: (_, state) {
           if (state.view == AdminOrderViewState.users) {
             return const ViewUsersWhoOrderedBody();
           } else if (state.view == AdminOrderViewState.userOrders) {

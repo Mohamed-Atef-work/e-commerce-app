@@ -23,7 +23,7 @@ class AdminRepositoryData implements AdminRepositoryDomain {
     this.dataSource,
   );
   @override
-  Future<Either<Failure, void>> addProduct(AddProductparams params) async {
+  Future<Either<Failure, void>> addProduct(AddProductParams params) async {
     try {
       final result = await dataSource.addProduct(params);
       return Right(result);

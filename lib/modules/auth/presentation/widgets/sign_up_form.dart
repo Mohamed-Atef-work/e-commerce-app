@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -8,6 +7,7 @@ import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/sign_up_controller/sign_up_bloc.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/sign_up_controller/sign_up_states.dart';
@@ -64,26 +64,25 @@ class SignUpFormWidget extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(vertical: context.height * 0.05),
             child: BlocConsumer<SignUpBloc, SignUpState>(
-                listener: (context, state) {
-              _listener(context, state);
-            }, builder: (context, state) {
-              if (state.signUpState == RequestState.loading ||
-                  state.storeUserDataState == RequestState.loading) {
-                return SizedBox(
-                  height: context.height * 0.05,
-                  child: const LoadingWidget(),
-                );
-              } else {
-                return CustomButton(
-                  text: AppStrings.signUp,
-                  width: context.width * 0.3,
-                  height: context.height * 0.05,
-                  onPressed: () {
-                    controller.signUp();
-                  },
-                );
-              }
-            }),
+                listener: _listener,
+                builder: (context, state) {
+                  if (state.signUpState == RequestState.loading ||
+                      state.storeUserDataState == RequestState.loading) {
+                    return SizedBox(
+                      height: context.height * 0.05,
+                      child: const LoadingWidget(),
+                    );
+                  } else {
+                    return CustomButton(
+                      text: AppStrings.signUp,
+                      width: context.width * 0.3,
+                      height: context.height * 0.05,
+                      onPressed: () {
+                        controller.signUp();
+                      },
+                    );
+                  }
+                }),
           ),
         ],
       ),
@@ -93,11 +92,11 @@ class SignUpFormWidget extends StatelessWidget {
   void _listener(BuildContext context, SignUpState state) {
     if (state.signUpState == RequestState.success &&
         state.storeUserDataState == RequestState.success) {
-      showMyToast(AppStrings.success, Colors.green);
+      showMyToast(AppStrings.success, context, Colors.green);
       Navigator.of(context).pushReplacementNamed(Screens.loginScreen);
     } else if (state.signUpState == RequestState.error ||
         state.storeUserDataState == RequestState.error) {
-      showMyToast(AppStrings.ops, Colors.red);
+      showMyToast(AppStrings.ops, context, Colors.red);
     }
   }
 }

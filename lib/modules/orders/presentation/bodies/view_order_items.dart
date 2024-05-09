@@ -17,9 +17,7 @@ class ViewUserOrderItemsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<OrderItemsCubit, OrderItemsState>(
-      listener: (_, state) {
-        _listener(state);
-      },
+      listener: _listener,
       builder: (context, state) {
         if (state.getOrderItems == RequestState.loading ||
             state.deleteOrderItem == RequestState.loading) {
@@ -48,13 +46,13 @@ class ViewUserOrderItemsBody extends StatelessWidget {
     );
   }
 
-  void _listener(OrderItemsState state) {
+  void _listener(BuildContext context, OrderItemsState state) {
     if (state.deleteOrderItem == RequestState.error) {
-      showMyToast(state.message, Colors.red);
+      showMyToast(state.message, context, Colors.red);
     } else if (state.getOrderItems == RequestState.error) {
-      showMyToast(state.message, Colors.red);
+      showMyToast(state.message, context, Colors.red);
     } else if (state.deleteOrderItem == RequestState.success) {
-      showMyToast(AppStrings.deleted, Colors.green);
+      showMyToast(AppStrings.deleted, context, Colors.green);
     }
   }
 }

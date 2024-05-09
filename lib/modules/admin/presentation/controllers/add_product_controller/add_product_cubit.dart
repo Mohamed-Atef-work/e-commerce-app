@@ -150,7 +150,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
     print(
         "< -------------------------------------------_addProduct----------------------------------------------- >");
     final addProductResult = await addProductUseCase(
-      AddProductparams(
+      AddProductParams(
         product: ProductModel(
           description: descriptionController.text,
           category: state.categories![state.categoryIndex].name,
@@ -282,7 +282,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
 /*Future<void> testing() async {
     if(formKey.currentState!.validate()){    /// < -------------------------------------------------------------------- >
       final addProductResult = await addProductUseCase(
-        AddProductparams(
+        AddProductParams(
           productDescription: descriptionController.text,
           productCategory: categoryController.text,
           productLocation: locationController.text,

@@ -11,7 +11,7 @@ import 'package:e_commerce_app/modules/admin/domain/use_cases/add_new_product_ca
 abstract class ProductStore {
   Stream<QuerySnapshot<Map<String, dynamic>>> loadProducts(
       LoadProductsParams params);
-  Future<void> addProduct(AddProductparams product);
+  Future<void> addProduct(AddProductParams product);
   Future<void> deleteProduct(DeleteProductParams params);
   Future<void> updateProduct(UpdateProductParams params);
   Stream<QuerySnapshot<Map<String, dynamic>>> getAllProductCategories();
@@ -26,7 +26,7 @@ class ProductStoreImpl implements ProductStore {
   ProductStoreImpl(this.store);
 
   @override
-  Future<void> addProduct(AddProductparams params) async {
+  Future<void> addProduct(AddProductParams params) async {
     await store
         .collection(kProducts)
         .doc(kCategories)

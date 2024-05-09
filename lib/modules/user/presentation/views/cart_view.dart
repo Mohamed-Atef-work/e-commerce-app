@@ -17,7 +17,7 @@ import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data
 import 'package:e_commerce_app/modules/user/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 
 class CartView extends StatelessWidget {
-  const CartView({Key? key}) : super(key: key);
+  const CartView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +26,7 @@ class CartView extends StatelessWidget {
     final userData = BlocProvider.of<SharedUserDataCubit>(context).state;
     final userEntity = userData.sharedEntity!.user.userEntity;
     return BlocConsumer<ManageCartProductsCubit, ManageCartProductsState>(
-      listener: (_, state) {
-        _listener(state);
-      },
+      listener: _listener,
       builder: (_, state) {
         if (state.getCart == RequestState.loading) {
           return const LoadingCartWidget();
@@ -83,7 +81,8 @@ class CartView extends StatelessWidget {
                       print("userEntity.phone${userEntity.address}");
 
                       /// to do error snack bar;
-                      showMyToast(AppStrings.pleaseAddPhoneAddress, Colors.red);
+                      showMyToast(AppStrings.pleaseAddPhoneAddress, context,
+                          Colors.red);
                     }
                   },
                 ),
@@ -103,14 +102,14 @@ class CartView extends StatelessWidget {
   _secondaryBackground() => const DismissibleSecondaryBackgroundComponent(
       color: Colors.red, icon: Icons.delete);
 
-  void _listener(ManageCartProductsState state) {
+  void _listener(BuildContext context, ManageCartProductsState state) {
     if (state.getCart == RequestState.error ||
         state.addOrder == RequestState.error ||
         state.deleteFromCart == RequestState.error) {
-      showMyToast(state.message!, Colors.red);
+      showMyToast(state.message!, context, Colors.red);
     } else if (state.addOrder == RequestState.success ||
         state.deleteFromCart == RequestState.success) {
-      showMyToast(state.message!, Colors.green);
+      showMyToast(state.message!, context, Colors.green);
     }
   }
 }

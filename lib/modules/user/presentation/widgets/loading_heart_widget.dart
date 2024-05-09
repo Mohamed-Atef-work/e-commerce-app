@@ -36,9 +36,9 @@ class _LoadingHeartWidgetState extends State<LoadingHeartWidget>
       opacity: animation.value,
       child: IconButton(
         splashRadius: 20,
+        onPressed: () {},
         splashColor: Colors.red,
         highlightColor: Colors.transparent,
-        onPressed: () {},
         icon: const Icon(
           Icons.favorite,
           color: Colors.red,

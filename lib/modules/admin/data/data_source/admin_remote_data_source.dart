@@ -17,7 +17,7 @@ import '../../../shared/domain/use_cases/load_product_use_case.dart';
 import '../../domain/use_cases/up_date_product_category_use_case.dart';
 
 abstract class AdminBaseRemoteDataSource {
-  Future<void> addProduct(AddProductparams params);
+  Future<void> addProduct(AddProductParams params);
   Future<Reference> uploadProductImage(File image);
   Future<void> deleteProduct(DeleteProductParams params);
   Future<void> updateProduct(UpdateProductParams params);
@@ -45,7 +45,7 @@ class AdminRemoteDataSourceImpl implements AdminBaseRemoteDataSource {
   }
 
   @override
-  Future<void> addProduct(AddProductparams params) async {
+  Future<void> addProduct(AddProductParams params) async {
     await store.addProduct(params).then((value) {}).catchError((error) {
       return throw ServerException(
         message: error.code,

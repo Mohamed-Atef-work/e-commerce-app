@@ -1,4 +1,9 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/core/components/custom_text.dart';
+import 'package:e_commerce_app/core/fire_base/fire_store/product.dart';
+import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
+import 'package:e_commerce_app/modules/admin/domain/use_cases/add_product_use_case.dart';
 import 'package:flutter/material.dart';
 
 class TestScreen extends StatelessWidget {
@@ -7,29 +12,31 @@ class TestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column() ,
+      body: Center(
+        child: TextButton(
+          onPressed: () async {
+            final FirebaseFirestore firestore = FirebaseFirestore.instance;
+            final ProductStore store = ProductStoreImpl(firestore);
+            await store.addProduct(
+              const AddProductParams(
+                product: ProductModel(
+                    description: "productDescription",
+                    location: "productLocation",
+                    category: "suit shirts",
+                    price: 20,
+                    image: "productImage",
+                    name: "productName"),
+              ),
+            );
+          },
+          child: const CustomText(text: "Add"),
+        ),
+      ) ,
     );
   }
 }
 
-/*TextButton(
-onPressed: () async {
-final FirebaseFirestore firestore = FirebaseFirestore.instance;
-final ProductStore store = ProductStoreImpl(firestore);
-await store.addProduct(
-const AddProductparams(
-product: ProductModel(
-description: "productDescription",
-location: "productLocation",
-category: "suit shirts",
-price: 20,
-image: "productImage",
-name: "productName"),
-),
-);
-},
-child: const CustomText(text: "Add"),
-)*/
+
 
 /*Future<List<DocumentSnapshot<Map<String, dynamic>>>>
     getFavoriteProductsOfCategory({

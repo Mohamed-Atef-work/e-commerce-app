@@ -17,7 +17,7 @@ abstract class AdminRepositoryDomain {
   Either<Failure, Stream<List<ProductEntity>>> loadProducts(
       LoadProductsParams params);
   Future<Either<Failure, Reference>> uploadProductImage(File params);
-  Future<Either<Failure, void>> addProduct(AddProductparams params);
+  Future<Either<Failure, void>> addProduct(AddProductParams params);
   Future<Either<Failure, void>> editProduct(UpdateProductParams params);
   Future<Either<Failure, String>> downloadProductImageUrl(Reference params);
   Either<Failure, Stream<List<ProductCategoryEntity>>>

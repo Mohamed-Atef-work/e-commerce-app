@@ -12,47 +12,46 @@ import 'package:e_commerce_app/modules/orders/presentation/controller/manage_use
 import 'package:e_commerce_app/modules/orders/presentation/controller/get_user_orders_controller/get_user_orders_cubit.dart';
 
 class ViewUserOrdersBody extends StatelessWidget {
-  const ViewUserOrdersBody({Key? key}) : super(key: key);
+  const ViewUserOrdersBody({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GetUserOrdersCubit, GetUserOrdersState>(
-        listener: (_, state) {
-      _listener(state);
-    }, builder: (_, state) {
-      if (state.deleteOrder == RequestState.loading ||
-          state.getOrders == RequestState.loading) {
-        return const LoadingWidget();
-      } else if (state.getOrders == RequestState.success &&
-          state.orders.isEmpty) {
-        return const MessengerComponent(AppStrings.youHaveNoOrders);
-      } else {
-        return ListView.separated(
-          itemCount: state.orders.length,
-          padding: const EdgeInsets.all(10),
-          physics: const BouncingScrollPhysics(),
-          itemBuilder: (context, index) => OrderWidget(
-            index: index,
-            onPressed: () {
-              BlocProvider.of<OrderItemsCubit>(context)
-                  .getOrderItems(state.orders[index].reference!);
-              BlocProvider.of<ManageUserOrderViewCubit>(context)
-                  .viewOrderItems();
-            },
-          ),
-          separatorBuilder: (context, index) => const DividerComponent(),
-        );
-      }
-    });
+        listener: _listener,
+        builder: (_, state) {
+          if (state.deleteOrder == RequestState.loading ||
+              state.getOrders == RequestState.loading) {
+            return const LoadingWidget();
+          } else if (state.getOrders == RequestState.success &&
+              state.orders.isEmpty) {
+            return const MessengerComponent(AppStrings.youHaveNoOrders);
+          } else {
+            return ListView.separated(
+              itemCount: state.orders.length,
+              padding: const EdgeInsets.all(10),
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, index) => OrderWidget(
+                index: index,
+                onPressed: () {
+                  BlocProvider.of<OrderItemsCubit>(context)
+                      .getOrderItems(state.orders[index].reference!);
+                  BlocProvider.of<ManageUserOrderViewCubit>(context)
+                      .viewOrderItems();
+                },
+              ),
+              separatorBuilder: (context, index) => const DividerComponent(),
+            );
+          }
+        });
   }
 
-  void _listener(GetUserOrdersState state) {
+  void _listener(BuildContext context, GetUserOrdersState state) {
     if (state.getOrders == RequestState.error) {
-      showMyToast(state.message, Colors.red);
+      showMyToast(state.message, context, Colors.red);
     } else if (state.deleteOrder == RequestState.success) {
-      showMyToast(AppStrings.deleted, Colors.green);
+      showMyToast(AppStrings.deleted, context, Colors.green);
     } else if (state.deleteOrder == RequestState.error) {
-      showMyToast(state.message, Colors.red);
+      showMyToast(state.message, context, Colors.red);
     }
   }
 }
