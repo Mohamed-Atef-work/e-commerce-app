@@ -22,7 +22,7 @@ class _CustomFadingWidgetState extends State<CustomFadingWidget>
     );
     ///////////////////////////////////////////////////////////
     animation =
-        Tween<double>(begin: 0.2, end: 0.8).animate(animationController);
+        Tween<double>(begin: 0.3, end: 0.8).animate(animationController);
     ///////////////////////////////////////////////////////////
     animation.addListener(() {
       setState(() {});

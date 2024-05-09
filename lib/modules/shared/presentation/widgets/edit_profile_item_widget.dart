@@ -30,22 +30,23 @@ class EditProfileItemWidget extends StatelessWidget {
         child: Row(
           children: [
             Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomText(
-                    fontSize: 20,
-                    text: "$title :",
-                    fontFamily: kPacifico,
-                    textColor: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  CustomText(
-                    fontSize: 20,
-                    text: " $value",
-                    textColor: Colors.black,
-                  ),
-                ]),
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomText(
+                  fontSize: 20,
+                  text: "$title :",
+                  fontFamily: kPacifico,
+                  textColor: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+                CustomText(
+                  fontSize: 20,
+                  text: " $value",
+                  textColor: Colors.black,
+                ),
+              ],
+            ),
             const Spacer(),
             IconButton(
               onPressed: onPressed,
@@ -78,22 +79,23 @@ class AddressWidget extends StatelessWidget {
         ),
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
         child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const CustomText(
-                fontSize: 20,
-                text: AppStrings.address,
-                fontFamily: kPacifico,
-                textColor: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-              CustomText(
-                fontSize: 20,
-                text: address,
-                textColor: Colors.black,
-              ),
-            ]),
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const CustomText(
+              fontSize: 20,
+              fontFamily: kPacifico,
+              textColor: Colors.black,
+              text: AppStrings.address,
+              fontWeight: FontWeight.bold,
+            ),
+            CustomText(
+              fontSize: 20,
+              text: address,
+              textColor: Colors.black,
+            ),
+          ],
+        ),
       ),
     );
   }

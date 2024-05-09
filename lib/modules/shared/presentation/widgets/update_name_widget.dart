@@ -27,7 +27,7 @@ class UpDateNameWidget extends StatelessWidget {
 
     /// bloc
     return BlocProvider(
-      create: (context) => sl<UpdateProfileCubit>(),
+      create: (_) => sl<UpdateProfileCubit>(),
       child: BaseModelSheetComponent(
         height: context.height * 0.3,
         child: Builder(builder: (context) {
@@ -37,7 +37,7 @@ class UpDateNameWidget extends StatelessWidget {
 
           /// bloc
           return BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
-            listener: (context, state) {
+            listener: (_, state) {
               if (state.updateState == RequestState.success) {
                 userDataController.getSavedUser();
               }

@@ -42,7 +42,7 @@ class UpDateEmailWidget extends StatelessWidget {
                 userDataController.getSavedUser();
               }
             },
-            builder: (context, state) {
+            builder: (_, state) {
               if (state.changeState == RequestState.loading) {
                 return const LoadingWidget();
               } else if (state.changeState == RequestState.success) {

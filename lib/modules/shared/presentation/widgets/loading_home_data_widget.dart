@@ -23,7 +23,7 @@ class LoadingHomeProductsWidget extends StatelessWidget {
           childAspectRatio: 1 / 1.6,
           crossAxisCount: 2,
         ),
-        itemBuilder: (context, index) => Container(
+        itemBuilder: (_, __) => Container(
           decoration: BoxDecoration(
             color: kWhiteGray,
             borderRadius: BorderRadius.circular(30),
@@ -73,7 +73,7 @@ class LoadingCategoriesWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: 6,
             physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) => Container(
+            itemBuilder: (_, __) => Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               height: height * 0.3,
               width: width * 0.25,
@@ -82,7 +82,7 @@ class LoadingCategoriesWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
             ),
-            separatorBuilder: (context, index) => SizedBox(width: width * 0.01),
+            separatorBuilder: (_, __) => SizedBox(width: width * 0.01),
           ),
         ),
       ),

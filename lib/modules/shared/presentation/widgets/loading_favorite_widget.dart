@@ -23,7 +23,7 @@ class LoadingFavoriteWidget extends StatelessWidget {
 }
 
 class LoadingFavoriteProductWidget extends StatelessWidget {
-  const LoadingFavoriteProductWidget({Key? key}) : super(key: key);
+  const LoadingFavoriteProductWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

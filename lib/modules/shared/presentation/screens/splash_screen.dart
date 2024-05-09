@@ -24,7 +24,11 @@ class _SplashScreenState extends State<SplashScreen> {
       appBar: AppBar(toolbarHeight: 0),
       body: BlocListener<SharedUserDataCubit, SharedUserDataState>(
         listener: _listener,
-        child: const Center(child: CustomFadingWidget(child: LogoWidget())),
+        child: const Center(
+          child: CustomFadingWidget(
+            child: LogoWidget(),
+          ),
+        ),
       ),
     );
   }

@@ -27,7 +27,7 @@ class UpDatePhoneWidget extends StatelessWidget {
 
     /// bloc
     return BlocProvider(
-      create: (context) => sl<UpdateProfileCubit>(),
+      create: (_) => sl<UpdateProfileCubit>(),
       child: Builder(builder: (context) {
         /// bloc
         final updateProfileController =
@@ -55,11 +55,10 @@ class UpDatePhoneWidget extends StatelessWidget {
                     children: [
                       CustomTextFormField(
                         hintText: AppStrings.phone,
+                        validator: _phoneValidator,
                         prefixIcon: Icons.phone_android,
                         textEditingController:
                             updateProfileController.changedOne,
-                        validator: (value) => Validators.numericValidator(
-                            value, AppStrings.phone),
                       ),
                       CustomButton(
                         height: 50,
@@ -93,4 +92,7 @@ class UpDatePhoneWidget extends StatelessWidget {
       }),
     );
   }
+
+  String? _phoneValidator(String? value) =>
+      Validators.numericValidator(value, AppStrings.phone);
 }
