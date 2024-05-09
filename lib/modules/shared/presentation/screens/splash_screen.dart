@@ -23,30 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       appBar: AppBar(toolbarHeight: 0),
       body: BlocListener<SharedUserDataCubit, SharedUserDataState>(
-        listener: (context, state) {
-          print("${state.message} < ------ listener ----- > ${state.getState}");
-          print(state.sharedEntity?.user.userEntity.name);
-          print(state.sharedEntity?.user.adminOrUser);
-          print(state.sharedEntity?.user.password);
-
-          /// < ------------------------------------------------------------ >
-          if (state.getState == RequestState.success) {
-            if (state.sharedEntity!.user.adminOrUser == AdminUser.admin) {
-              Navigator.of(context)
-                  .pushReplacementNamed(Screens.adminLayoutScreen);
-            } else {
-              Navigator.of(context)
-                  .pushReplacementNamed(Screens.userLayoutScreen);
-            }
-          } else if (state.getState == RequestState.error) {
-            if (state.message == kThereIsNoData) {
-              Navigator.of(context).pushReplacementNamed(Screens.loginScreen);
-            } else {
-              /// show snake bar .....
-              showMyToast(AppStrings.tryAgain,context, Colors.red);
-            }
-          }
-        },
+        listener: _listener,
         child: const Center(child: CustomFadingWidget(child: LogoWidget())),
       ),
     );
@@ -61,5 +38,21 @@ class _SplashScreenState extends State<SplashScreen> {
         BlocProvider.of<SharedUserDataCubit>(context).getInitialDataLocally();
       },
     );
+  }
+
+  void _listener(BuildContext context, SharedUserDataState state) {
+    if (state.getState == RequestState.success) {
+      if (state.sharedEntity!.user.adminOrUser == AdminUser.admin) {
+        Navigator.of(context).pushReplacementNamed(Screens.adminLayoutScreen);
+      } else {
+        Navigator.of(context).pushReplacementNamed(Screens.userLayoutScreen);
+      }
+    } else if (state.getState == RequestState.error) {
+      if (state.message == kThereIsNoData) {
+        Navigator.of(context).pushReplacementNamed(Screens.loginScreen);
+      } else {
+        showMyToast(AppStrings.tryAgain, context, Colors.red);
+      }
+    }
   }
 }
