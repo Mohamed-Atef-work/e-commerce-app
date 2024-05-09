@@ -1,6 +1,6 @@
-import 'package:e_commerce_app/modules/shared/presentation/controller/change_password_controller/change_password_cubit.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_state.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/change_password_controller/change_password_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_state.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';

@@ -8,9 +8,9 @@ import 'package:e_commerce_app/modules/auth/data/data_source/auth_remote_data_so
 import 'package:e_commerce_app/modules/auth/domain/repository/auth_domain_repository.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_bloc.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/sign_up_controller/sign_up_bloc.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/logout_controller/logout_cubit.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/change_email_controller/change_email_cubit.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/change_password_controller/change_password_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/logout_controller/logout_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/change_email_controller/change_email_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/change_password_controller/change_password_cubit.dart';
 
 void auth() {
   // < --------------------------------- Auth --------------------------------- >

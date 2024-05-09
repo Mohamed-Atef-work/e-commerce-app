@@ -8,11 +8,11 @@ import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/core/components/product_details_component.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/categories_widget.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/products_view_controller/products_view_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 
 class AdminProductsView extends StatelessWidget {
-  const AdminProductsView({Key? key}) : super(key: key);
+  const AdminProductsView({super.key});
 
   @override
   Widget build(BuildContext context) {

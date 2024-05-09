@@ -10,9 +10,9 @@ import 'package:e_commerce_app/modules/admin/domain/use_cases/get_all_product_ca
 import 'package:e_commerce_app/modules/shared/domain/use_cases/save_address_use_case.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/update_user_data_use_case.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/user_data_after_login_use_case.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/address_controller/edit_address_cubit.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/up_date_profile_controller/update_profile_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/address_controller/edit_address_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/up_date_profile_controller/update_profile_cubit.dart';
 
 void shared() {
   //sl.registerFactory(() => InitCubit(sl()));

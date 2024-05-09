@@ -14,8 +14,8 @@ import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/modules/shared/domain/entities/cached_user_data_entity.dart';
 import 'package:e_commerce_app/modules/shared/domain/entities/shared_user_data_entity.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/address_controller/edit_address_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/address_controller/edit_address_cubit.dart';
 
 class EditAddressScreen extends StatelessWidget {
   const EditAddressScreen({super.key});

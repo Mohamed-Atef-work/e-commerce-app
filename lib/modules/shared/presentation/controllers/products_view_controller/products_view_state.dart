@@ -1,4 +1,4 @@
-part of 'home_screen_cubit.dart';
+part of 'products_view_cubit.dart';
 
 @immutable
 class ProductsViewState {

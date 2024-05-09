@@ -11,7 +11,7 @@ import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/account_item_widget.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/profile_item_widget.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/logout_controller/logout_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/logout_controller/logout_cubit.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

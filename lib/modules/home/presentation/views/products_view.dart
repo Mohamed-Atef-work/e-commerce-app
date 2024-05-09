@@ -8,11 +8,11 @@ import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/core/components/product_details_component.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/categories_widget.dart';
 import 'package:e_commerce_app/modules/shared/presentation/widgets/loading_home_data_widget.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/products_view_controller/products_view_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';
 
 class UserProductsView extends StatelessWidget {
-  const UserProductsView({Key? key}) : super(key: key);
+  const UserProductsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +40,12 @@ class UserProductsView extends StatelessWidget {
                     crossAxisCount: 2,
                   ),
                   itemBuilder: (context, index) => ProductComponent(
+                    product: state.products[index],
                     onPressed: () {
                       BlocProvider.of<ProductDetailsCubit>(context)
                           .product(state.products[index]);
                       Navigator.pushNamed(context, Screens.detailsScreen);
                     },
-                    product: state.products[index],
                   ),
                 );
               }

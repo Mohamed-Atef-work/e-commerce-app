@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/modules/home/presentation/controllers/home_screen_controller/home_screen_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/products_view_controller/products_view_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/widgets/loading_home_data_widget.dart';
 import 'package:e_commerce_app/core/components/product_category_component.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';

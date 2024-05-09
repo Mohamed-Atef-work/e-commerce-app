@@ -20,7 +20,7 @@ import 'package:e_commerce_app/modules/orders/presentation/screens/user_order_sc
 import 'package:e_commerce_app/modules/admin/presentation/screens/admin_layout_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/edit_profile_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/change_password_screen.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/product_details_controller/product_details_cubit.dart';

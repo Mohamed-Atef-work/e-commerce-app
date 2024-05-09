@@ -9,7 +9,7 @@ import 'package:e_commerce_app/modules/admin/domain/use_cases/get_all_product_ca
 import 'package:e_commerce_app/modules/shared/domain/use_cases/load_product_use_case.dart';
 import 'package:meta/meta.dart';
 
-part 'home_screen_state.dart';
+part 'products_view_state.dart';
 
 class ProductsViewCubit extends Cubit<ProductsViewState> {
   final GetAllProductCategoriesUseCase getAllProductCategoriesUseCase;
@@ -27,7 +27,7 @@ class ProductsViewCubit extends Cubit<ProductsViewState> {
     await categorySub?.cancel();
     emit(state.copyWith(categoriesState: RequestState.loading));
     print("Categories -----------> ${state.categoriesState}");
-    final result = await getAllProductCategoriesUseCase(const NoParams());
+    final result = getAllProductCategoriesUseCase(const NoParams());
     result.fold(
         (l) => emit(
               state.copyWith(
@@ -48,7 +48,7 @@ class ProductsViewCubit extends Cubit<ProductsViewState> {
     emit(state.copyWith(productsState: RequestState.loading));
     print("products -----------> ${state.productsState}");
 
-    final result = await loadProductsUseCase(
+    final result = loadProductsUseCase(
       LoadProductsParams(category: state.categories[state.categoryIndex].name),
     );
     result.fold(
@@ -76,7 +76,7 @@ class ProductsViewCubit extends Cubit<ProductsViewState> {
 
   Future<List<ProductCategoryEntity>> _loadFirstCat() async {
     await categorySub?.cancel();
-    final result = await getAllProductCategoriesUseCase(const NoParams());
+    final result = getAllProductCategoriesUseCase(const NoParams());
     late Future<List<ProductCategoryEntity>> firstList;
     result.fold((l) => null, (stream) {
       firstList = stream.first;

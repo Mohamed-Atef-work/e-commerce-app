@@ -1,19 +1,16 @@
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
 import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_state.dart';
+import 'package:e_commerce_app/modules/shared/presentation/widgets/loading_favorite_widget.dart';
 import 'package:e_commerce_app/modules/home/presentation/widgets/favorite_widget.dart';
 import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/core/components/divider_component.dart';
-import 'package:e_commerce_app/core/components/loading_widget.dart';
-import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
-import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
-import 'package:e_commerce_app/modules/shared/presentation/widgets/loading_favorite_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 class FavoritesView<CubitName> extends StatelessWidget {
-  const FavoritesView({Key? key}) : super(key: key);
+  const FavoritesView({super.key});
 
   @override
   Widget build(BuildContext context) {

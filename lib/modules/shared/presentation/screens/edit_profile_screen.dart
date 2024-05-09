@@ -12,8 +12,8 @@ import 'package:e_commerce_app/modules/shared/presentation/widgets/update_email_
 import 'package:e_commerce_app/modules/shared/presentation/widgets/update_name_widget.dart';
 import 'package:e_commerce_app/modules/shared/presentation/widgets/update_phone_widget.dart';
 import 'package:e_commerce_app/modules/shared/presentation/widgets/edit_profile_item_widget.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_state.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_state.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});

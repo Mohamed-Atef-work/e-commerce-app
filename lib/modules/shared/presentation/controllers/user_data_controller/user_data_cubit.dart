@@ -7,7 +7,7 @@ import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_re
 import 'package:e_commerce_app/modules/shared/domain/use_cases/get_initial_use_case.dart';
 import 'package:e_commerce_app/modules/shared/domain/entities/shared_user_data_entity.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/user_data_after_login_use_case.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_state.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_state.dart';
 
 class SharedUserDataCubit extends Cubit<SharedUserDataState> {
   final SharedDomainRepo _sharedDomainRepo;

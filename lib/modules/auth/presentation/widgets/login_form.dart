@@ -12,8 +12,8 @@ import 'package:e_commerce_app/modules/shared/domain/use_cases/user_data_after_l
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_bloc.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_states.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_events.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_cubit.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controller/user_data_controller/user_data_state.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_state.dart';
 
 class LoginFormWidget extends StatelessWidget {
   const LoginFormWidget({super.key});
