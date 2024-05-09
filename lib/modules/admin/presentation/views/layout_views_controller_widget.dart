@@ -4,8 +4,8 @@ import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_layo
 import 'package:e_commerce_app/modules/admin/presentation/views/admin_orders_view.dart';
 import 'package:e_commerce_app/modules/admin/presentation/views/admin_products_view.dart';
 import 'package:e_commerce_app/modules/admin/presentation/views/admin_profile_view.dart';
-import 'package:e_commerce_app/modules/home/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
-import 'package:e_commerce_app/modules/home/presentation/views/favorites_view.dart';
+import 'package:e_commerce_app/modules/user/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';
+import 'package:e_commerce_app/modules/user/presentation/views/favorites_view.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -3,8 +3,8 @@ import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
-import 'package:e_commerce_app/modules/home/presentation/widgets/account_item_widget.dart';
-import 'package:e_commerce_app/modules/home/presentation/widgets/profile_item_widget.dart';
+import 'package:e_commerce_app/modules/user/presentation/widgets/account_item_widget.dart';
+import 'package:e_commerce_app/modules/user/presentation/widgets/profile_item_widget.dart';
 
 class AdminProfileView extends StatelessWidget {
   const AdminProfileView({super.key});

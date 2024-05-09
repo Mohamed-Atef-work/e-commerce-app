@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/store_helper.dart';
-import 'package:e_commerce_app/modules/home/domain/use_cases/add_favorite_use_case.dart';
+import 'package:e_commerce_app/modules/user/domain/use_cases/add_favorite_use_case.dart';
 
 abstract class FavoriteStore {
   Future<List<DocumentSnapshot<Map<String, dynamic>>>> getProductsOfCategory(

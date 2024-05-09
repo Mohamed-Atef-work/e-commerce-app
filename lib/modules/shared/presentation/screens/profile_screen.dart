@@ -9,8 +9,8 @@ import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
-import 'package:e_commerce_app/modules/home/presentation/widgets/account_item_widget.dart';
-import 'package:e_commerce_app/modules/home/presentation/widgets/profile_item_widget.dart';
+import 'package:e_commerce_app/modules/user/presentation/widgets/account_item_widget.dart';
+import 'package:e_commerce_app/modules/user/presentation/widgets/profile_item_widget.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/logout_controller/logout_cubit.dart';
 
 class ProfileScreen extends StatelessWidget {

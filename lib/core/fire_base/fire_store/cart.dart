@@ -3,9 +3,9 @@ import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/store_helper.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
-import 'package:e_commerce_app/modules/home/data/data_source/cart_remote_data_source.dart';
-import 'package:e_commerce_app/modules/home/domain/use_cases/add_product_to_cart_use_case.dart';
-import 'package:e_commerce_app/modules/home/domain/use_cases/delete_product_from_cart_use_case.dart';
+import 'package:e_commerce_app/modules/user/data/data_source/cart_remote_data_source.dart';
+import 'package:e_commerce_app/modules/user/domain/use_cases/add_product_to_cart_use_case.dart';
+import 'package:e_commerce_app/modules/user/domain/use_cases/delete_product_from_cart_use_case.dart';
 
 /*  Future<List<DocumentSnapshot<Map<String, dynamic>>>> getCartProducts(
       String uId);*/

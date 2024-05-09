@@ -1,41 +1,43 @@
-import 'package:e_commerce_app/core/components/messenger_component.dart';
-import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
-import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
+import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/app_bar.dart';
-import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
+import 'package:e_commerce_app/modules/orders/presentation/widgets/counting_widget.dart';
+import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/user/presentation/widgets/heart_with_manage_favorite_cubit_provided_widget.dart';
-import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
-import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_state.dart';
+import 'package:e_commerce_app/modules/user/presentation/controllers/product_details_controller/product_details_cubit.dart';
+import 'package:e_commerce_app/modules/user/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 
-class AdminDetailsScreen extends StatelessWidget {
-  const AdminDetailsScreen({super.key});
+class DetailsScreen extends StatelessWidget {
+  const DetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final detailsController = BlocProvider.of<ProductDetailsCubit>(context);
+    final userData = BlocProvider.of<SharedUserDataCubit>(context).state;
+    final uId = userData.sharedEntity!.user.userEntity.id;
     return Scaffold(
+      backgroundColor: kPrimaryColorYellow,
       appBar: _appBar(context),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-        child: BlocBuilder<AdminDetailsCubit, AdminDetailsState>(
-          buildWhen: (current, previous) =>
-              current.deleteState != previous.deleteState,
+        child: BlocConsumer<ProductDetailsCubit, ProductDetailsState>(
+          listener: _listener,
           builder: (context, state) {
-            if (state.deleteState == RequestState.loading) {
+            if (state.addToCart == RequestState.loading) {
               return const LoadingWidget();
-            } else if (state.deleteState == RequestState.success) {
-              return const MessengerComponent(AppStrings.deleted);
             } else {
               return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Align(
                     alignment: Alignment.center,
@@ -45,11 +47,14 @@ class AdminDetailsScreen extends StatelessWidget {
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20)),
-                      child: Image.network(
-                        fit: BoxFit.fill,
-                        state.product!.image,
-                        width: double.infinity,
-                        height: double.infinity,
+                      child: Hero(
+                        tag: state.product!.id!,
+                        child: Image.network(
+                          fit: BoxFit.fill,
+                          state.product!.image,
+                          width: double.infinity,
+                          height: double.infinity,
+                        ),
                       ),
                     ),
                   ),
@@ -65,7 +70,7 @@ class AdminDetailsScreen extends StatelessWidget {
                     textColor: kDarkBrown,
                     fontFamily: kPacifico,
                     fontWeight: FontWeight.bold,
-                    text: "\$${state.product!.price}",
+                    text: "\$${state.product!.price * state.quantity}",
                   ),
                   SizedBox(height: context.height * 0.03),
                   CustomText(
@@ -75,31 +80,18 @@ class AdminDetailsScreen extends StatelessWidget {
                   ),
                   const Spacer(),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          fixedSize: Size(
-                            context.width * 0.7,
-                            context.height * 0.06,
-                          ),
-                          backgroundColor: Colors.transparent,
-                          side: const BorderSide(
-                            color: Colors.white,
-                            style: BorderStyle.solid,
-                          ),
-                        ),
-                        onPressed: () {
-                          BlocProvider.of<AdminDetailsCubit>(context)
-                              .deleteProduct();
+                      CountingWidget(
+                        height: 40,
+                        num: state.quantity,
+                        width: context.width * 0.8,
+                        plus: () {
+                          detailsController.quantityPlus();
                         },
-                        child: CustomText(
-                          fontSize: 18,
-                          fontFamily: kPacifico,
-                          text: AppStrings.delete,
-                          fontWeight: FontWeight.bold,
-                          textColor: Colors.red.withOpacity(0.8),
-                        ),
+                        minus: () {
+                          detailsController.quantityMinus();
+                        },
                       ),
                       HeartWihMangeFavoriteCubitProviderWidget(
                         heartColor: Colors.white,
@@ -113,15 +105,16 @@ class AdminDetailsScreen extends StatelessWidget {
                     alignment: Alignment.center,
                     child: CustomButton(
                       fontSize: 18,
-                      text: AppStrings.edit,
                       fontFamily: kPacifico,
+                      text: AppStrings.addToCart,
                       width: context.width * 0.9,
                       fontWeight: FontWeight.bold,
                       height: context.height * 0.07,
                       onPressed: () {
                         /// To Do o o o o o o o
-                        Navigator.pushNamed(context, Screens.addProductScreen,
-                            arguments: {"product": state.product!});
+                        detailsController.addToCart(uId);
+                        BlocProvider.of<ManageCartProductsCubit>(context)
+                            .needToReGet();
                       },
                     ),
                   )
@@ -134,14 +127,22 @@ class AdminDetailsScreen extends StatelessWidget {
     );
   }
 
-  _appBar(BuildContext context) => appBar(
-        title: AppStrings.productDetails,
-        leading: IconButton(
-          onPressed: () {
-            BlocProvider.of<AdminDetailsCubit>(context).reset();
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back),
-        ),
-      );
+  void _listener(BuildContext context, ProductDetailsState state) {
+    if (state.addToCart == RequestState.success) {
+      showMyToast(AppStrings.added, Colors.green);
+    } else if (state.addToCart == RequestState.error) {
+      showMyToast(state.message!, Colors.red);
+    }
+  }
 }
+
+_appBar(BuildContext context) => appBar(
+      title: AppStrings.details,
+      leading: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+          BlocProvider.of<ProductDetailsCubit>(context).reset();
+        },
+        icon: const Icon(Icons.arrow_back),
+      ),
+    );
