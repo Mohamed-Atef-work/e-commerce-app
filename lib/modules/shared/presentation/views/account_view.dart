@@ -9,33 +9,28 @@ class AccountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = context.height;
     return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: 5, vertical: context.height * 0.05),
+      padding: EdgeInsets.symmetric(horizontal: 5, vertical: height * 0.05),
       child: Column(
         children: [
           AccountItemsWidget(
-            onTap: () {
-              Navigator.pushNamed(context, Screens.profileScreen);
-            },
             name: AppStrings.profile,
             icon: Icons.person_outline,
+            onTap: () => Navigator.pushNamed(context, Screens.profileScreen),
           ),
-          SizedBox(height: context.height * 0.03),
+          SizedBox(height: height * 0.03),
           AccountItemsWidget(
-            onTap: () {
-              Navigator.pushNamed(context, Screens.userOrderScreen);
-            },
             name: AppStrings.orders,
             icon: Icons.shopping_basket_outlined,
+            onTap: () => Navigator.pushNamed(context, Screens.userOrderScreen),
           ),
-          SizedBox(height: context.height * 0.03),
+          SizedBox(height: height * 0.03),
           AccountItemsWidget(
-            onTap: () {
-              Navigator.pushNamed(context, Screens.editAddressScreen);
-            },
             name: AppStrings.address,
             icon: Icons.location_on_outlined,
+            onTap: () =>
+                Navigator.pushNamed(context, Screens.editAddressScreen),
           ),
         ],
       ),

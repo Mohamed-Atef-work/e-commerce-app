@@ -8,7 +8,7 @@ import 'package:e_commerce_app/modules/shared/presentation/screens/address_scree
 import 'package:e_commerce_app/modules/shared/presentation/screens/profile_screen.dart';
 import 'package:e_commerce_app/modules/user/presentation/screens/user_layout_screen.dart';
 import 'package:e_commerce_app/modules/orders/presentation/screens/user_order_screen.dart';
-import 'package:e_commerce_app/modules/admin/presentation/screens/admin_panel_screen.dart';
+import 'package:e_commerce_app/modules/admin/presentation/screens/not_needed/admin_panel_screen.dart';
 import 'package:e_commerce_app/modules/admin/presentation/screens/admin_layout_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/edit_profile_screen.dart';
 import 'package:e_commerce_app/modules/admin/presentation/screens/admin_details_screen.dart';

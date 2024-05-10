@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/modules/user/presentation/views/cart_view.dart';
-import 'package:e_commerce_app/modules/user/presentation/views/account_view.dart';
+import 'package:e_commerce_app/modules/shared/presentation/views/account_view.dart';
 import 'package:e_commerce_app/modules/user/presentation/views/products_view.dart';
 import 'package:e_commerce_app/modules/user/presentation/views/favorites_view.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';

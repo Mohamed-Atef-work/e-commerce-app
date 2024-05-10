@@ -18,6 +18,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = context.height * 0.03;
     return Scaffold(
       appBar: appBar(title: AppStrings.profile),
       body: BlocProvider(
@@ -28,32 +29,28 @@ class ProfileScreen extends StatelessWidget {
             builder: (context) {
               return BlocConsumer<LogoutCubit, LogoutState>(
                 listener: _listener,
-                builder: (context, state) {
+                builder: (_, state) {
                   if (state.logoutState == RequestState.loading) {
                     return const LoadingWidget();
                   } else {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: context.height * 0.03),
+                        SizedBox(height: height),
                         ProfileItemsWidget(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(Screens.editProfileScreen);
-                          },
                           icon: Icons.person_outline,
                           name: AppStrings.editProfile,
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(Screens.editProfileScreen),
                         ),
-                        SizedBox(height: context.height * 0.03),
+                        SizedBox(height: height),
                         ProfileItemsWidget(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(Screens.changePasswordScreen);
-                          },
                           icon: Icons.key_outlined,
                           name: AppStrings.changePassword,
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(Screens.changePasswordScreen),
                         ),
-                        SizedBox(height: context.height * 0.03),
+                        SizedBox(height: height),
                         ProfileItemsWidget(
                           onTap: () {},
                           name: AppStrings.myCards,
@@ -62,8 +59,8 @@ class ProfileScreen extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.only(
                             left: 20,
-                            top: context.height * 0.03,
-                            bottom: context.height * 0.03,
+                            top: height,
+                            bottom: height,
                           ),
                           child: const CustomText(
                             fontSize: 25,
@@ -78,13 +75,12 @@ class ProfileScreen extends StatelessWidget {
                           name: AppStrings.language,
                           icon: Icons.language_outlined,
                         ),
-                        SizedBox(height: context.height * 0.03),
+                        SizedBox(height: height),
                         AccountItemsWidget(
-                          onTap: () {
-                            BlocProvider.of<LogoutCubit>(context).logout();
-                          },
                           name: AppStrings.logout,
                           icon: Icons.logout_outlined,
+                          onTap: () =>
+                              BlocProvider.of<LogoutCubit>(context).logout(),
                         ),
                       ],
                     );

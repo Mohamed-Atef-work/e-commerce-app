@@ -5,9 +5,7 @@ import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 
 class AdminPanelScreen extends StatelessWidget {
-  AdminPanelScreen({
-    super.key,
-  });
+  AdminPanelScreen({super.key});
 
   final List<String> _buttonNames = [
     AppStrings.add,
