@@ -39,6 +39,15 @@ class Validators {
     return null;
   }
 
+  static String? addressValidator(value, String message) {
+    // Check if the address contains at least one digit
+    RegExp regex = RegExp(r'\d');
+    if (value.isEmpty || !regex.hasMatch(value)) {
+      return AppStrings.invalid + message;
+    }
+    return null;
+  }
+
   static bool _isValidPassword(String password) {
     // Check the length of the input.
     if (password.length < 8) {

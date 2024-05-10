@@ -62,7 +62,7 @@ class UpDateOrderDataWidget extends StatelessWidget {
                     textEditingController:
                         BlocProvider.of<UpdateOrderDataCubit>(context).address,
                     validator: (value) =>
-                        Validators.stringValidator(value, AppStrings.address),
+                        Validators.addressValidator(value, AppStrings.address),
                   ),
                   CustomButton(
                     height: 50,
