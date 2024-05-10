@@ -50,13 +50,11 @@ class AddNewCategoryModelSheetWidget extends StatelessWidget {
                           ),
                           SizedBox(height: context.height * 0.03),
                           CustomButton(
-                            onPressed: () {
-                              controller.addNewCategory();
-                            },
                             text: AppStrings.add,
                             width: context.width * 0.3,
                             backgroundColor: Colors.black,
                             height: context.height * 0.065,
+                            onPressed: () => controller.addNewCategory(),
                           ),
                         ],
                       ),

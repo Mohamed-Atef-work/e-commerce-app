@@ -18,7 +18,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 class OrderWidget extends StatelessWidget {
   final int index;
   final void Function() onPressed;
-  const OrderWidget({super.key, required this.index, required this.onPressed});
+  const OrderWidget({
+    super.key,
+    required this.index,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +77,6 @@ class OrderWidget extends StatelessWidget {
                   Images.orderImage,
                   width: context.width * 0.15,
                   height: context.height * 0.1,
-
-                  //fit: BoxFit.contain,
-                  //color: kDarkBrown.withOpacity(0.001),
                 ),
               ),
               Column(
@@ -83,24 +84,24 @@ class OrderWidget extends StatelessWidget {
                 children: [
                   CustomText(
                     fontSize: 18,
+                    textColor: kDarkBrown,
                     fontWeight: FontWeight.bold,
                     text: state.orders[index].name,
-                    textColor: kDarkBrown,
                   ),
                   SizedBox(height: context.height * 0.01),
                   CustomText(
                     fontSize: 15,
-                    text: state.orders[index].date,
                     textColor: kDarkBrown,
+                    text: state.orders[index].date,
                   ),
                 ],
               ),
               const Spacer(),
               CustomText(
                 fontSize: 22,
+                fontFamily: kPacifico,
                 textColor: Colors.black,
                 fontWeight: FontWeight.bold,
-                fontFamily: kPacifico,
                 text: "\$${state.orders[index].totalPrice}",
               ),
             ],

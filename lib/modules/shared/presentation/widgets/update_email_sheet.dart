@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -10,7 +11,6 @@ import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
-import 'package:e_commerce_app/core/components/centered_message_component.dart';
 import 'package:e_commerce_app/core/components/base_model_sheet_component.dart';
 import 'package:e_commerce_app/modules/shared/domain/entities/cached_user_data_entity.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
@@ -46,7 +46,11 @@ class UpDateEmailWidget extends StatelessWidget {
               if (state.changeState == RequestState.loading) {
                 return const LoadingWidget();
               } else if (state.changeState == RequestState.success) {
-                return const CenteredMessageComponent(AppStrings.updated);
+                return MessengerComponent(
+                  AppStrings.updated,
+                  imageWidth: context.height * 0.3,
+                  imageHeight: context.height * 0.2,
+                );
               } else {
                 return Form(
                   key: updateEmailController.formKey,

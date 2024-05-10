@@ -7,7 +7,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class MessengerComponent extends StatelessWidget {
   final String mess;
-  const MessengerComponent(this.mess, {super.key});
+  final double? imageWidth;
+  final double? imageHeight;
+  const MessengerComponent(
+    this.mess, {
+    this.imageWidth,
+    this.imageHeight,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +24,10 @@ class MessengerComponent extends StatelessWidget {
         children: [
           SvgPicture.asset(
             Images.message,
-            height: context.height * 0.3,
-            width: context.width * 0.4,
+            height: imageHeight ?? context.height * 0.3,
+            width: imageWidth ?? context.width * 0.4,
           ),
-          SizedBox(height: context.height *0.01),
+          SizedBox(height: context.height * 0.01),
           CustomText(
             text: mess,
             fontSize: 25,

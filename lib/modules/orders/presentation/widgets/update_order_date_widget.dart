@@ -3,6 +3,7 @@ import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -25,13 +26,10 @@ class UpDateOrderDataWidget extends StatelessWidget {
           if (state.updateState == RequestState.loading) {
             return const LoadingWidget();
           } else if (state.updateState == RequestState.success) {
-            return const Center(
-              child: CustomText(
-                fontSize: 25,
-                fontFamily: kPacifico,
-                text: AppStrings.updated,
-                fontWeight: FontWeight.bold,
-              ),
+            return MessengerComponent(
+              AppStrings.updated,
+              imageWidth: context.height * 0.3,
+              imageHeight: context.height * 0.2,
             );
           } else {
             return Form(
