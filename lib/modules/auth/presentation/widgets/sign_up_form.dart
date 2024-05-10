@@ -13,44 +13,41 @@ import 'package:e_commerce_app/modules/auth/presentation/controllers/sign_up_con
 import 'package:e_commerce_app/modules/auth/presentation/controllers/sign_up_controller/sign_up_states.dart';
 
 class SignUpFormWidget extends StatelessWidget {
-  const SignUpFormWidget({Key? key}) : super(key: key);
+  const SignUpFormWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     final controller = BlocProvider.of<SignUpBloc>(context);
-
+    final height = context.height;
     return Form(
       key: controller.formKey,
       child: Column(
         children: [
           CustomTextFormField(
             prefixIcon: Icons.person,
+            validator: _nameValidator,
             hintText: AppStrings.enterYourName,
             onChanged: (name) {
               controller.name = name;
               print(controller.name);
             },
-            validator: (value) =>
-                Validators.stringValidator(value, AppStrings.enterYourName),
           ),
-          SizedBox(height: context.height * 0.02),
+          SizedBox(height: height * 0.02),
           CustomTextFormField(
-            prefixIcon: Icons.email,
-            hintText: AppStrings.enterYourEmail,
             onChanged: (email) {
               controller.email = email;
               print(controller.email);
             },
-            validator: (value) => Validators.emailValidator(value),
+            prefixIcon: Icons.email,
+            validator: _emailValidator,
+            hintText: AppStrings.enterYourEmail,
           ),
-          SizedBox(height: context.height * 0.02),
+          SizedBox(height: height * 0.02),
           BlocBuilder<SignUpBloc, SignUpState>(
             buildWhen: (previous, current) =>
                 previous.obSecure != current.obSecure,
-            builder: (context, state) {
+            builder: (_, state) {
               return PasswordTextFormField(
-                obSecure: state.obSecure,
-                hintText: AppStrings.enterYourPassword,
                 suffixPressed: () {
                   controller.obSecure();
                 },
@@ -58,36 +55,44 @@ class SignUpFormWidget extends StatelessWidget {
                   controller.password = password;
                   print(controller.password);
                 },
+                obSecure: state.obSecure,
+                hintText: AppStrings.enterYourPassword,
               );
             },
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: context.height * 0.05),
+            padding: EdgeInsets.symmetric(vertical: height * 0.05),
             child: BlocConsumer<SignUpBloc, SignUpState>(
-                listener: _listener,
-                builder: (context, state) {
-                  if (state.signUpState == RequestState.loading ||
-                      state.storeUserDataState == RequestState.loading) {
-                    return SizedBox(
-                      height: context.height * 0.05,
-                      child: const LoadingWidget(),
-                    );
-                  } else {
-                    return CustomButton(
-                      text: AppStrings.signUp,
-                      width: context.width * 0.3,
-                      height: context.height * 0.05,
-                      onPressed: () {
-                        controller.signUp();
-                      },
-                    );
-                  }
-                }),
+              listener: _listener,
+              builder: (_, state) {
+                if (state.signUpState == RequestState.loading ||
+                    state.storeUserDataState == RequestState.loading) {
+                  return SizedBox(
+                    height: height * 0.05,
+                    child: const LoadingWidget(),
+                  );
+                } else {
+                  return CustomButton(
+                    text: AppStrings.signUp,
+                    width: context.width * 0.3,
+                    height: height * 0.05,
+                    onPressed: () {
+                      controller.signUp();
+                    },
+                  );
+                }
+              },
+            ),
           ),
         ],
       ),
     );
   }
+
+  String? _emailValidator(String? value) => Validators.emailValidator(value);
+
+  String? _nameValidator(String? value) =>
+      Validators.stringValidator(value, AppStrings.enterYourName);
 
   void _listener(BuildContext context, SignUpState state) {
     if (state.signUpState == RequestState.success &&

@@ -20,7 +20,7 @@ class ChangePasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<ChangePasswordCubit>(),
+      create: (_) => sl<ChangePasswordCubit>(),
       child: Builder(
         builder: (context) {
           final passwordController =
@@ -28,37 +28,30 @@ class ChangePasswordScreen extends StatelessWidget {
           final userDataController =
               BlocProvider.of<SharedUserDataCubit>(context);
 
+          /// ----------------------------------------------
+          final width = context.width;
+          final height = context.height;
+
+          /// ----------------------------------------------
+
           return Scaffold(
             appBar: appBar(title: AppStrings.changePassword, height: 80),
             body: MultiBlocListener(
-              listeners: [
-                BlocListener<ChangePasswordCubit, ChangePasswordState>(
-                  listener: (context, state) {
-                    print("Change State is ------------> ${state.changeState}");
-                    if (state.changeState == RequestState.success) {
-                      userDataController.savePartOfUserDataLocally(
-                          password: passwordController.newPassword.text);
-                    }
-                  },
-                ),
-                BlocListener<SharedUserDataCubit, SharedUserDataState>(
-                  listener: _dataListener,
-                ),
-              ],
+              listeners: _listeners(userDataController),
               child: BlocBuilder<SharedUserDataCubit, SharedUserDataState>(
-                builder: (context, state) {
+                builder: (_, state) {
                   if (state.saveState == RequestState.loading) {
                     return const LoadingWidget();
                   } else {
                     return BlocBuilder<ChangePasswordCubit,
                         ChangePasswordState>(
-                      builder: (context, state) {
+                      builder: (_, state) {
                         if (state.changeState == RequestState.loading) {
                           return const LoadingWidget();
                         } else {
                           return Padding(
                             padding: EdgeInsets.only(
-                              top: context.height * 0.1,
+                              top: height * 0.1,
                               left: 10,
                               right: 10,
                             ),
@@ -71,44 +64,40 @@ class ChangePasswordScreen extends StatelessWidget {
                                     hintText: AppStrings.oldPassword,
                                     textEditingController:
                                         passwordController.oldPassword,
-                                    suffixPressed: () {
-                                      passwordController.obSecure(
-                                          oldPassword: !state.oldPassword);
-                                    },
+                                    suffixPressed: () =>
+                                        passwordController.obSecure(
+                                            oldPassword: !state.oldPassword),
                                   ),
-                                  _sizedBox(context.height * 0.02),
+                                  _sizedBox(height * 0.02),
                                   PasswordTextFormField(
                                     obSecure: state.newPassword,
                                     hintText: AppStrings.newPassword,
                                     textEditingController:
                                         passwordController.newPassword,
-                                    suffixPressed: () {
-                                      passwordController.obSecure(
-                                          newPassword: !state.newPassword);
-                                    },
+                                    suffixPressed: () =>
+                                        passwordController.obSecure(
+                                            newPassword: !state.newPassword),
                                   ),
-                                  _sizedBox(context.height * 0.02),
+                                  _sizedBox(height * 0.02),
                                   PasswordTextFormField(
                                     obSecure: state.confirmPassword,
                                     hintText: AppStrings.confirmPassword,
                                     textEditingController:
                                         passwordController.confirmPassword,
-                                    suffixPressed: () {
-                                      passwordController.obSecure(
-                                          confirmPassword:
-                                              !state.confirmPassword);
-                                    },
+                                    suffixPressed: () =>
+                                        passwordController.obSecure(
+                                            confirmPassword:
+                                                !state.confirmPassword),
                                   ),
-                                  _sizedBox(context.height * 0.02),
+                                  _sizedBox(height * 0.02),
                                   CustomButton(
                                     height: 50,
                                     fontSize: 18,
                                     fontFamily: kPacifico,
                                     text: AppStrings.update,
-                                    width: context.width * 0.7,
-                                    onPressed: () {
-                                      passwordController.changePassword();
-                                    },
+                                    width: width * 0.7,
+                                    onPressed: () =>
+                                        passwordController.changePassword(),
                                   ),
                                 ],
                               ),
@@ -129,11 +118,29 @@ class ChangePasswordScreen extends StatelessWidget {
 
   _sizedBox(double height) => SizedBox(height: height);
 
+  _listeners(userDataController) => [
+        BlocListener<SharedUserDataCubit, SharedUserDataState>(
+            listener: _dataListener),
+        BlocListener<ChangePasswordCubit, ChangePasswordState>(
+          listener: (context, state) =>
+              _passwordListener(state, userDataController, context),
+        ),
+      ];
+
   void _dataListener(BuildContext context, SharedUserDataState state) {
     print("save State is ------------> ${state.saveState}");
     if (state.saveState == RequestState.success) {
       Navigator.of(context)
           .pushNamedAndRemoveUntil(Screens.loginScreen, (route) => false);
+    }
+  }
+
+  _passwordListener(state, userDataController, context) {
+    print("Change State is ------------> ${state.changeState}");
+    if (state.changeState == RequestState.success) {
+      final passwordController = BlocProvider.of<ChangePasswordCubit>(context);
+      userDataController.savePartOfUserDataLocally(
+          password: passwordController.newPassword.text);
     }
   }
 }

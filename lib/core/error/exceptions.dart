@@ -1,6 +1,6 @@
 class ServerException implements Exception {
   final String message;
-  final dynamic object;
+  final Object? object;
   const ServerException({
     required this.message,
     this.object,

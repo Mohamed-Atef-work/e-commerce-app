@@ -20,6 +20,9 @@ class LoginFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = context.width;
+    final height = context.height;
+
     final loginController = BlocProvider.of<LoginBloc>(context);
     final userDataController = BlocProvider.of<SharedUserDataCubit>(context);
 
@@ -28,51 +31,41 @@ class LoginFormWidget extends StatelessWidget {
       child: Column(
         children: [
           CustomTextFormField(
-            onChanged: (email) {
-              loginController.email = email;
-            },
             prefixIcon: Icons.email,
+            validator: _emailValidator,
             hintText: AppStrings.enterYourEmail,
-            validator: (value) => Validators.emailValidator(value),
+            onChanged: (email) => loginController.email = email,
           ),
-          SizedBox(height: context.height * 0.02),
+          SizedBox(height: height * 0.02),
           BlocBuilder<LoginBloc, LoginState>(
             buildWhen: (previous, current) =>
                 previous.obSecure != current.obSecure,
-            builder: (context, state) {
-              return PasswordTextFormField(
-                obSecure: state.obSecure,
-                suffixPressed: () {
-                  loginController.add(const ObSecureEvent());
-                },
-                onChanged: (password) {
-                  loginController.password = password;
-                },
-                hintText: AppStrings.enterYourPassword,
-              );
-            },
+            builder: (_, state) => PasswordTextFormField(
+              obSecure: state.obSecure,
+              hintText: AppStrings.enterYourPassword,
+              onChanged: (password) => loginController.password = password,
+              suffixPressed: () => loginController.add(const ObSecureEvent()),
+            ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: context.height * 0.05),
+            padding: EdgeInsets.symmetric(vertical: height * 0.05),
             child: MultiBlocListener(
               listeners: [
                 BlocListener<LoginBloc, LoginState>(
                   listenWhen: (previous, current) =>
                       previous.loginState != current.loginState,
-                  listener: (context, state) {
-                    _loginListener(state, loginController, userDataController);
-                  },
+                  listener: (context, state) => _loginListener(
+                      state, loginController, userDataController),
                 ),
                 BlocListener<SharedUserDataCubit, SharedUserDataState>(
                   listenWhen: (previous, current) =>
                       previous.afterLoginState != current.afterLoginState,
-                  listener: (context, state) {
-                    _userDataListener(context, state, loginController);
-                  },
+                  listener: (context, state) =>
+                      _userDataListener(context, state, loginController),
                 ),
               ],
               child: BlocBuilder<LoginBloc, LoginState>(
-                builder: (context, state) {
+                builder: (_, state) {
                   print(
                       " ------------------------------------------------- > Rebuild.....");
                   if (state.loginState == RequestState.loading ||
@@ -81,12 +74,11 @@ class LoginFormWidget extends StatelessWidget {
                     return const LoadingWidget();
                   } else {
                     return CustomButton(
+                      width: width * 0.4,
+                      height: height * 0.05,
                       text: AppStrings.login,
-                      width: context.width * 0.4,
-                      height: context.height * 0.05,
-                      onPressed: () {
-                        loginController.add(SignInEvent(state.adminUser));
-                      },
+                      onPressed: () =>
+                          loginController.add(SignInEvent(state.adminUser)),
                     );
                   }
                 },
@@ -97,42 +89,45 @@ class LoginFormWidget extends StatelessWidget {
       ),
     );
   }
-}
 
-void _loginListener(
-  LoginState state,
-  LoginBloc loginController,
-  SharedUserDataCubit userDataController,
-) {
-  print(
-      "LoginState ------ listener ---------------------------- > ${state.loginState}");
-  if (state.loginState == RequestState.success) {
-    final afterLogin = AfterLoginParams(
-      adminUser: state.adminUser,
-      password: loginController.password!,
-      uId: state.userCredential!.user!.uid,
-      userCredential: state.userCredential!,
-    );
-    userDataController.userDataAfterLogin(afterLogin);
-  }
-}
+  String? _emailValidator(String? value) => Validators.emailValidator(value);
 
-void _userDataListener(
-  BuildContext context,
-  SharedUserDataState state,
-  LoginBloc loginController,
-) {
-  print(
-      "afterLoginState ------ listener ---------------------------- > ${state.afterLoginState}");
-  if (state.afterLoginState == RequestState.error ||
-      state.afterLoginState == RequestState.success) {
-    loginController.add(const RebuildEvent());
+  void _loginListener(
+    LoginState state,
+    LoginBloc loginController,
+    SharedUserDataCubit userDataController,
+  ) {
+    print("LoginState ----------- listener ----------- > ${state.loginState}");
+    if (state.loginState == RequestState.success) {
+      final afterLogin = AfterLoginParams(
+        adminUser: state.adminUser,
+        password: loginController.password!,
+        uId: state.userCredential!.user!.uid,
+        userCredential: state.userCredential!,
+      );
+      userDataController.userDataAfterLogin(afterLogin);
+    }
   }
-  if (state.afterLoginState == RequestState.success) {
-    if (state.sharedEntity!.user.adminOrUser == AdminUser.user) {
-      Navigator.of(context).pushReplacementNamed(Screens.userLayoutScreen);
-    } else {
-      Navigator.of(context).pushReplacementNamed(Screens.adminLayoutScreen);
+
+  void _userDataListener(
+    BuildContext context,
+    SharedUserDataState state,
+    LoginBloc loginController,
+  ) {
+    print(
+        "afterLoginState ----------- listener ----------- > ${state.afterLoginState}");
+    if (state.afterLoginState == RequestState.error ||
+        state.afterLoginState == RequestState.success) {
+      loginController.add(const RebuildEvent());
+    }
+
+    /// < ------------------------------ listener ------------------------------ >
+    if (state.afterLoginState == RequestState.success) {
+      if (state.sharedEntity!.user.adminOrUser == AdminUser.user) {
+        Navigator.of(context).pushReplacementNamed(Screens.userLayoutScreen);
+      } else {
+        Navigator.of(context).pushReplacementNamed(Screens.adminLayoutScreen);
+      }
     }
   }
 }
