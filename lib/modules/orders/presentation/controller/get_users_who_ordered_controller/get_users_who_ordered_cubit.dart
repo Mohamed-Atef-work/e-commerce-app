@@ -14,14 +14,12 @@ class GetUsersWhoOrderedCubit extends Cubit<GetUsersWhoOrderedState> {
   GetUsersWhoOrderedCubit(this._getUsersWhoOrderedUseCase)
       : super(const GetUsersWhoOrderedState());
 
-  //StreamSubscription<List<String>>? idsSub;
   StreamSubscription<List<UserEntity>>? usersSub;
 
   Future<void> getUsers() async {
-    print(
-        "---------------------------------------- Loading ----------------------------------------");
     await usersSub?.cancel();
     emit(state.copyWith(usersDataState: RequestState.loading));
+
     final result = _getUsersWhoOrderedUseCase(const NoParams());
 
     result.fold(
@@ -31,7 +29,6 @@ class GetUsersWhoOrderedCubit extends Cubit<GetUsersWhoOrderedState> {
                 usersDataState: RequestState.error,
               ),
             ), (r) {
-      emit(state.copyWith(usersDataState: RequestState.success));
       print(
           "---------------------------------------- success ----------------------------------------");
       usersSub = r.listen((event) {

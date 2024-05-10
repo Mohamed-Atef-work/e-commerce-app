@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -9,6 +8,7 @@ import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
+import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/core/components/base_model_sheet_component.dart';
@@ -49,8 +49,8 @@ class UpDatePhoneWidget extends StatelessWidget {
                 } else if (state.updateState == RequestState.success) {
                   return MessengerComponent(
                     AppStrings.updated,
-                    imageWidth: context.height * 0.3,
-                    imageHeight: context.height * 0.2,
+                    imageWidth: context.height * 0.2,
+                    imageHeight: context.height * 0.1,
                   );
                 } else {
                   return Form(

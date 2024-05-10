@@ -48,8 +48,8 @@ class UpDateEmailWidget extends StatelessWidget {
               } else if (state.changeState == RequestState.success) {
                 return MessengerComponent(
                   AppStrings.updated,
-                  imageWidth: context.height * 0.3,
-                  imageHeight: context.height * 0.2,
+                  imageWidth: context.height * 0.2,
+                  imageHeight: context.height * 0.1,
                 );
               } else {
                 return Form(
