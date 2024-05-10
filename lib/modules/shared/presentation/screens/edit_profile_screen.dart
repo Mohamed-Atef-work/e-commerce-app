@@ -14,6 +14,7 @@ import 'package:e_commerce_app/modules/shared/presentation/widgets/update_phone_
 import 'package:e_commerce_app/modules/shared/presentation/widgets/edit_profile_item_widget.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_state.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
@@ -34,19 +35,10 @@ class EditProfileScreen extends StatelessWidget {
             return ListView(
               children: [
                 SizedBox(height: context.height * 0.02),
-                Container(
+                SvgPicture.asset(
+                  Images.user,
                   width: 100,
                   height: 100,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: AssetImage(Images.orderImage),
-                    ),
-                    border: Border.all(
-                      color: Colors.white,
-                      style: BorderStyle.solid,
-                    ),
-                  ),
                 ),
                 SizedBox(height: context.height * 0.01),
                 CustomText(

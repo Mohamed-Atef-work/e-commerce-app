@@ -35,7 +35,7 @@ class ViewOrdersForAdmin extends StatelessWidget {
                   icon: const Icon(Icons.arrow_back)),
             ),
             const Expanded(
-              child: MessengerComponent(AppStrings.youHaveNoOrders),
+              child: MessengerComponent(AppStrings.noOrdersForThisUser),
             ),
           ],
         );

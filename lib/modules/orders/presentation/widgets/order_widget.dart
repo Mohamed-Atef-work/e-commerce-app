@@ -13,6 +13,7 @@ import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_state.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/get_user_orders_controller/get_user_orders_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/update_order_data_controller/update_order_data_cubit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class OrderWidget extends StatelessWidget {
   final int index;
@@ -66,19 +67,15 @@ class OrderWidget extends StatelessWidget {
           padding: const EdgeInsets.all(5.0),
           child: Row(
             children: [
-              Container(
-                width: context.width * 0.15,
-                height: context.height * 0.1,
-                clipBehavior: Clip.antiAlias,
-                margin: const EdgeInsets.only(right: 7),
-                decoration: const BoxDecoration(
-                  color: Colors.grey,
-                  shape: BoxShape.circle,
-                ),
-                child: Image.asset(
+              Padding(
+                padding: const EdgeInsets.only(right: 7),
+                child: SvgPicture.asset(
                   Images.orderImage,
-                  fit: BoxFit.contain,
-                  color: kDarkBrown.withOpacity(0.001),
+                  width: context.width * 0.15,
+                  height: context.height * 0.1,
+
+                  //fit: BoxFit.contain,
+                  //color: kDarkBrown.withOpacity(0.001),
                 ),
               ),
               Column(
