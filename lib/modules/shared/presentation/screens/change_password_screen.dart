@@ -2,6 +2,7 @@ import 'package:e_commerce_app/modules/shared/presentation/controllers/change_pa
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_state.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
+import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
@@ -25,19 +26,12 @@ class ChangePasswordScreen extends StatelessWidget {
         builder: (context) {
           final passwordController =
               BlocProvider.of<ChangePasswordCubit>(context);
-          final userDataController =
-              BlocProvider.of<SharedUserDataCubit>(context);
-
-          /// ----------------------------------------------
           final width = context.width;
           final height = context.height;
-
-          /// ----------------------------------------------
-
           return Scaffold(
             appBar: appBar(title: AppStrings.changePassword, height: 80),
             body: MultiBlocListener(
-              listeners: _listeners(userDataController),
+              listeners: _listeners(),
               child: BlocBuilder<SharedUserDataCubit, SharedUserDataState>(
                 builder: (_, state) {
                   if (state.saveState == RequestState.loading) {
@@ -118,12 +112,12 @@ class ChangePasswordScreen extends StatelessWidget {
 
   _sizedBox(double height) => SizedBox(height: height);
 
-  _listeners(userDataController) => [
-        BlocListener<SharedUserDataCubit, SharedUserDataState>(
-            listener: _dataListener),
+  _listeners() => [
         BlocListener<ChangePasswordCubit, ChangePasswordState>(
-          listener: (context, state) =>
-              _passwordListener(state, userDataController, context),
+          listener: _passwordListener,
+        ),
+        BlocListener<SharedUserDataCubit, SharedUserDataState>(
+          listener: _dataListener,
         ),
       ];
 
@@ -135,12 +129,15 @@ class ChangePasswordScreen extends StatelessWidget {
     }
   }
 
-  _passwordListener(state, userDataController, context) {
+  void _passwordListener(BuildContext context, ChangePasswordState state) {
     print("Change State is ------------> ${state.changeState}");
     if (state.changeState == RequestState.success) {
       final passwordController = BlocProvider.of<ChangePasswordCubit>(context);
+      final userDataController = BlocProvider.of<SharedUserDataCubit>(context);
       userDataController.savePartOfUserDataLocally(
           password: passwordController.newPassword.text);
+    } else if (state.changeState == RequestState.error) {
+      showMyToast(state.message, context, Colors.red);
     }
   }
 }

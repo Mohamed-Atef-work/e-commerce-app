@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -50,20 +51,7 @@ class LoginFormWidget extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(vertical: height * 0.05),
             child: MultiBlocListener(
-              listeners: [
-                BlocListener<LoginBloc, LoginState>(
-                  listenWhen: (previous, current) =>
-                      previous.loginState != current.loginState,
-                  listener: (context, state) => _loginListener(
-                      state, loginController, userDataController),
-                ),
-                BlocListener<SharedUserDataCubit, SharedUserDataState>(
-                  listenWhen: (previous, current) =>
-                      previous.afterLoginState != current.afterLoginState,
-                  listener: (context, state) =>
-                      _userDataListener(context, state, loginController),
-                ),
-              ],
+              listeners: _listeners(),
               child: BlocBuilder<LoginBloc, LoginState>(
                 builder: (_, state) {
                   print(
@@ -92,11 +80,23 @@ class LoginFormWidget extends StatelessWidget {
 
   String? _emailValidator(String? value) => Validators.emailValidator(value);
 
-  void _loginListener(
-    LoginState state,
-    LoginBloc loginController,
-    SharedUserDataCubit userDataController,
-  ) {
+  _listeners() => [
+        BlocListener<LoginBloc, LoginState>(
+          listenWhen: (previous, current) =>
+              previous.loginState != current.loginState,
+          listener: _loginListener,
+        ),
+        BlocListener<SharedUserDataCubit, SharedUserDataState>(
+          listenWhen: (previous, current) =>
+              previous.afterLoginState != current.afterLoginState,
+          listener: _userDataListener,
+        ),
+      ];
+
+  void _loginListener(BuildContext context, LoginState state) {
+    final loginController = BlocProvider.of<LoginBloc>(context);
+    final userDataController = BlocProvider.of<SharedUserDataCubit>(context);
+
     print("LoginState ----------- listener ----------- > ${state.loginState}");
     if (state.loginState == RequestState.success) {
       final afterLogin = AfterLoginParams(
@@ -106,14 +106,14 @@ class LoginFormWidget extends StatelessWidget {
         userCredential: state.userCredential!,
       );
       userDataController.userDataAfterLogin(afterLogin);
+    } else if (state.loginState == RequestState.error) {
+      showMyToast(state.errorMessage!, context, Colors.red);
     }
   }
 
-  void _userDataListener(
-    BuildContext context,
-    SharedUserDataState state,
-    LoginBloc loginController,
-  ) {
+  void _userDataListener(BuildContext context, SharedUserDataState state) {
+    final loginController = BlocProvider.of<LoginBloc>(context);
+
     print(
         "afterLoginState ----------- listener ----------- > ${state.afterLoginState}");
     if (state.afterLoginState == RequestState.error ||

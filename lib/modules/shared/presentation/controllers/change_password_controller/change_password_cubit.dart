@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -17,7 +18,8 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
 
   final formKey = GlobalKey<FormState>();
 
-  Future<void> changePassword() async {
+  void changePassword() async {
+    print("canaegekadadgla;jkggggggggggggggggggggggggggggggggg");
     if (formKey.currentState!.validate()) {
       if (newPassword.text == confirmPassword.text &&
           confirmPassword.text != oldPassword.text) {
@@ -31,11 +33,28 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
             (r) => state.copyWith(changeState: RequestState.success),
           ),
         );
+        print("canaegekadadgla;jkggggggggggggggggggggggggggggggggg");
+        print(state.changeState);
+
         if (result.isRight()) {
           oldPassword.text = "";
           newPassword.text = "";
           confirmPassword.text = "";
         }
+      } else if (newPassword.text == oldPassword.text) {
+        emit(
+          state.copyWith(
+            changeState: RequestState.error,
+            message: AppStrings.newPasswordNotCorrect,
+          ),
+        );
+      } else if (newPassword.text != confirmPassword.text) {
+        emit(
+          state.copyWith(
+            changeState: RequestState.error,
+            message: AppStrings.confirmPasswordNotCorrect,
+          ),
+        );
       }
     }
   }
