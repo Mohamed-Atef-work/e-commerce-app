@@ -31,7 +31,7 @@ class AuthRepositoryData implements AuthRepositoryDomain {
   }
 
   @override
-  Future<Either<Failure, UserCredential>> signUp(SignUpparams params) async {
+  Future<Either<Failure, UserCredential>> signUp(SignUpParams params) async {
     print(
         "<------------------- In The Sign_UP Data Repository ------------------->");
     try {

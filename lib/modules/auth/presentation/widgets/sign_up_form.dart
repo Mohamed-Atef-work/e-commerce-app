@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/validators.dart';
@@ -27,20 +28,14 @@ class SignUpFormWidget extends StatelessWidget {
             prefixIcon: Icons.person,
             validator: _nameValidator,
             hintText: AppStrings.enterYourName,
-            onChanged: (name) {
-              controller.name = name;
-              print(controller.name);
-            },
+            onChanged: (name) => controller.name = name,
           ),
           SizedBox(height: height * 0.02),
           CustomTextFormField(
-            onChanged: (email) {
-              controller.email = email;
-              print(controller.email);
-            },
             prefixIcon: Icons.email,
             validator: _emailValidator,
             hintText: AppStrings.enterYourEmail,
+            onChanged: (email) => controller.email = email,
           ),
           SizedBox(height: height * 0.02),
           BlocBuilder<SignUpBloc, SignUpState>(
@@ -48,15 +43,10 @@ class SignUpFormWidget extends StatelessWidget {
                 previous.obSecure != current.obSecure,
             builder: (_, state) {
               return PasswordTextFormField(
-                suffixPressed: () {
-                  controller.obSecure();
-                },
-                onChanged: (password) {
-                  controller.password = password;
-                  print(controller.password);
-                },
                 obSecure: state.obSecure,
                 hintText: AppStrings.enterYourPassword,
+                suffixPressed: () => controller.obSecure(),
+                onChanged: (password) => controller.password = password,
               );
             },
           ),
@@ -73,12 +63,10 @@ class SignUpFormWidget extends StatelessWidget {
                   );
                 } else {
                   return CustomButton(
+                    height: height * 0.05,
                     text: AppStrings.signUp,
                     width: context.width * 0.3,
-                    height: height * 0.05,
-                    onPressed: () {
-                      controller.signUp();
-                    },
+                    onPressed: () => controller.signUp(),
                   );
                 }
               },

@@ -1,6 +1,6 @@
-import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/validators.dart';
@@ -8,6 +8,7 @@ import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/user_data_after_login_use_case.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_bloc.dart';
@@ -65,8 +66,9 @@ class LoginFormWidget extends StatelessWidget {
                       width: width * 0.4,
                       height: height * 0.05,
                       text: AppStrings.login,
-                      onPressed: () =>
-                          loginController.add(SignInEvent(state.adminUser)),
+                      onPressed: () => loginController.add(
+                        SignInEvent(state.adminUser),
+                      ),
                     );
                   }
                 },

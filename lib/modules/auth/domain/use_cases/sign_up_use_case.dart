@@ -4,31 +4,28 @@ import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/core/use_case/base_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/repository/auth_domain_repository.dart';
 
-class SignUpUseCase extends BaseUseCase<UserCredential, SignUpparams> {
+class SignUpUseCase extends BaseUseCase<UserCredential, SignUpParams> {
   final AuthRepositoryDomain domainRepository;
 
   SignUpUseCase(this.domainRepository);
 
   @override
-  Future<Either<Failure, UserCredential>> call(SignUpparams params) async {
-    print(
-        "<--------------------- In The SIGN_UP Use Case ------------------------>");
+  Future<Either<Failure, UserCredential>> call(SignUpParams params) async {
+
     final result = await domainRepository.signUp(params);
     result.fold((l) {
-      print(
-          "<----------------- fold -- Error ----------------------> ${l.message}");
+
     }, (r) {
-      print(
-          "<----------------- fold -- Success ------------------->${r.user!.uid}");
+
     });
     return result;
   }
 }
 
-class SignUpparams {
+class SignUpParams {
   final String name, email, password;
 
-  SignUpparams({
+  SignUpParams({
     required this.name,
     required this.email,
     required this.password,

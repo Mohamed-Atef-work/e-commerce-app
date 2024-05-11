@@ -86,7 +86,7 @@ class SharedLocalDataSourceImpl implements SharedLocalDataSource {
             message: AppStrings.youCanceledPickingTheImage);
       }
     } catch (e) {
-      throw const LocalDataBaseException(message: AppStrings.ops);
+      throw LocalDataBaseException(message: e.toString());
     }
   }
 }

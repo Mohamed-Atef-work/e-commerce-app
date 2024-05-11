@@ -38,6 +38,7 @@ void admin() {
 
   /// UseCases
   sl.registerLazySingleton(() => AddProductUseCase(sl()));
+  sl.registerLazySingleton(() => AddProductUseCaseNew(sl(), sl()));
   sl.registerLazySingleton(() => UpdateProductUseCase(sl()));
   sl.registerLazySingleton(() => DeleteProductUseCase(sl()));
   sl.registerLazySingleton(() => GetUsersWhoOrderedUseCase(sl()));

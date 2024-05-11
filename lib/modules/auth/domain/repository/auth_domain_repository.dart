@@ -12,7 +12,7 @@ abstract class AuthRepositoryDomain {
   Future<Either<Failure, UserEntity>> getUserData(String uId);
   Future<Either<Failure, void>> storeUserData(UserEntity user);
   Future<Either<Failure, UserCredential>> signIn(LoginParams params);
-  Future<Either<Failure, UserCredential>> signUp(SignUpparams params);
+  Future<Either<Failure, UserCredential>> signUp(SignUpParams params);
   Future<Either<Failure, void>> updateEmail(UpdateEmailParams params);
   Future<Either<Failure, void>> updatePassword(UpdatePasswordParams params);
 }

@@ -14,7 +14,7 @@ abstract class AuthBaseRemoteDatSource {
   Future<void> storeUserDate(UserModel user);
   Future<UserEntity> getUserData(String uId);
   Future<UserCredential> signIn(LoginParams params);
-  Future<UserCredential> signUp(SignUpparams params);
+  Future<UserCredential> signUp(SignUpParams params);
   Future<void> upDateEmail(UpdateEmailParams params);
   Future<void> upDatePassword(UpdatePasswordParams params);
 }
@@ -57,7 +57,7 @@ class AuthRemoteDatSourceImpl implements AuthBaseRemoteDatSource {
   }
 
   @override
-  Future<UserCredential> signUp(SignUpparams params) async {
+  Future<UserCredential> signUp(SignUpParams params) async {
     print(
         "<----------------- In The SIGN_UP Remote Data Source ------------------>");
     final userCredential = _userAuth.signUp(params).catchError((error) {

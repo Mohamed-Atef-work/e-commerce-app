@@ -7,7 +7,7 @@ abstract class UserAuth {
   Future<void> upDataEmail(String newEmail);
   Future<void> upDataPassword(String newPassword);
   Future<UserCredential> signIn(LoginParams params);
-  Future<UserCredential> signUp(SignUpparams params);
+  Future<UserCredential> signUp(SignUpParams params);
   Future<void> reAuthenticateWithCredential(String currentPassword);
 }
 
@@ -45,7 +45,7 @@ class UserAuthImpl implements UserAuth {
       );
 
   @override
-  Future<UserCredential> signUp(SignUpparams params) async =>
+  Future<UserCredential> signUp(SignUpParams params) async =>
       await _auth.createUserWithEmailAndPassword(
         password: params.password,
         email: params.email,
