@@ -13,6 +13,7 @@ import 'package:e_commerce_app/modules/shared/presentation/screens/edit_profile_
 import 'package:e_commerce_app/modules/admin/presentation/screens/admin_details_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/change_password_screen.dart';
 import 'package:e_commerce_app/modules/admin/presentation/screens/admin_add_product_screen.dart';
+import 'package:e_commerce_app/modules/shared/presentation/screens/splash_after_login_screen.dart';
 
 routes() => {
       Screens.testScreen: (context) => const TestScreen(),
@@ -29,4 +30,6 @@ routes() => {
       Screens.editAddressScreen: (context) => const EditAddressScreen(),
       Screens.adminDetailsScreen: (context) => const AdminDetailsScreen(),
       Screens.changePasswordScreen: (context) => const ChangePasswordScreen(),
+      Screens.splashAfterLoginScreen: (context) =>
+          const SplashAfterLoginScreen(),
     };

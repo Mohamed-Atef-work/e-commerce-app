@@ -20,5 +20,6 @@ class Screens {
   static const String editAddressScreen = "editAddress";
   static const String adminDetailsScreen = "adminDetails";
   static const String changePasswordScreen = "changePassword";
+  static const String splashAfterLoginScreen = "splashAfterLoginScreen";
   static const String adminProductDetailsScreen = "adminProductDetails";
 }
