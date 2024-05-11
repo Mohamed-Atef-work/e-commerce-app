@@ -16,7 +16,6 @@ import 'package:e_commerce_app/modules/admin/domain/use_cases/upload_product_ima
 import 'package:e_commerce_app/modules/admin/presentation/controllers/add_product_controller/add_product_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/categories_model_sheet_controller_in_edit_add_screen/categories_model_sheet_cubit.dart';
-import 'package:e_commerce_app/modules/admin/presentation/controllers/explore_product_controller/explore_product_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_layout_controller/admin_layout_cubit.dart';
 
 void admin() {
@@ -24,7 +23,6 @@ void admin() {
   /// blocs
   sl.registerFactory(() => AdminLayoutCubit());
   sl.registerFactory(() => AdminDetailsCubit(sl()));
-  sl.registerFactory(() => ExploreProductsCubit(sl()));
   sl.registerFactory(() => ManageAdminOrderViewCubit());
   sl.registerFactory(() => GetUsersWhoOrderedCubit(sl()));
   sl.registerFactory(() => CategoriesModelSheetCubit(sl(), sl(), sl()));

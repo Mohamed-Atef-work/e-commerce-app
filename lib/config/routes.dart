@@ -8,26 +8,22 @@ import 'package:e_commerce_app/modules/shared/presentation/screens/address_scree
 import 'package:e_commerce_app/modules/shared/presentation/screens/profile_screen.dart';
 import 'package:e_commerce_app/modules/user/presentation/screens/user_layout_screen.dart';
 import 'package:e_commerce_app/modules/orders/presentation/screens/user_order_screen.dart';
-import 'package:e_commerce_app/modules/admin/presentation/screens/not_needed/admin_panel_screen.dart';
 import 'package:e_commerce_app/modules/admin/presentation/screens/admin_layout_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/edit_profile_screen.dart';
 import 'package:e_commerce_app/modules/admin/presentation/screens/admin_details_screen.dart';
 import 'package:e_commerce_app/modules/shared/presentation/screens/change_password_screen.dart';
 import 'package:e_commerce_app/modules/admin/presentation/screens/admin_add_product_screen.dart';
-import 'package:e_commerce_app/modules/admin/presentation/screens/not_needed/admin_explore_products_screen.dart';
 
 routes() => {
       Screens.testScreen: (context) => const TestScreen(),
       Screens.loginScreen: (context) => const LoginScreen(),
       Screens.splashScreen: (context) => const SplashScreen(),
       Screens.signUpScreen: (context) => const SignUpScreen(),
-      Screens.adminPanelScreen: (context) => AdminPanelScreen(),
       Screens.detailsScreen: (context) => const DetailsScreen(),
       Screens.profileScreen: (context) => const ProfileScreen(),
       Screens.userOrderScreen: (context) => const UserOrderScreen(),
       Screens.userLayoutScreen: (context) => const UserLayoutScreen(),
       Screens.addProductScreen: (context) => const AddProductScreen(),
-      Screens.exploreScreen: (context) => const ExploreProductsScreen(),
       Screens.adminLayoutScreen: (context) => const AdminLayoutScreen(),
       Screens.editProfileScreen: (context) => const EditProfileScreen(),
       Screens.editAddressScreen: (context) => const EditAddressScreen(),

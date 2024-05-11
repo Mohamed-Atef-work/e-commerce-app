@@ -10,8 +10,7 @@ class GetAllProductCategoriesUseCase
 
   GetAllProductCategoriesUseCase(this.domainRepo);
   @override
-  Either<Failure, Stream<List<ProductCategoryEntity>>> call(
-      NoParams params)  {
+  Either<Failure, Stream<List<ProductCategoryEntity>>> call(NoParams params) {
     return domainRepo.getAllProductCategories();
   }
 }
