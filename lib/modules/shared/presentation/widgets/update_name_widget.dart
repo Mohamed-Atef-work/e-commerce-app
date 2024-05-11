@@ -26,60 +26,63 @@ class UpDateNameWidget extends StatelessWidget {
       create: (_) => sl<UpdateProfileCubit>(),
       child: BaseModelSheetComponent(
         height: context.height * 0.3,
-        child: Builder(builder: (context) {
-          /// bloc
-          final updateProfileController =
-              BlocProvider.of<UpdateProfileCubit>(context);
-          final dataController = BlocProvider.of<SharedUserDataCubit>(context);
-          final userData = dataController.state.sharedEntity!.user;
+        child: Builder(
+          builder: (context) {
+            /// bloc
+            final updateProfileController =
+                BlocProvider.of<UpdateProfileCubit>(context);
+            final dataController =
+                BlocProvider.of<SharedUserDataCubit>(context);
+            final userData = dataController.state.sharedEntity!.user;
 
-          /// bloc
-          return BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
-            listener: (_, state) => _listener(dataController, state),
-            builder: (_, state) {
-              if (state.updateState == RequestState.loading) {
-                return const LoadingWidget();
-              } else if (state.updateState == RequestState.success) {
-                return MessengerComponent(
-                  AppStrings.updated,
-                  imageWidth: context.height * 0.2,
-                  imageHeight: context.height * 0.1,
-                );
-              } else {
-                return Form(
-                  key: updateProfileController.formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CustomTextFormField(
-                        prefixIcon: Icons.person,
-                        hintText: AppStrings.name,
-                        textEditingController:
-                            updateProfileController.changedOne,
-                        validator: (value) =>
-                            Validators.stringValidator(value, AppStrings.name),
-                      ),
-                      CustomButton(
-                        height: 50,
-                        fontSize: 18,
-                        fontFamily: kPacifico,
-                        text: AppStrings.update,
-                        width: context.width * 0.7,
-                        onPressed: () =>
-                            _onPressed(updateProfileController, userData),
-                      ),
-                    ],
-                  ),
-                );
-              }
-            },
-          );
-        }),
+            /// bloc
+            return BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
+              listener: (_, state) => _listener(dataController, state),
+              builder: (_, state) {
+                if (state.updateState == RequestState.loading) {
+                  return const LoadingWidget();
+                } else if (state.updateState == RequestState.success) {
+                  return MessengerComponent(
+                    AppStrings.updated,
+                    imageWidth: context.height * 0.2,
+                    imageHeight: context.height * 0.1,
+                  );
+                } else {
+                  return Form(
+                    key: updateProfileController.formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CustomTextFormField(
+                          prefixIcon: Icons.person,
+                          hintText: AppStrings.name,
+                          textEditingController:
+                              updateProfileController.changedOne,
+                          validator: (value) => Validators.stringValidator(
+                              value, AppStrings.name),
+                        ),
+                        CustomButton(
+                          height: 50,
+                          fontSize: 18,
+                          fontFamily: kPacifico,
+                          text: AppStrings.update,
+                          width: context.width * 0.7,
+                          onPressed: () =>
+                              _onPressed(updateProfileController, userData),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              },
+            );
+          },
+        ),
       ),
     );
   }
 
-  _onPressed(controller, data) {
+  _onPressed(UpdateProfileCubit controller, CachedUserDataEntity data) {
     final userEntity = UserEntity(
       id: data.userEntity.id,
       email: data.userEntity.email,

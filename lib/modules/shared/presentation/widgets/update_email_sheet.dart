@@ -36,11 +36,7 @@ class UpDateEmailWidget extends StatelessWidget {
         return BaseModelSheetComponent(
           height: context.height * 0.5,
           child: BlocConsumer<ChangeEmailCubit, ChangeEmailState>(
-            listener: (_, state) {
-              if (state.changeState == RequestState.success) {
-                userDataController.getSavedUser();
-              }
-            },
+            listener: (_, state) => _listener(state, userDataController),
             builder: (_, state) {
               if (state.changeState == RequestState.loading) {
                 return const LoadingWidget();
@@ -94,7 +90,7 @@ class UpDateEmailWidget extends StatelessWidget {
     );
   }
 
-  _onPressed(emailController, data) {
+  _onPressed(ChangeEmailCubit emailController, CachedUserDataEntity data) {
     /// upDate.........................................
 
     final userEntity = UserEntity(
@@ -113,6 +109,12 @@ class UpDateEmailWidget extends StatelessWidget {
     if (emailController.newEmail.text != emailController.oldEmail.text &&
         emailController.oldEmail.text == data.userEntity.email) {
       emailController.changeEmail(cachedUser);
+    }
+  }
+
+  _listener(ChangeEmailState state, SharedUserDataCubit dataController) {
+    if (state.changeState == RequestState.success) {
+      dataController.getSavedUser();
     }
   }
 }
