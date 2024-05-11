@@ -14,8 +14,6 @@ import 'package:e_commerce_app/modules/shared/domain/use_cases/user_data_after_l
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_bloc.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_states.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_events.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_state.dart';
 
 class LoginFormWidget extends StatelessWidget {
   const LoginFormWidget({super.key});
@@ -26,110 +24,66 @@ class LoginFormWidget extends StatelessWidget {
     final height = context.height;
 
     final loginController = BlocProvider.of<LoginBloc>(context);
-    final userDataController = BlocProvider.of<SharedUserDataCubit>(context);
 
-    return Form(
-      key: loginController.formKey,
-      child: MultiBlocListener(
-        listeners: _listeners(),
-        child: Column(
-          children: [
-            CustomTextFormField(
-              prefixIcon: Icons.email,
-              validator: _emailValidator,
-              hintText: AppStrings.enterYourEmail,
-              onChanged: (email) => loginController.email = email,
-            ),
-            SizedBox(height: height * 0.02),
-            BlocBuilder<LoginBloc, LoginState>(
-              buildWhen: (previous, current) =>
-                  previous.obSecure != current.obSecure,
-              builder: (_, state) => PasswordTextFormField(
+    return BlocConsumer<LoginBloc, LoginState>(
+      listener: _loginListener,
+      builder: (_, state) {
+        return Form(
+          key: loginController.formKey,
+          child: Column(
+            children: [
+              CustomTextFormField(
+                prefixIcon: Icons.email,
+                validator: _emailValidator,
+                hintText: AppStrings.enterYourEmail,
+                onChanged: (email) => loginController.email = email,
+              ),
+              SizedBox(height: height * 0.02),
+              PasswordTextFormField(
                 obSecure: state.obSecure,
                 hintText: AppStrings.enterYourPassword,
                 onChanged: (password) => loginController.password = password,
                 suffixPressed: () => loginController.add(const ObSecureEvent()),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: height * 0.05),
-              child: BlocBuilder<LoginBloc, LoginState>(
-                builder: (_, state) {
-                  print(
-                      " ------------------------------------------------- > Rebuild.....");
-                  if (state.loginState == RequestState.loading ||
-                      userDataController.state.afterLoginState ==
-                          RequestState.loading) {
-                    return const LoadingWidget();
-                  } else {
-                    return CustomButton(
-                      width: width * 0.4,
-                      height: height * 0.05,
-                      text: AppStrings.login,
-                      onPressed: () => loginController.add(
-                        SignInEvent(state.adminUser),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: height * 0.05),
+                child: state.loginState == RequestState.loading
+                    ? const LoadingWidget()
+                    : CustomButton(
+                        width: width * 0.4,
+                        height: height * 0.05,
+                        text: AppStrings.login,
+                        onPressed: () => loginController.add(
+                          SignInEvent(state.adminUser),
+                        ),
                       ),
-                    );
-                  }
-                },
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 
   String? _emailValidator(String? value) => Validators.emailValidator(value);
 
-  _listeners() => [
-        BlocListener<LoginBloc, LoginState>(
-          listenWhen: (previous, current) =>
-              previous.loginState != current.loginState,
-          listener: _loginListener,
-        ),
-        BlocListener<SharedUserDataCubit, SharedUserDataState>(
-          listenWhen: (previous, current) =>
-              previous.afterLoginState != current.afterLoginState,
-          listener: _userDataListener,
-        ),
-      ];
-
   void _loginListener(BuildContext context, LoginState state) {
     final loginController = BlocProvider.of<LoginBloc>(context);
-    final userDataController = BlocProvider.of<SharedUserDataCubit>(context);
 
     print("LoginState ----------- listener ----------- > ${state.loginState}");
     if (state.loginState == RequestState.success) {
-      final afterLogin = AfterLoginParams(
+      final params = AfterLoginParams(
         adminUser: state.adminUser,
         password: loginController.password!,
         uId: state.userCredential!.user!.uid,
         userCredential: state.userCredential!,
       );
-      userDataController.userDataAfterLogin(afterLogin);
+      Navigator.of(context).pushReplacementNamed(
+        Screens.splashAfterLoginScreen,
+        arguments: params,
+      );
     } else if (state.loginState == RequestState.error) {
       showMyToast(state.errorMessage!, context, Colors.red);
-    }
-  }
-
-  void _userDataListener(BuildContext context, SharedUserDataState state) {
-    final loginController = BlocProvider.of<LoginBloc>(context);
-
-    print(
-        "afterLoginState ----------- listener ----------- > ${state.afterLoginState}");
-    if (state.afterLoginState == RequestState.error ||
-        state.afterLoginState == RequestState.success) {
-      loginController.add(const RebuildEvent());
-    }
-
-    /// < ------------------------------ listener ------------------------------ >
-    if (state.afterLoginState == RequestState.success) {
-      if (state.sharedEntity!.user.adminOrUser == AdminUser.user) {
-        Navigator.of(context).pushReplacementNamed(Screens.userLayoutScreen);
-      } else {
-        Navigator.of(context).pushReplacementNamed(Screens.adminLayoutScreen);
-      }
     }
   }
 }
