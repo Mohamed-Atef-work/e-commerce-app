@@ -34,7 +34,7 @@ void admin() {
 
   /// Data Sources
   sl.registerLazySingleton<AdminBaseRemoteDataSource>(
-      () => AdminRemoteDataSourceImpl(sl(), sl()));
+      () => AdminRemoteDataSourceImpl(sl()));
 
   /// UseCases
   sl.registerLazySingleton(() => AddProductUseCase(sl()));

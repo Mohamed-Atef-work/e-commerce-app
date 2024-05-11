@@ -35,27 +35,6 @@ class AdminRepositoryData implements AdminRepositoryDomain {
   }
 
   @override
-  Future<Either<Failure, Reference>> uploadProductImage(File params) async {
-    try {
-      final result = await dataSource.uploadProductImage(params);
-      return Right(result);
-    } on ServerException catch (serverException) {
-      return Left(ServerFailure(message: serverException.message));
-    }
-  }
-
-  @override
-  Future<Either<Failure, String>> downloadProductImageUrl(
-      Reference parameter) async {
-    try {
-      final result = await dataSource.downLoadProductImageUrl(parameter);
-      return Right(result);
-    } on ServerException catch (serverException) {
-      return Left(ServerFailure(message: serverException.message));
-    }
-  }
-
-  @override
   Either<Failure, Stream<List<ProductEntity>>> loadProducts(
       LoadProductsParams params) {
     try {
@@ -71,16 +50,6 @@ class AdminRepositoryData implements AdminRepositoryDomain {
       DeleteProductParams params) async {
     try {
       final result = await dataSource.deleteProduct(params);
-      return Right(result);
-    } on ServerException catch (serverException) {
-      return Left(ServerFailure(message: serverException.message));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> editProduct(UpdateProductParams params) async {
-    try {
-      final result = await dataSource.updateProduct(params);
       return Right(result);
     } on ServerException catch (serverException) {
       return Left(ServerFailure(message: serverException.message));
@@ -129,5 +98,12 @@ class AdminRepositoryData implements AdminRepositoryDomain {
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));
     }
+  }
+
+
+  @override
+  Future<Either<Failure, void>> editProduct(UpdateProductParams params) {
+    // TODO: implement editProduct
+    throw UnimplementedError();
   }
 }

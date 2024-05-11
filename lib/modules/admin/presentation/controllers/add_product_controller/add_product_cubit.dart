@@ -44,7 +44,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
 
   Future<void> getCategories() async {
     emit(state.copyWith(getCategoriesState: RequestState.loading));
-    final result = await getAllProductCategoriesUseCase(const NoParams());
+    final result = getAllProductCategoriesUseCase(const NoParams());
     result.fold(
         (l) => emit(
               state.copyWith(
@@ -66,14 +66,13 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
         state.copyWith(
           thereIsImage: true,
           imageState: ImageState.network,
-          imageButtonText: AppStrings.changeTheImage,
           addUpdateButtonText: AppStrings.update,
           productToBeUpdated: productToBeUpdated,
+          imageButtonText: AppStrings.changeTheImage,
         ),
       );
       nameController.text = productToBeUpdated.name;
       priceController.text = productToBeUpdated.price.toString();
-      //categoryController.text = productToBeUpdated.category;
       locationController.text = productToBeUpdated.location;
       descriptionController.text = productToBeUpdated.description;
     }
@@ -84,8 +83,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
   }
 
   Future<void> execute() async {
-    print(
-        "< -------------------------------------------execute----------------------------------------------- >");
+    print(" < ------------------------- execute ------------------------- > ");
 
     if (formKey.currentState!.validate() && state.thereIsImage) {
       /// < ------------------------------------------------------------------ >
@@ -103,7 +101,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
       }
     } else {
       print(
-          "< -------------------- Not Validate or No Image ------------------- >");
+          "< ------------------- Not Validate or No Image ------------------- >");
     }
   }
 
@@ -152,10 +150,10 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
     final addProductResult = await addProductUseCase(
       AddProductParams(
         product: ProductModel(
-          description: descriptionController.text,
           category: state.categories![state.categoryIndex].name,
-          location: locationController.text,
           price: int.parse(priceController.text),
+          description: descriptionController.text,
+          location: locationController.text,
           name: nameController.text,
           image: imageUrl,
         ),
@@ -173,26 +171,23 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
     }, (r) {
       emit(
         state.copyWith(
+          thereIsImage: false,
+          imageState: ImageState.noImage,
           productState: RequestState.success,
           imageButtonText: AppStrings.addAnImage,
-          imageState: ImageState.noImage,
-          thereIsImage: false,
         ),
       );
       nameController.text = "";
       priceController.text = "";
-      //categoryController.text = "";
       locationController.text = "";
       descriptionController.text = "";
-      print("< ________ imagePath is ________ ${state.imagePath} ________ >");
-      print(
-          "< ________ productState is ________ ${state.productState} ________ >");
+      print("< _________ imagePath is ________ ${state.imagePath} _________ >");
+      print("< ________ productState is _______ ${state.productState} _____ >");
     });
   }
 
   Future<void> _imagePart() async {
-    print(
-        "< -------------------------------------------_imagePart----------------------------------------------- >");
+    print("< ------------------------ _imagePart ------------------------- >");
     final uploadImageResult =
         await uploadProductImageUseCase(File(state.imagePath!));
 
@@ -202,15 +197,15 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
         (l) => emit(
               state.copyWith(
                 errorMessage: l.message,
-                uploadImageState: RequestState.error,
                 productState: RequestState.error,
+                uploadImageState: RequestState.error,
               ),
             ), (imageReference) async {
-      emit(state.copyWith(
-        uploadImageState: RequestState.success,
-      ));
+      emit(
+        state.copyWith(uploadImageState: RequestState.success),
+      );
       print(
-          "< ________ uploadImageState is ________ ${state.uploadImageState} ________ >");
+          "< _____ uploadImageState is ______ ${state.uploadImageState} ______ >");
 
       /// < ---------------------------------------------------------------- >
       _downloadUrlPart(imageReference);
@@ -219,7 +214,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
 
   Future<void> _downloadUrlPart(Reference imageReference) async {
     print(
-        "< -------------------------------------------_downloadUrlPart----------------------------------------------- >");
+        "< ---------------------------- _downloadUrlPart -------------------- >");
 
     /// < -------------------------------------------------------------------- >
     final downloadUrlResult =
@@ -230,17 +225,15 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
         (l) => emit(
               state.copyWith(
                 errorMessage: l.message,
-                downloadImageState: RequestState.error,
                 productState: RequestState.error,
+                downloadImageState: RequestState.error,
               ),
             ), (imageUrl) async {
       emit(state.copyWith(downloadImageState: RequestState.success));
       print(
-          "< ________ downloadImageState is ________ ${state.downloadImageState} ________ >");
+          "< _____ downloadImageState is ____ ${state.downloadImageState} ____ >");
       if (state.addUpdateButtonText == AppStrings.update) {
-        await _upDateProduct(
-          productImage: imageUrl,
-        );
+        await _upDateProduct(productImage: imageUrl);
       } else {
         await _addProduct(imageUrl);
       }
@@ -249,7 +242,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
 
   Future<void> getImageFromGallery() async {
     print(
-        "< -------------------------------------------getImageFromGallery----------------------------------------------- >");
+        "< -------------------------getImageFromGallery------------------------- >");
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     emit(state.copyWith(imageState: ImageState.noImage));
@@ -272,49 +265,3 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
     }
   }
 }
-
-/*  late String productName;
-  late String productPrice;
-  late String productLocation;
-  late String productCategory;
-  late String productDescription;*/
-
-/*Future<void> testing() async {
-    if(formKey.currentState!.validate()){    /// < -------------------------------------------------------------------- >
-      final addProductResult = await addProductUseCase(
-        AddProductParams(
-          productDescription: descriptionController.text,
-          productCategory: categoryController.text,
-          productLocation: locationController.text,
-          productPrice: priceController.text,
-          productName: nameController.text,
-          productImage: "imageUrl",
-        ),
-      );
-
-      /// < -------------------------------------------------------------------- >
-      addProductResult.fold((l) {
-        emit(
-          state.copyWith(
-            errorMessage: l.message,
-            productState: RequestState.error,
-          ),
-        );
-      }, (r) {
-        emit(
-          state.copyWith(
-            productState: RequestState.success,
-            imageButtonText: AppStrings.addAnImage,
-            thereIsImage: false,
-          ),
-        );
-        nameController.text = "";
-        priceController.text = "";
-        categoryController.text = "";
-        locationController.text = "";
-        descriptionController.text = "";
-        print("< ________ imagePath is ________ ${state.imagePath} ________ >");
-        print(
-            "< ________ productState is ________ ${state.productState} ________ >");
-      });}
-  }*/

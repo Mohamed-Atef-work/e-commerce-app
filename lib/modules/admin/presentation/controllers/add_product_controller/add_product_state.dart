@@ -1,8 +1,9 @@
-import 'package:e_commerce_app/modules/admin/domain/entities/product_category_entity.dart';
 import 'package:equatable/equatable.dart';
-import 'package:e_commerce_app/core/utils/app_strings.dart';
+
 import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
+import 'package:e_commerce_app/modules/admin/domain/entities/product_category_entity.dart';
 
 class EditAddProductState extends Equatable {
   final List<ProductCategoryEntity>? categories;

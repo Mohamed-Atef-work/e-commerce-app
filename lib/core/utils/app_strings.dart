@@ -96,8 +96,12 @@ class AppStrings {
   static const String pleaseAddPhone = "please Add Phone";
   static const String pleaseAddAddress = "please Add Address";
   static const String pleaseAddPhoneAddress = "please Add Phone and Address";
-  static const String confirmPasswordNotCorrect = "Confirm Password Is Not Correct";
+  static const String confirmPasswordNotCorrect =
+      "Confirm Password Is Not Correct";
   static const String newPasswordNotCorrect = "New Password Is Not Correct";
   static const String outOfStock = "Out Of Stock";
   static const String someItemsAreOutOfStock = "Some Items Are Out Of Stock";
+
+  static const String youCanceledPickingTheImage =
+      "You Canceled Picking The Image";
 }
