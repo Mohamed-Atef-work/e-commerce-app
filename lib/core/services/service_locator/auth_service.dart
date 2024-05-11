@@ -16,11 +16,11 @@ void auth() {
   // < --------------------------------- Auth --------------------------------- >
   /// blocs
 
+  sl.registerFactory(() => SignUpBloc(sl()));
   sl.registerFactory(() => LogoutCubit(sl()));
   sl.registerFactory(() => LoginBloc(sl(), sl()));
   sl.registerFactory(() => ChangeEmailCubit(sl()));
   sl.registerFactory(() => ChangePasswordCubit(sl()));
-  sl.registerFactory(() => SignUpBloc(sl(), sl()));
 
   /// UseCases
   sl.registerLazySingleton(() => SignUpUseCase(sl()));

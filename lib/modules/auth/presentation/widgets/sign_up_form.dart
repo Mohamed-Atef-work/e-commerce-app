@@ -55,8 +55,7 @@ class SignUpFormWidget extends StatelessWidget {
             child: BlocConsumer<SignUpBloc, SignUpState>(
               listener: _listener,
               builder: (_, state) {
-                if (state.signUpState == RequestState.loading ||
-                    state.storeUserDataState == RequestState.loading) {
+                if (state.signUpState == RequestState.loading) {
                   return SizedBox(
                     height: height * 0.05,
                     child: const LoadingWidget(),
@@ -77,19 +76,17 @@ class SignUpFormWidget extends StatelessWidget {
     );
   }
 
+  void _listener(BuildContext context, SignUpState state) {
+    if (state.signUpState == RequestState.success) {
+      showMyToast(AppStrings.success, context, Colors.green);
+      Navigator.of(context).pushReplacementNamed(Screens.loginScreen);
+    } else if (state.signUpState == RequestState.error) {
+      showMyToast(AppStrings.ops, context, Colors.red);
+    }
+  }
+
   String? _emailValidator(String? value) => Validators.emailValidator(value);
 
   String? _nameValidator(String? value) =>
       Validators.stringValidator(value, AppStrings.enterYourName);
-
-  void _listener(BuildContext context, SignUpState state) {
-    if (state.signUpState == RequestState.success &&
-        state.storeUserDataState == RequestState.success) {
-      showMyToast(AppStrings.success, context, Colors.green);
-      Navigator.of(context).pushReplacementNamed(Screens.loginScreen);
-    } else if (state.signUpState == RequestState.error ||
-        state.storeUserDataState == RequestState.error) {
-      showMyToast(AppStrings.ops, context, Colors.red);
-    }
-  }
 }

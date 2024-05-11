@@ -3,63 +3,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:e_commerce_app/core/utils/enums.dart';
-import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/sign_up_use_case.dart';
-import 'package:e_commerce_app/modules/auth/domain/use_cases/store_user_data_use_case.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/sign_up_controller/sign_up_states.dart';
 
 class SignUpBloc extends Cubit<SignUpState> {
   final SignUpUseCase _signUpUseCase;
-  final StoreUserDataUseCase _storeUserDataUseCase;
+
+  SignUpBloc(this._signUpUseCase) : super(const SignUpState());
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String? name, email, password;
-  SignUpBloc(this._signUpUseCase, this._storeUserDataUseCase)
-      : super(const SignUpState());
 
   Future<void> signUp() async {
     if (formKey.currentState!.validate()) {
-      _signUp().then((_) {
-        _storeUserDate();
-      });
+      emit(state.copyWith(signUpState: RequestState.loading));
+      final result = await _signUpUseCase(
+        SignUpParams(
+          name: name!,
+          email: email!,
+          password: password!,
+        ),
+      );
+      emit(
+        result.fold(
+          (l) => state.copyWith(
+              signUpState: RequestState.error, errorMessage: l.message),
+          (r) => state.copyWith(signUpState: RequestState.success),
+        ),
+      );
     }
   }
 
-  void obSecure() {
-    emit(state.copyWith(obSecure: !state.obSecure));
-  }
-
-  Future<void> _signUp() async {
-    emit(state.copyWith(signUpState: RequestState.loading));
-    final result = await _signUpUseCase(
-      SignUpParams(
-        name: name!,
-        email: email!,
-        password: password!,
-      ),
-    );
-    emit(result.fold(
-      (l) => state.copyWith(
-          signUpState: RequestState.error, errorMessage: l.message),
-      (r) =>
-          state.copyWith(signUpState: RequestState.success, userCredential: r),
-    ));
-  }
-
-  Future<void> _storeUserDate() async {
-    emit(state.copyWith(storeUserDataState: RequestState.loading));
-    final result = await _storeUserDataUseCase.call(
-      UserModel(
-        name: name!,
-        email: email!,
-        id: state.userCredential!.user!.uid,
-      ),
-    );
-    emit(
-      result.fold(
-        (l) => state.copyWith(
-            storeUserDataState: RequestState.error, errorMessage: l.message),
-        (r) => state.copyWith(storeUserDataState: RequestState.success),
-      ),
-    );
-  }
+  void obSecure() => emit(state.copyWith(obSecure: !state.obSecure));
 }
