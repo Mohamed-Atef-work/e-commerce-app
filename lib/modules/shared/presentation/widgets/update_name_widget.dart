@@ -1,6 +1,6 @@
-import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
@@ -9,6 +9,7 @@ import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
+import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/core/components/base_model_sheet_component.dart';
@@ -21,11 +22,6 @@ class UpDateNameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// bloc
-    final userDataController = BlocProvider.of<SharedUserDataCubit>(context);
-    final userData = userDataController.state.sharedEntity!.user;
-
-    /// bloc
     return BlocProvider(
       create: (_) => sl<UpdateProfileCubit>(),
       child: BaseModelSheetComponent(
@@ -34,15 +30,13 @@ class UpDateNameWidget extends StatelessWidget {
           /// bloc
           final updateProfileController =
               BlocProvider.of<UpdateProfileCubit>(context);
+          final dataController = BlocProvider.of<SharedUserDataCubit>(context);
+          final userData = dataController.state.sharedEntity!.user;
 
           /// bloc
           return BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
-            listener: (_, state) {
-              if (state.updateState == RequestState.success) {
-                userDataController.getSavedUser();
-              }
-            },
-            builder: (context, state) {
+            listener: (_, state) => _listener(dataController, state),
+            builder: (_, state) {
               if (state.updateState == RequestState.loading) {
                 return const LoadingWidget();
               } else if (state.updateState == RequestState.success) {
@@ -71,21 +65,8 @@ class UpDateNameWidget extends StatelessWidget {
                         fontFamily: kPacifico,
                         text: AppStrings.update,
                         width: context.width * 0.7,
-                        onPressed: () {
-                          final userEntity = UserEntity(
-                            id: userData.userEntity.id,
-                            email: userData.userEntity.email,
-                            phone: userData.userEntity.phone,
-                            address: userData.userEntity.address,
-                            name: updateProfileController.changedOne.text,
-                          );
-                          final cachedUser = CachedUserDataEntity(
-                            userEntity: userEntity,
-                            password: userData.password,
-                            adminOrUser: userData.adminOrUser,
-                          );
-                          updateProfileController.updateName(cachedUser);
-                        },
+                        onPressed: () =>
+                            _onPressed(updateProfileController, userData),
                       ),
                     ],
                   ),
@@ -96,5 +77,27 @@ class UpDateNameWidget extends StatelessWidget {
         }),
       ),
     );
+  }
+
+  _onPressed(controller, data) {
+    final userEntity = UserEntity(
+      id: data.userEntity.id,
+      email: data.userEntity.email,
+      phone: data.userEntity.phone,
+      address: data.userEntity.address,
+      name: controller.changedOne.text,
+    );
+    final cachedUser = CachedUserDataEntity(
+      userEntity: userEntity,
+      password: data.password,
+      adminOrUser: data.adminOrUser,
+    );
+    controller.updateName(cachedUser);
+  }
+
+  _listener(SharedUserDataCubit controller, state) {
+    if (state.updateState == RequestState.success) {
+      controller.getSavedUser();
+    }
   }
 }

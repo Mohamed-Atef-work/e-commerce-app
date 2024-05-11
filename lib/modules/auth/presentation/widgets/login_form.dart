@@ -30,29 +30,29 @@ class LoginFormWidget extends StatelessWidget {
 
     return Form(
       key: loginController.formKey,
-      child: Column(
-        children: [
-          CustomTextFormField(
-            prefixIcon: Icons.email,
-            validator: _emailValidator,
-            hintText: AppStrings.enterYourEmail,
-            onChanged: (email) => loginController.email = email,
-          ),
-          SizedBox(height: height * 0.02),
-          BlocBuilder<LoginBloc, LoginState>(
-            buildWhen: (previous, current) =>
-                previous.obSecure != current.obSecure,
-            builder: (_, state) => PasswordTextFormField(
-              obSecure: state.obSecure,
-              hintText: AppStrings.enterYourPassword,
-              onChanged: (password) => loginController.password = password,
-              suffixPressed: () => loginController.add(const ObSecureEvent()),
+      child: MultiBlocListener(
+        listeners: _listeners(),
+        child: Column(
+          children: [
+            CustomTextFormField(
+              prefixIcon: Icons.email,
+              validator: _emailValidator,
+              hintText: AppStrings.enterYourEmail,
+              onChanged: (email) => loginController.email = email,
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: height * 0.05),
-            child: MultiBlocListener(
-              listeners: _listeners(),
+            SizedBox(height: height * 0.02),
+            BlocBuilder<LoginBloc, LoginState>(
+              buildWhen: (previous, current) =>
+                  previous.obSecure != current.obSecure,
+              builder: (_, state) => PasswordTextFormField(
+                obSecure: state.obSecure,
+                hintText: AppStrings.enterYourPassword,
+                onChanged: (password) => loginController.password = password,
+                suffixPressed: () => loginController.add(const ObSecureEvent()),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: height * 0.05),
               child: BlocBuilder<LoginBloc, LoginState>(
                 builder: (_, state) {
                   print(
@@ -74,8 +74,8 @@ class LoginFormWidget extends StatelessWidget {
                 },
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -38,9 +38,10 @@ class SharedUserDataCubit extends Cubit<SharedUserDataState> {
       result.fold(
         (l) => state.copyWith(getState: RequestState.error, message: l.message),
         (r) => state.copyWith(
-            getState: RequestState.success,
-            sharedEntity: SharedUserDataEntity(
-                userCredential: state.sharedEntity!.userCredential, user: r)),
+          getState: RequestState.success,
+          sharedEntity: SharedUserDataEntity(
+              userCredential: state.sharedEntity!.userCredential, user: r),
+        ),
       ),
     );
   }
@@ -110,17 +111,4 @@ class SharedUserDataCubit extends Cubit<SharedUserDataState> {
       ),
     );
   }
-
-/*  void saveDataLocally(CachedUserDataModel user) async {
-    emit(state.copyWith(saveState: RequestState.loading));
-
-    final result = await _sharedDomainRepo.saveUserDataLocally(user);
-    emit(
-      result.fold(
-            (l) =>
-            state.copyWith(message: l.message, saveState: RequestState.error),
-            (r) => state.copyWith(saveState: RequestState.success),
-      ),
-    );
-  }*/
 }

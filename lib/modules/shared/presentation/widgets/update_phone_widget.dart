@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
@@ -38,12 +39,8 @@ class UpDatePhoneWidget extends StatelessWidget {
           return BaseModelSheetComponent(
             height: context.height * 0.3,
             child: BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
-              listener: (context, state) {
-                if (state.updateState == RequestState.success) {
-                  userDataController.getSavedUser();
-                }
-              },
-              builder: (context, state) {
+              listener: (_, state) => _listener(state, userDataController),
+              builder: (_, state) {
                 if (state.updateState == RequestState.loading) {
                   return const LoadingWidget();
                 } else if (state.updateState == RequestState.success) {
@@ -71,21 +68,8 @@ class UpDatePhoneWidget extends StatelessWidget {
                           fontFamily: kPacifico,
                           text: AppStrings.update,
                           width: context.width * 0.7,
-                          onPressed: () {
-                            final userEntity = UserEntity(
-                              id: userData.userEntity.id,
-                              name: userData.userEntity.name,
-                              email: userData.userEntity.email,
-                              address: userData.userEntity.address,
-                              phone: updateProfileController.changedOne.text,
-                            );
-                            final cachedUser = CachedUserDataEntity(
-                              userEntity: userEntity,
-                              password: userData.password,
-                              adminOrUser: userData.adminOrUser,
-                            );
-                            updateProfileController.updateName(cachedUser);
-                          },
+                          onPressed: () =>
+                              _onPressed(updateProfileController, userData),
                         ),
                       ],
                     ),
@@ -101,4 +85,26 @@ class UpDatePhoneWidget extends StatelessWidget {
 
   String? _phoneValidator(String? value) =>
       Validators.numericValidator(value, AppStrings.phone);
+
+  _onPressed(UpdateProfileCubit profileController, CachedUserDataEntity data) {
+    final userEntity = UserEntity(
+      id: data.userEntity.id,
+      name: data.userEntity.name,
+      email: data.userEntity.email,
+      address: data.userEntity.address,
+      phone: profileController.changedOne.text,
+    );
+    final cachedUser = CachedUserDataEntity(
+      userEntity: userEntity,
+      password: data.password,
+      adminOrUser: data.adminOrUser,
+    );
+    profileController.updateName(cachedUser);
+  }
+
+  _listener(state, dataController) {
+    if (state.updateState == RequestState.success) {
+      dataController.getSavedUser();
+    }
+  }
 }

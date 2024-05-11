@@ -1,6 +1,6 @@
-import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
@@ -9,6 +9,7 @@ import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
+import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
 import 'package:e_commerce_app/core/components/base_model_sheet_component.dart';
@@ -21,23 +22,21 @@ class UpDateEmailWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// bloc
-    final userDataController = BlocProvider.of<SharedUserDataCubit>(context);
-    final userData = userDataController.state.sharedEntity!.user;
-
-    /// bloc
     return BlocProvider(
-      create: (context) => sl<ChangeEmailCubit>(),
+      create: (_) => sl<ChangeEmailCubit>(),
       child: Builder(builder: (context) {
         /// bloc
         final updateEmailController =
             BlocProvider.of<ChangeEmailCubit>(context);
+        final userDataController =
+            BlocProvider.of<SharedUserDataCubit>(context);
+        final userData = userDataController.state.sharedEntity!.user;
 
         /// bloc
         return BaseModelSheetComponent(
           height: context.height * 0.5,
           child: BlocConsumer<ChangeEmailCubit, ChangeEmailState>(
-            listener: (context, state) {
+            listener: (_, state) {
               if (state.changeState == RequestState.success) {
                 userDataController.getSavedUser();
               }
@@ -73,9 +72,7 @@ class UpDateEmailWidget extends StatelessWidget {
                         obSecure: state.obSecure,
                         hintText: AppStrings.enterYourPassword,
                         textEditingController: updateEmailController.password,
-                        suffixPressed: () {
-                          updateEmailController.obSecure();
-                        },
+                        suffixPressed: () => updateEmailController.obSecure(),
                       ),
                       CustomButton(
                         height: 50,
@@ -83,29 +80,8 @@ class UpDateEmailWidget extends StatelessWidget {
                         fontFamily: kPacifico,
                         text: AppStrings.update,
                         width: context.width * 0.7,
-                        onPressed: () {
-                          /// upDate.........................................
-
-                          final userEntity = UserEntity(
-                            id: userData.userEntity.id,
-                            name: userData.userEntity.name,
-                            phone: userData.userEntity.phone,
-                            address: userData.userEntity.address,
-                            email: updateEmailController.newEmail.text,
-                          );
-                          final cachedUser = CachedUserDataEntity(
-                            userEntity: userEntity,
-                            password: userData.password,
-                            adminOrUser: userData.adminOrUser,
-                          );
-
-                          if (updateEmailController.newEmail.text !=
-                                  updateEmailController.oldEmail.text &&
-                              updateEmailController.oldEmail.text ==
-                                  userData.userEntity.email) {
-                            updateEmailController.changeEmail(cachedUser);
-                          }
-                        },
+                        onPressed: () =>
+                            _onPressed(updateEmailController, userData),
                       ),
                     ],
                   ),
@@ -116,5 +92,27 @@ class UpDateEmailWidget extends StatelessWidget {
         );
       }),
     );
+  }
+
+  _onPressed(emailController, data) {
+    /// upDate.........................................
+
+    final userEntity = UserEntity(
+      id: data.userEntity.id,
+      name: data.userEntity.name,
+      phone: data.userEntity.phone,
+      address: data.userEntity.address,
+      email: emailController.newEmail.text,
+    );
+    final cachedUser = CachedUserDataEntity(
+      userEntity: userEntity,
+      password: data.password,
+      adminOrUser: data.adminOrUser,
+    );
+
+    if (emailController.newEmail.text != emailController.oldEmail.text &&
+        emailController.oldEmail.text == data.userEntity.email) {
+      emailController.changeEmail(cachedUser);
+    }
   }
 }
