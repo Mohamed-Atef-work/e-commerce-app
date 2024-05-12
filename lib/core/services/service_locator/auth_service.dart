@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
-import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/sign_up_use_case.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/log_out_use_case.dart';
 import 'package:e_commerce_app/modules/auth/data/repository/auth_data_repository.dart';

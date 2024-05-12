@@ -1,37 +1,31 @@
 import 'dart:async';
-
-import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/orders/domain/entity/item_entity.dart';
 import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/delete_item_from_order_use_case.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_case.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/get_order_items_use_case.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/get_user_orders_use_case.dart';
-import 'package:equatable/equatable.dart';
+import 'package:e_commerce_app/modules/orders/domain/params/delete_order_params.dart';
+import 'package:e_commerce_app/modules/orders/domain/params/get_order_items_params.dart';
+import 'package:e_commerce_app/modules/orders/domain/repository/order_domain_repository.dart';
+import 'package:e_commerce_app/modules/orders/domain/params/delete_item_from_order_params.dart';
 
 part 'manage_user_orders_state.dart';
 
 class ManageUserOrdersCubit extends Cubit<ManageUserOrdersState> {
-  final DeleteOrderUseCase _deleteOrder;
-  final GetUserOrdersUseCase _getUserOrders;
-  final GetOrderItemsUseCase _getOrderItems;
-  final DeleteItemFromOrderUseCase _deleteItemFromOrder;
+  final OrderDomainRepo _orderRepo;
 
   StreamSubscription<List<OrderDataEntity>>? ordersSub;
 
   ManageUserOrdersCubit(
-    this._deleteOrder,
-    this._getUserOrders,
-    this._getOrderItems,
-    this._deleteItemFromOrder,
+    this._orderRepo,
   ) : super(const ManageUserOrdersState());
 
   Future<void> getOrders(String uId) async {
     await ordersSub?.cancel();
     emit(state.copyWith(getOrders: RequestState.loading));
-    final result = await _getUserOrders.call(uId);
+    final result = _orderRepo.streamOfUserOrders(uId);
 
     result.fold(
         (l) => emit(
@@ -50,7 +44,7 @@ class ManageUserOrdersCubit extends Cubit<ManageUserOrdersState> {
   Future<void> getOrderItems(DocumentReference orderRef) async {
     emit(state.copyWith(getOrderItems: RequestState.loading));
     final result =
-        await _getOrderItems.call(GetOrderItemsParams(orderRef: orderRef));
+        await _orderRepo.getOrderItems(GetOrderItemsParams(orderRef: orderRef));
     emit(
       result.fold(
         (l) => state.copyWith(
@@ -66,7 +60,7 @@ class ManageUserOrdersCubit extends Cubit<ManageUserOrdersState> {
   Future<void> deleteOrder(DeleteOrderParams params) async {
     emit(state.copyWith(deleteOrder: RequestState.loading));
     print(state.deleteOrder);
-    final result = await _deleteOrder.call(params);
+    final result = await _orderRepo.deleteOrder(params);
     emit(
       result.fold(
         (l) =>
@@ -79,7 +73,7 @@ class ManageUserOrdersCubit extends Cubit<ManageUserOrdersState> {
 
   Future<void> deleteItemFromOrder(DeleteItemFromOrderParams params) async {
     emit(state.copyWith(deleteOrderItem: RequestState.loading));
-    final result = await _deleteItemFromOrder.call(params);
+    final result = await _orderRepo.deleteItemFromOrder(params);
     emit(
       result.fold(
         (l) => state.copyWith(

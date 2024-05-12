@@ -2,16 +2,15 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
-import 'package:e_commerce_app/core/use_case/base_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/get_users_who_ordered_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/repository/order_domain_repository.dart';
 import 'package:meta/meta.dart';
 
 part 'get_users_who_ordered_state.dart';
 
 class GetUsersWhoOrderedCubit extends Cubit<GetUsersWhoOrderedState> {
-  final GetUsersWhoOrderedUseCase _getUsersWhoOrderedUseCase;
-  GetUsersWhoOrderedCubit(this._getUsersWhoOrderedUseCase)
+  final OrderDomainRepo _orderRepo;
+  GetUsersWhoOrderedCubit(this._orderRepo)
       : super(const GetUsersWhoOrderedState());
 
   StreamSubscription<List<UserEntity>>? usersSub;
@@ -20,7 +19,7 @@ class GetUsersWhoOrderedCubit extends Cubit<GetUsersWhoOrderedState> {
     await usersSub?.cancel();
     emit(state.copyWith(usersDataState: RequestState.loading));
 
-    final result = _getUsersWhoOrderedUseCase(const NoParams());
+    final result = _orderRepo.streamUsersWhoOrdered();
 
     result.fold(
         (l) => emit(

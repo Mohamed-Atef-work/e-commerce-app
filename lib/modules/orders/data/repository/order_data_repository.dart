@@ -6,13 +6,13 @@ import 'package:e_commerce_app/modules/orders/data/data_source/order_remote_data
 import 'package:e_commerce_app/modules/orders/domain/entity/item_entity.dart';
 import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.dart';
 import 'package:e_commerce_app/modules/orders/domain/repository/order_domain_repository.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/add_item_to_order_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/params/add_item_to_order_params.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/add_order_use_case.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/delete_item_from_order_use_case.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_case.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/get_order_data_use_case.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/get_order_items_use_case.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/up_date_order_data_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/params/delete_item_from_order_params.dart';
+import 'package:e_commerce_app/modules/orders/domain/params/delete_order_params.dart';
+import 'package:e_commerce_app/modules/orders/domain/params/get_order_data_params.dart';
+import 'package:e_commerce_app/modules/orders/domain/params/get_order_items_params.dart';
+import 'package:e_commerce_app/modules/orders/domain/params/up_date_order_data_params.dart';
 
 class OrderDataRepo implements OrderDomainRepo {
   final OrderBaseRemoteDataSource dataSource;

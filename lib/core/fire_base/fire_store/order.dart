@@ -4,11 +4,11 @@ import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/store_helper.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/modules/orders/data/model/item_model.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/add_item_to_order_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/params/add_item_to_order_params.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/add_order_use_case.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/delete_item_from_order_use_case.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_case.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/up_date_order_data_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/params/delete_item_from_order_params.dart';
+import 'package:e_commerce_app/modules/orders/domain/params/delete_order_params.dart';
+import 'package:e_commerce_app/modules/orders/domain/params/up_date_order_data_params.dart';
 
 abstract class OrderStore {
   Future<void> addOrder(AddOrderParams params);

@@ -7,7 +7,7 @@ import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/core/components/dismissible_background.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/params/delete_order_params.dart';
 import 'package:e_commerce_app/modules/orders/presentation/widgets/update_order_data_widget.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_state.dart';

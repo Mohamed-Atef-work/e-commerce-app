@@ -5,7 +5,7 @@ import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/dismissible_background.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/delete_item_from_order_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/params/delete_item_from_order_params.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/order_items_controller/order_items_cubit.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 

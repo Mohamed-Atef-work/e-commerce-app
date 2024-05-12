@@ -6,7 +6,7 @@ import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
-import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/login_params.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/update_password_params.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/sign_up_use_case.dart';

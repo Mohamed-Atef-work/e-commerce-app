@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
-import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email_use_case.dart';
 import 'package:e_commerce_app/modules/shared/domain/entities/cached_user_data_entity.dart';
 
 part 'change_email_state.dart';

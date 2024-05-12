@@ -3,25 +3,23 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/delete_order_use_case.dart';
-import 'package:e_commerce_app/modules/orders/domain/use_case/get_user_orders_use_case.dart';
+import 'package:e_commerce_app/modules/orders/domain/params/delete_order_params.dart';
+import 'package:e_commerce_app/modules/orders/domain/repository/order_domain_repository.dart';
 import 'package:meta/meta.dart';
 
 part 'get_user_orders_state.dart';
 
 class GetUserOrdersCubit extends Cubit<GetUserOrdersState> {
-  final GetUserOrdersUseCase _getUserOrders;
-  final DeleteOrderUseCase _deleteOrder;
+  final OrderDomainRepo _orderRepo;
 
   StreamSubscription<List<OrderDataEntity>>? ordersSub;
 
-  GetUserOrdersCubit(this._getUserOrders, this._deleteOrder)
-      : super(const GetUserOrdersState());
+  GetUserOrdersCubit(this._orderRepo) : super(const GetUserOrdersState());
 
   Future<void> getOrders(String uId) async {
     await ordersSub?.cancel();
     emit(state.copyWith(getOrders: RequestState.loading));
-    final result = await _getUserOrders.call(uId);
+    final result = _orderRepo.streamOfUserOrders(uId);
 
     result.fold(
         (l) => emit(
@@ -40,7 +38,7 @@ class GetUserOrdersCubit extends Cubit<GetUserOrdersState> {
   Future<void> deleteOrder(DeleteOrderParams params) async {
     emit(state.copyWith(deleteOrder: RequestState.loading));
     print(state.deleteOrder);
-    final result = await _deleteOrder.call(params);
+    final result = await _orderRepo.deleteOrder(params);
     emit(
       result.fold(
         (l) =>
