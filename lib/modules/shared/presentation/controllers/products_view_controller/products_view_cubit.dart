@@ -5,14 +5,14 @@ import 'package:e_commerce_app/core/use_case/base_use_case.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_category_entity.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/get_all_product_categories.dart';
+import 'package:e_commerce_app/modules/admin/domain/repository/admin_domain_repository.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/load_product_use_case.dart';
 import 'package:meta/meta.dart';
 
 part 'products_view_state.dart';
 
 class ProductsViewCubit extends Cubit<ProductsViewState> {
-  final GetAllProductCategoriesUseCase getAllProductCategoriesUseCase;
+  final AdminRepositoryDomain adminRepo;
   final LoadProductsUseCase loadProductsUseCase;
 
   StreamSubscription<List<ProductEntity>>? productsSub;
@@ -20,14 +20,14 @@ class ProductsViewCubit extends Cubit<ProductsViewState> {
 
   ProductsViewCubit(
     this.loadProductsUseCase,
-    this.getAllProductCategoriesUseCase,
+    this.adminRepo,
   ) : super(const ProductsViewState());
 
   Future<void> loadCategories() async {
     await categorySub?.cancel();
     emit(state.copyWith(categoriesState: RequestState.loading));
     print("Categories -----------> ${state.categoriesState}");
-    final result = getAllProductCategoriesUseCase(const NoParams());
+    final result = adminRepo.getAllProductCategories();
     result.fold(
         (l) => emit(
               state.copyWith(
@@ -76,7 +76,7 @@ class ProductsViewCubit extends Cubit<ProductsViewState> {
 
   Future<List<ProductCategoryEntity>> _loadFirstCat() async {
     await categorySub?.cancel();
-    final result = getAllProductCategoriesUseCase(const NoParams());
+    final result = adminRepo.getAllProductCategories();
     late Future<List<ProductCategoryEntity>> firstList;
     result.fold((l) => null, (stream) {
       firstList = stream.first;

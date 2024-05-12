@@ -20,20 +20,7 @@ class GetInitialDataUseCase
 
     return userEither.fold(
       (userFailure) => Left(userFailure),
-      (user) async {
-        final loginParams = LoginParams(
-          adminOrUser: user.adminOrUser,
-          email: user.userEntity.email,
-          password: user.password,
-        );
-        final loginEither = await _authRepo.signIn(loginParams);
-        return loginEither.fold(
-          (loginFailure) => Left(loginFailure),
-          (userCredential) => Right(
-            SharedUserDataEntity(userCredential: userCredential, user: user),
-          ),
-        );
-      },
+      (user) async => await _login(user),
     );
   }
 
@@ -47,7 +34,7 @@ class GetInitialDataUseCase
     return loginEither.fold(
       (loginFailure) => Left(loginFailure),
       (userCredential) => Right(
-        SharedUserDataEntity(user: user, userCredential: userCredential),
+        SharedUserDataEntity(userCredential: userCredential, user: user),
       ),
     );
   }

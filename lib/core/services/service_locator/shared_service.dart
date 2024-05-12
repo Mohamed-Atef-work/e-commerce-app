@@ -7,7 +7,6 @@ import 'package:e_commerce_app/modules/shared/domain/use_cases/get_initial_use_c
 import 'package:e_commerce_app/modules/shared/domain/use_cases/load_product_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/get_user_data_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/store_user_data_use_case.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/get_all_product_categories.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/save_address_use_case.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/update_user_data_use_case.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/user_data_after_login_use_case.dart';
@@ -32,6 +31,5 @@ void shared() {
   sl.registerLazySingleton(() => UpdateAddressUseCase(sl(), sl()));
   sl.registerLazySingleton(() => UpdateUserDataUseCase(sl(), sl()));
   sl.registerLazySingleton(() => GetInitialDataUseCase(sl(), sl()));
-  sl.registerLazySingleton(() => GetAllProductCategoriesUseCase(sl()));
   sl.registerLazySingleton(() => UserDataAfterLoginUseCase(sl(), sl()));
 }

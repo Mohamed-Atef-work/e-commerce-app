@@ -35,7 +35,6 @@ class UpDatePhoneWidget extends StatelessWidget {
               BlocProvider.of<SharedUserDataCubit>(context);
           final userData = userDataController.state.sharedEntity!.user;
 
-          ///  < ---------------------------- bloc --------------------------- >
           return BaseModelSheetComponent(
             height: context.height * 0.3,
             child: BlocConsumer<UpdateProfileCubit, UpdateProfileState>(

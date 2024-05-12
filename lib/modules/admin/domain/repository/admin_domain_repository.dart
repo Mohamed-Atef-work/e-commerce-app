@@ -1,8 +1,8 @@
 import 'package:e_commerce_app/modules/admin/domain/use_cases/add_new_product_category_use_case.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/edit_product_use_case.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/up_date_product_category_use_case.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/delete_product_category_use_case.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/delete_product_use_case.dart';
+import 'package:e_commerce_app/modules/admin/domain/use_cases/edit_product_params.dart';
+import 'package:e_commerce_app/modules/admin/domain/use_cases/up_date_product_category_params.dart';
+import 'package:e_commerce_app/modules/admin/domain/use_cases/delete_product_category_params.dart';
+import 'package:e_commerce_app/modules/admin/domain/use_cases/delete_product_params.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_category_entity.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/load_product_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/add_product_use_case.dart';

@@ -1,36 +1,27 @@
 import 'dart:io';
-
-import 'package:e_commerce_app/core/use_case/base_use_case.dart';
 import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/download_product_image_url_use_case.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/get_all_product_categories.dart';
+import 'package:e_commerce_app/modules/admin/domain/repository/admin_domain_repository.dart';
+import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/upload_product_image_use_case.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../domain/use_cases/add_product_use_case.dart';
-import '../../../domain/use_cases/edit_product_use_case.dart';
 import 'add_product_state.dart';
 
 class EditAddProductCubit extends Cubit<EditAddProductState> {
   final AddProductUseCase addProductUseCase;
-  final UpdateProductUseCase updateProductUseCase;
-  final UploadProductImageUseCase uploadProductImageUseCase;
-  //final AddNewProductCategoryUseCase addNewProductCategoryUseCase;
-  final DownloadProductImageUrlUseCase downloadProductImageUrlUseCase;
-  final GetAllProductCategoriesUseCase getAllProductCategoriesUseCase;
+  final AdminRepositoryDomain adminRepo;
+  final SharedDomainRepo sharedRepo;
+
   EditAddProductCubit(
     this.addProductUseCase,
-    this.updateProductUseCase,
-    this.uploadProductImageUseCase,
-    //this.addNewProductCategoryUseCase,
-    this.getAllProductCategoriesUseCase,
-    this.downloadProductImageUrlUseCase,
+    this.adminRepo,
+    this.sharedRepo,
   ) : super(const EditAddProductState());
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -44,7 +35,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
 
   Future<void> getCategories() async {
     emit(state.copyWith(getCategoriesState: RequestState.loading));
-    final result = getAllProductCategoriesUseCase(const NoParams());
+    final result = adminRepo.getAllProductCategories();
     result.fold(
         (l) => emit(
               state.copyWith(
@@ -108,8 +99,8 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
   Future<void> _upDateProduct({required String productImage}) async {
     print(
         "< -------------------------------------------_upDateProduct----------------------------------------------- >");
-    final result = await updateProductUseCase(
-      UpdateProductParams(
+    final result = await adminRepo.addProduct(
+      AddProductParams(
           product: ProductModel(
         image: productImage,
         name: nameController.text,
@@ -137,7 +128,6 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
         ));
         nameController.text = "";
         priceController.text = "";
-        //categoryController.text = "";
         locationController.text = "";
         descriptionController.text = "";
       },
@@ -189,7 +179,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
   Future<void> _imagePart() async {
     print("< ------------------------ _imagePart ------------------------- >");
     final uploadImageResult =
-        await uploadProductImageUseCase(File(state.imagePath!));
+        await sharedRepo.uploadImage(File(state.imagePath!));
 
     ///< ------------------------------------------------------------------- >
 
@@ -217,8 +207,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
         "< ---------------------------- _downloadUrlPart -------------------- >");
 
     /// < -------------------------------------------------------------------- >
-    final downloadUrlResult =
-        await downloadProductImageUrlUseCase(imageReference);
+    final downloadUrlResult = await sharedRepo.downloadImageUrl(imageReference);
 
     /// < ------------------------------------------------------------------- >
     downloadUrlResult.fold(

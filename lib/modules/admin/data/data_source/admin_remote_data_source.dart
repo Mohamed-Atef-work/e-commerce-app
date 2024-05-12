@@ -6,11 +6,11 @@ import 'package:e_commerce_app/modules/admin/domain/use_cases/add_product_use_ca
 import '../../domain/entities/product_category_entity.dart';
 import '../../domain/entities/product_entity.dart';
 import '../../domain/use_cases/add_new_product_category_use_case.dart';
-import '../../domain/use_cases/delete_product_category_use_case.dart';
-import '../../domain/use_cases/delete_product_use_case.dart';
-import '../../domain/use_cases/edit_product_use_case.dart';
+import '../../domain/use_cases/delete_product_category_params.dart';
+import '../../domain/use_cases/delete_product_params.dart';
+import '../../domain/use_cases/edit_product_params.dart';
 import '../../../shared/domain/use_cases/load_product_use_case.dart';
-import '../../domain/use_cases/up_date_product_category_use_case.dart';
+import '../../domain/use_cases/up_date_product_category_params.dart';
 
 abstract class AdminBaseRemoteDataSource {
   Future<void> addProduct(AddProductParams params);
