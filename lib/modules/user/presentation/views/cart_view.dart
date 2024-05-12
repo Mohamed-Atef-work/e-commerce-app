@@ -12,7 +12,7 @@ import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/core/components/dismissible_background.dart';
 import 'package:e_commerce_app/modules/user/presentation/widgets/cart_product_widget.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/delete_product_from_cart_use_case.dart';
+import 'package:e_commerce_app/modules/user/domain/params/delete_product_from_cart_params.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/user/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
 

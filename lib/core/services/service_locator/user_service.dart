@@ -4,13 +4,10 @@ import 'package:e_commerce_app/modules/shared/presentation/controllers/products_
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_order_view/user_order_view_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_orders/manage_user_orders_cubit.dart';
 import 'package:e_commerce_app/modules/user/presentation/controllers/user_layout_controller/user_layout_cubit.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/delete_product_from_cart_use_case.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/add_product_to_cart_use_case.dart';
 import 'package:e_commerce_app/modules/user/domain/repository/cart_domain_repository.dart';
 import 'package:e_commerce_app/modules/user/data/data_source/cart_remote_data_source.dart';
 import 'package:e_commerce_app/modules/user/data/repository/cart_data_repository.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/add_order_use_case.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/clear_cart_use_case.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 
 void user() {
@@ -25,11 +22,6 @@ void user() {
   /// Use Case
   /// <-------------------- Orders ------------------------------->
   sl.registerLazySingleton(() => AddOrderUseCase(sl(), sl()));
-
-  /// <--------------------- Cart ------------------------------->
-  sl.registerLazySingleton(() => AddToCartUseCase(sl()));
-  sl.registerLazySingleton(() => ClearCartUseCase(sl()));
-  sl.registerLazySingleton(() => DeleteFromCartUseCase(sl()));
 
   /// Repositories
   sl.registerLazySingleton<CartDomainRepo>(() => CartDataRepo(sl()));

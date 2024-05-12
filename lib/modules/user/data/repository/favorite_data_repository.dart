@@ -2,8 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/modules/user/domain/entities/favorite_entity.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/add_favorite_use_case.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/get_favorites_use_case.dart';
+import 'package:e_commerce_app/modules/user/domain/params/add_favorite_params.dart';
+import 'package:e_commerce_app/modules/user/domain/params/get_favorites_params.dart';
 import 'package:e_commerce_app/modules/user/domain/repository/favorite_domain_repository.dart';
 import 'package:e_commerce_app/modules/user/data/data_source/favorite_remote_data_source.dart';
 

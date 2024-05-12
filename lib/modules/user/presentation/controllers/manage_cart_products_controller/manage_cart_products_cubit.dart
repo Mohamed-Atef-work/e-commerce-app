@@ -7,7 +7,7 @@ import 'package:e_commerce_app/modules/orders/data/model/order_data_model.dart';
 import 'package:e_commerce_app/modules/user/domain/entities/cart_item_entity.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/add_order_use_case.dart';
 import 'package:e_commerce_app/modules/user/domain/repository/cart_domain_repository.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/delete_product_from_cart_use_case.dart';
+import 'package:e_commerce_app/modules/user/domain/params/delete_product_from_cart_params.dart';
 
 part 'manage_cart_products_state.dart';
 

@@ -1,25 +1,22 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/add_product_to_cart_use_case.dart';
+import 'package:e_commerce_app/modules/user/domain/params/add_product_to_cart_params.dart';
+import 'package:e_commerce_app/modules/user/domain/repository/cart_domain_repository.dart';
 
 part 'product_details_state.dart';
 
 class ProductDetailsCubit extends Cubit<ProductDetailsState> {
-  final AddToCartUseCase _addToCartUseCase;
+  final CartDomainRepo _cartRepo;
 
-  /// To Do
-  /// You provided this cubit on the top of ProductsOfCategoryScreen....
-  /// NOT DetailsScreen....
-
-  ProductDetailsCubit(this._addToCartUseCase)
-      : super(const ProductDetailsState());
+  ProductDetailsCubit(this._cartRepo) : super(const ProductDetailsState());
 
   void addToCart(String uId) async {
     emit(state.copyWith(addToCart: RequestState.loading));
     print(state.product!.category);
-    final result = await _addToCartUseCase.call(
+    final result = await _cartRepo.addToCart(
       AddToCartParams(
         uId: uId,
         quantity: state.quantity,

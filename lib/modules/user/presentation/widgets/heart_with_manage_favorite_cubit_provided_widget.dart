@@ -5,7 +5,7 @@ import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/add_favorite_use_case.dart';
+import 'package:e_commerce_app/modules/user/domain/params/add_favorite_params.dart';
 import 'package:e_commerce_app/modules/user/presentation/widgets/loading_heart_widget.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/user/presentation/controllers/get_favorite_controller/get_favorite_cubit.dart';

@@ -1,15 +1,17 @@
-import 'package:e_commerce_app/core/utils/enums.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/add_favorite_use_case.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/delete_favorite_use_case.dart';
-import 'package:e_commerce_app/modules/user/presentation/controllers/manage_favorite_products_controller/manage_favorite_products_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/modules/user/domain/params/add_favorite_params.dart';
+import 'package:e_commerce_app/modules/user/domain/use_cases/delete_favorite_use_case.dart';
+import 'package:e_commerce_app/modules/user/domain/repository/favorite_domain_repository.dart';
+import 'package:e_commerce_app/modules/user/presentation/controllers/manage_favorite_products_controller/manage_favorite_products_state.dart';
+
 class ManageFavoriteCubit extends Cubit<ManageFavoriteState> {
-  final AddFavoriteUseCase addFavoriteUseCase;
+  final FavoriteDomainRepository _favRepo;
   final DeleteFavoriteUseCase deleteFavoriteUseCase;
   ManageFavoriteCubit(
-    this.addFavoriteUseCase,
+    this._favRepo,
     this.deleteFavoriteUseCase,
   ) : super(const ManageFavoriteState());
 
@@ -27,7 +29,7 @@ class ManageFavoriteCubit extends Cubit<ManageFavoriteState> {
 
   Future<void> addFavorite(AddDeleteFavoriteParams params) async {
     emit(state.copyWith(requestState: RequestState.loading));
-    final result = await addFavoriteUseCase.call(params);
+    final result = await _favRepo.addFavorite(params);
     emit(
       result.fold(
         (l) => state.copyWith(

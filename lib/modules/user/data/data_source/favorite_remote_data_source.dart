@@ -6,7 +6,7 @@ import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 import 'package:e_commerce_app/modules/user/domain/entities/favorite_entity.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/user/data/models/favorite_category_model.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/add_favorite_use_case.dart';
+import 'package:e_commerce_app/modules/user/domain/params/add_favorite_params.dart';
 import 'package:e_commerce_app/modules/user/domain/entities/favorite_category_entity.dart';
 
 abstract class FavoriteBaseRemoteDataSource {

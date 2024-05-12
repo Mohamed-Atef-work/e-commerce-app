@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/delete_product_from_cart_use_case.dart';
+import 'package:e_commerce_app/modules/user/domain/params/delete_product_from_cart_params.dart';
 
 part 'delete_cart_product_state.dart';
 

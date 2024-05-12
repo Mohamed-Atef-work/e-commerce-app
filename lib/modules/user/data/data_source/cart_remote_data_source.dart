@@ -9,9 +9,9 @@ import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart
 import 'package:e_commerce_app/modules/user/data/models/cart_category_model.dart';
 import 'package:e_commerce_app/modules/user/domain/entities/cart_item_entity.dart';
 import 'package:e_commerce_app/modules/user/domain/entities/cart_category_entity.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/clear_cart_use_case.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/add_product_to_cart_use_case.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/delete_product_from_cart_use_case.dart';
+import 'package:e_commerce_app/modules/user/domain/params/clear_cart_params.dart';
+import 'package:e_commerce_app/modules/user/domain/params/add_product_to_cart_params.dart';
+import 'package:e_commerce_app/modules/user/domain/params/delete_product_from_cart_params.dart';
 
 abstract class CartBaseRemoteDataSource {
   Future<void> addToCart(AddToCartParams params);
