@@ -28,7 +28,7 @@ class ProductsViewCubit extends Cubit<ProductsViewState> {
     await categorySub?.cancel();
     emit(state.copyWith(categoriesState: RequestState.loading));
     print("Categories -----------> ${state.categoriesState}");
-    final result = adminRepo.getAllProductCategories();
+    final result = _sharedRepo.getAllProductCategories();
     result.fold(
         (l) => emit(
               state.copyWith(
@@ -49,7 +49,7 @@ class ProductsViewCubit extends Cubit<ProductsViewState> {
     emit(state.copyWith(productsState: RequestState.loading));
     print("products -----------> ${state.productsState}");
 
-    final result = adminRepo.loadProducts(
+    final result = _sharedRepo.loadProducts(
       LoadProductsParams(category: state.categories[state.categoryIndex].name),
     );
     result.fold(
@@ -77,7 +77,7 @@ class ProductsViewCubit extends Cubit<ProductsViewState> {
 
   Future<List<ProductCategoryEntity>> _loadFirstCat() async {
     await categorySub?.cancel();
-    final result = adminRepo.getAllProductCategories();
+    final result = _sharedRepo.getAllProductCategories();
     late Future<List<ProductCategoryEntity>> firstList;
     result.fold((l) => null, (stream) {
       firstList = stream.first;

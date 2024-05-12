@@ -20,7 +20,7 @@ void shared() {
   sl.registerLazySingleton<SharedLocalDataSource>(
       () => SharedLocalDataSourceImpl(sl()));
   sl.registerLazySingleton<SharedRemoteDataSource>(
-      () => SharedRemoteDataSourceImpl(sl()));
+      () => SharedRemoteDataSourceImpl(sl(),sl()));
 
   sl.registerLazySingleton(() => UpdateAddressUseCase(sl(), sl()));
   sl.registerLazySingleton(() => UpdateUserDataUseCase(sl(), sl()));

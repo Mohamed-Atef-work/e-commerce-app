@@ -1,27 +1,29 @@
 import 'dart:io';
-import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
-import 'package:e_commerce_app/modules/admin/domain/repository/admin_domain_repository.dart';
-import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:e_commerce_app/core/utils/app_strings.dart';
-import 'package:e_commerce_app/core/utils/enums.dart';
-import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
-import 'package:image_picker/image_picker.dart';
 
-import '../../../domain/use_cases/add_product_use_case.dart';
-import 'add_product_state.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
+import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
+import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
+import 'package:e_commerce_app/modules/admin/domain/params/edit_product_params.dart';
+import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
+import 'package:e_commerce_app/modules/admin/domain/use_cases/add_product_use_case.dart';
+import 'package:e_commerce_app/modules/admin/domain/repository/admin_domain_repository.dart';
+import 'package:e_commerce_app/modules/admin/presentation/controllers/add_product_controller/add_product_state.dart';
 
 class EditAddProductCubit extends Cubit<EditAddProductState> {
   final AddProductUseCase addProductUseCase;
   final AdminRepositoryDomain adminRepo;
-  final SharedDomainRepo sharedRepo;
+  final SharedDomainRepo _sharedRepo;
 
   EditAddProductCubit(
     this.addProductUseCase,
     this.adminRepo,
-    this.sharedRepo,
+    this._sharedRepo,
   ) : super(const EditAddProductState());
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -35,7 +37,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
 
   Future<void> getCategories() async {
     emit(state.copyWith(getCategoriesState: RequestState.loading));
-    final result = adminRepo.getAllProductCategories();
+    final result = _sharedRepo.getAllProductCategories();
     result.fold(
         (l) => emit(
               state.copyWith(
@@ -99,33 +101,36 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
   Future<void> _upDateProduct({required String productImage}) async {
     print(
         "< -------------------------------------------_upDateProduct----------------------------------------------- >");
-    final result = await adminRepo.addProduct(
-      AddProductParams(
-          product: ProductModel(
-        image: productImage,
-        name: nameController.text,
-        id: state.productToBeUpdated!.id!,
-        location: locationController.text,
-        price: int.parse(priceController.text),
-        description: descriptionController.text,
-        category: state.categories![state.categoryIndex].name,
-      )),
+    final result = await adminRepo.editProduct(
+      UpdateProductParams(
+        product: ProductModel(
+          image: productImage,
+          name: nameController.text,
+          id: state.productToBeUpdated!.id!,
+          location: locationController.text,
+          price: int.parse(priceController.text),
+          description: descriptionController.text,
+          category: state.categories![state.categoryIndex].name,
+        ),
+      ),
     );
     result.fold(
       (l) => emit(
         state.copyWith(
-          productState: RequestState.error,
           errorMessage: l.message,
+          productState: RequestState.error,
         ),
       ),
       (r) {
-        emit(state.copyWith(
-          imageButtonText: AppStrings.addAnImage,
-          addUpdateButtonText: AppStrings.add,
-          productState: RequestState.success,
-          imageState: ImageState.noImage,
-          thereIsImage: false,
-        ));
+        emit(
+          state.copyWith(
+            thereIsImage: false,
+            imageState: ImageState.noImage,
+            productState: RequestState.success,
+            addUpdateButtonText: AppStrings.add,
+            imageButtonText: AppStrings.addAnImage,
+          ),
+        );
         nameController.text = "";
         priceController.text = "";
         locationController.text = "";
@@ -179,7 +184,7 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
   Future<void> _imagePart() async {
     print("< ------------------------ _imagePart ------------------------- >");
     final uploadImageResult =
-        await sharedRepo.uploadImage(File(state.imagePath!));
+        await _sharedRepo.uploadImage(File(state.imagePath!));
 
     ///< ------------------------------------------------------------------- >
 
@@ -207,7 +212,8 @@ class EditAddProductCubit extends Cubit<EditAddProductState> {
         "< ---------------------------- _downloadUrlPart -------------------- >");
 
     /// < -------------------------------------------------------------------- >
-    final downloadUrlResult = await sharedRepo.downloadImageUrl(imageReference);
+    final downloadUrlResult =
+        await _sharedRepo.downloadImageUrl(imageReference);
 
     /// < ------------------------------------------------------------------- >
     downloadUrlResult.fold(

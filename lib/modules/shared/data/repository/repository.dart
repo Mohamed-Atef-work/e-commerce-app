@@ -1,9 +1,12 @@
 import 'dart:io';
 import 'package:dartz/dartz.dart';
+import 'package:e_commerce_app/modules/admin/domain/entities/product_category_entity.dart';
+import 'package:e_commerce_app/modules/shared/domain/use_cases/load_product_params.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
+import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/shared/data/data_source/local_data_source.dart';
 import 'package:e_commerce_app/modules/shared/data/models/cached_user_data_model.dart';
 import 'package:e_commerce_app/modules/shared/data/data_source/remote_data_source.dart';
@@ -76,8 +79,7 @@ class SharedDataRepo implements SharedDomainRepo {
   }
 
   @override
-  Future<Either<Failure, String>> downloadImageUrl(
-      Reference parameter) async {
+  Future<Either<Failure, String>> downloadImageUrl(Reference parameter) async {
     try {
       final result = await _remote.downLoadImageUrlFromFireBase(parameter);
       return Right(result);
@@ -85,4 +87,29 @@ class SharedDataRepo implements SharedDomainRepo {
       return Left(ServerFailure(message: serverException.message));
     }
   }
+
+
+
+  @override
+  Either<Failure, Stream<List<ProductEntity>>> loadProducts(
+      LoadProductsParams params) {
+    try {
+      final result = _remote.loadProducts(params);
+      return Right(result);
+    } on ServerException catch (exception) {
+      return Left(ServerFailure(message: exception.message));
+    }
+  }
+
+  @override
+  Either<Failure, Stream<List<ProductCategoryEntity>>>
+  getAllProductCategories() {
+    try {
+      final result = _remote.getAllProductCategories();
+      return Right(result);
+    } on ServerException catch (exception) {
+      return Left(ServerFailure(message: exception.message));
+    }
+  }
+
 }
