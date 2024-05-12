@@ -13,7 +13,7 @@ import 'package:e_commerce_app/modules/admin/domain/use_cases/delete_product_par
 import 'package:e_commerce_app/modules/admin/domain/use_cases/edit_product_params.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../domain/repository/admin_domain_repository.dart';
-import '../../../shared/domain/use_cases/load_product_use_case.dart';
+import '../../../shared/domain/use_cases/load_product_params.dart';
 import '../data_source/admin_remote_data_source.dart';
 
 class AdminRepositoryData implements AdminRepositoryDomain {

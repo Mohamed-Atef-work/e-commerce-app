@@ -6,20 +6,21 @@ import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_category_entity.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/admin/domain/repository/admin_domain_repository.dart';
-import 'package:e_commerce_app/modules/shared/domain/use_cases/load_product_use_case.dart';
+import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
+import 'package:e_commerce_app/modules/shared/domain/use_cases/load_product_params.dart';
 import 'package:meta/meta.dart';
 
 part 'products_view_state.dart';
 
 class ProductsViewCubit extends Cubit<ProductsViewState> {
   final AdminRepositoryDomain adminRepo;
-  final LoadProductsUseCase loadProductsUseCase;
+  final SharedDomainRepo _sharedRepo;
 
   StreamSubscription<List<ProductEntity>>? productsSub;
   StreamSubscription<List<ProductCategoryEntity>>? categorySub;
 
   ProductsViewCubit(
-    this.loadProductsUseCase,
+    this._sharedRepo,
     this.adminRepo,
   ) : super(const ProductsViewState());
 
@@ -48,7 +49,7 @@ class ProductsViewCubit extends Cubit<ProductsViewState> {
     emit(state.copyWith(productsState: RequestState.loading));
     print("products -----------> ${state.productsState}");
 
-    final result = loadProductsUseCase(
+    final result = adminRepo.loadProducts(
       LoadProductsParams(category: state.categories[state.categoryIndex].name),
     );
     result.fold(
