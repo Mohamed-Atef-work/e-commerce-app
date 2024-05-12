@@ -2,7 +2,7 @@ import 'package:e_commerce_app/modules/admin/domain/repository/admin_domain_repo
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/delete_product_params.dart';
+import 'package:e_commerce_app/modules/admin/domain/params/delete_product_params.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_state.dart';
 
 class AdminDetailsCubit extends Cubit<AdminDetailsState> {

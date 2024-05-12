@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/utils/enums.dart';
-import '../../../domain/use_cases/add_new_product_category_use_case.dart';
-import '../../../domain/use_cases/delete_product_category_params.dart';
-import '../../../domain/use_cases/up_date_product_category_params.dart';
+import '../../../domain/params/add_new_product_category_params.dart';
+import '../../../domain/params/delete_product_category_params.dart';
+import '../../../domain/params/up_date_product_category_params.dart';
 import 'categories_model_sheet_state.dart';
 
 class CategoriesModelSheetCubit extends Cubit<CategoriesModelSheetState> {

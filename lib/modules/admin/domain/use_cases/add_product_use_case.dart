@@ -8,23 +8,6 @@ import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
 import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
 import 'package:e_commerce_app/modules/admin/domain/repository/admin_domain_repository.dart';
 
-class AddProductUseCase extends BaseUseCase<void, AddProductParams> {
-  final AdminRepositoryDomain domainRepository;
-
-  AddProductUseCase(this.domainRepository);
-
-  @override
-  Future<Either<Failure, void>> call(AddProductParams params) async {
-    return await domainRepository.addProduct(params);
-  }
-}
-
-class AddProductParams {
-  final ProductModel product;
-
-  const AddProductParams({required this.product});
-}
-
 class AddProductUseCaseNew extends BaseUseCase<void, AddProductParamsNew> {
   final AdminRepositoryDomain _adminRepo;
   final SharedDomainRepo _sharedRepo;
@@ -90,4 +73,21 @@ class AddProductParamsNew {
     required this.price,
     required this.name,
   });
+}
+
+class AddProductUseCase extends BaseUseCase<void, AddProductParams> {
+  final AdminRepositoryDomain domainRepository;
+
+  AddProductUseCase(this.domainRepository);
+
+  @override
+  Future<Either<Failure, void>> call(AddProductParams params) async {
+    return await domainRepository.addProduct(params);
+  }
+}
+
+class AddProductParams {
+  final ProductModel product;
+
+  const AddProductParams({required this.product});
 }

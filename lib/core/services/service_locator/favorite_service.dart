@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/delete_favorite_use_case.dart';
 import 'package:e_commerce_app/modules/user/data/data_source/favorite_remote_data_source.dart';
 import 'package:e_commerce_app/modules/user/data/repository/favorite_data_repository.dart';
 import 'package:e_commerce_app/modules/user/domain/repository/favorite_domain_repository.dart';
@@ -11,14 +10,11 @@ void favorite() {
   sl.registerFactory(() => GetFavoriteCubit(sl()));
   sl.registerFactory(() => ManageFavoriteCubit(sl(), sl()));
 
-  /// UseCases
-  sl.registerLazySingleton(() => DeleteFavoriteUseCase(sl()));
-
   /// Repository
   sl.registerLazySingleton<FavoriteDomainRepository>(
       () => FavoriteDataRepository(sl()));
 
   /// Data Source
   sl.registerLazySingleton<FavoriteBaseRemoteDataSource>(
-      () => FavoriteRemoteDataSource(sl(),sl()));
+      () => FavoriteRemoteDataSource(sl(), sl()));
 }

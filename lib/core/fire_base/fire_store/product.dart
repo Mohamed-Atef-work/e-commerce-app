@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/add_product_use_case.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/edit_product_params.dart';
+import 'package:e_commerce_app/modules/admin/domain/params/edit_product_params.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/load_product_params.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/delete_product_params.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/delete_product_category_params.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/up_date_product_category_params.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/add_new_product_category_use_case.dart';
+import 'package:e_commerce_app/modules/admin/domain/params/delete_product_params.dart';
+import 'package:e_commerce_app/modules/admin/domain/params/delete_product_category_params.dart';
+import 'package:e_commerce_app/modules/admin/domain/params/up_date_product_category_params.dart';
+import 'package:e_commerce_app/modules/admin/domain/params/add_new_product_category_params.dart';
 
 abstract class ProductStore {
   Stream<QuerySnapshot<Map<String, dynamic>>> loadProducts(
