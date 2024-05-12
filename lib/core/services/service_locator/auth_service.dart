@@ -1,6 +1,5 @@
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email.dart';
-import 'package:e_commerce_app/modules/auth/domain/use_cases/login_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/sign_up_use_case.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/log_out_use_case.dart';
 import 'package:e_commerce_app/modules/auth/data/repository/auth_data_repository.dart';
@@ -18,13 +17,12 @@ void auth() {
 
   sl.registerFactory(() => SignUpBloc(sl()));
   sl.registerFactory(() => LogoutCubit(sl()));
-  sl.registerFactory(() => LoginBloc(sl(), sl()));
+  sl.registerFactory(() => LoginBloc(sl()));
   sl.registerFactory(() => ChangeEmailCubit(sl()));
   sl.registerFactory(() => ChangePasswordCubit(sl()));
 
   /// UseCases
   sl.registerLazySingleton(() => SignUpUseCase(sl()));
-  sl.registerLazySingleton(() => LoginInUseCase(sl()));
   sl.registerLazySingleton(() => LogoutUseCase(sl(), sl()));
 
   /// Repositories

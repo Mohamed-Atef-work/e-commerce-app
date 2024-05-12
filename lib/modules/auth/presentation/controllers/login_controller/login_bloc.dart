@@ -1,21 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:e_commerce_app/core/utils/enums.dart';
-import 'package:e_commerce_app/modules/auth/domain/use_cases/login_use_case.dart';
-import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/login_params.dart';
+import 'package:e_commerce_app/modules/auth/domain/repository/auth_domain_repository.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_events.dart';
 import 'package:e_commerce_app/modules/auth/presentation/controllers/login_controller/login_states.dart';
 
 class LoginBloc extends Bloc<LoginEvents, LoginState> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String? email, password;
-
-  final LoginInUseCase loginInUseCase;
-  final SharedDomainRepo _sharedDomainRepo;
+  final AuthRepositoryDomain _authRepo;
 
   LoginBloc(
-    this.loginInUseCase,
-    this._sharedDomainRepo,
+    this._authRepo,
   ) : super(const LoginState()) {
     on<ToggleAdminAndUserEvent>(_toggleAdminUserEvent);
     on<ObSecureEvent>(_obSecureEvent);
@@ -27,7 +25,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
     if (formKey.currentState!.validate()) {
       emit(state.copyWith(loginState: RequestState.loading));
 
-      final result = await loginInUseCase.call(
+      final result = await _authRepo.signIn(
         LoginParams(
             email: email!, password: password!, adminOrUser: event.adminOrUser),
       );

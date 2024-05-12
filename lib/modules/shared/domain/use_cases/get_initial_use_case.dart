@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/core/use_case/base_use_case.dart';
-import 'package:e_commerce_app/modules/auth/domain/use_cases/login_use_case.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/login_params.dart';
 import 'package:e_commerce_app/modules/shared/domain/repository/shared_domain_repo.dart';
 import 'package:e_commerce_app/modules/auth/domain/repository/auth_domain_repository.dart';
 import 'package:e_commerce_app/modules/shared/domain/entities/cached_user_data_entity.dart';

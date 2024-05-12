@@ -1,6 +1,4 @@
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
-import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email.dart';
-import 'package:e_commerce_app/modules/auth/domain/use_cases/update_password.dart';
 import 'package:e_commerce_app/modules/user/domain/use_cases/get_favorites_use_case.dart';
 import 'package:e_commerce_app/modules/user/domain/use_cases/delete_favorite_use_case.dart';
 import 'package:e_commerce_app/modules/user/data/data_source/favorite_remote_data_source.dart';
@@ -19,7 +17,6 @@ void favorite() {
   sl.registerLazySingleton(() => AddFavoriteUseCase(sl()));
   sl.registerLazySingleton(() => GetFavoritesUseCase(sl()));
   sl.registerLazySingleton(() => DeleteFavoriteUseCase(sl()));
-  sl.registerLazySingleton(() => UpdatePasswordUseCase(sl()));
 
   /// Repository
   sl.registerLazySingleton<FavoriteDomainRepository>(

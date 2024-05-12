@@ -1,16 +1,17 @@
-import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:e_commerce_app/core/utils/enums.dart';
-import 'package:e_commerce_app/modules/auth/domain/use_cases/update_password.dart';
+import 'package:e_commerce_app/core/utils/app_strings.dart';
+import 'package:e_commerce_app/modules/auth/domain/repository/auth_domain_repository.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/update_password_params.dart';
 
 part 'change_password_state.dart';
 
 class ChangePasswordCubit extends Cubit<ChangePasswordState> {
-  final UpdatePasswordUseCase _updatePasswordUseCase;
+  final AuthRepositoryDomain _authRepo;
 
-  ChangePasswordCubit(this._updatePasswordUseCase)
-      : super(const ChangePasswordState());
+  ChangePasswordCubit(this._authRepo) : super(const ChangePasswordState());
 
   TextEditingController oldPassword = TextEditingController();
   TextEditingController newPassword = TextEditingController();
@@ -24,8 +25,10 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
       if (newPassword.text == confirmPassword.text &&
           confirmPassword.text != oldPassword.text) {
         emit(state.copyWith(changeState: RequestState.loading));
-        final result = await _updatePasswordUseCase.call(UpdatePasswordParams(
-            currentPassword: oldPassword.text, newPassword: newPassword.text));
+        final result = await _authRepo.updatePassword(
+          UpdatePasswordParams(
+              currentPassword: oldPassword.text, newPassword: newPassword.text),
+        );
         emit(
           result.fold(
             (l) => state.copyWith(
