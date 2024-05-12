@@ -9,8 +9,6 @@ import 'package:e_commerce_app/modules/admin/domain/params/up_date_product_categ
 import 'package:e_commerce_app/modules/admin/domain/params/add_new_product_category_params.dart';
 
 abstract class ProductStore {
-  Stream<QuerySnapshot<Map<String, dynamic>>> loadProducts(
-      LoadProductsParams params);
   Future<void> addProduct(AddProductParams product);
   Future<void> deleteProduct(DeleteProductParams params);
   Future<void> updateProduct(UpdateProductParams params);
@@ -18,6 +16,8 @@ abstract class ProductStore {
   Future<void> deleteProductCategory(DeleteProductsCategoryParams params);
   Future<void> upDateProductCategory(UpDateProductsCategoryParams params);
   Future<void> addNewProductCategory(AddNewProductsCategoryParams params);
+  Stream<QuerySnapshot<Map<String, dynamic>>> loadProducts(
+      LoadProductsParams params);
 }
 
 class ProductStoreImpl implements ProductStore {

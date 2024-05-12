@@ -88,8 +88,6 @@ class SharedDataRepo implements SharedDomainRepo {
     }
   }
 
-
-
   @override
   Either<Failure, Stream<List<ProductEntity>>> loadProducts(
       LoadProductsParams params) {
@@ -103,7 +101,7 @@ class SharedDataRepo implements SharedDomainRepo {
 
   @override
   Either<Failure, Stream<List<ProductCategoryEntity>>>
-  getAllProductCategories() {
+      getAllProductCategories() {
     try {
       final result = _remote.getAllProductCategories();
       return Right(result);
@@ -111,5 +109,4 @@ class SharedDataRepo implements SharedDomainRepo {
       return Left(ServerFailure(message: exception.message));
     }
   }
-
 }
