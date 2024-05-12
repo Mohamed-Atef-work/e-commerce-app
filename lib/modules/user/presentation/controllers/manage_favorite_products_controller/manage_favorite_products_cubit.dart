@@ -3,16 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/user/domain/params/add_favorite_params.dart';
-import 'package:e_commerce_app/modules/user/domain/use_cases/delete_favorite_use_case.dart';
 import 'package:e_commerce_app/modules/user/domain/repository/favorite_domain_repository.dart';
 import 'package:e_commerce_app/modules/user/presentation/controllers/manage_favorite_products_controller/manage_favorite_products_state.dart';
 
 class ManageFavoriteCubit extends Cubit<ManageFavoriteState> {
   final FavoriteDomainRepository _favRepo;
-  final DeleteFavoriteUseCase deleteFavoriteUseCase;
   ManageFavoriteCubit(
     this._favRepo,
-    this.deleteFavoriteUseCase,
   ) : super(const ManageFavoriteState());
 
   void setHeartColor(Color heartColor) {
@@ -46,7 +43,7 @@ class ManageFavoriteCubit extends Cubit<ManageFavoriteState> {
 
   Future<void> deleteFavorite(AddDeleteFavoriteParams params) async {
     emit(state.copyWith(requestState: RequestState.loading));
-    final result = await deleteFavoriteUseCase.call(params);
+    final result = await _favRepo.deleteFavorite(params);
     emit(
       result.fold(
         (l) => state.copyWith(

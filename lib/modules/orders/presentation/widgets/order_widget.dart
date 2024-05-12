@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:e_commerce_app/core/utils/images.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
@@ -7,13 +10,13 @@ import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/core/components/dismissible_background.dart';
+import 'package:e_commerce_app/modules/orders/domain/entity/order_data_entity.dart';
 import 'package:e_commerce_app/modules/orders/domain/params/delete_order_params.dart';
 import 'package:e_commerce_app/modules/orders/presentation/widgets/update_order_data_widget.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_state.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/get_user_orders_controller/get_user_orders_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/update_order_data_controller/update_order_data_cubit.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class OrderWidget extends StatelessWidget {
   final int index;
@@ -26,41 +29,30 @@ class OrderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GetUserOrdersState state =
-        BlocProvider.of<GetUserOrdersCubit>(context).state;
+    final orderController = BlocProvider.of<GetUserOrdersCubit>(context);
+
+    final state = orderController.state;
     SharedUserDataState userDataState =
         BlocProvider.of<SharedUserDataCubit>(context).state;
 
+    final dateTime = state.orders[index].date.split(" ");
+    final date = dateTime[0];
+    final bigTime = dateTime[1].split(":");
+    final time = "${bigTime[0]}:${bigTime[1]}";
+
     return Dismissible(
-      onDismissed: (DismissDirection direction) {
-        //if (direction == DismissDirection.startToEnd) {
-        BlocProvider.of<GetUserOrdersCubit>(context).dismissOrder(index);
-        //}
-      },
-      confirmDismiss: (DismissDirection direction) async {
-        if (direction == DismissDirection.startToEnd) {
-          BlocProvider.of<GetUserOrdersCubit>(context).deleteOrder(
-            DeleteOrderParams(
-                orderRef: state.orders[index].reference!,
-                uId: userDataState.sharedEntity!.user.userEntity.id),
-          );
-          return true;
-        } else {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) => BlocProvider(
-              create: (context) =>
-                  sl<UpdateOrderDataCubit>()..orderData(state.orders[index]),
-              child: const UpDateOrderDataWidget(),
-            ),
-          );
-          return false;
-        }
-      },
-      secondaryBackground: const DismissibleSecondaryBackgroundComponent(
-          color: Colors.green, icon: Icons.edit),
-      background: const DismissibleBackgroundComponent(
-          color: Colors.red, icon: Icons.delete),
+      background: _backGround(),
+      secondaryBackground: _secondaryBackGround(),
+      onDismissed: (DismissDirection direction) =>
+          orderController.dismissOrder(index),
+      confirmDismiss: (DismissDirection direction) async => _confirmDismiss(
+        id: userDataState.sharedEntity!.user.userEntity.id,
+        ref: state.orders[index].reference!,
+        orderController: orderController,
+        order: state.orders[index],
+        direction: direction,
+        context: context,
+      ),
       key: ValueKey(state.orders[index].reference),
       child: InkWell(
         onTap: onPressed,
@@ -90,9 +82,15 @@ class OrderWidget extends StatelessWidget {
                   ),
                   SizedBox(height: context.height * 0.01),
                   CustomText(
+                    text: time,
                     fontSize: 15,
                     textColor: kDarkBrown,
-                    text: state.orders[index].date,
+                  ),
+                  SizedBox(height: context.height * 0.005),
+                  CustomText(
+                    text: date,
+                    fontSize: 15,
+                    textColor: kDarkBrown,
                   ),
                 ],
               ),
@@ -109,5 +107,36 @@ class OrderWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _secondaryBackGround() => const DismissibleSecondaryBackgroundComponent(
+      color: Colors.green, icon: Icons.edit);
+
+  _backGround() => const DismissibleBackgroundComponent(
+      color: Colors.red, icon: Icons.delete);
+
+  _confirmDismiss({
+    required String id,
+    required BuildContext context,
+    required DocumentReference ref,
+    required OrderDataEntity order,
+    required DismissDirection direction,
+    required GetUserOrdersCubit orderController,
+  }) {
+    if (direction == DismissDirection.startToEnd) {
+      orderController.deleteOrder(
+        DeleteOrderParams(orderRef: ref, uId: id),
+      );
+      return true;
+    } else {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) => BlocProvider(
+          create: (context) => sl<UpdateOrderDataCubit>()..orderData(order),
+          child: const UpDateOrderDataWidget(),
+        ),
+      );
+      return false;
+    }
   }
 }

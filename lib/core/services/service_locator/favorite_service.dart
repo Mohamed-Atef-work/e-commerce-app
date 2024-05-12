@@ -8,7 +8,7 @@ import 'package:e_commerce_app/modules/user/presentation/controllers/get_favorit
 void favorite() {
   /// Bloc
   sl.registerFactory(() => GetFavoriteCubit(sl()));
-  sl.registerFactory(() => ManageFavoriteCubit(sl(), sl()));
+  sl.registerFactory(() => ManageFavoriteCubit(sl()));
 
   /// Repository
   sl.registerLazySingleton<FavoriteDomainRepository>(

@@ -18,10 +18,20 @@ class GetInitialDataUseCase
   Future<Either<Failure, SharedUserDataEntity>> call(NoParams params) async {
     final userEither = await _sharedRepo.getUserDataLocally();
 
-    return userEither.fold(
-      (userFailure) => Left(userFailure),
-      (user) async => await _login(user),
-    );
+    return userEither.fold((userFailure) => Left(userFailure), (user) async {
+      final loginParams = LoginParams(
+        adminOrUser: user.adminOrUser,
+        email: user.userEntity.email,
+        password: user.password,
+      );
+      final loginEither = await _authRepo.signIn(loginParams);
+      return loginEither.fold(
+        (loginFailure) => Left(loginFailure),
+        (userCredential) => Right(
+          SharedUserDataEntity(userCredential: userCredential, user: user),
+        ),
+      );
+    });
   }
 
   _login(CachedUserDataEntity user) async {
