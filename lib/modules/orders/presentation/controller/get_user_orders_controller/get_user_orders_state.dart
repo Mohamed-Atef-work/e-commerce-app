@@ -1,6 +1,5 @@
 part of 'get_user_orders_cubit.dart';
 
-@immutable
 class GetUserOrdersState {
   final List<OrderDataEntity> orders;
   final RequestState getOrders;

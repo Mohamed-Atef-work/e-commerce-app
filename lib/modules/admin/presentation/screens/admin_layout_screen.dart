@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/app_bar.dart';
 import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
@@ -18,22 +17,19 @@ class AdminLayoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<AdminLayoutCubit>(
-          create: (context) => sl<AdminLayoutCubit>(),
-        ),
-        BlocProvider<ProductsViewCubit>(
-          create: (context) => sl<ProductsViewCubit>()
+        BlocProvider(create: (_) => sl<AdminLayoutCubit>()),
+        BlocProvider(
+          create: (_) => sl<ProductsViewCubit>()
             ..loadCategories()
             ..loadProductsOfTheFirstCategory(),
         ),
-        /*BlocProvider<AdminDetailsCubit>(
-          create: (context) => sl<AdminDetailsCubit>(),
-        ),*/
       ],
       child: BlocBuilder<AdminLayoutCubit, AdminLayoutState>(
-        builder: (context, state) {
+        builder: (context, _) {
+          final controller = BlocProvider.of<AdminLayoutCubit>(context);
+          final appBarTitle = controller.state.appBarTitle;
           return Scaffold(
-            appBar: _appBar(context),
+            appBar: appBar(title: appBarTitle),
             body: const AdminViewsControllerWidget(),
             floatingActionButton: const AddProductButtonWidget(),
             bottomNavigationBar: const AdminBottomNavigationBarWidget(),
@@ -44,47 +40,13 @@ class AdminLayoutScreen extends StatelessWidget {
       ),
     );
   }
-
-  PreferredSizeWidget _appBar(BuildContext context) => appBar(
-        title: BlocProvider.of<AdminLayoutCubit>(context).state.appBarTitle,
-      );
 }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-final List<String> _tabs = [
-  AppStrings.jackets,
-  AppStrings.shirts,
-  AppStrings.suits,
-];
 
 final List<ProductEntity> _products = List.generate(
   10,
   (index) => const ProductEntity(
     id: "",
     price: 100,
-    location: "home",
     category: "jackets",
     description: "we are testing",
     name: "Product details Screen task",

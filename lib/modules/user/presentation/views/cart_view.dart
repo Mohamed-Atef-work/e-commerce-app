@@ -1,6 +1,6 @@
-import 'package:e_commerce_app/modules/shared/presentation/widgets/loading_cart_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
@@ -12,9 +12,11 @@ import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/core/components/dismissible_background.dart';
 import 'package:e_commerce_app/modules/user/presentation/widgets/cart_product_widget.dart';
+import 'package:e_commerce_app/modules/shared/presentation/widgets/loading_cart_widget.dart';
 import 'package:e_commerce_app/modules/user/domain/params/delete_product_from_cart_params.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/user/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 class CartView extends StatelessWidget {
   const CartView({super.key});
@@ -42,25 +44,23 @@ class CartView extends StatelessWidget {
                   itemCount: state.products.length,
                   physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
-                  itemBuilder: (context, index) => Dismissible(
+                  itemBuilder: (_, index) => Dismissible(
                     background: _background(),
                     secondaryBackground: _secondaryBackground(),
                     key: ValueKey(state.products[index].product.name),
                     onDismissed: (direction) {
-                      /// To Do ooo ooo ooo ooo ooo ..[uId]..
-                      manageCartController.deleteFromCart(
-                        DeleteFromCartParams(
-                          uId: userEntity.id,
-                          productId: state.products[index].product.id!,
-                          category: state.products[index].product.category,
-                        ),
+                      final product = state.products[index].product;
+                      final deleteParams = DeleteFromCartParams(
+                        uId: userEntity.id,
+                        productId: product.id!,
+                        category: product.category,
                       );
+                      manageCartController.deleteFromCart(deleteParams);
                       state.products.removeAt(index);
                     },
-                    child: CartProductWidget(index: index),
+                    child: CartProductWidget(index),
                   ),
-                  separatorBuilder: (context, index) =>
-                      const DividerComponent(),
+                  separatorBuilder: (_, __) => const DividerComponent(),
                 ),
               ),
               Padding(
@@ -77,16 +77,17 @@ class CartView extends StatelessWidget {
                         userEntity.phone != null) {
                       manageCartController.addOrder(userEntity);
                     } else {
-                      print("userEntity.phone${userEntity.phone}");
-                      print("userEntity.phone${userEntity.address}");
-
-                      /// to do error snack bar;
-                      showMyToast(AppStrings.pleaseAddPhoneAddress, context,
-                          Colors.red);
+                      showMyToast(
+                        AppStrings.pleaseAddPhoneAddress,
+                        context,
+                        Colors.red,
+                        const StyledToastPosition(
+                            align: Alignment.bottomCenter, offset: 70),
+                      );
                     }
                   },
                 ),
-              )
+              ),
             ],
           );
         } else {
@@ -106,10 +107,12 @@ class CartView extends StatelessWidget {
     if (state.getCart == RequestState.error ||
         state.addOrder == RequestState.error ||
         state.deleteFromCart == RequestState.error) {
-      showMyToast(state.message!, context, Colors.red);
+      showMyToast(state.message!, context, Colors.red,
+          const StyledToastPosition(align: Alignment.bottomCenter, offset: 70));
     } else if (state.addOrder == RequestState.success ||
         state.deleteFromCart == RequestState.success) {
-      showMyToast(state.message!, context, Colors.green);
+      showMyToast(state.message!, context, Colors.green,
+          const StyledToastPosition(align: Alignment.bottomCenter, offset: 65));
     }
   }
 }

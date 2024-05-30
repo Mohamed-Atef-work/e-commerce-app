@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
@@ -8,6 +9,7 @@ import 'package:e_commerce_app/core/components/dismissible_background.dart';
 import 'package:e_commerce_app/modules/orders/domain/params/delete_item_from_order_params.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/order_items_controller/order_items_cubit.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class OrderItemWidget extends StatelessWidget {
   final int index;
@@ -20,25 +22,18 @@ class OrderItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    OrderItemsState state = BlocProvider.of<OrderItemsCubit>(context).state;
+    final controller = BlocProvider.of<OrderItemsCubit>(context);
+    final order = controller.state.orderItems[index];
 
     return Dismissible(
-      key: ValueKey(state.orderItems[index].product.id),
+      background: _background(),
+      secondaryBackground: _secondaryBackground(),
+      key: ValueKey(order.product.id),
       onDismissed: (_) {
-        BlocProvider.of<OrderItemsCubit>(context).deleteItemFromOrder(
-          DeleteItemFromOrderParams(
-            itemRef: state.orderItems[index].ref!,
-          ),
-        );
-        BlocProvider.of<OrderItemsCubit>(context)
-            .state
-            .orderItems
-            .removeAt(index);
+        final params = DeleteItemFromOrderParams(itemRef: order.ref!);
+        controller.deleteItemFromOrder(params);
+        controller.state.orderItems.removeAt(index);
       },
-      background: const DismissibleBackgroundComponent(
-          color: Colors.red, icon: Icons.delete),
-      secondaryBackground: const DismissibleSecondaryBackgroundComponent(
-          color: Colors.red, icon: Icons.delete),
       child: InkWell(
         onTap: onPressed,
         //hoverColor: Colors.transparent,
@@ -53,18 +48,19 @@ class OrderItemWidget extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Container(
-                width: context.width * 0.2,
-                height: context.height * 0.12,
-                clipBehavior: Clip.antiAlias,
-                padding: const EdgeInsets.all(10),
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                child: Hero(
-                  tag: state.orderItems[index].product.id!,
-                  child: Image.network(
-                    fit: BoxFit.contain,
-                    state.orderItems[index].product.image,
+              Hero(
+                tag: order.product.id!,
+                child: Container(
+                  width: context.width * 0.25,
+                  clipBehavior: Clip.antiAlias,
+                  height: context.height * 0.12,
+                  margin: const EdgeInsets.all(5),
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                  child: FadeInImage(
+                    fit: BoxFit.fill,
+                    placeholder: Svg(Images.loading),
+                    image: NetworkImage(order.product.image),
                   ),
                 ),
               ),
@@ -74,17 +70,16 @@ class OrderItemWidget extends StatelessWidget {
                     fontSize: 20,
                     fontFamily: kPacifico,
                     textColor: Colors.black,
+                    text: order.product.name,
                     textAlign: TextAlign.left,
                     fontWeight: FontWeight.bold,
-                    text: state.orderItems[index].product.name,
                   ),
                   SizedBox(height: context.height * 0.03),
                   CustomText(
                     fontSize: 18,
                     textColor: kDarkBrown,
                     fontWeight: FontWeight.bold,
-                    text:
-                        "\$${state.orderItems[index].product.price * state.orderItems[index].quantity}",
+                    text: "\$${order.product.price * order.quantity}",
                   ),
                 ],
               ),
@@ -94,8 +89,7 @@ class OrderItemWidget extends StatelessWidget {
                 textColor: kDarkBrown,
                 fontFamily: kPacifico,
                 fontWeight: FontWeight.bold,
-                text:
-                    "${state.orderItems[index].quantity} ${AppStrings.pieces}",
+                text: "${order.quantity} ${AppStrings.pieces}",
               ),
             ],
           ),
@@ -103,4 +97,10 @@ class OrderItemWidget extends StatelessWidget {
       ),
     );
   }
+
+  _background() => const DismissibleBackgroundComponent(
+      color: Colors.red, icon: Icons.delete);
+
+  _secondaryBackground() => const DismissibleSecondaryBackgroundComponent(
+      color: Colors.red, icon: Icons.delete);
 }

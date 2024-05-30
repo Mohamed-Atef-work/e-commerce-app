@@ -6,20 +6,24 @@ class AdminDetailsState extends Equatable {
   final String? message;
   final ProductEntity? product;
   final RequestState? deleteState;
+  final RequestState? getState;
 
   const AdminDetailsState({
     this.product,
     this.message = "",
+    this.getState = RequestState.success,
     this.deleteState = RequestState.initial,
   });
   AdminDetailsState copyWith({
     String? message,
     ProductEntity? product,
+    RequestState? getState,
     RequestState? deleteState,
   }) =>
       AdminDetailsState(
         message: message ?? this.message,
         product: product ?? this.product,
+        getState: getState ?? this.getState,
         deleteState: deleteState ?? this.deleteState,
       );
 
@@ -27,6 +31,7 @@ class AdminDetailsState extends Equatable {
   List<Object?> get props => [
         product,
         message,
+        getState,
         deleteState,
       ];
 }

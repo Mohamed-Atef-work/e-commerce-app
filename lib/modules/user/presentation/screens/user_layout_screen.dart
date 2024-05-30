@@ -58,24 +58,12 @@ class UserLayoutScreen extends StatelessWidget {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-final List<String> _tabs = [
-  AppStrings.jackets,
-  AppStrings.shirts,
-  AppStrings.suits,
-];
+
 
 final List<ProductEntity> _products = List.generate(
   10,
   (index) => const ProductEntity(
     description: "we are testing",
-    location: "home",
     category: "jackets",
     price: 100,
     image:

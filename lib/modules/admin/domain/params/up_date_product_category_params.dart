@@ -1,20 +1,24 @@
+import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:equatable/equatable.dart';
 
 class UpDateProductsCategoryParams extends Equatable {
-  final String name;
+  final String oldName;
+  final String newName;
   final String id;
 
   const UpDateProductsCategoryParams({
-    required this.name,
+    required this.oldName,
+    required this.newName,
     required this.id,
   });
   Map<String, dynamic> toJson() => {
-        "name": name,
+        kName: newName,
       };
 
   @override
   List<Object?> get props => [
-        name,
+        oldName,
+        newName,
         id,
       ];
 }

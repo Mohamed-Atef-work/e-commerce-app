@@ -3,7 +3,7 @@ import '../constants/colors.dart';
 import 'custom_text.dart';
 
 class CustomButton extends StatelessWidget {
-  final double width;
+  final double? width;
   final double? height;
   final Color? backgroundColor;
   final Color? textColor;
@@ -17,13 +17,13 @@ class CustomButton extends StatelessWidget {
 
   const CustomButton({
     super.key,
+    this.width,
     this.onPressed,
     this.fontFamily,
     this.fontWeight,
     this.height = 50,
     this.fontSize = 18,
     required this.text,
-    required this.width,
     this.textColor = kWhite,
     this.backgroundColor = Colors.black,
 
@@ -46,7 +46,7 @@ class CustomButton extends StatelessWidget {
         //backgroundColor: green,
         //foregroundColor: green,
         fixedSize: Size(
-          width,
+          width ?? double.infinity,
           height!,
         ),
         shape: RoundedRectangleBorder(

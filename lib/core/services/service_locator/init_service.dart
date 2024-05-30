@@ -21,7 +21,7 @@ void init() {
   sl.registerLazySingleton<UserAuth>(() => UserAuthImpl(sl()));
   sl.registerLazySingleton<UserStore>(() => UserStoreImpl(sl()));
   sl.registerLazySingleton<StoreHelper>(() => StoreHelperImpl(sl()));
-  sl.registerLazySingleton<ProductStore>(() => ProductStoreImpl(sl()));
+  sl.registerLazySingleton<ProductStore>(() => ProductStoreImpl(sl(),sl()));
   sl.registerLazySingleton<CartStore>(() => CartStoreImpl(sl(), sl()));
   sl.registerLazySingleton<OrderStore>(() => OrderStoreImpl(sl(), sl()));
   sl.registerLazySingleton<StorageService>(() => StorageServiceImpl(sl()));

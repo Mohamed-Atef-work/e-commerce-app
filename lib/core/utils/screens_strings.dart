@@ -1,6 +1,5 @@
 class Screens {
   static const String testScreen = "test";
-
   static const String homeScreen = "home";
   static const String cartScreen = "cart";
   static const String loginScreen = "login";
@@ -18,6 +17,7 @@ class Screens {
   static const String adminLayoutScreen = "userLayout";
   static const String editProfileScreen = "editProfile";
   static const String editAddressScreen = "editAddress";
+  static const String editProductScreen = "editProduct";
   static const String adminDetailsScreen = "adminDetails";
   static const String changePasswordScreen = "changePassword";
   static const String splashAfterLoginScreen = "splashAfterLoginScreen";

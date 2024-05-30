@@ -25,7 +25,7 @@ class FavoritesView<CubitName> extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               itemBuilder: (_, index) =>
                   FavoriteWidget<CubitName>(state.favorites[index]),
-              separatorBuilder: (context, index) => const DividerComponent(),
+              separatorBuilder: (_, __) => const DividerComponent(),
             );
           } else {
             return const MessengerComponent(AppStrings.favoriteIsEmpty);

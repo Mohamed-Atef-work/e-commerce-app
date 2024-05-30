@@ -14,13 +14,15 @@ class LogoutUseCase extends BaseUseCase<bool, NoParams> {
     final deleteEither = await _sharedRepo.deleteUserDataLocally();
     return deleteEither.fold(
       (deleteFailure) => Left(deleteFailure),
-      (deleteResult) async {
-        final logOutEither = await _authRepo.logOut();
-        return logOutEither.fold(
-          (logOutFailure) => Left(logOutFailure),
-          (r) => Right(deleteResult),
-        );
-      },
+      (deleteResult) async => await _logout(deleteResult),
+    );
+  }
+
+  Future<Either<Failure, bool>> _logout(bool deleteResult) async {
+    final logOutEither = await _authRepo.logOut();
+    return logOutEither.fold(
+      (logOutFailure) => Left(logOutFailure),
+      (r) => Right(deleteResult),
     );
   }
 }

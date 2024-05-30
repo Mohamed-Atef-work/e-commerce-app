@@ -6,7 +6,7 @@ import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/components/messenger_component.dart';
-import 'package:e_commerce_app/core/components/product_details_component.dart';
+import 'package:e_commerce_app/core/components/product_component.dart';
 import 'package:e_commerce_app/modules/user/presentation/widgets/categories_widget.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/products_view_controller/products_view_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
@@ -18,7 +18,7 @@ class AdminProductsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const CategoriesWidget(),
+        const AdminCategoriesWidget(),
         Expanded(
           child: BlocBuilder<ProductsViewCubit, ProductsViewState>(
             builder: (context, state) {

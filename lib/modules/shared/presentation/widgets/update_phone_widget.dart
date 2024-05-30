@@ -36,30 +36,27 @@ class UpDatePhoneWidget extends StatelessWidget {
           final userData = userDataController.state.sharedEntity!.user;
 
           return BaseModelSheetComponent(
-            height: context.height * 0.3,
             child: BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
               listener: (_, state) => _listener(state, userDataController),
               builder: (_, state) {
                 if (state.updateState == RequestState.loading) {
                   return const LoadingWidget();
                 } else if (state.updateState == RequestState.success) {
-                  return MessengerComponent(
-                    AppStrings.updated,
-                    imageWidth: context.height * 0.2,
-                    imageHeight: context.height * 0.1,
-                  );
+                  return const MessengerComponent(AppStrings.updated);
                 } else {
                   return Form(
                     key: updateProfileController.formKey,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        CustomTextFormField(
-                          hintText: AppStrings.phone,
-                          validator: _phoneValidator,
-                          prefixIcon: Icons.phone_android,
-                          textEditingController:
-                              updateProfileController.changedOne,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 15.0),
+                          child: CustomTextFormField(
+                            hintText: AppStrings.phone,
+                            validator: _phoneValidator,
+                            prefixIcon: Icons.phone_android,
+                            textEditingController:
+                                updateProfileController.changedOne,
+                          ),
                         ),
                         CustomButton(
                           height: 50,

@@ -59,11 +59,12 @@ class SharedLocalDataSourceImpl implements SharedLocalDataSource {
 
   @override
   Future<bool> deleteUserData() async {
-    final result =
-        await _localDataBaseService.delete(kUser).catchError((error) {
-      throw LocalDataBaseException(message: error.toString());
-    });
-    return result;
+    try {
+      final result = await _localDataBaseService.delete(kUser);
+      return result;
+    } catch (e) {
+      throw LocalDataBaseException(message: e.toString());
+    }
   }
 
   @override

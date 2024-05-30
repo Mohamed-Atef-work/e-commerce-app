@@ -5,9 +5,11 @@ class AnimationHelperWidget extends StatelessWidget {
   final double width;
   final double height;
   final Color? color;
+  final Widget? child;
 
   const AnimationHelperWidget({
     super.key,
+    this.child,
     required this.width,
     required this.height,
     this.color = kWhiteGray,
@@ -22,6 +24,7 @@ class AnimationHelperWidget extends StatelessWidget {
         color: color,
         borderRadius: BorderRadius.circular(20),
       ),
+      child: child,
     );
   }
 }

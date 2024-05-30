@@ -2,6 +2,7 @@ import 'package:e_commerce_app/core/components/base_model_sheet_component.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
@@ -18,10 +19,8 @@ import '../../../../core/services/service_locator/sl.dart';
 
 class DeleteUpdateCategoryModelSheetWidget extends StatelessWidget {
   final ProductCategoryEntity category;
-  const DeleteUpdateCategoryModelSheetWidget({
-    super.key,
-    required this.category,
-  });
+  const DeleteUpdateCategoryModelSheetWidget(
+      {super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +28,6 @@ class DeleteUpdateCategoryModelSheetWidget extends StatelessWidget {
       create: (context) =>
           sl<CategoriesModelSheetCubit>()..takeCategoryName(category.name),
       child: BaseModelSheetComponent(
-        height: context.height * 0.4,
         child: Builder(
           builder: (context) {
             final controller =
@@ -37,62 +35,60 @@ class DeleteUpdateCategoryModelSheetWidget extends StatelessWidget {
             return BlocBuilder<CategoriesModelSheetCubit,
                 CategoriesModelSheetState>(
               builder: (context, state) {
-                if (state.updateCategoryState == RequestState.loading ||
-                    state.deleteCategoryState == RequestState.loading) {
+                if (state.categoryState == RequestState.loading) {
                   return const LoadingWidget();
+                } else if (state.categoryState == RequestState.error) {
+                  return MessengerComponent(state.message!);
+                } else if (state.categoryState == RequestState.success) {
+                  return const MessengerComponent(AppStrings.done);
                 } else {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: context.height * 0.02,
-                      horizontal: context.width * 0.01,
-                    ),
-                    child: Form(
-                      key: controller.formKey,
-                      child: Column(
-                        children: [
-                          CustomTextFormField(
+                  return Form(
+                    key: controller.formKey,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: context.height * 0.01),
+                          child: CustomTextFormField(
                             fontSize: 15,
                             hintText: AppStrings.category,
                             validator: _categoryValidator,
                             textEditingController:
                                 controller.categoryController,
                           ),
-                          SizedBox(height: context.height * 0.03),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              CustomButton(
-                                onPressed: () {
-                                  controller.updateCategory(
-                                    UpDateProductsCategoryParams(
-                                      name: controller.categoryController.text,
-                                      id: category.id,
-                                    ),
-                                  );
-                                },
-                                text: AppStrings.update,
-                                width: context.width * 0.3,
-                                backgroundColor: Colors.black,
-                                height: context.height * 0.065,
-                              ),
-                              CustomButton(
-                                onPressed: () {
-                                  controller.deleteCategory(
-                                    DeleteProductsCategoryParams(
-                                      name: category.name,
-                                      id: category.id,
-                                    ),
-                                  );
-                                },
-                                text: AppStrings.delete,
-                                width: context.width * 0.3,
-                                backgroundColor: Colors.black,
-                                height: context.height * 0.065,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            CustomButton(
+                              onPressed: () {
+                                final params = UpDateProductsCategoryParams(
+                                  newName: controller.categoryController.text,
+                                  oldName: category.name,
+                                  id: category.id,
+                                );
+                                controller.updateCategory(params);
+                              },
+                              text: AppStrings.update,
+                              backgroundColor: Colors.black,
+                              height: context.height * 0.065,
+                            ),
+                            CustomButton(
+                              onPressed: () {
+                                final params = DeleteProductsCategoryParams(
+                                  name: category.name,
+                                  id: category.id,
+                                );
+                                controller.deleteCategory(params);
+                              },
+                              text: AppStrings.delete,
+                              //width: context.width * 0.3,
+                              backgroundColor: Colors.black,
+                              height: context.height * 0.065,
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   );
                 }

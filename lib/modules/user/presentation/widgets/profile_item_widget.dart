@@ -22,6 +22,7 @@ class ProfileItemsWidget extends StatelessWidget {
       // changes all it's color ,when putting the mouse on it .
       splashColor: kWhiteGray,
       // the color is spread gradually.
+      // then disappear quickly..
       borderRadius: BorderRadius.circular(20),
       onTap: onTap,
       child: Padding(
@@ -37,8 +38,9 @@ class ProfileItemsWidget extends StatelessWidget {
             CustomText(
               text: name,
               fontSize: 20,
-              fontWeight: FontWeight.bold,
               textColor: kDarkBrown,
+              fontWeight: FontWeight.bold,
+              //overflow: TextOverflow.ellipsis,
             ),
             const Spacer(),
             const Icon(Icons.arrow_forward_ios),

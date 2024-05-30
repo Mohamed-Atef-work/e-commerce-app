@@ -16,15 +16,15 @@ class ManageFavoriteCubit extends Cubit<ManageFavoriteState> {
     emit(state.copyWith(heartColor: heartColor));
   }
 
-  Future<void> addOrDelete(AddDeleteFavoriteParams params) async {
+  void addOrDelete(AddDeleteFavoriteParams params) async {
     if (state.heartColor == Colors.red) {
-      await deleteFavorite(params);
+      deleteFavorite(params);
     } else {
-      await addFavorite(params);
+      addFavorite(params);
     }
   }
 
-  Future<void> addFavorite(AddDeleteFavoriteParams params) async {
+  void addFavorite(AddDeleteFavoriteParams params) async {
     emit(state.copyWith(requestState: RequestState.loading));
     final result = await _favRepo.addFavorite(params);
     emit(
@@ -41,7 +41,7 @@ class ManageFavoriteCubit extends Cubit<ManageFavoriteState> {
     );
   }
 
-  Future<void> deleteFavorite(AddDeleteFavoriteParams params) async {
+  void deleteFavorite(AddDeleteFavoriteParams params) async {
     emit(state.copyWith(requestState: RequestState.loading));
     final result = await _favRepo.deleteFavorite(params);
     emit(

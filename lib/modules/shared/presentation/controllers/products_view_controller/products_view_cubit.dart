@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:e_commerce_app/core/use_case/base_use_case.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_category_entity.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
@@ -24,7 +23,7 @@ class ProductsViewCubit extends Cubit<ProductsViewState> {
     this.adminRepo,
   ) : super(const ProductsViewState());
 
-  Future<void> loadCategories() async {
+  void loadCategories() async {
     await categorySub?.cancel();
     emit(state.copyWith(categoriesState: RequestState.loading));
     print("Categories -----------> ${state.categoriesState}");
@@ -44,34 +43,37 @@ class ProductsViewCubit extends Cubit<ProductsViewState> {
     });
   }
 
-  Future<void> loadProducts() async {
-    await productsSub?.cancel();
+  void loadProducts() async {
     emit(state.copyWith(productsState: RequestState.loading));
-    print("products -----------> ${state.productsState}");
+    await productsSub?.cancel();
+    Future.delayed(const Duration(seconds: 1), () {
+      print("products -----------> ${state.productsState}");
 
-    final result = _sharedRepo.loadProducts(
-      LoadProductsParams(category: state.categories[state.categoryIndex].name),
-    );
-    result.fold(
-        (l) => emit(
-              state.copyWith(
-                  productsState: RequestState.error, message: l.message),
-            ), (stream) {
-      productsSub = stream.listen((products) {
-        emit(
-          state.copyWith(
-              productsState: RequestState.success, products: products),
-        );
-        print(" <----------- update -----------> ");
+      final result = _sharedRepo.loadProducts(
+        LoadProductsParams(
+            category: state.categories[state.categoryIndex].name),
+      );
+      result.fold(
+          (l) => emit(
+                state.copyWith(
+                    productsState: RequestState.error, message: l.message),
+              ), (stream) {
+        productsSub = stream.listen((products) {
+          emit(
+            state.copyWith(
+                productsState: RequestState.success, products: products),
+          );
+          print(" <----------- update -----------> ");
 
-        print("products -----------> ${state.productsState}");
+          print("products -----------> ${state.productsState}");
+        });
       });
     });
   }
 
-  Future<void> loadProductsOfTheFirstCategory() async {
+  void loadProductsOfTheFirstCategory() async {
     await _loadFirstCat().then((value) async {
-      await loadProducts();
+      loadProducts();
     });
   }
 
@@ -85,7 +87,7 @@ class ProductsViewCubit extends Cubit<ProductsViewState> {
     return firstList;
   }
 
-  void emitCategoryIndex(int index) {
+  void emitCategoryIndex(int index) async {
     emit(state.copyWith(categoryIndex: index));
     loadProducts();
   }

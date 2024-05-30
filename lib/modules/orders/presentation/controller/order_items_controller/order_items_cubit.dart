@@ -17,9 +17,7 @@ class OrderItemsCubit extends Cubit<OrderItemsState> {
 
   StreamSubscription<List<OrderDataEntity>>? ordersSub;
 
-  OrderItemsCubit(
-    this._orderRepo,
-  ) : super(const OrderItemsState());
+  OrderItemsCubit(this._orderRepo) : super(const OrderItemsState());
 
   void getOrderItems(DocumentReference orderRef) async {
     emit(state.copyWith(getOrderItems: RequestState.loading));
@@ -46,6 +44,10 @@ class OrderItemsCubit extends Cubit<OrderItemsState> {
             message: l.message, deleteOrderItem: RequestState.error),
         (r) => state.copyWith(deleteOrderItem: RequestState.success),
       ),
+    );
+    Future.delayed(
+      const Duration(milliseconds: 30),
+      () => emit(state.copyWith(deleteOrderItem: RequestState.initial)),
     );
   }
 

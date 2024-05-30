@@ -48,6 +48,15 @@ class Validators {
     return null;
   }
 
+  static String? descriptionValidator(description) {
+    // Check if the description is empty
+    if (description.isEmpty || description.length < 30) {
+      return AppStrings.invalid + AppStrings.productDescription;
+    }
+
+    return null;
+  }
+
   static bool _isValidPassword(String password) {
     // Check the length of the input.
     if (password.length < 8) {

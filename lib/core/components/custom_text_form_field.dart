@@ -5,6 +5,7 @@ import '../constants/colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final bool? obSecure;
+  final int? maxLines;
   final String hintText;
   final double? fontSize;
   final Color? fillColor;
@@ -19,6 +20,7 @@ class CustomTextFormField extends StatelessWidget {
 
   const CustomTextFormField({
     super.key,
+    this.maxLines,
     this.validator,
     this.onChanged,
     this.labelText,
@@ -36,10 +38,11 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: kWhite,
+      maxLines: maxLines,
       onChanged: onChanged,
       validator: validator,
       obscureText: obSecure!,
-      cursorColor: kWhite,
       controller: textEditingController,
       decoration: InputDecoration(
         filled: true,
@@ -115,5 +118,5 @@ class PasswordTextFormField extends StatelessWidget {
         borderSide: const BorderSide(color: kWhite),
       );
   _suffixIcon(bool obSecure) =>
-      obSecure ? Icons.remove_red_eye : Icons.panorama_fish_eye_outlined;
+      obSecure ? Icons.remove_red_eye : Icons.visibility_off;
 }

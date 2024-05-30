@@ -2,6 +2,8 @@ import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
+import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EditProfileItemWidget extends StatelessWidget {
@@ -40,14 +42,18 @@ class EditProfileItemWidget extends StatelessWidget {
                   textColor: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
-                CustomText(
-                  fontSize: 20,
-                  text: " $value",
-                  textColor: Colors.black,
+                SizedBox(
+                  width: context.width * 0.6,
+                  child: CustomText(
+                    maxLines: 1,
+                    fontSize: 20,
+                    text: " $value",
+                    textColor: Colors.black,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ],
             ),
-            const Spacer(),
             IconButton(
               onPressed: onPressed,
               //hoverColor: Colors.red,

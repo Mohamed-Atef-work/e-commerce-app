@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/components/logo.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
-import 'package:e_commerce_app/core/utils/app_strings.dart';
+import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:e_commerce_app/core/animation/custom_fading_widget.dart';
@@ -21,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(toolbarHeight: 0),
+      backgroundColor: kPrimaryColorYellow,
       body: BlocListener<SharedUserDataCubit, SharedUserDataState>(
         listener: _listener,
         child: const Center(
@@ -55,7 +56,8 @@ class _SplashScreenState extends State<SplashScreen> {
       if (state.message == kThereIsNoData) {
         Navigator.of(context).pushReplacementNamed(Screens.loginScreen);
       } else {
-        showMyToast(AppStrings.tryAgain, context, Colors.red);
+        showMyToast(state.message!, context, Colors.red);
+        Navigator.of(context).pushReplacementNamed(Screens.loginScreen);
       }
     }
   }

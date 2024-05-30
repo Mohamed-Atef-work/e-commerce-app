@@ -100,16 +100,17 @@ class ManageCartProductsCubit extends Cubit<ManageCartProductsState> {
         (r) => state.copyWith(
           needToReGet: true,
           products: const [],
-          message: AppStrings.added,
           notExistedProducts: const [],
           addOrder: RequestState.success,
+          message: AppStrings.yourOrderIsPlaced,
         ),
       ),
     );
 
-    Future.delayed(const Duration(milliseconds: 30), () {
-      emit(state.copyWith(addOrder: RequestState.initial));
-    });
+    Future.delayed(
+      const Duration(milliseconds: 30),
+      () => emit(state.copyWith(addOrder: RequestState.initial)),
+    );
   }
 
   double _totalPrice() {

@@ -11,12 +11,15 @@ class LogoutCubit extends Cubit<LogoutState> {
   void logout() async {
     emit(state.copyWith(logoutState: RequestState.loading));
     final result = await _logoutUseCase.call(const NoParams());
-    emit(
-      result.fold(
-        (l) =>
-            state.copyWith(logoutState: RequestState.error, message: l.message),
-        (r) => state.copyWith(logoutState: RequestState.success),
-      ),
-    );
+
+    Future.delayed(const Duration(seconds: 1), () {
+      emit(
+        result.fold(
+          (l) => state.copyWith(
+              logoutState: RequestState.error, message: l.message),
+          (r) => state.copyWith(logoutState: RequestState.success),
+        ),
+      );
+    });
   }
 }

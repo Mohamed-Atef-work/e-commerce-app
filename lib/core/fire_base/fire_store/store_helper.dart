@@ -17,12 +17,14 @@ class StoreHelperImpl implements StoreHelper {
   Future<bool> doesProductExists(GetProductParams params) async {
     print(params.productId);
     print(params.category);
+
     final response = await store
         .collection(kProducts)
         .doc(kCategories)
         .collection(params.category)
         .doc(params.productId)
         .get();
+
     print(response.data().toString());
 
     if (response.exists) {

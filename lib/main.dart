@@ -7,11 +7,10 @@ import 'firebase_options.dart';
 void main() async {
   print(DateTime.now());
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  WidgetsFlutterBinding.ensureInitialized();
+  await sl.allReady();
   serviceLocatorInit();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const BuyItApp());
 }
-
-//await sl.allReady();

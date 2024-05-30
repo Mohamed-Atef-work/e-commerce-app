@@ -20,49 +20,62 @@ class CategoriesModelSheetCubit extends Cubit<CategoriesModelSheetState> {
     categoryController.text = name;
   }
 
-  Future<void> addNewCategory() async {
+  void addNewCategory() async {
     if (formKey.currentState!.validate()) {
-      emit(state.copyWith(
-        addCategoryState: RequestState.loading,
-      ));
+      emit(
+        state.copyWith(addCategoryState: RequestState.loading),
+      );
       final result = await adminRepo.addNewProductCategory(
           AddNewProductsCategoryParams(name: categoryController.text));
-      result.fold(
-          (l) => emit(state.copyWith(
-                addCategoryState: RequestState.error,
-                message: l.message,
-              )), (r) {
+      emit(
+        result.fold(
+          (l) => state.copyWith(
+              addCategoryState: RequestState.error, message: l.message),
+          (r) => state.copyWith(addCategoryState: RequestState.success),
+        ),
+      );
+
+      if (result.isRight()) {
         categoryController.text = "";
-        emit(state.copyWith(
-          addCategoryState: RequestState.success,
-        ));
-      });
+      }
     }
   }
 
-  Future<void> deleteCategory(DeleteProductsCategoryParams params) async {
-    emit(state.copyWith(deleteCategoryState: RequestState.loading));
+  void deleteCategory(DeleteProductsCategoryParams params) async {
+    emit(
+      state.copyWith(categoryState: RequestState.loading),
+    );
     final result = await adminRepo.deleteProductCategory(params);
-    result.fold((l) {
-      emit(state.copyWith(
-          deleteCategoryState: RequestState.error, message: l.message));
-    }, (r) {
+    emit(
+      result.fold(
+        (l) => state.copyWith(
+            categoryState: RequestState.error, message: l.message),
+        (r) => state.copyWith(categoryState: RequestState.success),
+      ),
+    );
+
+    if (result.isRight()) {
       categoryController.text = "";
-      emit(state.copyWith(deleteCategoryState: RequestState.success));
-    });
+    }
   }
 
-  Future<void> updateCategory(UpDateProductsCategoryParams params) async {
+  void updateCategory(UpDateProductsCategoryParams params) async {
     if (formKey.currentState!.validate()) {
-      emit(state.copyWith(updateCategoryState: RequestState.loading));
+      emit(
+        state.copyWith(categoryState: RequestState.loading),
+      );
       final result = await adminRepo.upDateProductCategory(params);
-      emit(result.fold(
+      emit(
+        result.fold(
           (l) => state.copyWith(
-              updateCategoryState: RequestState.error,
-              message: l.message), (r) {
+              categoryState: RequestState.error, message: l.message),
+          (r) => state.copyWith(categoryState: RequestState.success),
+        ),
+      );
+
+      if (result.isRight()) {
         categoryController.text = "";
-        return state.copyWith(updateCategoryState: RequestState.success);
-      }));
+      }
     }
   }
 }

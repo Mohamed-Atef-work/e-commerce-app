@@ -26,6 +26,8 @@ class LoginFormWidget extends StatelessWidget {
     final loginController = BlocProvider.of<LoginBloc>(context);
 
     return BlocConsumer<LoginBloc, LoginState>(
+      listenWhen: (previous, current) =>
+          previous.loginState != current.loginState,
       listener: _loginListener,
       builder: (_, state) {
         return Form(

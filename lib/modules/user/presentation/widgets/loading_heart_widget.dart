@@ -40,6 +40,7 @@ class _LoadingHeartWidgetState extends State<LoadingHeartWidget>
         splashColor: Colors.red,
         highlightColor: Colors.transparent,
         icon: const Icon(
+          size: 35,
           Icons.favorite,
           color: Colors.red,
         ),

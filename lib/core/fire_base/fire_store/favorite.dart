@@ -34,20 +34,18 @@ class FavoriteStoreImpl implements FavoriteStore {
 
   @override
   Future<void> addFav(AddDeleteFavoriteParams params) async {
-    final exists = await _storeHelper.doesProductExists(
-      GetProductParams(
-        category: params.category,
-        productId: params.productId,
-      ),
+    final existParams = GetProductParams(
+      category: params.category,
+      productId: params.productId,
     );
+    final favParams = FavoriteParams(
+      uId: params.uId,
+      category: params.category,
+      productId: params.productId,
+    );
+    final exists = await _storeHelper.doesProductExists(existParams);
     if (exists) {
-      await _setFavCategoryToBeAvailableToFetch(
-        FavoriteParams(
-          uId: params.uId,
-          category: params.category,
-          productId: params.productId,
-        ),
-      );
+      await _setFavCategoryToBeAvailableToFetch(favParams);
       await _store
           .collection(kUsers)
           .doc(params.uId)

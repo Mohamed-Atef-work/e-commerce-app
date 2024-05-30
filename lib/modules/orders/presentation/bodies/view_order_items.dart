@@ -17,15 +17,18 @@ class ViewUserOrderItemsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<OrderItemsCubit, OrderItemsState>(
+      listenWhen: _listenWhen,
       listener: _listener,
-      builder: (context, state) {
+      builder: (_, state) {
         if (state.getOrderItems == RequestState.loading ||
             state.deleteOrderItem == RequestState.loading) {
           return const LoadingWidget();
-        } else if (state.getOrderItems != RequestState.loading &&
+        } else if (state.getOrderItems == RequestState.success &&
             state.orderItems.isEmpty) {
           return const MessengerComponent(
               AppStrings.thisOrderIsNoLongerExisted);
+        } else if (state.getOrderItems == RequestState.error) {
+          return MessengerComponent(state.message);
         } else {
           return ListView.separated(
             padding: const EdgeInsets.all(10),
@@ -34,12 +37,12 @@ class ViewUserOrderItemsBody extends StatelessWidget {
             itemBuilder: (context, index) => OrderItemWidget(
               index: index,
               onPressed: () {
-                BlocProvider.of<ProductDetailsCubit>(context)
-                    .product(state.orderItems[index].product);
+                final product = state.orderItems[index].product;
+                BlocProvider.of<ProductDetailsCubit>(context).product(product);
                 Navigator.pushNamed(context, Screens.detailsScreen);
               },
             ),
-            separatorBuilder: (context, index) => const DividerComponent(),
+            separatorBuilder: (_, __) => const DividerComponent(),
           );
         }
       },
@@ -52,76 +55,11 @@ class ViewUserOrderItemsBody extends StatelessWidget {
     } else if (state.getOrderItems == RequestState.error) {
       showMyToast(state.message, context, Colors.red);
     } else if (state.deleteOrderItem == RequestState.success) {
-      showMyToast(AppStrings.deleted, context, Colors.green);
+      showMyToast(AppStrings.itemDeleted(), context, Colors.green);
     }
   }
+
+  bool _listenWhen(OrderItemsState previous, OrderItemsState current) =>
+      current.deleteOrderItem != previous.deleteOrderItem ||
+      current.getOrderItems != previous.getOrderItems;
 }
-
-/*class ViewUserOrderItemsBody extends StatelessWidget {
-  const ViewUserOrderItemsBody({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ManageUserOrdersCubit, ManageUserOrdersState>(
-      builder: (context, state) {
-        if (state.getOrderItems == RequestState.loading ||
-            state.deleteOrderItem == RequestState.loading) {
-          return const LoadingWidget();
-        } else if (state.getOrderItems != RequestState.loading &&
-            state.orderItems.isEmpty) {
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const CustomText(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: kPacifico,
-                  text: AppStrings.thisOrderIsNoLongerExisted,
-                ),
-                CustomButton(
-                  text: AppStrings.ok,
-                  fontFamily: kPacifico,
-                  onPressed: () {
-                    BlocProvider.of<ManageUserOrderViewCubit>(context)
-                        .viewOrders();
-                  },
-                  width: context.height * 0.1,
-                  height: context.height * 0.05,
-                ),
-              ],
-            ),
-          );
-        } else {
-          return ListView.separated(
-            padding: const EdgeInsets.all(10),
-            itemCount: state.orderItems.length,
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) => Dismissible(
-              key: ValueKey(state.orderItems[index].product.id),
-              onDismissed: (_) {
-                BlocProvider.of<ManageUserOrdersCubit>(context)
-                    .deleteItemFromOrder(
-                  DeleteItemFromOrderParams(
-                    itemRef: state.orderItems[index].ref!,
-                  ),
-                );
-                BlocProvider.of<ManageUserOrdersCubit>(context)
-                    .state
-                    .orderItems
-                    .removeAt(index);
-              },
-              background: const DismissibleBackgroundComponent(
-                  color: Colors.red, icon: Icons.delete),
-              secondaryBackground:
-                  const DismissibleSecondaryBackgroundComponent(
-                      color: Colors.red, icon: Icons.delete),
-              child: OrderItemWidget(state.orderItems[index]),
-            ),
-            separatorBuilder: (context, index) => const DividerComponent(),
-          );
-        }
-      },
-    );
-  }
-}*/

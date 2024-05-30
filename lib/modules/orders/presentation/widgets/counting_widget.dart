@@ -40,10 +40,7 @@ class CountingWidget extends StatelessWidget {
             ),
             child: InkWell(
               onTap: plus,
-              child: const Icon(
-                color: Colors.white,
-                Icons.add,
-              ),
+              child: const Icon(color: Colors.white, Icons.add),
             ),
           ),
           CustomText(
@@ -60,10 +57,7 @@ class CountingWidget extends StatelessWidget {
             ),
             child: InkWell(
               onTap: minus,
-              child: const Icon(
-                color: Colors.white,
-                Icons.remove,
-              ),
+              child: const Icon(color: Colors.white, Icons.remove),
             ),
           ),
         ],

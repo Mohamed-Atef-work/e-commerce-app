@@ -39,6 +39,7 @@ class AccountItemsWidget extends StatelessWidget {
               fontSize: 20,
               textColor: kDarkBrown,
               fontWeight: FontWeight.bold,
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),

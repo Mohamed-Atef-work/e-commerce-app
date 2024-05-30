@@ -33,43 +33,43 @@ class UpDateEmailWidget extends StatelessWidget {
         final userData = userDataController.state.sharedEntity!.user;
 
         /// bloc
+        final padding = context.height * 0.01;
+
         return BaseModelSheetComponent(
-          height: context.height * 0.5,
           child: BlocConsumer<ChangeEmailCubit, ChangeEmailState>(
-            listener: (_, state) => _listener(state, userDataController),
+            listener: _listener,
             builder: (_, state) {
               if (state.changeState == RequestState.loading) {
                 return const LoadingWidget();
               } else if (state.changeState == RequestState.success) {
-                return MessengerComponent(
-                  AppStrings.updated,
-                  imageWidth: context.height * 0.2,
-                  imageHeight: context.height * 0.1,
-                );
+                return const MessengerComponent(AppStrings.updated);
               } else {
                 return Form(
                   key: updateEmailController.formKey,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
+                      SizedBox(height: padding),
                       CustomTextFormField(
                         prefixIcon: Icons.email,
+                        validator: _emailValidator,
                         hintText: AppStrings.oldEmail,
                         textEditingController: updateEmailController.oldEmail,
-                        validator: (value) => Validators.emailValidator(value),
                       ),
+                      SizedBox(height: padding),
                       CustomTextFormField(
                         prefixIcon: Icons.email,
+                        validator: _emailValidator,
                         hintText: AppStrings.newEmail,
                         textEditingController: updateEmailController.newEmail,
-                        validator: (value) => Validators.emailValidator(value),
                       ),
+                      SizedBox(height: padding),
                       PasswordTextFormField(
                         obSecure: state.obSecure,
                         hintText: AppStrings.enterYourPassword,
                         textEditingController: updateEmailController.password,
                         suffixPressed: () => updateEmailController.obSecure(),
                       ),
+                      SizedBox(height: padding),
                       CustomButton(
                         height: 50,
                         fontSize: 18,
@@ -112,9 +112,12 @@ class UpDateEmailWidget extends StatelessWidget {
     }
   }
 
-  _listener(ChangeEmailState state, SharedUserDataCubit dataController) {
+  void _listener(BuildContext context, ChangeEmailState state) {
     if (state.changeState == RequestState.success) {
-      dataController.getSavedUser();
+      final controller = BlocProvider.of<SharedUserDataCubit>(context);
+      controller.getSavedUser();
     }
   }
+
+  String? _emailValidator(String? value) => Validators.emailValidator(value);
 }

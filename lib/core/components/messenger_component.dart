@@ -1,9 +1,11 @@
 import 'package:e_commerce_app/core/components/custom_text.dart';
-import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/images.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:flutter/material.dart';
 
 class MessengerComponent extends StatelessWidget {
   final String mess;
@@ -24,14 +26,15 @@ class MessengerComponent extends StatelessWidget {
         children: [
           SvgPicture.asset(
             Images.message,
-            height: imageHeight ?? context.height * 0.3,
             width: imageWidth ?? context.width * 0.4,
+            height: imageHeight ?? context.height * 0.3,
           ),
           SizedBox(height: context.height * 0.01),
           CustomText(
             text: mess,
             fontSize: 25,
             fontFamily: kPacifico,
+            textAlign: TextAlign.center,
             fontWeight: FontWeight.bold,
           ),
         ],

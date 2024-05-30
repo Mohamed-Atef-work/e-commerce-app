@@ -37,13 +37,16 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
       emit(state.copyWith(updateState: RequestState.loading));
 
       final result = await _updateUseCase.call(params);
-      emit(
-        result.fold(
-          (l) => state.copyWith(
-              updateState: RequestState.error, message: l.message),
-          (r) => state.copyWith(updateState: RequestState.success),
-        ),
-      );
+
+      Future.delayed(const Duration(milliseconds: 300), () {
+        emit(
+          result.fold(
+            (l) => state.copyWith(
+                updateState: RequestState.error, message: l.message),
+            (r) => state.copyWith(updateState: RequestState.success),
+          ),
+        );
+      });
     }
     print(state.updateState);
   }

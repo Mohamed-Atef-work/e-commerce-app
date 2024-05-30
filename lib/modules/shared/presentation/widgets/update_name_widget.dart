@@ -25,7 +25,6 @@ class UpDateNameWidget extends StatelessWidget {
     return BlocProvider(
       create: (_) => sl<UpdateProfileCubit>(),
       child: BaseModelSheetComponent(
-        height: context.height * 0.3,
         child: Builder(
           builder: (context) {
             /// bloc
@@ -42,24 +41,21 @@ class UpDateNameWidget extends StatelessWidget {
                 if (state.updateState == RequestState.loading) {
                   return const LoadingWidget();
                 } else if (state.updateState == RequestState.success) {
-                  return MessengerComponent(
-                    AppStrings.updated,
-                    imageWidth: context.height * 0.2,
-                    imageHeight: context.height * 0.1,
-                  );
+                  return const MessengerComponent(AppStrings.updated);
                 } else {
                   return Form(
                     key: updateProfileController.formKey,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        CustomTextFormField(
-                          prefixIcon: Icons.person,
-                          hintText: AppStrings.name,
-                          textEditingController:
-                              updateProfileController.changedOne,
-                          validator: (value) => Validators.stringValidator(
-                              value, AppStrings.name),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 15.0),
+                          child: CustomTextFormField(
+                            prefixIcon: Icons.person,
+                            hintText: AppStrings.name,
+                            validator: _nameValidator,
+                            textEditingController:
+                                updateProfileController.changedOne,
+                          ),
                         ),
                         CustomButton(
                           height: 50,
@@ -103,4 +99,7 @@ class UpDateNameWidget extends StatelessWidget {
       controller.getSavedUser();
     }
   }
+
+  String? _nameValidator(String? value) =>
+      Validators.stringValidator(value, AppStrings.name);
 }

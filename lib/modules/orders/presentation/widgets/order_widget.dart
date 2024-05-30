@@ -35,6 +35,9 @@ class OrderWidget extends StatelessWidget {
     SharedUserDataState userDataState =
         BlocProvider.of<SharedUserDataCubit>(context).state;
 
+    final width = context.width;
+    final height = context.height;
+
     final dateTime = state.orders[index].date.split(" ");
     final date = dateTime[0];
     final bigTime = dateTime[1].split(":");
@@ -47,7 +50,6 @@ class OrderWidget extends StatelessWidget {
           orderController.dismissOrder(index),
       confirmDismiss: (DismissDirection direction) async => _confirmDismiss(
         id: userDataState.sharedEntity!.user.userEntity.id,
-        ref: state.orders[index].reference!,
         orderController: orderController,
         order: state.orders[index],
         direction: direction,
@@ -67,8 +69,8 @@ class OrderWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 7),
                 child: SvgPicture.asset(
                   Images.orderImage,
-                  width: context.width * 0.15,
-                  height: context.height * 0.1,
+                  width: width * 0.15,
+                  height: height * 0.1,
                 ),
               ),
               Column(
@@ -80,13 +82,13 @@ class OrderWidget extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     text: state.orders[index].name,
                   ),
-                  SizedBox(height: context.height * 0.01),
+                  SizedBox(height: height * 0.01),
                   CustomText(
                     text: time,
                     fontSize: 15,
                     textColor: kDarkBrown,
                   ),
-                  SizedBox(height: context.height * 0.005),
+                  SizedBox(height: height * 0.005),
                   CustomText(
                     text: date,
                     fontSize: 15,
@@ -118,21 +120,20 @@ class OrderWidget extends StatelessWidget {
   _confirmDismiss({
     required String id,
     required BuildContext context,
-    required DocumentReference ref,
     required OrderDataEntity order,
     required DismissDirection direction,
     required GetUserOrdersCubit orderController,
   }) {
     if (direction == DismissDirection.startToEnd) {
-      orderController.deleteOrder(
-        DeleteOrderParams(orderRef: ref, uId: id),
-      );
+      final deleteParams =
+          DeleteOrderParams(orderRef: order.reference!, uId: id);
+      orderController.deleteOrder(deleteParams);
       return true;
     } else {
       showModalBottomSheet(
         context: context,
-        builder: (context) => BlocProvider(
-          create: (context) => sl<UpdateOrderDataCubit>()..orderData(order),
+        builder: (_) => BlocProvider(
+          create: (_) => sl<UpdateOrderDataCubit>()..orderData(order),
           child: const UpDateOrderDataWidget(),
         ),
       );

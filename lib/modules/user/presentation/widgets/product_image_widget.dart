@@ -28,6 +28,7 @@ class ProductDetailsImageWidget extends StatelessWidget {
           HeartWihMangeFavoriteCubitProviderWidget(
             heartColor: Colors.white,
             product: product,
+            iconsSize: 35,
           ),
         ],
       ),

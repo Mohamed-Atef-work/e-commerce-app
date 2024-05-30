@@ -12,7 +12,7 @@ import '../../../../core/services/service_locator/sl.dart';
 import '../widgets/sign_up_form.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +39,8 @@ class SignUpScreen extends StatelessWidget {
                   text: AppStrings.haveAnAccount,
                 ),
                 TextButton(
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushReplacementNamed(Screens.loginScreen);
-                  },
+                  onPressed: () => Navigator.of(context)
+                      .pushReplacementNamed(Screens.loginScreen),
                   child: const CustomText(
                     fontSize: 15,
                     text: AppStrings.login,

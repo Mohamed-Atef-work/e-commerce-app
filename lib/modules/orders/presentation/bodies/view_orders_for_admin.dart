@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
@@ -17,6 +18,7 @@ class ViewOrdersForAdmin extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GetUserOrdersCubit, GetUserOrdersState>(
         builder: (context, state) {
+      final controller = BlocProvider.of<ManageAdminOrderViewCubit>(context);
       if (state.deleteOrder == RequestState.loading ||
           state.getOrders == RequestState.loading) {
         return const LoadingWidget();
@@ -28,15 +30,12 @@ class ViewOrdersForAdmin extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 5.0),
               child: IconButton(
-                  onPressed: () {
-                    BlocProvider.of<ManageAdminOrderViewCubit>(context)
-                        .viewUsers();
-                  },
-                  icon: const Icon(Icons.arrow_back)),
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => controller.viewUsers(),
+              ),
             ),
             const Expanded(
-              child: MessengerComponent(AppStrings.noOrdersForThisUser),
-            ),
+                child: MessengerComponent(AppStrings.noOrdersForThisUser)),
           ],
         );
       } else {
@@ -46,11 +45,9 @@ class ViewOrdersForAdmin extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 5.0),
               child: IconButton(
-                  onPressed: () {
-                    BlocProvider.of<ManageAdminOrderViewCubit>(context)
-                        .viewUsers();
-                  },
-                  icon: const Icon(Icons.arrow_back)),
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => controller.viewUsers(),
+              ),
             ),
             Expanded(
               child: ListView.separated(
@@ -62,11 +59,10 @@ class ViewOrdersForAdmin extends StatelessWidget {
                   onPressed: () {
                     BlocProvider.of<OrderItemsCubit>(context)
                         .getOrderItems(state.orders[index].reference!);
-                    BlocProvider.of<ManageAdminOrderViewCubit>(context)
-                        .viewOrderItems();
+                    controller.viewOrderItems();
                   },
                 ),
-                separatorBuilder: (context, index) => const DividerComponent(),
+                separatorBuilder: (_, __) => const DividerComponent(),
               ),
             ),
           ],

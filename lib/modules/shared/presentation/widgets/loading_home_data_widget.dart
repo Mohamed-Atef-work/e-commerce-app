@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/core/animation/animation_helper_widget.dart';
 import 'package:e_commerce_app/core/animation/custom_fading_widget.dart';
+import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
@@ -23,30 +24,10 @@ class LoadingHomeProductsWidget extends StatelessWidget {
           childAspectRatio: 1 / 1.6,
           crossAxisCount: 2,
         ),
-        itemBuilder: (_, __) => Container(
-          decoration: BoxDecoration(
-            color: kWhiteGray,
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                height: height * 0.36,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              SizedBox(height: height * 0.02),
-              AnimationHelperWidget(
-                  width: width * 0.15, height: height * 0.025),
-              SizedBox(height: height * 0.01),
-              AnimationHelperWidget(width: width * 0.2, height: height * 0.025),
-              SizedBox(height: height * 0.01),
-              AnimationHelperWidget(width: width * 0.1, height: height * 0.025),
-            ],
-          ),
+        itemBuilder: (_, __) => AnimationHelperWidget(
+          width: double.infinity,
+          height: height * 0.03,
+          color: kWhiteGray,
         ),
       ),
     );

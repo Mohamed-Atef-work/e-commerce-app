@@ -1,8 +1,10 @@
 import 'package:e_commerce_app/core/animation/animation_helper_widget.dart';
 import 'package:e_commerce_app/core/animation/custom_fading_widget.dart';
+import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/divider_component.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoadingCartWidget extends StatelessWidget {
@@ -28,35 +30,40 @@ class CartProductLoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Container(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: AnimationHelperWidget(
-              width: context.width * 0.3,
-              height: context.height * 0.2,
-            ),
-          ),
-          SizedBox(width: context.width * 0.04),
-          Column(
-            //mainAxisAlignment: MainAxisAlignment.spaceAround,
+    final width = context.width;
+    final height = context.height;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        AnimationHelperWidget(
+          width: width * 0.32,
+          height: height * 0.17,
+        ),
+        SizedBox(
+          width: width * 0.6,
+          height: height * 0.17,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               AnimationHelperWidget(
-                width: context.width * 0.25,
-                height: context.height * 0.025,
+                width: width * 0.08,
+                height: height * 0.03,
+                child: CustomText(
+                  text: "\$",
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.center,
+                  textColor: kDarkBrown.withOpacity(0.2),
+                ),
               ),
-              SizedBox(height: context.height * 0.03),
+              AnimationHelperWidget(
+                width: width * 0.25,
+                height: height * 0.025,
+              ),
               Container(
-                width: context.width * 0.3,
-                height: context.height * 0.04,
+                height: height * 0.04,
+                width: double.infinity,
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                padding: const EdgeInsets.symmetric(horizontal: 2),
                 decoration: BoxDecoration(
                   color: kWhiteGray,
                   borderRadius: BorderRadius.circular(20),
@@ -72,20 +79,15 @@ class CartProductLoadingWidget extends StatelessWidget {
                     Icon(
                       size: 25,
                       color: Colors.white,
-                      Icons.add_circle_outline,
+                      Icons.remove_circle_outline,
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          const Spacer(),
-          AnimationHelperWidget(
-            width: context.width * 0.08,
-            height: context.height * 0.03,
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -24,7 +24,6 @@ class OrderItemModel extends OrderItemEntity {
         kItem: ProductModel(
           description: product.description,
           category: product.category,
-          location: product.location,
           price: product.price,
           image: product.image,
           name: product.name,

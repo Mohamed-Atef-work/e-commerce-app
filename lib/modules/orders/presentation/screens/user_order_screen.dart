@@ -7,7 +7,6 @@ import 'package:e_commerce_app/modules/orders/presentation/bodies/view_orders.da
 import 'package:e_commerce_app/modules/orders/presentation/bodies/view_order_items.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/order_items_controller/order_items_cubit.dart';
-import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_orders/manage_user_orders_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_user_order_view/user_order_view_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/get_user_orders_controller/get_user_orders_cubit.dart';
 
@@ -20,14 +19,9 @@ class UserOrderScreen extends StatelessWidget {
     final uId = userData.sharedEntity!.user.userEntity.id;
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => sl<ManageUserOrderViewCubit>()),
-        BlocProvider(
-          create: (context) => sl<ManageUserOrdersCubit>()..getOrders(uId),
-        ),
-        BlocProvider(
-          create: (context) => sl<GetUserOrdersCubit>()..getOrders(uId),
-        ),
-        BlocProvider(create: (context) => sl<OrderItemsCubit>()),
+        BlocProvider(create: (_) => sl<ManageUserOrderViewCubit>()),
+        BlocProvider(create: (_) => sl<GetUserOrdersCubit>()..getOrders(uId)),
+        BlocProvider(create: (_) => sl<OrderItemsCubit>()),
       ],
       child: BlocBuilder<ManageUserOrderViewCubit, ManageUserOrderViewState>(
         builder: (context, state) {

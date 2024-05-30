@@ -1,15 +1,16 @@
+import 'package:e_commerce_app/modules/admin/presentation/widgets/edite_delete_category_model_sheet_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../modules/admin/domain/entities/product_category_entity.dart';
 import 'custom_text.dart';
 
-class CategoryComponent extends StatelessWidget {
+class AdminCategoryComponent extends StatelessWidget {
   final void Function() onTap;
-  final ProductCategoryEntity category;
   final Color backgroundColor;
   final Color iconAndTextColor;
+  final ProductCategoryEntity category;
 
-  const CategoryComponent({
+  const AdminCategoryComponent({
     super.key,
     required this.onTap,
     required this.category,
@@ -20,8 +21,15 @@ class CategoryComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      borderRadius: BorderRadius.circular(20),
       onTap: onTap,
+      onLongPress: () {
+        showModalBottomSheet(
+          context: context,
+          builder: (context) =>
+              DeleteUpdateCategoryModelSheetWidget(category: category),
+        );
+      },
+      borderRadius: BorderRadius.circular(20),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
         decoration: BoxDecoration(
@@ -29,9 +37,9 @@ class CategoryComponent extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
           children: [
             CustomText(
               fontSize: 18,
@@ -39,7 +47,49 @@ class CategoryComponent extends StatelessWidget {
               textColor: iconAndTextColor,
               textAlign: TextAlign.center,
             ),
-            //SizedBox(width: context.width * 0.01),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class UserCategoryComponent extends StatelessWidget {
+  final void Function() onTap;
+  final Color backgroundColor;
+  final Color iconAndTextColor;
+  final ProductCategoryEntity category;
+
+  const UserCategoryComponent({
+    super.key,
+    required this.onTap,
+    required this.category,
+    required this.backgroundColor,
+    required this.iconAndTextColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CustomText(
+              fontSize: 18,
+              text: category.name,
+              textColor: iconAndTextColor,
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),

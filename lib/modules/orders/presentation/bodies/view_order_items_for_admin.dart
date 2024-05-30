@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/components/divider_component.dart';
 import 'package:e_commerce_app/core/components/messenger_component.dart';
+import 'package:e_commerce_app/modules/orders/domain/entity/item_entity.dart';
 import 'package:e_commerce_app/modules/orders/presentation/widgets/order_product_widget.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/order_items_controller/order_items_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
@@ -23,58 +25,78 @@ class ViewOrderItemsForAdmin extends StatelessWidget {
           return const LoadingWidget();
         } else if (state.getOrderItems != RequestState.loading &&
             state.orderItems.isEmpty) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 5.0),
-                child: IconButton(
-                    onPressed: () {
-                      BlocProvider.of<ManageAdminOrderViewCubit>(context)
-                          .viewOrders();
-                    },
-                    icon: const Icon(Icons.arrow_back)),
-              ),
-              const Expanded(
-                child: MessengerComponent(
-                    AppStrings.thisOrderIsNoLongerExisted),
-              ),
-            ],
-          );
+          return const NotExistedOrderWidget();
         } else {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 5.0),
-                child: IconButton(
-                    onPressed: () {
-                      BlocProvider.of<ManageAdminOrderViewCubit>(context)
-                          .viewOrders();
-                    },
-                    icon: const Icon(Icons.arrow_back)),
-              ),
-              Expanded(
-                child: ListView.separated(
-                  padding: const EdgeInsets.all(10),
-                  itemCount: state.orderItems.length,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) => OrderItemWidget(
-                    index: index,
-                    onPressed: () {
-                      BlocProvider.of<AdminDetailsCubit>(context)
-                          .product(state.orderItems[index].product);
-                      Navigator.pushNamed(context, Screens.adminDetailsScreen);
-                    },
-                  ),
-                  separatorBuilder: (context, index) =>
-                      const DividerComponent(),
-                ),
-              ),
-            ],
-          );
+          return ItemsWidget(state.orderItems);
         }
       },
+    );
+  }
+}
+
+class NotExistedOrderWidget extends StatelessWidget {
+  const NotExistedOrderWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final orderViewsController =
+        BlocProvider.of<ManageAdminOrderViewCubit>(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 5.0),
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => orderViewsController.viewOrders(),
+          ),
+        ),
+        const Expanded(
+          child: MessengerComponent(AppStrings.thisOrderIsNoLongerExisted),
+        ),
+      ],
+    );
+  }
+}
+
+class ItemsWidget extends StatelessWidget {
+  final List<OrderItemEntity> orderItems;
+  const ItemsWidget(this.orderItems, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final detailsController = BlocProvider.of<AdminDetailsCubit>(context);
+
+    final orderViewsController =
+        BlocProvider.of<ManageAdminOrderViewCubit>(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 5.0),
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => orderViewsController.viewOrders(),
+          ),
+        ),
+        Expanded(
+          child: ListView.separated(
+            padding: const EdgeInsets.all(10),
+            itemCount: orderItems.length,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) => OrderItemWidget(
+              index: index,
+              onPressed: () {
+                final product = orderItems[index].product;
+                detailsController.product(product);
+                Navigator.pushNamed(context, Screens.adminDetailsScreen);
+              },
+            ),
+            separatorBuilder: (_, __) => const DividerComponent(),
+          ),
+        ),
+      ],
     );
   }
 }

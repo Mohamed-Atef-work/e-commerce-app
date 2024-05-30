@@ -31,27 +31,30 @@ class UpdateOrderDataCubit extends Cubit<UpdateOrderDataState> {
     address.text = state.orderData!.address;
   }
 
-  Future<void> updateOrderData() async {
+  void updateOrderData() async {
     if (formKey.currentState!.validate()) {
       emit(state.copyWith(updateState: RequestState.loading));
-
-      final result = await _orderRepo.updateOrderData(
-        UpDateOrderDataParams(
-          ref: state.orderData!.reference!,
-          data: OrderDataModel(
-            name: name.text,
-            phone: phone.text,
-            address: address.text,
-            date: state.orderData!.date,
-            totalPrice: state.orderData!.totalPrice,
-          ),
-        ),
+      final orderDataModel = OrderDataModel(
+        name: name.text,
+        phone: phone.text,
+        address: address.text,
+        date: state.orderData!.date,
+        totalPrice: state.orderData!.totalPrice,
       );
-      emit(
-        result.fold(
-          (l) => state.copyWith(
-              updateState: RequestState.error, message: l.message),
-          (r) => state.copyWith(updateState: RequestState.success),
+      final updateParams = UpDateOrderDataParams(
+        ref: state.orderData!.reference!,
+        data: orderDataModel,
+      );
+
+      final result = await _orderRepo.updateOrderData(updateParams);
+      Future.delayed(
+        const Duration(milliseconds: 300),
+        () => emit(
+          result.fold(
+            (l) => state.copyWith(
+                updateState: RequestState.error, message: l.message),
+            (r) => state.copyWith(updateState: RequestState.success),
+          ),
         ),
       );
     }

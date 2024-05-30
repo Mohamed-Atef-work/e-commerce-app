@@ -87,9 +87,9 @@ class ChangePasswordScreen extends StatelessWidget {
                                   CustomButton(
                                     height: 50,
                                     fontSize: 18,
+                                    width: width * 0.7,
                                     fontFamily: kPacifico,
                                     text: AppStrings.update,
-                                    width: width * 0.7,
                                     onPressed: () =>
                                         passwordController.changePassword(),
                                   ),
@@ -124,8 +124,13 @@ class ChangePasswordScreen extends StatelessWidget {
   void _dataListener(BuildContext context, SharedUserDataState state) {
     print("save State is ------------> ${state.saveState}");
     if (state.saveState == RequestState.success) {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil(Screens.loginScreen, (route) => false);
+      Future.delayed(
+        const Duration(milliseconds: 500),
+        () {
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(Screens.loginScreen, (route) => false);
+        },
+      );
     }
   }
 
@@ -136,6 +141,8 @@ class ChangePasswordScreen extends StatelessWidget {
       final userDataController = BlocProvider.of<SharedUserDataCubit>(context);
       userDataController.savePartOfUserDataLocally(
           password: passwordController.newPassword.text);
+
+      showMyToast(AppStrings.passwordIsUpdated(), context, Colors.green);
     } else if (state.changeState == RequestState.error) {
       showMyToast(state.message, context, Colors.red);
     }

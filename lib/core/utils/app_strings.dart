@@ -1,107 +1,103 @@
 class AppStrings {
-  static const String success = "Success";
-  static const String ops = "Oops";
-  static const String tryAgain = "Some error, Try Again";
+  static const String add = "Add";
+  static const String city = "City";
   static const String done = "Done";
+  static const String edit = "Edit";
+  static const String name = "Name";
+  static const String cart = "Cart";
+  static const String phone = "Phone";
+  static const String order = "Order";
+  static const String email = "email";
   static const String admin = "admin";
-  static const String profile = "Profile";
   static const String login = "Login";
   static const String buyIt = "Buy It";
   static const String logout = "Logout";
-  static const String signUp = "Sign Up";
-  static const String account = "Account";
-  static const String iAmAUser = "I'm a User !";
-  static const String invalidEmail = "Invalid Email";
-  static const String iAmAnAdmin = "I'm an Admin !";
-  static const String enterYourName = "Enter Your Name";
-  static const String enterYourEmail = "Enter Your Email";
-  static const String haveAnAccount = "Have an Account ? ";
-  static const String invalidPassword = "Invalid password";
-  static const String enterYourPassword = "Enter Your Password";
-  static const String oldPassword = "Old Password";
-  static const String newPassword = "New Password";
-  static const String confirmPassword = "Confirm Password";
-  static const String doNotHaveAnAccount = "Don't have an Account ? ";
-
-  static const String changeTheImage = "Change The Image";
-  static const String addAnImage = "Add An Image";
-  static const String updated = "Updated !";
-  static const String deleted = "Deleted !";
+  static const String added = "Added !";
   static const String delete = "Delete";
+  static const String orders = "Orders";
+  static const String pieces = "Pieces";
+  static const String street = "Street";
   static const String update = "Update";
-  static const String image = "Image ......";
-  static const String edit = "Edit";
-  static const String hiThere = "Hi There ";
-  static const String add = "Add";
-  static const String added = "Added";
-  static const String ok = "Ok";
-
-  static const String viewOrders = "View The Orders";
-  static const String categories = "Categories";
-  static const String products = "Products";
-  static const String invalid = "Invalid ";
+  static const String signUp = "Sign Up";
+  static const String invalid = "Invalid";
   static const String product = "Product";
   static const String details = "Details";
-  static const String pieces = "Pieces";
-  static const String city = "City";
-  static const String street = "Street";
-  static const String apartment = "Apartment";
-  static const String buildingBloc = "building Bloc";
-
-  static const String name = "Name";
-  static const String email = "email";
+  static const String profile = "Profile";
+  static const String account = "Account";
+  static const String address = "Address";
+  static const String myCards = "my Cards";
+  static const String hiThere = "Hi There ";
+  static const String updated = "Updated !";
+  static const String deleted = "Deleted !";
+  static const String language = "Language";
+  static const String products = "Products";
+  static const String category = "Category";
   static const String oldEmail = "Old Email";
   static const String newEmail = "New Email";
-  static const String phone = "Phone";
-  static const String address = "Address";
-  static const String category = "Category";
-  static const String addCategory = "Add Category";
-  static const String newCategory = "New Category";
-  static const String productDetails = "Product Details";
-
-  static const String productDescription = "Product Description";
-  static const String productLocation = "Product Location";
-  static const String productPrice = "Product Price";
-  static const String productImage = "Product Image";
-  static const String productName = "Product Name";
-  static const String favorites = "Favorites";
-
-  static const String cart = "Cart";
-  static const String order = "Order";
-  static const String orders = "Orders";
+  static const String image = "Image ......";
   static const String checkOut = "Check Out";
-
+  static const String apartment = "Apartment";
+  static const String favorites = "Favorites";
   static const String yourOrder = "Your Order";
   static const String addToCart = "Add to cart";
+  static const String categories = "Categories";
+  static const String iAmAUser = "I'm a User !";
   static const String yourOrders = "Your Orders";
-
-  static const String myCards = "my Cards";
-  static const String language = "Language";
+  static const String addAnImage = "Add An Image";
+  static const String outOfStock = "Out Of Stock";
+  static const String addCategory = "Add Category";
+  static const String newCategory = "New Category";
+  static const String productName = "Product Name";
   static const String appSettings = "App Settings";
   static const String editProfile = "Edit Profile";
+  static const String pleaseLogin = "Please Login";
+  static const String oldPassword = "Old Password";
+  static const String newPassword = "New Password";
+  static const String iAmAnAdmin = "I'm an Admin !";
+  static const String viewOrders = "View The Orders";
+  static const String invalidEmail = "Invalid Email";
+  static const String productPrice = "Product Price";
+  static const String productImage = "Product Image";
+  static const String buildingBloc = "building Bloc";
+  static const String enterYourName = "Enter Your Name";
+  static const String tryAgain = "Some error, Try Again";
+  static const String productDetails = "Product Details";
   static const String changePassword = "Change Password";
   static const String cartIsEmpty = "Your Cart Is Empty";
-  static const String noOrdersForThisUser = "No Orders For This User";
   static const String noUsersOrdered = "No Users Ordered";
+  static const String enterYourEmail = "Enter Your Email";
+  static const String changeTheImage = "Change The Image";
+  static const String productLocation = "Product Location";
+  static const String haveAnAccount = "Have an Account ? ";
+  static const String invalidPassword = "Invalid password";
+  static const String confirmPassword = "Confirm Password";
+  static const String pleaseAddPhone = "please Add A Phone";
+  static const String enterYourPassword = "Enter Your Password";
+  static const String productDescription = "Product Description";
   static const String thereIsNoProducts = "There Is No Products";
-
   static const String favoriteIsEmpty = "Your Favorite Is Empty";
+  static const String pleaseAddAddress = "please Add An Address";
+  static const String alreadyOutOfStock = "Already Out Of Stock";
+  static const String yourOrderIsPlaced = "Your Order Is Placed !";
+  static const String doNotHaveAnAccount = "Don't have an Account ? ";
+  static const String noOrdersForThisUser = "No Orders For This User";
+  static const String newPasswordNotCorrect = "New Password Is Not Correct";
+  static const String someItemsAreOutOfStock = "Some Items Are Out Of Stock";
+  static const String pleaseAddPhoneAddress = "please Add Phone and Address";
+
   static const String thisOrderIsNoLongerExisted =
       "This Order Is No Longer Existed";
-
-  static const String jackets = "Jackets";
-  static const String shirts = "Shirts";
-  static const String suits = "Suits";
-
-  static const String pleaseAddPhone = "please Add Phone";
-  static const String pleaseAddAddress = "please Add Address";
-  static const String pleaseAddPhoneAddress = "please Add Phone and Address";
-  static const String confirmPasswordNotCorrect =
-      "Confirm Password Is Not Correct";
-  static const String newPasswordNotCorrect = "New Password Is Not Correct";
-  static const String outOfStock = "Out Of Stock";
-  static const String someItemsAreOutOfStock = "Some Items Are Out Of Stock";
-
   static const String youCanceledPickingTheImage =
       "You Canceled Picking The Image";
+  static const String outOfStockOrCategoryChanged =
+      "out Of Stock Or It's Category Has Changed!";
+  static const String confirmPasswordNotCorrect =
+      "Confirm Password Is Not Correct";
+  static const String youHaveSignedUpSuccessfully =
+      "You Have Signed Up Successfully";
+
+  static String itemDeleted() => "Item Is $deleted";
+  static String orderDeleted() => "$order $deleted";
+  static String addressIsUpdated() => "$address Is $updated";
+  static String passwordIsUpdated() => "Password Is $updated $pleaseLogin";
 }

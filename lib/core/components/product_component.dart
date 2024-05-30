@@ -1,47 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
-import '../../../../core/components/custom_text.dart';
+import 'custom_text.dart';
+import 'package:e_commerce_app/core/utils/images.dart';
+import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:e_commerce_app/core/constants/colors.dart';
+import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 
 class ProductComponent extends StatelessWidget {
-  final void Function() onTap;
-  final String? image;
-  final String name;
+  final ProductEntity product;
+  final void Function() onPressed;
+
   const ProductComponent({
     super.key,
-    required this.onTap,
-    required this.image,
-    required this.name,
+    required this.product,
+    required this.onPressed,
   });
+
   @override
   Widget build(BuildContext context) {
+    final height = context.height;
     return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        children: [
-          Container(
-            height: 150,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-            child: image != null
-                ? Image.network(
-                    image!,
-                    fit: BoxFit.cover,
-                  )
-                : Image.network(
-                    "https://i.pinimg.com/originals/49/e5/8d/49e58d5922019b8ec4642a2e2b9291c2.png",
-                    fit: BoxFit.cover,
-                  ),
-          ),
-          const SizedBox(
-            height: 12,
-          ),
-          CustomText(
-            text: name,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            fontSize: 15,
-          ),
-        ],
+      onTap: onPressed,
+      child: Container(
+        decoration: BoxDecoration(
+          color: kWhiteGray,
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Hero(
+              tag: product.id!,
+              child: Container(
+                height: height * 0.26,
+                width: double.infinity,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: FadeInImage(
+                  fit: BoxFit.fill,
+                  placeholder: Svg(Images.loading), // Local placeholder image
+                  image: NetworkImage(product.image), // Network image URL
+                ),
+              ),
+            ),
+            CustomText(
+              fontSize: 16,
+              text: product.name,
+              textColor: Colors.black,
+            ),
+            CustomText(
+              fontSize: 16,
+              textColor: Colors.black,
+              text: "\$${product.price}",
+            ),
+            SizedBox(height: height * 0.001),
+          ],
+        ),
       ),
     );
   }

@@ -70,9 +70,7 @@ class EditAddressScreen extends StatelessWidget {
                     ),
                     _sizedBox(context.height * 0.02),
                     BlocConsumer<EditAddressCubit, EditAddressState>(
-                      listener: (context, state) {
-                        _listener(context, state);
-                      },
+                      listener: _listener,
                       builder: (context, state) {
                         if (state.changeState == RequestState.loading) {
                           return const LoadingWidget();
@@ -117,7 +115,7 @@ class EditAddressScreen extends StatelessWidget {
       final userDataController = BlocProvider.of<SharedUserDataCubit>(context);
       userDataController.takeShared(shared);
       BlocProvider.of<EditAddressCubit>(context).clear();
-      showMyToast(AppStrings.success, context, Colors.green);
+      showMyToast(AppStrings.addressIsUpdated(), context, Colors.green);
     } else if (state.changeState == RequestState.error) {
       showMyToast(state.message, context, Colors.red);
     }

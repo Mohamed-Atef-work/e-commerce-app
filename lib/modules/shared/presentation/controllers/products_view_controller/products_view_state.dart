@@ -2,10 +2,10 @@ part of 'products_view_cubit.dart';
 
 @immutable
 class ProductsViewState {
+  final List<ProductCategoryEntity> categories;
+  final List<ProductEntity> products;
   final RequestState categoriesState;
   final RequestState productsState;
-  final List<ProductEntity> products;
-  final List<ProductCategoryEntity> categories;
   final int categoryIndex;
   final String? message;
 
@@ -18,10 +18,10 @@ class ProductsViewState {
     this.message,
   });
   ProductsViewState copyWith({
-    List<ProductEntity>? products,
     List<ProductCategoryEntity>? categories,
-    RequestState? productsState,
     RequestState? categoriesState,
+    List<ProductEntity>? products,
+    RequestState? productsState,
     int? categoryIndex,
     String? message,
   }) =>

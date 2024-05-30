@@ -16,8 +16,8 @@ class EditAddressCubit extends Cubit<EditAddressState> {
 
   TextEditingController city = TextEditingController();
   TextEditingController bloc = TextEditingController();
-  TextEditingController apartment = TextEditingController();
   TextEditingController street = TextEditingController();
+  TextEditingController apartment = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
 
@@ -25,13 +25,15 @@ class EditAddressCubit extends Cubit<EditAddressState> {
     if (formKey.currentState!.validate()) {
       emit(state.copyWith(changeState: RequestState.loading));
       final result = await _updateAddressUseCase(cashed);
-      emit(
-        result.fold(
-          (l) => state.copyWith(
-              message: l.message, changeState: RequestState.error),
-          (r) => state.copyWith(changeState: RequestState.success),
-        ),
-      );
+      Future.delayed(const Duration(milliseconds: 300), () {
+        emit(
+          result.fold(
+            (l) => state.copyWith(
+                message: l.message, changeState: RequestState.error),
+            (r) => state.copyWith(changeState: RequestState.success),
+          ),
+        );
+      });
     }
   }
 

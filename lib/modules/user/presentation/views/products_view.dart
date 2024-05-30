@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/screens_strings.dart';
 import 'package:e_commerce_app/core/components/messenger_component.dart';
-import 'package:e_commerce_app/core/components/product_details_component.dart';
+import 'package:e_commerce_app/core/components/product_component.dart';
 import 'package:e_commerce_app/modules/user/presentation/widgets/categories_widget.dart';
 import 'package:e_commerce_app/modules/shared/presentation/widgets/loading_home_data_widget.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/products_view_controller/products_view_cubit.dart';
@@ -16,9 +17,11 @@ class UserProductsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = context.width;
+    final height = context.height;
     return Column(
       children: [
-        const CategoriesWidget(),
+        const UserCategoriesWidget(),
         Expanded(
           child: BlocBuilder<ProductsViewCubit, ProductsViewState>(
             builder: (context, state) {
@@ -31,11 +34,10 @@ class UserProductsView extends StatelessWidget {
                 return GridView.builder(
                   itemCount: state.products.length,
                   physics: const BouncingScrollPhysics(),
-                  padding:
-                      EdgeInsets.symmetric(horizontal: context.width * 0.02),
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.02),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    mainAxisSpacing: context.height * 0.005,
-                    crossAxisSpacing: context.width * 0.01,
+                    mainAxisSpacing: height * 0.005,
+                    crossAxisSpacing: width * 0.01,
                     childAspectRatio: 1 / 1.6,
                     crossAxisCount: 2,
                   ),

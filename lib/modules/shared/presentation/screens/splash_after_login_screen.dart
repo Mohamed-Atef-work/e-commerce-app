@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,7 +29,6 @@ class _SplashAfterLoginScreenState extends State<SplashAfterLoginScreen> {
     );
 
     return Scaffold(
-      appBar: AppBar(toolbarHeight: 0),
       body: BlocListener<SharedUserDataCubit, SharedUserDataState>(
         listener: _listener,
         child: const Center(
@@ -39,13 +39,15 @@ class _SplashAfterLoginScreenState extends State<SplashAfterLoginScreen> {
   }
 
   void _listener(BuildContext context, SharedUserDataState state) {
-    if (state.afterLoginState == RequestState.success ||
-        state.afterLoginState == RequestState.error) {
+    if (state.afterLoginState == RequestState.success) {
       if (state.sharedEntity!.user.adminOrUser == AdminUser.user) {
         Navigator.of(context).pushReplacementNamed(Screens.userLayoutScreen);
       } else {
         Navigator.of(context).pushReplacementNamed(Screens.adminLayoutScreen);
       }
+    } else if (state.afterLoginState == RequestState.error) {
+      showMyToast(state.message!, context, Colors.red);
+      Navigator.of(context).pushReplacementNamed(Screens.loginScreen);
     }
   }
 }

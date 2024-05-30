@@ -20,6 +20,7 @@ class SignUpFormWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = BlocProvider.of<SignUpBloc>(context);
     final height = context.height;
+    final width = context.width;
     return Form(
       key: controller.formKey,
       child: Column(
@@ -53,6 +54,8 @@ class SignUpFormWidget extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(vertical: height * 0.05),
             child: BlocConsumer<SignUpBloc, SignUpState>(
+              listenWhen: (previous, current) =>
+                  previous.signUpState != current.signUpState,
               listener: _listener,
               builder: (_, state) {
                 if (state.signUpState == RequestState.loading) {
@@ -62,9 +65,9 @@ class SignUpFormWidget extends StatelessWidget {
                   );
                 } else {
                   return CustomButton(
+                    width: width * 0.4,
                     height: height * 0.05,
                     text: AppStrings.signUp,
-                    width: context.width * 0.3,
                     onPressed: () => controller.signUp(),
                   );
                 }
@@ -78,10 +81,14 @@ class SignUpFormWidget extends StatelessWidget {
 
   void _listener(BuildContext context, SignUpState state) {
     if (state.signUpState == RequestState.success) {
-      showMyToast(AppStrings.success, context, Colors.green);
-      Navigator.of(context).pushReplacementNamed(Screens.loginScreen);
+      showMyToast(
+          AppStrings.youHaveSignedUpSuccessfully, context, Colors.green);
+      Future.delayed(
+        const Duration(milliseconds: 500),
+        () => Navigator.of(context).pushReplacementNamed(Screens.loginScreen),
+      );
     } else if (state.signUpState == RequestState.error) {
-      showMyToast(AppStrings.ops, context, Colors.red);
+      showMyToast(state.errorMessage!, context, Colors.red);
     }
   }
 

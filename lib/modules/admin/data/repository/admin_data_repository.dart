@@ -1,3 +1,5 @@
+import 'package:e_commerce_app/core/fire_base/fire_store/store_helper.dart';
+import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce_app/core/error/failure.dart';
 import 'package:e_commerce_app/modules/admin/domain/params/add_new_product_category_params.dart';
@@ -5,7 +7,7 @@ import 'package:e_commerce_app/modules/admin/domain/params/delete_product_catego
 import 'package:e_commerce_app/modules/admin/domain/params/up_date_product_category_params.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/add_product_use_case.dart';
 import 'package:e_commerce_app/modules/admin/domain/params/delete_product_params.dart';
-import 'package:e_commerce_app/modules/admin/domain/params/edit_product_params.dart';
+import 'package:e_commerce_app/modules/admin/domain/use_cases/update_product_without_new_image_use_case.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../domain/repository/admin_domain_repository.dart';
@@ -39,7 +41,7 @@ class AdminRepositoryData implements AdminRepositoryDomain {
   }
 
   @override
-  Future<Either<Failure, void>> addProduct(AddProductParams params) async {
+  Future<Either<Failure, String>> addProduct(ProductModelParams params) async {
     try {
       final result = await _adminDataSource.addProduct(params);
       return Right(result);
@@ -76,6 +78,17 @@ class AdminRepositoryData implements AdminRepositoryDomain {
   Future<Either<Failure, void>> editProduct(UpdateProductParams params) async {
     try {
       final result = await _adminDataSource.updateProduct(params);
+      return Right(result);
+    } on ServerException catch (exception) {
+      return Left(ServerFailure(message: exception.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ProductEntity>> getProduct(
+      GetProductParams params) async {
+    try {
+      final result = await _adminDataSource.getProduct(params);
       return Right(result);
     } on ServerException catch (exception) {
       return Left(ServerFailure(message: exception.message));

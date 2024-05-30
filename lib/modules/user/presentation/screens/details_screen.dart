@@ -1,5 +1,7 @@
+import 'package:e_commerce_app/core/utils/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
@@ -15,6 +17,8 @@ import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data
 import 'package:e_commerce_app/modules/user/presentation/widgets/heart_with_manage_favorite_cubit_provided_widget.dart';
 import 'package:e_commerce_app/modules/user/presentation/controllers/product_details_controller/product_details_cubit.dart';
 import 'package:e_commerce_app/modules/user/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({super.key});
@@ -24,11 +28,15 @@ class DetailsScreen extends StatelessWidget {
     final detailsController = BlocProvider.of<ProductDetailsCubit>(context);
     final userData = BlocProvider.of<SharedUserDataCubit>(context).state;
     final uId = userData.sharedEntity!.user.userEntity.id;
+
+    final width = context.width;
+    final height = context.height;
+
     return Scaffold(
       backgroundColor: kPrimaryColorYellow,
       appBar: _appBar(context),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: BlocConsumer<ProductDetailsCubit, ProductDetailsState>(
           listener: _listener,
           builder: (context, state) {
@@ -41,19 +49,18 @@ class DetailsScreen extends StatelessWidget {
                 children: [
                   Align(
                     alignment: Alignment.center,
-                    child: Container(
-                      width: context.width * 0.8,
-                      height: context.height * 0.45,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Hero(
-                        tag: state.product!.id!,
-                        child: Image.network(
+                    child: Hero(
+                      tag: state.product!.id!,
+                      child: Container(
+                        width: width * 0.9,
+                        height: height * 0.45,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: FadeInImage(
                           fit: BoxFit.fill,
-                          state.product!.image,
-                          width: double.infinity,
-                          height: double.infinity,
+                          image: NetworkImage(state.product!.image),
+                          placeholder: Svg(Images.loading),
                         ),
                       ),
                     ),
@@ -67,31 +74,27 @@ class DetailsScreen extends StatelessWidget {
                   ),
                   CustomText(
                     fontSize: 20,
-                    textColor: kDarkBrown,
                     fontFamily: kPacifico,
+                    textColor: Colors.black,
                     fontWeight: FontWeight.bold,
                     text: "\$${state.product!.price * state.quantity}",
                   ),
-                  SizedBox(height: context.height * 0.03),
                   CustomText(
+                    maxLines: 5,
                     fontSize: 18,
                     textColor: kDarkBrown,
+                    overflow: TextOverflow.ellipsis,
                     text: state.product!.description,
                   ),
-                  const Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CountingWidget(
-                        height: 40,
+                        width: width * 0.8,
                         num: state.quantity,
-                        width: context.width * 0.8,
-                        plus: () {
-                          detailsController.quantityPlus();
-                        },
-                        minus: () {
-                          detailsController.quantityMinus();
-                        },
+                        height: height * 0.05,
+                        plus: () => detailsController.quantityPlus(),
+                        minus: () => detailsController.quantityMinus(),
                       ),
                       HeartWihMangeFavoriteCubitProviderWidget(
                         heartColor: Colors.white,
@@ -100,16 +103,15 @@ class DetailsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Spacer(),
                   Align(
                     alignment: Alignment.center,
                     child: CustomButton(
                       fontSize: 18,
+                      width: width * 0.9,
                       fontFamily: kPacifico,
+                      height: height * 0.07,
                       text: AppStrings.addToCart,
-                      width: context.width * 0.9,
                       fontWeight: FontWeight.bold,
-                      height: context.height * 0.07,
                       onPressed: () {
                         /// To Do o o o o o o o
                         detailsController.addToCart(uId);
@@ -129,9 +131,11 @@ class DetailsScreen extends StatelessWidget {
 
   void _listener(BuildContext context, ProductDetailsState state) {
     if (state.addToCart == RequestState.success) {
-      showMyToast(AppStrings.added, context, Colors.green);
+      showMyToast(AppStrings.added, context, Colors.green,
+          const StyledToastPosition(align: Alignment.bottomCenter, offset: 80));
     } else if (state.addToCart == RequestState.error) {
-      showMyToast(state.message!, context, Colors.red);
+      showMyToast(state.message!, context, Colors.red,
+          const StyledToastPosition(align: Alignment.bottomCenter, offset: 80));
     }
   }
 }

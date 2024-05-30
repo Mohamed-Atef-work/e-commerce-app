@@ -15,23 +15,23 @@ class ViewUsersWhoOrderedBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GetUsersWhoOrderedCubit, GetUsersWhoOrderedState>(
       builder: (_, state) {
-        if (state.usersDataState == RequestState.loading) {
-          return const LoadingWidget();
-        } else if (state.usersDataState == RequestState.success &&
-            state.usersData.isEmpty) {
-          return const MessengerComponent(AppStrings.noUsersOrdered);
-        } else if (state.usersDataState == RequestState.success &&
+        if (state.usersDataState == RequestState.success &&
             state.usersData.isNotEmpty) {
           return ListView.separated(
             itemCount: state.usersData.length,
             padding: const EdgeInsets.all(10),
             physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) =>
+            itemBuilder: (_, index) =>
                 UserWhoOrderedWidget(state.usersData[index]),
-            separatorBuilder: (context, index) => const DividerComponent(),
+            separatorBuilder: (_, __) => const DividerComponent(),
           );
+        } else if (state.usersDataState == RequestState.success &&
+            state.usersData.isEmpty) {
+          return const MessengerComponent(AppStrings.noUsersOrdered);
+        } else if (state.usersDataState == RequestState.error) {
+          return MessengerComponent(state.message);
         } else {
-          return const MessengerComponent(AppStrings.ops);
+          return const LoadingWidget();
         }
       },
     );

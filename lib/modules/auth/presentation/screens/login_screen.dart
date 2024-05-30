@@ -15,10 +15,12 @@ import '../../../../core/services/service_locator/sl.dart';
 import '../widgets/login_form.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final width = context.width;
+    final height = context.height;
     return BlocProvider<LoginBloc>(
       create: (context) => sl<LoginBloc>(),
       lazy: true,
@@ -26,13 +28,13 @@ class LoginScreen extends StatelessWidget {
         backgroundColor: kPrimaryColorYellow,
         body: ListView(
           padding: EdgeInsets.only(
-            top: context.height * 0.1,
-            right: context.width * 0.05,
-            left: context.width * 0.05,
+            top: height * 0.1,
+            right: width * 0.05,
+            left: width * 0.05,
           ),
           children: [
             const LogoWidget(),
-            SizedBox(height: context.height * 0.06),
+            SizedBox(height: height * 0.06),
             const LoginFormWidget(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -43,10 +45,8 @@ class LoginScreen extends StatelessWidget {
                   text: AppStrings.doNotHaveAnAccount,
                 ),
                 TextButton(
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushReplacementNamed(Screens.signUpScreen);
-                  },
+                  onPressed: () => Navigator.of(context)
+                      .pushReplacementNamed(Screens.signUpScreen),
                   child: const CustomText(
                     fontSize: 15,
                     text: AppStrings.signUp,
@@ -57,17 +57,15 @@ class LoginScreen extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(
-                vertical: context.height * 0.03,
-                horizontal: context.width * 0.23,
+                vertical: height * 0.03,
+                horizontal: width * 0.23,
               ),
               child: BlocBuilder<LoginBloc, LoginState>(
                 buildWhen: (previousState, currentState) =>
                     previousState.adminUser != currentState.adminUser,
                 builder: (context, state) => GestureDetector(
-                  onTap: () {
-                    BlocProvider.of<LoginBloc>(context)
-                        .add(const ToggleAdminAndUserEvent());
-                  },
+                  onTap: () => BlocProvider.of<LoginBloc>(context)
+                      .add(const ToggleAdminAndUserEvent()),
                   child: CustomText(
                     fontSize: 15,
                     textColor: Colors.black,
