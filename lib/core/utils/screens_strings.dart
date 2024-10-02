@@ -1,10 +1,10 @@
 class Screens {
+  static const String splashScreen = "/";
   static const String testScreen = "test";
   static const String homeScreen = "home";
   static const String cartScreen = "cart";
   static const String loginScreen = "login";
   static const String signUpScreen = "signUp";
-  static const String splashScreen = "splash";
   static const String profileScreen = "profile";
   static const String accountScreen = "account";
   static const String detailsScreen = "details";

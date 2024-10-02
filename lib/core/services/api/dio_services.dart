@@ -1,32 +1,51 @@
 import 'package:dio/dio.dart';
-import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/services/api/api_services.dart';
 
-class DioServices implements ApiServices {
+class DioServices implements ApiServices<Response> {
   final _dio = Dio();
   @override
-  Future<Response> post<Response>(ApiPostParams params) async {
+  Future<Response> post(ApiPostParams params) async {
     final response = await _dio.post(
       params.url,
       data: params.data,
-      queryParameters: params.queryParameters,
       options: Options(
-        contentType: Headers.formUrlEncodedContentType,
-        headers: {kAuthorization: "$kBearer ${params.token}"},
+        headers: params.headers,
+        contentType: params.contentType,
       ),
     );
-    return response.data;
+    return response;
   }
 
   @override
-  Future<T> get<T>(ApiGetParams params) async {
+  Future<Response> get(ApiGetParams params) async {
     // TODO: implement get
     throw UnimplementedError();
   }
 
   @override
-  Future<T> put<T>(ApiPutParams params) async {
+  Future<Response> put(ApiPutParams params) async {
     // TODO: implement put
     throw UnimplementedError();
   }
 }
+
+class ApiPostParams {
+  final String url;
+  final String? contentType;
+
+  final Map<String, dynamic> data;
+  final Map<String, dynamic> headers;
+  final Map<String, dynamic>? queryParameters;
+
+  ApiPostParams({
+    this.contentType,
+    required this.url,
+    required this.data,
+    this.queryParameters,
+    required this.headers,
+  });
+}
+
+class ApiGetParams {}
+
+class ApiPutParams {}

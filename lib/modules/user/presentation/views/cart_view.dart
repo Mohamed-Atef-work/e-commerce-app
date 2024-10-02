@@ -1,10 +1,14 @@
+import 'package:e_commerce_app/core/services/api/api_services.dart';
+import 'package:e_commerce_app/core/services/api/dio_services.dart';
+import 'package:e_commerce_app/core/services/stripe/constants.dart';
+import 'package:e_commerce_app/core/services/stripe/stripe_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/components/divider_component.dart';
@@ -16,7 +20,6 @@ import 'package:e_commerce_app/modules/shared/presentation/widgets/loading_cart_
 import 'package:e_commerce_app/modules/user/domain/params/delete_product_from_cart_params.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';
 import 'package:e_commerce_app/modules/user/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 class CartView extends StatelessWidget {
   const CartView({super.key});
@@ -72,17 +75,22 @@ class CartView extends StatelessWidget {
                   width: context.width * 0.7,
                   fontWeight: FontWeight.bold,
                   height: context.height * 0.06,
-                  onPressed: () {
+                  onPressed: () async {
                     if (userEntity.address != null &&
                         userEntity.phone != null) {
-                      manageCartController.addOrder(userEntity);
+                      final apiServices = DioServices();
+                      final stripe = StripeService(apiServices);
+                      await stripe.pay(100, "USD", StripeConstants.customerId);
+                      //manageCartController.addOrder(userEntity);
                     } else {
                       showMyToast(
                         AppStrings.pleaseAddPhoneAddress,
                         context,
                         Colors.red,
                         const StyledToastPosition(
-                            align: Alignment.bottomCenter, offset: 70),
+                          align: Alignment.bottomCenter,
+                          offset: 70,
+                        ),
                       );
                     }
                   },

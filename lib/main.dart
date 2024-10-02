@@ -9,12 +9,10 @@ import 'firebase_options.dart';
 void main() async {
   print(DateTime.now());
 
-  Stripe.publishableKey = StripeConstants.publishableKey;
-
-
   await sl.allReady();
   serviceLocatorInit();
   WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = StripeConstants.publishableKey;
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const BuyItApp());

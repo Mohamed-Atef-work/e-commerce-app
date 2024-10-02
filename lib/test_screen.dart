@@ -1,29 +1,51 @@
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/core/components/custom_text.dart';
-import 'package:e_commerce_app/core/fire_base/fire_store/product.dart';
-import 'package:e_commerce_app/modules/admin/data/model/product_model.dart';
-import 'package:e_commerce_app/modules/admin/domain/use_cases/add_product_use_case.dart';
+import 'package:dio/dio.dart';
+import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'core/services/api/dio_services.dart';
+import 'core/services/stripe/constants.dart';
+import 'core/services/stripe/stripe_service.dart';
+import 'package:e_commerce_app/core/components/custom_text.dart';
 
 class TestScreen extends StatelessWidget {
-  const TestScreen({Key? key}) : super(key: key);
+  const TestScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: TextButton(
-          onPressed: () async {
-          },
+          onPressed: () async {}
+          /*{
+            //final api = DioServices();
+            //final stripe = StripeService(api);
+            final dio = Dio();
+
+            try {
+              final response = await dio.post(
+                "https://api.stripe.com/v1/ephemeral_keys",
+                data: {kCustomer: StripeConstants.customerId},
+                options: Options(
+                  contentType: Headers.formUrlEncodedContentType,
+                  headers: {
+                    kStripeVersion: StripeConstants.version,
+                    kAuthorization: "$kBearer ${StripeConstants.secretKey}",
+                  },
+                ),
+              );
+              print(response.data);
+              print(response.statusCode);
+              print(response.statusMessage);
+            } catch (e) {
+              print("error is ------>$e");
+            }
+            //await stripe.pay(100, "USD", StripeConstants.customerId);
+          }*/,
           child: const CustomText(text: "Add"),
         ),
-      ) ,
+      ),
     );
   }
 }
-
-
 
 /*Future<List<DocumentSnapshot<Map<String, dynamic>>>>
     getFavoriteProductsOfCategory({

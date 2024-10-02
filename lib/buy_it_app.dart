@@ -17,7 +17,7 @@ class BuyItApp extends StatelessWidget {
       child: MaterialApp(
         routes: routes(),
         title: AppStrings.buyIt,
-        initialRoute: Screens.splashScreen,
+        //initialRoute: Screens.splashScreen,
         theme: ThemeData(scaffoldBackgroundColor: kPrimaryColorYellow),
       ),
     );
