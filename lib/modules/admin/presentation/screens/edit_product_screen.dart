@@ -7,7 +7,7 @@ import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/app_bar.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
-import 'package:e_commerce_app/core/services/service_locator/sl.dart';
+import 'package:e_commerce_app/config/service_locator/sl.dart';
 import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/core/fire_base/fire_store/store_helper.dart';

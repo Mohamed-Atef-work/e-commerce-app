@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/core/utils/extensions.dart';
-import 'package:e_commerce_app/core/utils/screens_strings.dart';
+import 'package:e_commerce_app/config/service_locator/sl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/components/logo.dart';
@@ -8,7 +8,7 @@ import 'package:e_commerce_app/modules/auth/presentation/controllers/sign_up_con
 
 import '../../../../core/components/custom_text.dart';
 import '../../../../core/constants/colors.dart';
-import '../../../../core/services/service_locator/sl.dart';
+import 'package:e_commerce_app/config/routes/pages.dart';
 import '../widgets/sign_up_form.dart';
 
 class SignUpScreen extends StatelessWidget {

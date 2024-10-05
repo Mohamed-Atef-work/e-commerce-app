@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/core/services/service_locator/sl.dart';
 import 'package:e_commerce_app/modules/admin/data/repository/admin_data_repository.dart';
 import 'package:e_commerce_app/modules/admin/domain/use_cases/add_product_use_case.dart';
 import 'package:e_commerce_app/modules/admin/data/data_source/admin_remote_data_source.dart';
@@ -12,6 +11,8 @@ import 'package:e_commerce_app/modules/admin/presentation/controllers/edit_produ
 import 'package:e_commerce_app/modules/orders/presentation/controller/manage_admin_order_view/admin_order_view_cubit.dart';
 import 'package:e_commerce_app/modules/orders/presentation/controller/get_users_who_ordered_controller/get_users_who_ordered_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/categories_model_sheet_controller_in_edit_add_screen/categories_model_sheet_cubit.dart';
+
+import 'package:e_commerce_app/config/service_locator/sl.dart';
 
 void admin() {
   // < --------------------------------- Admin -------------------------------- >

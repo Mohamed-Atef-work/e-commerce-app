@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/app_bar.dart';
-import 'package:e_commerce_app/core/services/service_locator/sl.dart';
+import 'package:e_commerce_app/config/service_locator/sl.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/user/presentation/views/views_controller_widget.dart';
 import 'package:e_commerce_app/modules/user/presentation/widgets/user_bottom_navigation_bar_widget.dart';

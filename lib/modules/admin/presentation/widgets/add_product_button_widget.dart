@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/core/constants/colors.dart';
-import 'package:e_commerce_app/core/utils/screens_strings.dart';
+import 'package:e_commerce_app/config/routes/pages.dart';
 import 'package:flutter/material.dart';
 
 class AddProductButtonWidget extends StatelessWidget {

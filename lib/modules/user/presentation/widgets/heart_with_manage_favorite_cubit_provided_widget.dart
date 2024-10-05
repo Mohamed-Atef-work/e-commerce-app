@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
-import 'package:e_commerce_app/core/services/service_locator/sl.dart';
+import 'package:e_commerce_app/config/service_locator/sl.dart';
 import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/user/domain/params/add_favorite_params.dart';

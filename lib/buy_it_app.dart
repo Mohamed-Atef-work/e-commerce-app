@@ -1,8 +1,7 @@
 import 'core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
-import 'core/utils/screens_strings.dart';
+import 'config/routes/routes_strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:e_commerce_app/config/routes.dart';
 import 'package:e_commerce_app/config/providers.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 

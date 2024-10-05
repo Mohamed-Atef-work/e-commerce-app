@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
-import 'package:e_commerce_app/core/utils/screens_strings.dart';
-import 'package:e_commerce_app/modules/user/presentation/widgets/account_item_widget.dart';
+import 'package:e_commerce_app/config/routes/pages.dart';import 'package:e_commerce_app/modules/user/presentation/widgets/account_item_widget.dart';
 
 class AccountView extends StatelessWidget {
   const AccountView({super.key});

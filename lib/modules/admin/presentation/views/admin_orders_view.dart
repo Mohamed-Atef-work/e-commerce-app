@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:e_commerce_app/core/services/service_locator/sl.dart';
+import 'package:e_commerce_app/config/service_locator/sl.dart';
 import 'package:e_commerce_app/modules/orders/presentation/bodies/view_orders_for_admin.dart';
 import 'package:e_commerce_app/modules/orders/presentation/bodies/view_users_who_ordered.dart';
 import 'package:e_commerce_app/modules/orders/presentation/bodies/view_order_items_for_admin.dart';

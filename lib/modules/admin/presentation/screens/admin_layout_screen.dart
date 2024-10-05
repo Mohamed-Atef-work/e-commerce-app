@@ -1,7 +1,8 @@
+import 'package:e_commerce_app/config/service_locator/sl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/components/app_bar.dart';
-import 'package:e_commerce_app/core/services/service_locator/sl.dart';
+import 'package:e_commerce_app/config/service_locator/sl.dart';
 import 'package:e_commerce_app/modules/admin/domain/entities/product_entity.dart';
 import 'package:e_commerce_app/modules/admin/presentation/widgets/add_product_button_widget.dart';
 import 'package:e_commerce_app/modules/admin/presentation/views/layout_views_controller_widget.dart';

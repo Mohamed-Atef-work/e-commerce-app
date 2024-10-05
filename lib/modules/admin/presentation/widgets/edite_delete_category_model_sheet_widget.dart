@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/config/service_locator/sl.dart';
 import 'package:e_commerce_app/core/components/base_model_sheet_component.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
@@ -15,7 +16,7 @@ import 'package:e_commerce_app/modules/admin/presentation/controllers/categories
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/services/service_locator/sl.dart';
+import 'package:e_commerce_app/config/routes/pages.dart';
 
 class DeleteUpdateCategoryModelSheetWidget extends StatelessWidget {
   final ProductCategoryEntity category;

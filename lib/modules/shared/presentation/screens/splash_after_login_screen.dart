@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/components/logo.dart';
-import 'package:e_commerce_app/core/utils/screens_strings.dart';
-import 'package:e_commerce_app/core/animation/custom_fading_widget.dart';
+import 'package:e_commerce_app/config/routes/pages.dart';import 'package:e_commerce_app/core/animation/custom_fading_widget.dart';
 import 'package:e_commerce_app/modules/shared/domain/use_cases/user_data_after_login_use_case.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_state.dart';
 import 'package:e_commerce_app/modules/shared/presentation/controllers/user_data_controller/user_data_cubit.dart';

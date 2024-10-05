@@ -1,9 +1,12 @@
 import 'package:dio/dio.dart';
+import 'params/Init_payment_sheet.dart';
+import 'params/create_payment_intent.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/services/api/dio_services.dart';
 import 'package:e_commerce_app/core/services/api/api_services.dart';
 import 'package:e_commerce_app/core/services/stripe/constants.dart';
+import 'package:e_commerce_app/core/services/stripe/models/ephemeral_key.dart';
 
 class StripeService {
   final ApiServices _apiServices;
@@ -12,14 +15,14 @@ class StripeService {
 
   StripeService(this._apiServices);
 
-  Future<String> createPaymentIntent(InputIntentModel model) async {
-    final params = ApiPostParams(
-      data: model.toJson(),
+  Future<String> createPaymentIntent(CreateIntentParams params) async {
+    final apiParams = ApiPostParams(
+      data: params.toJson(),
       url: StripeConstants.createPaymentIntentUrl(),
       contentType: Headers.formUrlEncodedContentType,
       headers: {kAuthorization: "$kBearer ${StripeConstants.secretKey}"},
     );
-    final result = await _apiServices.post(params) as Response;
+    final result = await _apiServices.post(apiParams) as Response;
     final clientSecret = result.data[kClientSecret];
     return clientSecret;
   }
@@ -36,8 +39,8 @@ class StripeService {
     );
     final result = await _apiServices.post(params) as Response;
 
-    final ephemeralKey = result.data["secret"];
-    return ephemeralKey;
+    final ephemeralKeyModel = EphemeralKeyModel.fromJson(result.data);
+    return ephemeralKeyModel.secret!;
   }
 
   Future<void> initPaymentSheet(InitSheetParams params) async {
@@ -54,7 +57,7 @@ class StripeService {
     try {
       final ephemeralKey = await createEphemeralKey(customerId);
       print(ephemeralKey);
-      final createIntentParams = InputIntentModel(
+      final createIntentParams = CreateIntentParams(
         amount: amount,
         currency: currency,
         customerId: customerId,
@@ -72,34 +75,4 @@ class StripeService {
       print(e.toString());
     }
   }
-}
-
-class InputIntentModel {
-  final int amount;
-  final String currency;
-  final String customerId;
-
-  InputIntentModel({
-    required this.amount,
-    required this.currency,
-    required this.customerId,
-  });
-
-  Map<String, dynamic> toJson() => {
-        kAmount: amount,
-        kCurrency: currency,
-        kCustomer: customerId,
-      };
-}
-
-class InitSheetParams {
-  final String customerId;
-  final String ephemeralKey;
-  final String paymentIntentClientSecret;
-
-  InitSheetParams({
-    required this.customerId,
-    required this.ephemeralKey,
-    required this.paymentIntentClientSecret,
-  });
 }

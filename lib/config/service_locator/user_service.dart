@@ -7,7 +7,7 @@ import 'package:e_commerce_app/modules/user/domain/repository/cart_domain_reposi
 import 'package:e_commerce_app/modules/user/data/data_source/cart_remote_data_source.dart';
 import 'package:e_commerce_app/modules/user/data/repository/cart_data_repository.dart';
 import 'package:e_commerce_app/modules/orders/domain/use_case/add_order_use_case.dart';
-import 'package:e_commerce_app/core/services/service_locator/sl.dart';
+import 'package:e_commerce_app/config/service_locator/sl.dart';
 
 void user() {
   /// blocs

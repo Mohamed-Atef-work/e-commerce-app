@@ -2,8 +2,7 @@ import 'package:e_commerce_app/modules/user/presentation/controllers/product_det
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 import 'package:e_commerce_app/modules/user/domain/entities/favorite_entity.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
-import 'package:e_commerce_app/core/utils/screens_strings.dart';
-import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:e_commerce_app/config/routes/pages.dart';import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';

@@ -3,7 +3,7 @@ import 'package:e_commerce_app/modules/admin/presentation/controllers/categories
 import 'package:e_commerce_app/modules/admin/presentation/controllers/categories_model_sheet_controller_in_edit_add_screen/categories_model_sheet_state.dart';
 import 'package:e_commerce_app/core/components/base_model_sheet_component.dart';
 import 'package:e_commerce_app/core/components/custom_text_form_field.dart';
-import 'package:e_commerce_app/core/services/service_locator/sl.dart';
+import 'package:e_commerce_app/config/service_locator/sl.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';

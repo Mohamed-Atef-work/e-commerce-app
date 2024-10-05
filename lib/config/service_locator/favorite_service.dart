@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/core/services/service_locator/sl.dart';
+import 'package:e_commerce_app/config/service_locator/sl.dart';
 import 'package:e_commerce_app/modules/user/data/data_source/favorite_remote_data_source.dart';
 import 'package:e_commerce_app/modules/user/data/repository/favorite_data_repository.dart';
 import 'package:e_commerce_app/modules/user/domain/repository/favorite_domain_repository.dart';

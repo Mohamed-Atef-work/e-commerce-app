@@ -1,13 +1,12 @@
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
-import 'package:e_commerce_app/core/services/service_locator/sl.dart';
+import 'package:e_commerce_app/config/service_locator/sl.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
-import 'package:e_commerce_app/core/utils/screens_strings.dart';
-import 'package:e_commerce_app/modules/shared/presentation/controllers/logout_controller/logout_cubit.dart';
+import 'package:e_commerce_app/config/routes/pages.dart';import 'package:e_commerce_app/modules/shared/presentation/controllers/logout_controller/logout_cubit.dart';
 import 'package:e_commerce_app/modules/user/presentation/widgets/account_item_widget.dart';
 import 'package:e_commerce_app/modules/user/presentation/widgets/profile_item_widget.dart';
 import 'package:flutter/material.dart';

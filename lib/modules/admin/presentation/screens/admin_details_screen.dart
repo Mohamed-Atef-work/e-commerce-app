@@ -1,14 +1,14 @@
-import 'package:e_commerce_app/core/utils/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:e_commerce_app/core/utils/enums.dart';
+import 'package:e_commerce_app/core/utils/images.dart';
+import 'package:e_commerce_app/config/routes/pages.dart';
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/core/components/app_bar.dart';
-import 'package:e_commerce_app/core/utils/screens_strings.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/core/components/custom_button.dart';
 import 'package:e_commerce_app/core/components/loading_widget.dart';
@@ -16,7 +16,6 @@ import 'package:e_commerce_app/core/components/messenger_component.dart';
 import 'package:e_commerce_app/modules/user/presentation/widgets/heart_with_manage_favorite_cubit_provided_widget.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_cubit.dart';
 import 'package:e_commerce_app/modules/admin/presentation/controllers/admin_details_controller/admin_details_state.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class AdminDetailsScreen extends StatelessWidget {
   const AdminDetailsScreen({super.key});
