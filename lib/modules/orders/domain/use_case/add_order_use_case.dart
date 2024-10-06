@@ -23,7 +23,7 @@ class AddOrderUseCase extends BaseUseCase<void, AddOrderParams> {
     );
   }
 
-  _params(AddOrderParams params) => ClearCartParams(
+  ClearCartParams _params(AddOrderParams params) => ClearCartParams(
         params: List.generate(
           params.items.length,
           (index) => DeleteFromCartParams(

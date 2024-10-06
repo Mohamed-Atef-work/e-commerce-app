@@ -1,9 +1,3 @@
-import 'package:e_commerce_app/core/services/api/api_services.dart';
-import 'package:e_commerce_app/core/services/api/dio_services.dart';
-import 'package:e_commerce_app/core/services/stripe/constants.dart';
-import 'package:e_commerce_app/core/services/stripe/stripe_service.dart';
-import 'package:e_commerce_app/modules/user/data/data_source/payment_data_source.dart';
-import 'package:e_commerce_app/modules/user/domain/repository/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -28,10 +22,6 @@ class CartView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final manageCartController =
-        BlocProvider.of<ManageCartProductsCubit>(context);
-    final userData = BlocProvider.of<SharedUserDataCubit>(context).state;
-    final userEntity = userData.sharedEntity!.user.userEntity;
     return BlocConsumer<ManageCartProductsCubit, ManageCartProductsState>(
       listener: _listener,
       builder: (_, state) {
@@ -41,83 +31,13 @@ class CartView extends StatelessWidget {
             state.deleteFromCart == RequestState.loading) {
           return const LoadingWidget();
         } else if (state.products.isNotEmpty) {
-          return Column(
-            children: [
-              Expanded(
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: state.products.length,
-                  physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
-                  itemBuilder: (_, index) => Dismissible(
-                    background: _background(),
-                    secondaryBackground: _secondaryBackground(),
-                    key: ValueKey(state.products[index].product.name),
-                    onDismissed: (direction) {
-                      final product = state.products[index].product;
-                      final deleteParams = DeleteFromCartParams(
-                        uId: userEntity.id,
-                        productId: product.id!,
-                        category: product.category,
-                      );
-                      manageCartController.deleteFromCart(deleteParams);
-                      state.products.removeAt(index);
-                    },
-                    child: CartProductWidget(index),
-                  ),
-                  separatorBuilder: (_, __) => const DividerComponent(),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: CustomButton(
-                  fontSize: 18,
-                  fontFamily: kPacifico,
-                  text: AppStrings.checkOut,
-                  width: context.width * 0.7,
-                  fontWeight: FontWeight.bold,
-                  height: context.height * 0.06,
-                  onPressed: () async {
-                    if (userEntity.address != null &&
-                        userEntity.phone != null) {
-                      final apiService = DioServices();
-                      final stripeService = StripeService(apiService);
-                      final dataSource = StripDataSource(stripeService);
-                      final params = PayParams(
-                        amount: 100,
-                        currency: "USD",
-                        customerId: StripeConstants.customerId,
-                      );
-                      await dataSource.pay(params);
-                      //manageCartController.addOrder(userEntity);
-                    } else {
-                      showMyToast(
-                        AppStrings.pleaseAddPhoneAddress,
-                        context,
-                        Colors.red,
-                        const StyledToastPosition(
-                          align: Alignment.bottomCenter,
-                          offset: 70,
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ),
-            ],
-          );
+          return const CartViewBody();
         } else {
           return const MessengerComponent(AppStrings.cartIsEmpty);
         }
       },
     );
   }
-
-  _background() => const DismissibleBackgroundComponent(
-      color: Colors.red, icon: Icons.delete);
-
-  _secondaryBackground() => const DismissibleSecondaryBackgroundComponent(
-      color: Colors.red, icon: Icons.delete);
 
   void _listener(BuildContext context, ManageCartProductsState state) {
     if (state.getCart == RequestState.error ||
@@ -131,4 +51,86 @@ class CartView extends StatelessWidget {
           const StyledToastPosition(align: Alignment.bottomCenter, offset: 65));
     }
   }
+}
+
+class CartViewBody extends StatelessWidget {
+  const CartViewBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final cartController = BlocProvider.of<ManageCartProductsCubit>(context);
+    final userData = BlocProvider.of<SharedUserDataCubit>(context).state;
+    final userEntity = userData.sharedEntity!.user.userEntity;
+    return BlocBuilder<ManageCartProductsCubit, ManageCartProductsState>(
+      builder: (context, state) {
+        onDismissed(DismissDirection direction, int index) {
+          {
+            final product = state.products[index].product;
+            final deleteParams = DeleteFromCartParams(
+              uId: userEntity.id,
+              productId: product.id!,
+              category: product.category,
+            );
+            cartController.deleteFromCart(deleteParams);
+            state.products.removeAt(index);
+          }
+        }
+
+        void onPressed() {
+          if (userEntity.address != null && userEntity.phone != null) {
+            cartController.checkout(userEntity);
+          } else {
+            showMyToast(
+              AppStrings.pleaseAddPhoneAddress,
+              context,
+              Colors.red,
+              const StyledToastPosition(
+                align: Alignment.bottomCenter,
+                offset: 70,
+              ),
+            );
+          }
+        }
+
+        return Column(
+          children: [
+            Expanded(
+              child: ListView.separated(
+                shrinkWrap: true,
+                itemCount: state.products.length,
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
+                itemBuilder: (_, index) => Dismissible(
+                  background: _background(),
+                  secondaryBackground: _secondaryBackground(),
+                  key: ValueKey(state.products[index].product.name),
+                  onDismissed: (direction) => onDismissed(direction, index),
+                  child: CartProductWidget(index),
+                ),
+                separatorBuilder: (_, __) => const DividerComponent(),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: CustomButton(
+                fontSize: 18,
+                onPressed: onPressed,
+                fontFamily: kPacifico,
+                text: AppStrings.checkOut,
+                width: context.width * 0.7,
+                fontWeight: FontWeight.bold,
+                height: context.height * 0.06,
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _background() => const DismissibleBackgroundComponent(
+      color: Colors.red, icon: Icons.delete);
+
+  _secondaryBackground() => const DismissibleSecondaryBackgroundComponent(
+      color: Colors.red, icon: Icons.delete);
 }

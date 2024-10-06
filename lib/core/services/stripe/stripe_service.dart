@@ -46,14 +46,12 @@ class StripeService {
     required String customerId,
   }) async {
     final ephemeralKey = await createEphemeralKey(customerId);
-    print(ephemeralKey);
     final createIntentParams = CreateIntentParams(
       currency: currency,
       amount: amount * 100,
       customerId: customerId,
     );
     final clientSecret = await createPaymentIntent(createIntentParams);
-    print(clientSecret);
     final initSheetParams =
         _initSheetParams(customerId, ephemeralKey, clientSecret);
     await initPaymentSheet(initSheetParams);

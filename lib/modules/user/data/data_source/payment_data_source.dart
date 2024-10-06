@@ -1,7 +1,7 @@
-import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:e_commerce_app/modules/user/domain/repository/payment.dart';
 import 'package:e_commerce_app/core/services/stripe/stripe_service.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
+import 'package:e_commerce_app/core/utils/extensions.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:dio/dio.dart';
 

@@ -5,10 +5,7 @@ import 'package:e_commerce_app/core/utils/extensions.dart';
 class ServerException implements Exception {
   final String message;
   final Object? object;
-  const ServerException({
-    required this.message,
-    this.object,
-  });
+  const ServerException({required this.message, this.object});
 
   factory ServerException.fromDioException(DioException exception) =>
       ServerException(

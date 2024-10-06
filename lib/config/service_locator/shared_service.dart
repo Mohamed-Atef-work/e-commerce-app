@@ -1,4 +1,6 @@
 import 'package:e_commerce_app/config/service_locator/sl.dart';
+import 'package:e_commerce_app/core/services/api/api_services.dart';
+import 'package:e_commerce_app/core/services/api/dio_services.dart';
 import 'package:e_commerce_app/modules/shared/data/repository/repository.dart';
 import 'package:e_commerce_app/modules/shared/data/data_source/local_data_source.dart';
 import 'package:e_commerce_app/modules/shared/data/data_source/remote_data_source.dart';
@@ -12,6 +14,8 @@ import 'package:e_commerce_app/modules/shared/presentation/controllers/address_c
 import 'package:e_commerce_app/modules/shared/presentation/controllers/up_date_profile_controller/update_profile_cubit.dart';
 
 void shared() {
+  sl.registerLazySingleton<ApiServices>(() => DioServices());
+
   sl.registerFactory(() => EditAddressCubit(sl()));
   sl.registerFactory(() => UpdateProfileCubit(sl()));
   sl.registerFactory(() => SharedUserDataCubit(sl(), sl(), sl()));
@@ -20,7 +24,7 @@ void shared() {
   sl.registerLazySingleton<SharedLocalDataSource>(
       () => SharedLocalDataSourceImpl(sl()));
   sl.registerLazySingleton<SharedRemoteDataSource>(
-      () => SharedRemoteDataSourceImpl(sl(),sl()));
+      () => SharedRemoteDataSourceImpl(sl(), sl()));
 
   sl.registerLazySingleton(() => UpdateAddressUseCase(sl(), sl()));
   sl.registerLazySingleton(() => UpdateUserDataUseCase(sl(), sl()));

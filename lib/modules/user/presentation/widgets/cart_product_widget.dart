@@ -1,13 +1,14 @@
-import 'package:e_commerce_app/core/utils/images.dart';
-import 'package:e_commerce_app/config/routes/pages.dart';import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:e_commerce_app/core/utils/images.dart';
+import 'package:e_commerce_app/config/routes/pages.dart';
 import 'package:e_commerce_app/core/constants/colors.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:e_commerce_app/core/components/custom_text.dart';
 import 'package:e_commerce_app/modules/orders/presentation/widgets/counting_widget.dart';
 import 'package:e_commerce_app/modules/user/presentation/controllers/product_details_controller/product_details_cubit.dart';
 import 'package:e_commerce_app/modules/user/presentation/controllers/manage_cart_products_controller/manage_cart_products_cubit.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class CartProductWidget extends StatelessWidget {
   final int index;
@@ -60,8 +61,9 @@ class CartProductWidget extends StatelessWidget {
                 tag: product.id!,
                 child: FadeInImage(
                   fit: BoxFit.fill,
-                  placeholder: Svg(Images.loading,
-                      ),
+                  placeholder: Svg(
+                    Images.loading,
+                  ),
                   image: NetworkImage(product.image),
                 ),
               ),
