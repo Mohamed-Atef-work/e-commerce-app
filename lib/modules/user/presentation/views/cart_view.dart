@@ -2,6 +2,8 @@ import 'package:e_commerce_app/core/services/api/api_services.dart';
 import 'package:e_commerce_app/core/services/api/dio_services.dart';
 import 'package:e_commerce_app/core/services/stripe/constants.dart';
 import 'package:e_commerce_app/core/services/stripe/stripe_service.dart';
+import 'package:e_commerce_app/modules/user/data/data_source/payment_data_source.dart';
+import 'package:e_commerce_app/modules/user/domain/repository/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
@@ -78,9 +80,15 @@ class CartView extends StatelessWidget {
                   onPressed: () async {
                     if (userEntity.address != null &&
                         userEntity.phone != null) {
-                      final apiServices = DioServices();
-                      final stripe = StripeService(apiServices);
-                      await stripe.pay(100, "USD", StripeConstants.customerId);
+                      final apiService = DioServices();
+                      final stripeService = StripeService(apiService);
+                      final dataSource = StripDataSource(stripeService);
+                      final params = PayParams(
+                        amount: 100,
+                        currency: "USD",
+                        customerId: StripeConstants.customerId,
+                      );
+                      await dataSource.pay(params);
                       //manageCartController.addOrder(userEntity);
                     } else {
                       showMyToast(

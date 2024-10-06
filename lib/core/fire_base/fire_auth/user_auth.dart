@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/login_params.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/sign_up_use_case.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class UserAuth {
   Future<void> logOut();
@@ -18,7 +18,7 @@ class UserAuthImpl implements UserAuth {
   @override
   Future<void> reAuthenticateWithCredential(String currentPassword) async {
     final User user = _auth.currentUser!;
-    final AuthCredential credential = EmailAuthProvider.credential(
+    final credential = EmailAuthProvider.credential(
       password: currentPassword,
       email: user.email!,
     );

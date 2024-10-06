@@ -16,63 +16,86 @@ class StripeService {
   StripeService(this._apiServices);
 
   Future<String> createPaymentIntent(CreateIntentParams params) async {
-    final apiParams = ApiPostParams(
-      data: params.toJson(),
-      url: StripeConstants.createPaymentIntentUrl(),
-      contentType: Headers.formUrlEncodedContentType,
-      headers: {kAuthorization: "$kBearer ${StripeConstants.secretKey}"},
-    );
+    final apiParams = _createIntentPostParams(params);
     final result = await _apiServices.post(apiParams) as Response;
     final clientSecret = result.data[kClientSecret];
+    print(clientSecret);
     return clientSecret;
   }
 
   Future<String> createEphemeralKey(String customerId) async {
-    final params = ApiPostParams(
-      data: {kCustomer: customerId},
-      url: StripeConstants.createEphemeralKeyUrl(),
-      contentType: Headers.formUrlEncodedContentType,
-      headers: {
-        kStripeVersion: StripeConstants.version,
-        kAuthorization: "$kBearer ${StripeConstants.secretKey}"
-      },
-    );
+    final params = _createEphemeralKeyPostParams(customerId);
     final result = await _apiServices.post(params) as Response;
 
     final ephemeralKeyModel = EphemeralKeyModel.fromJson(result.data);
+    print(ephemeralKeyModel.secret!);
     return ephemeralKeyModel.secret!;
   }
 
   Future<void> initPaymentSheet(InitSheetParams params) async {
-    final setupParams = SetupPaymentSheetParameters(
-      paymentIntentClientSecret: params.paymentIntentClientSecret,
-      customerEphemeralKeySecret: params.ephemeralKey,
-      customerId: params.customerId,
-      merchantDisplayName: 'Buy it',
-    );
+    final setupParams = _setUpPaymentSheetParams(params);
     await _stripe.initPaymentSheet(paymentSheetParameters: setupParams);
   }
 
-  Future<void> pay(int amount, String currency, String customerId) async {
-    try {
-      final ephemeralKey = await createEphemeralKey(customerId);
-      print(ephemeralKey);
-      final createIntentParams = CreateIntentParams(
-        amount: amount,
-        currency: currency,
-        customerId: customerId,
+  Future<PaymentSheetPaymentOption?> presentPaymentSheet() async =>
+      await _stripe.presentPaymentSheet();
+
+  Future<void> payWithSheet({
+    required int amount,
+    required String currency,
+    required String customerId,
+  }) async {
+    final ephemeralKey = await createEphemeralKey(customerId);
+    print(ephemeralKey);
+    final createIntentParams = CreateIntentParams(
+      currency: currency,
+      amount: amount * 100,
+      customerId: customerId,
+    );
+    final clientSecret = await createPaymentIntent(createIntentParams);
+    print(clientSecret);
+    final initSheetParams =
+        _initSheetParams(customerId, ephemeralKey, clientSecret);
+    await initPaymentSheet(initSheetParams);
+    await _stripe.presentPaymentSheet();
+  }
+
+  ApiPostParams _createIntentPostParams(CreateIntentParams params) =>
+      ApiPostParams(
+        data: params.toJson(),
+        url: StripeConstants.createPaymentIntentUrl(),
+        contentType: Headers.formUrlEncodedContentType,
+        headers: {kAuthorization: "$kBearer ${StripeConstants.secretKey}"},
       );
-      final clientSecret = await createPaymentIntent(createIntentParams);
-      print(clientSecret);
-      final initSheetParams = InitSheetParams(
+
+  ApiPostParams _createEphemeralKeyPostParams(String customerId) =>
+      ApiPostParams(
+        data: {kCustomer: customerId},
+        url: StripeConstants.createEphemeralKeyUrl(),
+        contentType: Headers.formUrlEncodedContentType,
+        headers: {
+          kStripeVersion: StripeConstants.version,
+          kAuthorization: "$kBearer ${StripeConstants.secretKey}"
+        },
+      );
+
+  SetupPaymentSheetParameters _setUpPaymentSheetParams(
+          InitSheetParams params) =>
+      SetupPaymentSheetParameters(
+        paymentIntentClientSecret: params.paymentIntentClientSecret,
+        customerEphemeralKeySecret: params.ephemeralKey,
+        customerId: params.customerId,
+        merchantDisplayName: 'Buy it',
+      );
+
+  InitSheetParams _initSheetParams(
+    String customerId,
+    String ephemeralKey,
+    String clientSecret,
+  ) =>
+      InitSheetParams(
         customerId: customerId,
         ephemeralKey: ephemeralKey,
         paymentIntentClientSecret: clientSecret,
       );
-      final initSheet = await initPaymentSheet(initSheetParams);
-      await _stripe.presentPaymentSheet();
-    } catch (e) {
-      print(e.toString());
-    }
-  }
 }

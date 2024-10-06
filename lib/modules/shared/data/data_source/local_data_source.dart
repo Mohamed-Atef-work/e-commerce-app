@@ -1,14 +1,13 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
-
 import 'package:e_commerce_app/core/utils/constants.dart';
 import 'package:e_commerce_app/core/error/exceptions.dart';
 import 'package:e_commerce_app/core/constants/strings.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
 import 'package:e_commerce_app/modules/shared/data/models/cached_user_data_model.dart';
 import 'package:e_commerce_app/modules/shared/domain/entities/cached_user_data_entity.dart';
-import 'package:e_commerce_app/core/services/local_data_base_service/local_data_base_interface.dart';
+import 'package:e_commerce_app/core/services/local_data_base/local_data_base_interface.dart';
 
 abstract class SharedLocalDataSource {
   Future<bool> deleteUserData();

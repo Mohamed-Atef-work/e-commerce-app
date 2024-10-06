@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/core/fire_base/fire_store/store_helper.dart';
-import 'package:e_commerce_app/core/services/local_data_base_service/local_data_base_interface.dart';
-import 'package:e_commerce_app/core/services/local_data_base_service/shared_prefs_impl.dart';
+import 'package:e_commerce_app/core/services/local_data_base/local_data_base_interface.dart';
+import 'package:e_commerce_app/core/services/local_data_base/shared_prefs_impl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';

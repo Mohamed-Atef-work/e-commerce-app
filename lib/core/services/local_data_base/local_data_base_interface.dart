@@ -1,5 +1,5 @@
 abstract class LocalDataBaseService {
   Future save<T>(String key, T value);
-  Future<R?> read<R>(String key);
+  Future<T?> read<T>(String key);
   Future delete(String key);
 }

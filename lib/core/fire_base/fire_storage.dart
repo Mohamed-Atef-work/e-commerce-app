@@ -24,7 +24,6 @@ class StorageServiceImpl implements StorageService {
   }
 
   @override
-  Future<String> downloadUrl(Reference reference) async {
-    return await reference.getDownloadURL();
-  }
+  Future<String> downloadUrl(Reference reference) async =>
+      await reference.getDownloadURL();
 }
