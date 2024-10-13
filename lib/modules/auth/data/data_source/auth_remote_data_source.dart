@@ -4,10 +4,11 @@ import 'package:e_commerce_app/core/fire_base/fire_store/user.dart';
 import 'package:e_commerce_app/core/fire_base/fire_auth/user_auth.dart';
 import 'package:e_commerce_app/modules/auth/data/model/user_model.dart';
 import 'package:e_commerce_app/modules/auth/domain/entities/user_entity.dart';
-import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email_use_case.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/login_params.dart';
-import 'package:e_commerce_app/modules/auth/domain/use_cases/update_password_params.dart';
 import 'package:e_commerce_app/modules/auth/domain/use_cases/sign_up_use_case.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/update_email_use_case.dart';
+import 'package:e_commerce_app/modules/auth/domain/use_cases/update_password_params.dart';
+import 'package:flutter/services.dart';
 
 abstract class AuthBaseRemoteDatSource {
   Future<void> logOut();
@@ -31,8 +32,12 @@ class AuthRemoteDatSourceImpl implements AuthBaseRemoteDatSource {
     try {
       await _userAuth.reAuthenticateWithCredential(params.currentPassword);
       await _userAuth.upDataPassword(params.newPassword);
-    } catch (error) {
-      throw (ServerException(message: error.toString()));
+    } on FirebaseAuthException catch (exc) {
+      final serverExc = ServerException.fromFirebaseAuthException(exc);
+      throw serverExc;
+    } catch (exc) {
+      final serverExc = ServerException(message: exc.toString());
+      throw serverExc;
     }
   }
 
@@ -50,10 +55,22 @@ class AuthRemoteDatSourceImpl implements AuthBaseRemoteDatSource {
   Future<UserCredential> signIn(LoginParams params) async {
     print(
         "<----------------- In The SIGN_IN Remote Data Source ------------------>");
-    final userCredential = _userAuth.signIn(params).catchError((error) {
-      throw (ServerException(message: error.code));
-    });
-    return userCredential;
+    try {
+      final userCredential = await _userAuth.signIn(params);
+      return userCredential;
+    } on FirebaseAuthException catch (exc) {
+      final serverExc = ServerException.fromFirebaseAuthException(exc);
+      throw serverExc;
+    } on FirebaseException catch (exc) {
+      final serverExc = ServerException.fromFirebaseException(exc);
+      throw serverExc;
+    } on PlatformException catch (exc) {
+      final serverExc = ServerException.fromPlatformException(exc);
+      throw serverExc;
+    } catch (e) {
+      print("ERROR is -------> ${e.toString()}");
+      throw (ServerException(message: e.toString()));
+    }
   }
 
   @override
@@ -82,7 +99,11 @@ class AuthRemoteDatSourceImpl implements AuthBaseRemoteDatSource {
   }
 
   @override
-  Future<void> logOut() async => await _userAuth.logOut().catchError((error) {
-        throw ServerException(message: error.code);
-      });
+  Future<void> logOut() async {
+    try {
+      await _userAuth.logOut();
+    } catch (exception) {
+      throw ServerException(message: exception.toString());
+    }
+  }
 }

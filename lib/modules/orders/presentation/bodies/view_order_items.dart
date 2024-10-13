@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/core/utils/enums.dart';
 import 'package:e_commerce_app/core/utils/app_strings.dart';
-import 'package:e_commerce_app/config/routes/pages.dart';import 'package:e_commerce_app/core/components/loading_widget.dart';
+import 'package:e_commerce_app/config/routes/pages.dart';
+import 'package:e_commerce_app/core/components/loading_widget.dart';
 import 'package:e_commerce_app/core/components/divider_component.dart';
 import 'package:e_commerce_app/core/constants/widgets/show_toast.dart';
 import 'package:e_commerce_app/core/components/messenger_component.dart';
@@ -35,11 +36,7 @@ class ViewUserOrderItemsBody extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) => OrderItemWidget(
               index: index,
-              onPressed: () {
-                final product = state.orderItems[index].product;
-                BlocProvider.of<ProductDetailsCubit>(context).product(product);
-                Navigator.pushNamed(context, Screens.detailsScreen);
-              },
+              onPressed: () => _onPressed(state, index, context),
             ),
             separatorBuilder: (_, __) => const DividerComponent(),
           );
@@ -61,4 +58,10 @@ class ViewUserOrderItemsBody extends StatelessWidget {
   bool _listenWhen(OrderItemsState previous, OrderItemsState current) =>
       current.deleteOrderItem != previous.deleteOrderItem ||
       current.getOrderItems != previous.getOrderItems;
+
+  void _onPressed(OrderItemsState state, int index, BuildContext context) {
+    final product = state.orderItems[index].product;
+    BlocProvider.of<ProductDetailsCubit>(context).product(product);
+    Navigator.pushNamed(context, Screens.detailsScreen);
+  }
 }

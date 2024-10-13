@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:e_commerce_app/core/utils/extensions.dart';
 
@@ -17,6 +19,25 @@ class ServerException implements Exception {
       ServerException(
         object: exception.error.localizedMessage,
         message: exception.errorMessageFromCode,
+      );
+
+  factory ServerException.fromFirebaseAuthException(
+          FirebaseAuthException exception) =>
+      ServerException(
+        object: exception.credential,
+        message: exception.message!,
+      );
+  factory ServerException.fromFirebaseException(
+          FirebaseException exception) =>
+      ServerException(
+        object: exception.message,
+        message: exception.message!,
+      );
+  factory ServerException.fromPlatformException(
+          PlatformException exception) =>
+      ServerException(
+        object: exception.details,
+        message: exception.message!,
       );
 }
 
