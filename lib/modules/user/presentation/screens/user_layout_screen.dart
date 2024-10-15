@@ -23,10 +23,11 @@ class UserLayoutScreen extends StatelessWidget {
     message.then((value) {
       if (value != null) {
         showMyToast(
-          value.notification?.body ?? "null",
+          value.data.toString(),
           context,
           Colors.green,
         );
+        print("data is -------> ${value.data}");
       }
     });
     return MultiBlocProvider(

@@ -5,3 +5,4 @@ const String kThereIsNoData = "There Is No Data";
 
 const String kBearer = "Bearer";
 const String kAuthorization = "Authorization";
+const String kApplicationJson = "application/json";

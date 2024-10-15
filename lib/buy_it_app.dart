@@ -1,3 +1,4 @@
+import 'config/routes/pages.dart';
 import 'core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'config/routes/routes_strings.dart';
@@ -16,7 +17,7 @@ class BuyItApp extends StatelessWidget {
       child: MaterialApp(
         routes: routes(),
         title: AppStrings.buyIt,
-        //initialRoute: Screens.splashScreen,
+        initialRoute: Screens.testScreen,
         theme: ThemeData(scaffoldBackgroundColor: kPrimaryColorYellow),
       ),
     );
